@@ -11,7 +11,7 @@ html {
   font-style: normal;
 
 }
-
+/* start of css for navbar */
 #NavUl {
   list-style-type: none;
   margin: 0;
@@ -69,8 +69,12 @@ li.dropdown {
   text-align: left;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
+  height: fit-content;
 }
+/* end of navbar css */
