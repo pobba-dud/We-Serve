@@ -88,7 +88,7 @@ li.dropdown {
   margin-right: 5%;
   padding-left: .5%;
   padding-right: .5%;
-  padding-top: .002%;
+  padding-top: 0.1px;
   width: 39%;
   height: auto;
   border-radius: 25px;
