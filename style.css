@@ -28,7 +28,6 @@ li {
   float: left;
   display: flex;
   align-content: center;
-  padding: 14px 16px;
 }
 li a, .dropbtn {
   display: inline-block;
