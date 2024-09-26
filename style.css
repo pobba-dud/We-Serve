@@ -28,6 +28,7 @@ li {
   float: left;
   display: flex;
   align-content: center;
+  padding: 14px 16px;
 }
 li a, .dropbtn {
   display: inline-block;
@@ -84,15 +85,16 @@ li.dropdown {
 /* module like containers */
 .module{
   display: block;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
   padding-left: .5%;
   padding-right: .5%;
   padding-top: 0.1px;
-  width: 39%;
+  margin-bottom: 2.5%;
+  width: 44%;
   height: auto;
   border-radius: 25px;
-  background-color:#bdbbbb;
+  background-color:#d4d4d4;
   padding-bottom:2.5px;
 }
 .innerContainer{
@@ -101,4 +103,34 @@ li.dropdown {
   padding: 1%;
   border-radius: 25px;
   display: block;
+}
+.moduleHeader{
+  padding: 0px;
+  margin:10px;
+  font-size: 175%;
+  margin-bottom: 0px;
+  margin-top:10px;
+  padding-bottom: 0px;
+  padding-left: 5px;
+}
+.module img{
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+.module button{
+  margin-right:25%;
+  margin-top: 3%;
+  float: right;
+  color: white;
+  background-color: dodgerblue;
+  border-radius: 25px;
+  border:none;
+  font-size: 150%;
+  cursor: pointer;
+  padding: 1.5%;
 }
