@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>WeServe</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="CalendarStyle.css" rel="stylesheet" type="text/css" />
 </head>
-  <script src="script.js"></script>
+  
 </body>
 
 <!-- navbar -->
@@ -27,7 +27,52 @@
   <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images\Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
 </ul>
 </div>
+
 <!-- end of navbar -->
- <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FNew_York&showPrint=0&src=ODAyMzVAd3dzLmsxMi5pbi51cw&src=Y18wYTIwMjk5N2RhN2YxY2FkNDhkZjMxOGRiMTJlM2FkNTNiZjRkNzM1YTI5NzI2NzZkOGRjNjlmZjYxNDk1ZDhkQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039BE5&color=%233F51B5&color=%2333B679&color=%230B8043" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>'
-    <body>
+ <div style="margin:3%;"></div>
+ <div style="display: inline;">
+<div id="container">
+  <div id="header">
+    <div id="monthDisplay"></div>
+    <div>
+      <button id="backButton">Back</button>
+      <button id="nextButton">Next</button>
+    </div>
+  </div>
+
+  <div id="weekdays">
+    <div>Sunday</div>
+    <div>Monday</div>
+    <div>Tuesday</div>
+    <div>Wednesday</div>
+    <div>Thursday</div>
+    <div>Friday</div>
+    <div>Saturday</div>
+  </div>
+
+  <div id="calendar"></div>
+</div>
+
+<div id="newEventModal">
+  <h2>New Event</h2>
+
+  <input id="eventTitleInput" placeholder="Event Title" />
+
+  <button id="saveButton">Save</button>
+  <button id="cancelButton">Cancel</button>
+</div>
+
+<div id="deleteEventModal">
+  <h2>Event</h2>
+
+  <p id="eventText"></p>
+
+  <button id="deleteButton">Delete</button>
+  <button id="closeButton">Close</button>
+</div>
+
+<div id="modalBackDrop"></div>
+</div>
+<script src="scriptCalendar.js"></script>
+  <body>
 </html>
