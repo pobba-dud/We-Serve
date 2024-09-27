@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Playwrite+DE+Grund:wght@100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
 /* testing importing fonts^^ */
 html {
   height: 100%;
   width: 100%;
 
   /* testing fonts  \/ */
-  font-family: "Playwrite DE Grund", cursive;
+  font-family: "Red Hat Text", sans-serif;
   font-optical-sizing: auto;
   font-weight: 30px;
   font-style: normal;
@@ -22,6 +22,7 @@ html {
   border-color: black;
   border-radius: 5px;
   border-width: 1px;
+  font-size: 20px;
 }
 li {
   float: left;
