@@ -80,6 +80,14 @@ li.dropdown {
 }
 /* end of navbar css */
 
+.hourContainer div{
+  border: 5px solid #b3b3b3;
+  background-color: #b3b3b3;
+  width: 10%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: row;
+}
 
 /* module like containers */
 .module{
