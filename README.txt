@@ -6,3 +6,7 @@ to enable a less arduious development
 
 (I hate comments too but itll help 
 everyone working on this project)
+
+Sexy blue:
+ #4747c4
+ -jordynn
