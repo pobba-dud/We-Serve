@@ -158,3 +158,19 @@ li.dropdown {
   cursor: pointer;
   padding: 1.5%;
 }
+table {
+  border-radius: 10px;
+  background-color: white;
+  border: 1px solid black;
+  width: 80%;
+  margin: auto;
+}
+
+th {
+  padding: 10px;
+}
+
+.highlight {
+  background-color: #d1f0d1;
+  font-weight: bold;
+}
