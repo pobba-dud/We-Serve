@@ -147,8 +147,21 @@ li.dropdown {
   justify-content: center;
 }
 .module button{
-  margin-right:25%;
+  margin-right:20%;
   margin-top: 3%;
+  float: right;
+  color: white;
+  background-color: dodgerblue;
+  border-radius: 25px;
+  border:none;
+  font-size: 150%;
+  cursor: pointer;
+  padding: 1.5%;
+}
+.innerContainer button{
+  margin-right:10%;
+  margin-top: 3%;
+  margin-left:10%;
   float: right;
   color: white;
   background-color: dodgerblue;
@@ -162,8 +175,9 @@ table {
   border-radius: 10px;
   background-color: white;
   border: 1px solid black;
-  width: 80%;
-  margin: auto;
+  width: 95%;
+  margin-top: 1%;
+  margin: 2.5%;
 }
 
 th {
