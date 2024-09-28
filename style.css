@@ -14,8 +14,8 @@ html {
 /* start of css for navbar */
 #NavUl {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  margin: 0%;
+  padding: 0%;
   overflow: hidden;
   background-color:#b3b3b3;
   border-style: solid;
