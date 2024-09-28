@@ -84,10 +84,12 @@ li.dropdown {
   border: 5px solid #d4d4d4;
   background-color: #d4d4d4;
   width: 20%;
+  padding-top: 5%;
+  padding-bottom: 5%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10%;
-  font-size: 80%;
+  margin-top:8%;
+  font-size: 140%;
   font-weight: bold;
   text-align: center;
   border-radius: 10px;
@@ -100,7 +102,7 @@ li.dropdown {
 }
 
 #loggedNum{
-  font-size: 150%;
+  font-size: 230%;
 }
 
 
