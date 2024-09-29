@@ -35,9 +35,43 @@
 <div class="module" style="float:right">
   <h2 class = "moduleHeader">
     This Week in Advance
-    <h4 style="margin:0px; padding:0px;padding-left: 15px">
-      October 1-7th <!--make a variable at some point-->
+    <h4 style="margin:0px; padding:0px;padding-left: 15px" id="date-header">
     </h4>
+    
+    <script>
+      const dateHeader = document.getElementById('date-header');
+      const currentDate = new Date();
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+      // Calculate the first day of the week
+      const firstDayOfWeek = currentDate.getDate() - currentDate.getDay() ;
+      const firstDayOfWeekDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), firstDayOfWeek);
+    
+      // Calculate the last day of the week
+      const lastDayOfWeek = firstDayOfWeek + 6;
+      const lastDayOfWeekDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), lastDayOfWeek);
+    
+      const firstDayOfWeekString = `${monthNames[firstDayOfWeekDate.getMonth()]} ${firstDayOfWeekDate.getDate()}${getOrdinal(firstDayOfWeekDate.getDate())}`;
+      let lastDayOfWeekString = `${lastDayOfWeekDate.getDate()}${getOrdinal(lastDayOfWeekDate.getDate())}`;
+    
+      if (lastDayOfWeekDate.getMonth() !== firstDayOfWeekDate.getMonth()) {
+        lastDayOfWeekString = `${monthNames[lastDayOfWeekDate.getMonth()]} ${lastDayOfWeekString}`;
+      }
+    
+      dateHeader.textContent = `${firstDayOfWeekString}-${lastDayOfWeekString}`;
+    
+      function getOrdinal(n) {
+        if (n % 10 === 1 && n % 100 !== 11) {
+          return 'st';
+        } else if (n % 10 === 2 && n % 100 !== 12) {
+          return 'nd';
+        } else if (n % 10 === 3 && n % 100 !== 13) {
+          return 'rd';
+        } else {
+          return 'th';
+        }
+      }
+    </script>
   </h2>
   <div style="padding-bottom: 2%;">
       <table border="1">
