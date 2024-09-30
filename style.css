@@ -82,24 +82,32 @@ li.dropdown {
 }
 /* end of navbar css */
 
-.hourContainer div {
+.hourContainer div{
   border: 5px solid #d4d4d4;
   background-color: #d4d4d4;
-  width: 20%;
-  padding-top: 5%;
-  padding-bottom: 5%;
+  font-size: 100%;
+  width: 15%;
   margin-left: auto;
   margin-right: auto;
-  margin-top:8%;
-  font-size: 140%;
-  font-weight: bold;
-  text-align: center;
   border-radius: 10px;
+  padding-top: 1%;
+  padding-bottom: 2.5%;
+  text-align: center;
+  font-weight: bold;
+  opacity: 0.7;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
 }
 
 .hourContainer {
   display: flex;
   flex-direction: row;
+  margin-top: 5%;
+}
+
+#subNum {
+  font-size: 150%;
   height:50%;
 }
 
