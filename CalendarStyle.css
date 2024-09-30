@@ -5,13 +5,13 @@ html {
     /* testing fonts  \/ */
     font-family: "Red Hat Text", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 30px;
     font-style: normal;
   
   }
   body {
     display: flex;
-    margin-top: 50px;
+    flex-direction: column;
+    margin: 0%;
     justify-content: center;
     background-color: #FFFCFF;
   }
@@ -51,7 +51,7 @@ html {
   }
   #calendar {
     width: 100%;
-    margin: auto;
+    
     display: flex;
     flex-wrap: wrap;
   }
@@ -136,13 +136,12 @@ html {
   }
   #NavUl {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin: 0%;
+    padding: 0%;
     overflow: hidden;
     background-color:#b3b3b3;
     border-style: solid;
     border-color: black;
-    border-radius: 5px;
     border-width: 1px;
     font-size: 20px;
   }

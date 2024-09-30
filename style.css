@@ -11,16 +11,18 @@ html {
   font-style: normal;
 
 }
+body{
+  margin: 0%;
+}
 /* start of css for navbar */
 #NavUl {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  margin: 0%;
+  padding: 0%;
   overflow: hidden;
   background-color:#b3b3b3;
   border-style: solid;
   border-color: black;
-  border-radius: 5px;
   border-width: 1px;
   font-size: 20px;
 }
@@ -106,7 +108,13 @@ li.dropdown {
 
 #subNum {
   font-size: 150%;
+  height:50%;
 }
+
+#loggedNum{
+  font-size: 230%;
+}
+
 
 /* module like containers */
 .module{
@@ -149,7 +157,7 @@ li.dropdown {
   justify-content: center;
 }
 .module button{
-  margin-right:25%;
+  margin-right:20%;
   margin-top: 3%;
   float: right;
   color: white;
@@ -159,4 +167,34 @@ li.dropdown {
   font-size: 150%;
   cursor: pointer;
   padding: 1.5%;
+}
+.innerContainer button{
+  margin-right:10%;
+  margin-top: 0%;
+  margin-left:10%;
+  float: right;
+  color: white;
+  background-color: dodgerblue;
+  border-radius: 25px;
+  border:none;
+  font-size: 150%;
+  cursor: pointer;
+  padding: 1.5%;
+}
+table {
+  border-radius: 10px;
+  background-color: white;
+  border: 1px solid black;
+  width: 95%;
+  margin-top: 1%;
+  margin: 2.5%;
+}
+
+th {
+  padding: 10px;
+}
+
+.highlight {
+  background-color: #d1f0d1;
+  font-weight: bold;
 }

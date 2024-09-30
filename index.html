@@ -35,17 +35,77 @@
 <div class="module" style="float:right">
   <h2 class = "moduleHeader">
     This Week in Advance
-    <h4 style="margin:0px; padding:0px;padding-left: 15px">
-      October 1-7th <!--make a variable at some point-->
+    <h4 style="margin:0px; padding:0px;padding-left: 15px" id="date-header">
     </h4>
+    
+    <script>
+      const dateHeader = document.getElementById('date-header');
+      const currentDate = new Date();
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+      // Calculate the first day of the week
+      const firstDayOfWeek = currentDate.getDate() - currentDate.getDay() ;
+      const firstDayOfWeekDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), firstDayOfWeek);
+    
+      // Calculate the last day of the week
+      const lastDayOfWeek = firstDayOfWeek + 6;
+      const lastDayOfWeekDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), lastDayOfWeek);
+    
+      const firstDayOfWeekString = `${monthNames[firstDayOfWeekDate.getMonth()]} ${firstDayOfWeekDate.getDate()}${getOrdinal(firstDayOfWeekDate.getDate())}`;
+      let lastDayOfWeekString = `${lastDayOfWeekDate.getDate()}${getOrdinal(lastDayOfWeekDate.getDate())}`;
+    
+      if (lastDayOfWeekDate.getMonth() !== firstDayOfWeekDate.getMonth()) {
+        lastDayOfWeekString = `${monthNames[lastDayOfWeekDate.getMonth()]} ${lastDayOfWeekString}`;
+      }
+    
+      dateHeader.textContent = `${firstDayOfWeekString}-${lastDayOfWeekString}`;
+    
+      function getOrdinal(n) {
+        if (n % 10 === 1 && n % 100 !== 11) {
+          return 'st';
+        } else if (n % 10 === 2 && n % 100 !== 12) {
+          return 'nd';
+        } else if (n % 10 === 3 && n % 100 !== 13) {
+          return 'rd';
+        } else {
+          return 'th';
+        }
+      }
+    </script>
   </h2>
-  <div class="innerContainer">
-    test
-  <br><br><br><br><br><br>
-  test
-  
-  </div>
-  </div>
+  <div style="padding-bottom: 2%;">
+      <table border="1">
+          <tr>
+              <th class="day-number">1<br>Sunday</th>
+              <th><u>Help plant trees</u><br>3:30 - 6:30pm at Cool Creek</th>
+          </tr>
+          <tr>
+              <th class="day-number">2<br>Monday</th>
+              <th>No event</th>
+          </tr>
+          <tr>
+              <th class="day-number">3<br>Tuesday</th>
+              <th><u>Helpout at food pantry</u><br>6:00 - 7:30pm at Food Pantry</th>
+          </tr>
+          <tr>
+              <th class="day-number">4<br>Wednesday</th>
+              <th>No event</th>
+          </tr>
+          <tr>
+              <th class="day-number">5<br>Thursday</th>
+              <th>No event</th>
+          </tr>
+          <tr>
+              <th class="day-number">6<br>Friday</th>
+              <th>No event</th>
+          </tr>
+          <tr>
+              <th class="day-number">7<br>Saturday</th>
+              <th><u>Example Volunteer event</u><br>XX:XXam - XX:XXpm at Example Location</th>
+          </tr>
+      </table>
+      </div>
+</div>
 
 
 <div class="module">
@@ -64,11 +124,15 @@
 
 <div class="module">
   <h2 class = "moduleHeader">Opportunies Coming Up</h2>
-  <div class="innerContainer">
-    test
-  <br><br><br><br><br><br>
-  test
-  
+  <div class="innerContainer" style="padding-bottom: 3%;"> 
+    <div style="margin-left:10%;">
+    <button> Get Involved</button>
+  <u><h3>Help at the Community center</h3></u>  
+    October 12, 6:00 - 730 pm
+    <button style="margin-top: 7%;"> Get Involved</button>
+  <u><h3>Event title</h3></u> 
+  Month XX, XX:XX - XX:XX
+  </div>
   </div>
   </div>
 
