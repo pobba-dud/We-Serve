@@ -162,6 +162,10 @@ li.dropdown {
   display: flex;
   justify-content: center;
 }
+.displayImg{
+  width: 40%;
+  height: auto;
+}
 .module button{
   margin-right:20%;
   margin-top: 3%;
