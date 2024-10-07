@@ -43,3 +43,47 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDayNumbers();  // Update the day numbers dynamically
     highlightToday();    // Highlight the current day's event
 });
+
+
+
+const events1 = [
+    {
+      title: "Help plant trees",
+      date: "2023-10-08",
+      time: "3:30 - 6:30pm",
+      location: "Cool Creek"
+    },
+    {
+      title: "Helpout at food pantry",
+      date: "2024-10-09",
+      time: "6:00 - 7:30pm",
+      location: "Food Pantry"
+    },
+    // Add more events here
+  ];
+  
+  localStorage.setItem("events1", JSON.stringify(events1));
+
+  function mapEventsToDays() {
+    const events1 = JSON.parse(localStorage.getItem("events1"));
+    const currentDate = new Date();
+    const firstDayOfWeek = currentDate.getDate() - currentDate.getDay() + (currentDate.getDay() === 0 ? 6 : 0);
+    const lastDayOfWeek = firstDayOfWeek + 6;
+  
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  
+    events1.forEach((event) => {
+      const eventDate = new Date(event.date);
+      const dayOfWeek = daysOfWeek[eventDate.getDay()];
+  
+      // Find the corresponding table row
+      const tableRow = document.querySelector(`tr:nth-child(${eventDate.getDate() - firstDayOfWeek + 2})`);
+  
+      // Update the table cell with the event information
+      tableRow.cells[1].innerHTML = `<u>${event.title}</u><br>${event.time} at ${event.location}`;
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", mapEventsToDays);
+
+  mapEventsToDays();

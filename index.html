@@ -77,37 +77,36 @@
 <!-- Table -->
   </h2>
   <div style="padding-bottom: 2%;">
-      <table border="1" style="border: grey;">
-          <tr>
-              <th class="day-number">1<br>Sunday</th>
-              <th><u>Help plant trees</u><br>3:30 - 6:30pm at Cool Creek</th>
-          </tr>
-          <tr>
-              <th class="day-number">2<br>Monday</th>
-              <th>No event</th>
-          </tr>
-          <tr>
-              <th class="day-number">3<br>Tuesday</th>
-              <th><u>Helpout at food pantry</u><br>6:00 - 7:30pm at Food Pantry</th>
-          </tr>
-          <tr>
-              <th class="day-number">4<br>Wednesday</th>
-              <th>No event</th>
-          </tr>
-          <tr>
-              <th class="day-number">5<br>Thursday</th>
-              <th>No event</th>
-          </tr>
-          <tr>
-            
-              <th class="day-number">6<br>Friday</th>
-              <th>No event</th>
-          </tr>
-          <tr>
-              <th class="day-number">7<br>Saturday</th>
-              <th><u>Example Volunteer event</u><br>XX:XXam - XX:XXpm at Example Location</th>
-          </tr>
-      </table>
+    <table border="1" style="border: grey;">
+      <tr>
+        <th class="day-number">1<br>Sunday</th>
+        <th id="event-1"></th>
+      </tr>
+      <tr>
+        <th class="day-number">2<br>Monday</th>
+        <th id="event-2"></th>
+      </tr>
+      <tr>
+        <th class="day-number">3<br>Tuesday</th>
+        <th id="event-3"></th>
+      </tr>
+      <tr>
+        <th class="day-number">4<br>Wednesday</th>
+        <th id="event-4"></th>
+      </tr>
+      <tr>
+        <th class="day-number">5<br>Thursday</th>
+        <th id="event-5"></th>
+      </tr>
+      <tr>
+        <th class="day-number">6<br>Friday</th>
+        <th id="event-6"></th>
+      </tr>
+      <tr>
+        <th class="day-number">7<br>Saturday</th>
+        <th id="event-7"></th>
+      </tr>
+    </table>
       </div>
 </div>
 <!-- End of table -->
@@ -140,7 +139,8 @@
   </div>
   </div>
 
-
-
+<script>
+mapEventsToDays();
+</script>
   <body>
 </html>
