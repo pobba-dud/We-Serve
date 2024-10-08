@@ -14,7 +14,7 @@ html {
     flex-direction: column;
     margin: 0%;
     justify-content: center;
-    background-color: #FFFCFF;
+    background-color: white;
   }
   button {
     width: 75px;
@@ -153,20 +153,19 @@ html {
     margin: 0%;
     padding: 0%;
     overflow: hidden;
-    background-color:#b3b3b3;
-    border-style: solid;
-    border-color: black;
-    border-width: 1px;
+    background-color: #2f4858;
     font-size: 20px;
   }
   li {
     float: left;
     display: flex;
     align-content: center;
+    color: #9bd1e5;
   }
+  
   li a, .dropbtn {
     display: inline-block;
-    color: black;
+    color: #9bd1e5;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
