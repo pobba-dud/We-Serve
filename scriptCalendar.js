@@ -138,3 +138,27 @@ function initButtons() {
 
 initButtons();
 load();
+
+// Calendar Editor Function
+
+function createEvent(date, title, time) {
+
+  if (date && title && time) {
+
+    const newEvent = {
+      date: date,
+      title: title,
+      time: time,
+    };
+
+    events.push(newEvent);
+
+    localStorage.setItem('events', JSON.stringify(events));
+
+    load();
+  } else {
+    console.error("Invalid event details.");
+  }
+}
+
+createEvent("10/15/2024", "Gooning w/ gang", "10:00 AM");
