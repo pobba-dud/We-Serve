@@ -11,6 +11,7 @@ html {
 
 }
 body{
+  background-color: white ;
   margin: 0%;
 }
 /* start of css for navbar */
@@ -19,21 +20,19 @@ body{
   margin: 0%;
   padding: 0%;
   overflow: hidden;
-  background-color:#b3b3b3;
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
+  background-color: #2f4858;
   font-size: 20px;
 }
 li {
   float: left;
   display: flex;
   align-content: center;
+  color: #9bd1e5;
 }
 
 li a, .dropbtn {
   display: inline-block;
-  color: black;
+  color: #9bd1e5;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -84,8 +83,9 @@ li.dropdown {
 
 /* Hour Log Style */
 .hourContainer div{
-  border: 5px solid #d4d4d4;
-  background-color: #d4d4d4;
+  
+  background-color: #9bd1e5;
+  color: #2f4858;
   font-size: 160%;
   width: 15%;
   margin-left: auto;
@@ -133,7 +133,8 @@ li.dropdown {
   width: 44%;
   height: auto;
   border-radius: 25px;
-  background-color:#d4d4d4;
+  background-color:#9bd1e5;
+  color: #2f4858;
   padding-bottom:2.5px;
 }
 .innerContainer{
@@ -170,7 +171,7 @@ li.dropdown {
   margin-top: 3%;
   float: right;
   color: white;
-  background-color: #4747c4;
+  background-color: #2f4858;
   border-radius: 25px;
   border:none;
   font-size: 150%;
@@ -183,7 +184,7 @@ li.dropdown {
   margin-left:10%;
   float: right;
   color: white;
-  background-color: #4747c4;
+  background-color: #2f4858;
   border-radius: 25px;
   border:none;
   font-size: 150%;
@@ -193,7 +194,6 @@ li.dropdown {
 table {
   border-radius: 10px;
   background-color: white;
-  border: 1px solid black;
   width: 95%;
   margin-top: 1%;
   margin: 2.5%;
