@@ -7,6 +7,7 @@ const newEventModal = document.getElementById('newEventModal');
 const deleteEventModal = document.getElementById('deleteEventModal');
 const backDrop = document.getElementById('modalBackDrop');
 const eventTitleInput = document.getElementById('eventTitleInput');
+const eventTimeInput = document.getElementById('eventTimeInput');
 const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function openModal(date) {
@@ -15,7 +16,7 @@ function openModal(date) {
   const eventForDay = events.find(e => e.date === clicked);
 
   if (eventForDay) {
-    document.getElementById('eventText').innerText = eventForDay.title;
+    document.getElementById('eventText').innerText = eventForDay.title + "\n" + eventForDay.time;
     deleteEventModal.style.display = 'block';
   } else {
     newEventModal.style.display = 'block';
@@ -68,7 +69,7 @@ function load() {
       if (eventForDay) {
         const eventDiv = document.createElement('div');
         eventDiv.classList.add('event');
-        eventDiv.innerText = eventForDay.title;
+        eventDiv.innerText = eventForDay.title + "\n" + eventForDay.time;
         daySquare.appendChild(eventDiv);
       }
 
@@ -83,27 +84,32 @@ function load() {
 
 function closeModal() {
   eventTitleInput.classList.remove('error');
+  eventTimeInput.classList.remove('error');
   newEventModal.style.display = 'none';
   deleteEventModal.style.display = 'none';
   backDrop.style.display = 'none';
   eventTitleInput.value = '';
+  eventTimeInput.value = '';
   clicked = null;
   load();
 }
 
 function saveEvent() {
-  if (eventTitleInput.value) {
+  if (eventTitleInput.value + eventTimeInput.value) {
     eventTitleInput.classList.remove('error');
+    eventTimeInput.classList.remove('error');
 
     events.push({
       date: clicked,
       title: eventTitleInput.value,
+      time: eventTimeInput.value,
     });
 
     localStorage.setItem('events', JSON.stringify(events));
     closeModal();
   } else {
     eventTitleInput.classList.add('error');
+    eventTimeInput.classList.add('error')
   }
 }
 
