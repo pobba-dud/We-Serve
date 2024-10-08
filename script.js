@@ -59,12 +59,6 @@ const events1 = [
       time: "6:00 - 7:30pm",
       location: "Food Pantry"
     },
-    {
-        title: "AAAAAAAAAAAAAAAAAAA",
-        date: "2023/10/12",
-        time: "3:30 - 6:30pm",
-        location: "Hell"
-      },
     // Add more events here
   ];
   
