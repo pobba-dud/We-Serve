@@ -56,7 +56,7 @@ function load() {
     const daySquare = document.createElement('div');
     daySquare.classList.add('day');
 
-    const dayString = `${month + 1}/${i - paddingDays}/${year}`;
+    const dayString = `${year}/${month + 1}/${i-paddingDays}`
 
     if (i > paddingDays) {
       daySquare.innerText = i - paddingDays;
@@ -161,4 +161,4 @@ function createEvent(date, title, time) {
   }
 }
 
-createEvent("10/15/2024", "Gooning w/ gang", "10:00 AM");
+createEvent("2024/10/15", "Gooning w/ gang", "10:00 AM");
