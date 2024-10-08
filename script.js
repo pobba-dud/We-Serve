@@ -49,16 +49,22 @@ document.addEventListener('DOMContentLoaded', () => {
 const events1 = [
     {
       title: "Help plant trees",
-      date: "2023-10-08",
+      date: "2023/10/08",
       time: "3:30 - 6:30pm",
       location: "Cool Creek"
     },
-    {
+    { 
       title: "Helpout at food pantry",
-      date: "2024-10-09",
+      date: "2024/10/09",
       time: "6:00 - 7:30pm",
       location: "Food Pantry"
     },
+    {
+        title: "AAAAAAAAAAAAAAAAAAA",
+        date: "2023/10/12",
+        time: "3:30 - 6:30pm",
+        location: "Hell"
+      },
     // Add more events here
   ];
   
@@ -77,7 +83,7 @@ const events1 = [
       const dayOfWeek = daysOfWeek[eventDate.getDay()];
   
       // Find the corresponding table row
-      const tableRow = document.querySelector(`tr:nth-child(${eventDate.getDate() - firstDayOfWeek + 2})`);
+      const tableRow = document.querySelector(`tr:nth-child(${eventDate.getDate() - firstDayOfWeek + 1})`);
   
       // Update the table cell with the event information
       tableRow.cells[1].innerHTML = `<u>${event.title}</u><br>${event.time} at ${event.location}`;
