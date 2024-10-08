@@ -8,7 +8,7 @@ html {
   font-family: "Red Hat Text", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-
+  color:#2f4858;
 }
 body{
   background-color: white ;
@@ -200,6 +200,7 @@ li.dropdown {
   padding: 1.5%;
 }
 table {
+  border: #2f4858;
   border-radius: 10px;
   background-color: white;
   width: 95%;
@@ -208,7 +209,7 @@ table {
   text-align: center;
 }
 table td, table th {
-  border: 1px solid black;
+  border: 1px solid #2f4858;
   border-collapse: collapse;
 }
 th {
@@ -217,13 +218,16 @@ th {
 }
 
 .highlight {
-  background-color: #d1f0d1;
+  background-color: #c0e1ed;
   font-weight: bold;
 }
-
-
-
-
+.modal-header{
+  background-color:#9bd1e5 ;
+  color:#2f4858;
+}
+.col-md-8{
+  color:#2f4858;
+}
 
 .modal-body .event-image {
   width: 100%;
@@ -234,25 +238,27 @@ th {
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  color: #6c757d;
+  color:#2f4858;
 }
 .event-info h5 {
   font-size: 18px;
   font-weight: bold;
   margin-top: 15px;
+  color:#2f4858;
 }
 .event-details {
   margin-bottom: 20px;
+  color:#2f4858;
 }
 .event-details p {
-  color: #6c757d;
+  color:#2f4858;
 }
 .event-details span {
   display: block;
-  color: #6c757d;
+  color:#2f4858;
 }
 .schedule-btn {
-  background-color: #0d6efd;
+  background-color: #2f4858;
   color: white;
   border-radius: 25px;
   padding: 10px 20px;
