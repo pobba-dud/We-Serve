@@ -29,7 +29,14 @@ li {
   align-content: center;
   color: #9bd1e5;
 }
-
+#NavUl img{
+  float: left;
+  display: flex;
+  width: 57px;
+  height:auto;
+  margin: 0%;
+  padding: 0%;
+}
 li a, .dropbtn {
   display: inline-block;
   color: #9bd1e5;
