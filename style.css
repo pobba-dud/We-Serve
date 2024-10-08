@@ -205,8 +205,12 @@ table {
   width: 95%;
   margin-top: 1%;
   margin: 2.5%;
+  text-align: center;
 }
-
+table td, table th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
 th {
   padding: 10px;
   border-radius: 10px;
@@ -215,4 +219,46 @@ th {
 .highlight {
   background-color: #d1f0d1;
   font-weight: bold;
+}
+
+
+
+
+
+.modal-body .event-image {
+  width: 100%;
+  height: 200px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #6c757d;
+}
+.event-info h5 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+.event-details {
+  margin-bottom: 20px;
+}
+.event-details p {
+  color: #6c757d;
+}
+.event-details span {
+  display: block;
+  color: #6c757d;
+}
+.schedule-btn {
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  border: none;
+  margin-top: 20px;
+}
+.schedule-btn:hover {
+  background-color: #0a58ca;
 }
