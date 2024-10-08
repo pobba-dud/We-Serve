@@ -161,4 +161,4 @@ function createEvent(date, title, time) {
   }
 }
 
-createEvent("2024/10/15", "Gooning w/ gang", "10:00 AM");
+createEvent("2024/10/15", "Assisting The Elderly", "10:00 AM");
