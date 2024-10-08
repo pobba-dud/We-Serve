@@ -83,9 +83,9 @@ li.dropdown {
 
 /* Hour Log Style */
 .hourContainer div{
-  
+  border: 5px solid #0b4161;
   background-color: #9bd1e5;
-  color: #2f4858;
+  color: #0b4161;
   font-size: 160%;
   width: 15%;
   margin-left: auto;
