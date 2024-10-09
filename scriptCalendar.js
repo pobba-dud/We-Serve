@@ -174,4 +174,5 @@ function remoteDeleteEvent(date, time) {
 }
 
 remoteCreateEvent('2024/10/12', 'skibidi sesh', '6:30 AM');
+remoteCreateEvent('2024/10/12', 'SITE WENT LIVE ON THIS DAY', '2:55 PM');
 //remoteDeleteEvent('2024/10/15', '10:00 AM');
