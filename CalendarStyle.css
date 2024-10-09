@@ -14,7 +14,7 @@ html {
     flex-direction: column;
     margin: 0%;
     justify-content: center;
-    background-color: #FFFCFF;
+    background-color: white;
   }
   button {
     width: 75px;
@@ -29,7 +29,7 @@ html {
   
   #header {
     padding: 10px;
-    color: #d36c6c;
+    color: #2f4858;
     font-size: 26px;
     font-family: sans-serif;
     display: flex;
@@ -153,20 +153,27 @@ html {
     margin: 0%;
     padding: 0%;
     overflow: hidden;
-    background-color:#b3b3b3;
-    border-style: solid;
-    border-color: black;
-    border-width: 1px;
+    background-color: #2f4858;
     font-size: 20px;
   }
   li {
     float: left;
     display: flex;
     align-content: center;
+    color: #9bd1e5;
+  }
+  #NavUl img{
+    float: left;
+    display: flex;
+    width: 57px;
+    height:auto;
+    margin: 0%;
+    padding: 0%;
+    margin-right: 5px;
   }
   li a, .dropbtn {
     display: inline-block;
-    color: black;
+    color: #9bd1e5;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -176,7 +183,7 @@ html {
   }
   
   li a:hover, .dropdown:hover .dropbtn {
-    background-color:#9e9a9a;
+    background-color: #496679;
     border-style: solid;
     border-width: 1px;
     border-color: #333;

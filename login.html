@@ -19,71 +19,69 @@ html {
 
 /* start of css for navbar */
 #NavUl {
-  list-style-type: none;
-  margin: 0%;
-  padding: 0%;
-  overflow: hidden;
-  background-color:#b3b3b3;
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
-  font-size: 20px;
-}
-li {
-  float: left;
-  display: flex;
-  align-content: center;
-}
-
-li a, .dropbtn {
-  display: inline-block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  border-color:none;
-  border-width:1px;
-  border-radius: 5px;
-}
-
-li a:hover, .dropdown:hover .dropbtn {
-  background-color:#9e9a9a;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #333;
-  border-radius: 5px;
-}
-
-li.dropdown {
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-  height: fit-content;
-}
+    list-style-type: none;
+    margin: 0%;
+    padding: 0%;
+    overflow: hidden;
+    background-color: #2f4858;
+    font-size: 20px;
+  }
+  li {
+    float: left;
+    display: flex;
+    align-content: center;
+    color: #9bd1e5;
+  }
+  
+  li a, .dropbtn {
+    display: inline-block;
+    color: #9bd1e5;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-color:none;
+    border-width:1px;
+    border-radius: 5px;
+  }
+  
+  li a:hover, .dropdown:hover .dropbtn {
+    background-color:#496679;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #333;
+    border-radius: 5px;
+  }
+  
+  li.dropdown {
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+    height: fit-content;
+  }
 /* end of navbar css */
 
 body {
@@ -143,6 +141,7 @@ body {
     background-color: #fff;
     color: #333;
     border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
     height: 86%;
     left: 0;
     overflow-x: hidden;
@@ -219,7 +218,7 @@ body {
 }
 
 .main .card {
-    background-color: #a7a7a7;
+    background-color: #9bd1e5;
     border-radius: 18px;
     box-shadow: 1px 1px 8px 0 grey;
     height: auto;
@@ -276,7 +275,15 @@ body {
 .fa-snapchat:hover {
     color: #fffb01 !important;
 }
-
+#NavUl img{
+     float: left;
+      display: flex;
+       width: 57px;
+       height:auto;
+      margin: 0%;
+      padding: 0%;
+      margin-right: 5px;
+    }
 /* End */
   </style>
 </head>
@@ -293,6 +300,7 @@ body {
 <!-- navbar -->
 <div>
   <ul id = "NavUl">
+    <img src="Images\logo.png">
     <li><a href="index.html"><b>Homepage</b></a></li>
     <li><a href="DiscoverPage.html" ><b>Discover</b></a></li>
     <li><a href="hourLog.html"><b>Hour log</b></a></li>
@@ -306,7 +314,7 @@ body {
     </li>-->
 
     <li><a href="Calendar.html"><b>Calendar</b></a></li>
-    <li style="float:right; display:flex; align-content: center;background-color: #adabab;"><a href="login.html"> <img src="Images\Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+    <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images\Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
   </ul>
   </div>
   <div style="margin-bottom: 50px;"></div>
@@ -321,21 +329,21 @@ body {
           <img src= 'Images/Default_pfp.png' style="width:auto;height:200px;margin-top: 100px;">
 
           <div class="name">
-              John Doe
+              Jon Doe
           </div>
           <div class="job">
-              Web Developer and such
+              Student
           </div>
       </div>
 
       <div class="sidenav-url">
           <div class="url">
               <a href="#profile" class="active">Profile</a>
-              <hr align="center">
+              <hr style="align-items: center;">
           </div>
           <div class="url">
               <a href="#settings">Settings</a>
-              <hr align="center">
+              <hr style = 'align-items: center;'>
           </div>
       </div>
   </div>
@@ -351,12 +359,12 @@ body {
                   <tr>
                       <td>Name</td>
                       <td>:</td>
-                      <td>John Doe</td>
+                      <td>Jon Doe</td>
                   </tr>
                   <tr>
                       <td>Email</td>
                       <td>:</td>
-                      <td>WEEUUUU@gmail</td>
+                      <td>JonDoe@gmail.com</td>
                   </tr>
                   <tr>
                     <td>Password</td>
@@ -366,65 +374,28 @@ body {
                   <tr>
                       <td>Address</td>
                       <td>:</td>
-                      <td>your, mom</td>
+                      <td>473753 Roadname Dr, Westfield, Indiana, 46074</td>
                   </tr>
                   <tr>
                       <td>Hobbies</td>
                       <td>:</td>
-                      <td>Beating adian</td>
+                      <td>Voluneering</td>
                   </tr>
                   <tr>
                       <td>Job</td>
                       <td>:</td>
-                      <td>Web Developer</td>
+                      <td>Student</td>
                   </tr>
                   <tr>
-                      <td>Skill</td>
+                      <td>Skills</td>
                       <td>:</td>
-                      <td> HTML, CSS, Java, Rapping(Taught by biggie cheese)</td>
+                      <td>Assiting the Community</td>
                   </tr>
               </tbody>
           </table>
       </div>
   </div>
 
-  <h2>SOCIAL MEDIA</h2>
-  <div class="card">
-      <div class="card-body">
-          <i class="fa fa-pen fa-xs edit"></i>
-          <div class="social-media">
-              <span class="fa-stack fa-sm">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
-              </span>
-              <span class="fa-stack fa-sm">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-              </span>
-              <span class="fa-stack fa-sm">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
-              </span>
-              <span class="fa-stack fa-sm">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fab fa-invision fa-stack-1x fa-inverse"></i>
-              </span>
-              <span class="fa-stack fa-sm">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-              </span>
-              <span class="fa-stack fa-sm">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fab fa-whatsapp fa-stack-1x fa-inverse"></i>
-              </span>
-              <span class="fa-stack fa-sm">
-                  <i class="fas fa-circle fa-stack-2x"></i>
-                  <i class="fab fa-snapchat fa-stack-1x fa-inverse"></i>
-              </span>
-          </div>
-      </div>
-  </div>
-</div>
 <!-- End -->
 
 

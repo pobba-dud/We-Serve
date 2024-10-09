@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width">
   <title>WeServe</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
   <script src="script.js"></script>
 </body>
@@ -12,7 +13,8 @@
 <!-- navbar -->
 <div>
 <ul id = "NavUl">
-  <li><a href="index.html"style="color: #4747c4;"><b>Homepage</b></a></li>
+  <img src="Images\logo.png">
+  <li><a href="index.html" style="color: #76a4b5;"><b>Homepage</b></a></li>
   <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
   <li><a href="hourLog.html"><b>Hour log</b></a></li>
   <!-- <li class="dropdown">
@@ -77,7 +79,7 @@
 <!-- Table -->
   </h2>
   <div style="padding-bottom: 2%;">
-    <table border="1" style="border: grey;">
+    <table style="border: solid 2px black;border-collapse:inherit">
       <tr>
         <th class="day-number">1<br>Sunday</th>
         <th id="event-1"></th>
@@ -114,11 +116,11 @@
 <div class="module">
 <h2 class = "moduleHeader">Hour Log Recap</h2>
 <div class="innerContainer">
-  <h3 style="display: flex; justify-content: center;"><!--make a variable at some point-->
-  Total Hours this year: <!-- character for a space -->&#160 <b> 45</b> 
+  <h3 style="display: flex; justify-content: center; margin-top: 3%;"><!--make a variable at some point-->
+  Total Hours this year: <!-- character for a space -->&#160 <b><span>45</span></b> 
   </h3>
-  <h3 style="display: flex; justify-content: center;">
-    Weekly Service Streak: <!-- character for a space -->&#160 <b style="color:orange"> 15</b> <!--make a variable at some point-->
+  <h3 style="display: flex; justify-content: center; margin-top: 3%;margin-bottom: 3%">
+    Weekly Service Streak: <!-- character for a space -->&#160 <b style="color:orange"> <span>15</span></b> <!--make a variable at some point-->
     </h3>
 </div>
 </div>
@@ -129,15 +131,90 @@
   <h2 class = "moduleHeader">Opportunies Coming Up</h2>
   <div class="innerContainer" style="padding-bottom: 3%;"> 
     <div style="margin-left:10%;">
-    <button> Get Involved</button>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1"> Get Involved</button>
   <u><h3>Help at the Community center</h3></u>  
-    October 12, 6:00 - 730 pm
-    <button style="margin-top: 7%;"> Get Involved</button>
+    October 12, 6:00 - 7:30 pm
+    <button style="margin-top: 7%;"type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#eventModal2"> Get Involved</button>
   <u><h3>Event title</h3></u> 
   Month XX, XX:XX - XX:XX
   </div>
   </div>
   </div>
+
+<!-- First Modal -->
+<div class="modal fade" id="eventModal1" tabindex="-1" aria-labelledby="eventModalLabel1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel1">Event Name 1</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Event Image -->
+          <div class="col-md-4">
+            <div class="event-image">
+              Image of Event 1
+            </div>
+            <div class="event-info">
+              <h5>Organization 1</h5>
+              <span>Event Name 1</span><br>
+              <span>Month 1,</span><br>
+              <span>10:00 AM - 12:00 PM</span>
+            </div>
+          </div>
+          <!-- Event Description -->
+          <div class="col-md-8">
+            <h5>Event Name 1</h5>
+            <p class="event-details">
+              This paragraph contains a small bio or description for Event 1. It includes details about the organization and the event schedule.
+            </p>
+            <button class="schedule-btn">Get Scheduled</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Second Modal -->
+<div class="modal fade" id="eventModal2" tabindex="-1" aria-labelledby="eventModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel2">Event Name 2</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Event Image -->
+          <div class="col-md-4">
+            <div class="event-image">
+              Image of Event 2
+            </div>
+            <div class="event-info">
+              <h5>Organization 2</h5>
+              <span>Event Name 2</span><br>
+              <span>Month 2,</span><br>
+              <span>02:00 PM - 04:00 PM</span>
+            </div>
+          </div>
+          <!-- Event Description -->
+          <div class="col-md-8">
+            <h5>Event Name 2</h5>
+            <p class="event-details">
+              This paragraph contains a small bio or description for Event 2. It includes details about the organization and the event schedule.
+            </p>
+            <button class="schedule-btn">Get Scheduled</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <button> <a href="test.html">test</a></button> -->
 
 <script>
 mapEventsToDays();

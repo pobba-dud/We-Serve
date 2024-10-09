@@ -56,7 +56,7 @@ function load() {
     const daySquare = document.createElement('div');
     daySquare.classList.add('day');
 
-    const dayString = `${month + 1}/${i - paddingDays}/${year}`;
+    const dayString = `${year}/${month + 1}/${i-paddingDays}`
 
     if (i > paddingDays) {
       daySquare.innerText = i - paddingDays;
@@ -138,3 +138,27 @@ function initButtons() {
 
 initButtons();
 load();
+
+// Calendar Editor Function
+
+function createEvent(date, title, time) {
+
+  if (date && title && time) {
+
+    const newEvent = {
+      date: date,
+      title: title,
+      time: time,
+    };
+
+    events.push(newEvent);
+
+    localStorage.setItem('events', JSON.stringify(events));
+
+    load();
+  } else {
+    console.error("Invalid event details.");
+  }
+}
+
+createEvent("2024/10/15", "Assisting The Elderly", "10:00 AM");

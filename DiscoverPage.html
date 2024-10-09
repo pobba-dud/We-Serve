@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>WeServe</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
-  <!-- Start of css -->
-  <style>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>WeServe</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <!-- Start of css -->
+    <style>
+    #NavUl img{
+     float: left;
+      display: flex;
+       width: 57px;
+       height:auto;
+      margin: 0%;
+      padding: 0%;
+      margin-right: 5px;
+    }
     .modal {
       display: none;
       position: fixed;
@@ -41,18 +50,20 @@
       cursor: pointer;
     }
   </style>
-  <!--End of css-->
-</head>
+    <!--End of css-->
+  </head>
 
-<body>
+  <body>
 
-<!-- navbar -->
-<div>
-<ul id = "NavUl">
-  <li><a href="index.html"><b>Homepage</b></a></li>
-  <li><a href="DiscoverPage.html" style="color: #4747c4;"><b>Discover</b></a></li>
-  <li><a href="hourLog.html"><b>Hour log</b></a></li>
-  <!-- <li class="dropdown">
+    <!-- navbar -->
+    <div>
+      <ul id="NavUl">
+        <img src="Images\logo.png">
+        <li><a href="index.html"><b>Homepage</b></a></li>
+        <li><a href="DiscoverPage.html"
+            style="color: #76a4b5;"><b>Discover</b></a></li>
+        <li><a href="hourLog.html"><b>Hour log</b></a></li>
+        <!-- <li class="dropdown">
     <a class="dropbtn">Dropdown</a>
     <div class="dropdown-content">
       <a href="">option 1</a>
@@ -60,133 +71,139 @@
       <a href="">option 3</a>
     </div> 
   </li>-->
- 
-  <li><a href="Calendar.html"><b>Calendar</b></a></li>
-  <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images\Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
-</ul>
-</div>
-<div style="margin:6%;"></div>
- <!--End of navbar -->
- 
-<!-- Module 1 -->
-<div class="module" style="float:left">
-  <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-  <button id="btn-modal-1">Get Involved</button>
-  <h3 style="margin-left: 20%;"><u>Event Name 1</u></h3>
-  <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
-</div>
 
-<!-- Modal 1 -->
-<div class="modal" id="myModal1">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Aiden In your FACE</p>
-  </div>
-</div>
+        <li><a href="Calendar.html"><b>Calendar</b></a></li>
+        <li style="float:right; display:flex; align-content: center;"><a
+            href="login.html"> <img src="Images\Default_pfp.png" alt="Profile"
+              style="width:auto;height:23px;"> </a></li>
+      </ul>
+    </div>
+    <div style="margin:6%;"></div>
+    <!--End of navbar -->
 
-<!-- Module 2 -->
-<div class="module" style="float:left">
-  <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-  <button id="btn-modal-2">Get Involved</button>
-  <h3 style="margin-left: 20%;"><u>Event Name 2</u></h3>
-  <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
-</div>
-
-<!-- Modal 2 -->
-<div class="modal" id="myModal2">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    
-    <div class="modalModule">
-      <img class = "displayImg"src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <h2 style = 'float: right; margin-right: 15%;'>UISGWUGUISWGSGUIGSU</h2>
+    <!-- Module 1 -->
+    <div class="module" style="float:left">
+      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+      <button id="btn-modal-1">Get Involved</button>
+      <h3 style="margin-left: 20%;"><u>Event Name 1</u></h3>
+      <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
     </div>
 
-
-  </div>
-</div>
-
-<!-- Module 3 -->
-<div class="module" style="float:left">
-  <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-  <button id="btn-modal-3">Get Involved</button>
-  <h3 style="margin-left: 20%;"><u>Event Name 3</u></h3>
-  <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
-</div>
-
-<!-- Modal 3 -->
-<div class="modal" id="myModal3">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="modalModule">
-      <img class = "displayImg"src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+    <!-- Modal 1 -->
+    <div class="modal" id="myModal1">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Aiden In your FACE</p>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- Module 4 -->
-<div class="module" style="float:left">
-  <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-  <button id="btn-modal-4">Get Involved</button>
-  <h3 style="margin-left: 20%;"><u>Event Name 4</u></h3>
-  <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
-</div>
-
-<!-- Modal 4 -->
-<div class="modal" id="myModal4">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="modalModule">
-      <img class = "displayImg"src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+    <!-- Module 2 -->
+    <div class="module" style="float:left">
+      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+      <button id="btn-modal-2">Get Involved</button>
+      <h3 style="margin-left: 20%;"><u>Event Name 2</u></h3>
+      <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
     </div>
-  </div>
-</div>
 
-<!-- Module 5 -->
-<div class="module" style="float:left">
-  <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-  <button id="btn-modal-5">Get Involved</button>
-  <h3 style="margin-left: 20%;"><u>Event Name 5</u></h3>
-  <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
-</div>
+    <!-- Modal 2 -->
+    <div class="modal" id="myModal2">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
 
-<!-- Modal 5 -->
-<div class="modal" id="myModal5">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="modalModule">
-      <img class = "displayImg"src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+        <div class="modalModule">
+          <img class="displayImg" src="Images/Insert-Image-Here.png"
+            alt="Insert-Image-Here">
+          <h2 style='float: right; margin-right: 15%;'>UISGWUGUISWGSGUIGSU</h2>
+        </div>
+
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- Module 6 -->
-<div class="module" style="float:left">
-  <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-  <button id="btn-modal-6">Get Involved</button>
-  <h3 style="margin-left: 20%;"><u>Event Name 6</u></h3>
-  <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
-</div>
-
-<!-- Modal 6 -->
-<div class="modal" id="myModal6">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="modalModule">
-      <img class = "displayImg"src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+    <!-- Module 3 -->
+    <div class="module" style="float:left">
+      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+      <button id="btn-modal-3">Get Involved</button>
+      <h3 style="margin-left: 20%;"><u>Event Name 3</u></h3>
+      <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
     </div>
-  </div>
-</div>
-<!-- End of modals -->
-  
-<!--Start of java stript -->
-<script>
+
+    <!-- Modal 3 -->
+    <div class="modal" id="myModal3">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modalModule">
+          <img class="displayImg" src="Images/Insert-Image-Here.png"
+            alt="Insert-Image-Here">
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 4 -->
+    <div class="module" style="float:left">
+      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+      <button id="btn-modal-4">Get Involved</button>
+      <h3 style="margin-left: 20%;"><u>Event Name 4</u></h3>
+      <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
+    </div>
+
+    <!-- Modal 4 -->
+    <div class="modal" id="myModal4">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modalModule">
+          <img class="displayImg" src="Images/Insert-Image-Here.png"
+            alt="Insert-Image-Here">
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 5 -->
+    <div class="module" style="float:left">
+      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+      <button id="btn-modal-5">Get Involved</button>
+      <h3 style="margin-left: 20%;"><u>Event Name 5</u></h3>
+      <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
+    </div>
+
+    <!-- Modal 5 -->
+    <div class="modal" id="myModal5">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modalModule">
+          <img class="displayImg" src="Images/Insert-Image-Here.png"
+            alt="Insert-Image-Here">
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 6 -->
+    <div class="module" style="float:left">
+      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+      <button id="btn-modal-6">Get Involved</button>
+      <h3 style="margin-left: 20%;"><u>Event Name 6</u></h3>
+      <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
+    </div>
+
+    <!-- Modal 6 -->
+    <div class="modal" id="myModal6">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modalModule">
+          <img class="displayImg" src="Images/Insert-Image-Here.png"
+            alt="Insert-Image-Here">
+        </div>
+      </div>
+    </div>
+    <!-- End of modals -->
+
+    <!--Start of java stript -->
+    <script>
   // Get the modal
   var modal1 = document.getElementById("myModal1");
   var modal2 = document.getElementById("myModal2");
@@ -273,6 +290,6 @@
     }
   }
 </script>
-<!-- End of java script -->
-</body>
+    <!-- End of java script -->
+  </body>
 </html>
