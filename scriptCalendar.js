@@ -141,7 +141,7 @@ load();
 
 // Calendar Editor Function
 
-function createEvent(date, title, time) {
+function remoteCreateEvent(date, title, time) {
 
   if (date && title && time) {
 
@@ -161,4 +161,17 @@ function createEvent(date, title, time) {
   }
 }
 
-createEvent("2024/10/15", "Assisting The Elderly", "10:00 AM");
+function remoteDeleteEvent(date, time) {
+  if (!date || !time) {
+    console.error("Date and time must be provided for deletion.");
+    return;
+  }
+
+  events = events.filter(e => !(e.date === date && e.time === time));
+
+  localStorage.setItem('events', JSON.stringify(events));
+  load();
+}
+
+remoteCreateEvent('2024/10/12', 'skibidi goon sesh', '6:30 AM');
+//remoteDeleteEvent('2024/10/15', '10:00 AM');
