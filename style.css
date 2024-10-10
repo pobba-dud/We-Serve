@@ -132,7 +132,7 @@ li.dropdown {
 /* module like containers */
 .module{
   display: block;
-  margin-left: 2.5%;
+  margin-left: 3.9%;
   margin-right: 2.5%;
   padding-left: .5%;
   padding-right: .5%;
@@ -267,4 +267,45 @@ th {
 }
 .schedule-btn:hover {
   background-color: #0a58ca;
+}
+
+@media only screen and (max-width: 1000px) {
+.module {float: none; width: 94%;  }
+}
+
+@media only screen and (max-width: 885px) {
+.hourContainer div{
+  flex-direction: column;
+align-content: center;
+justify-content: center;
+width:80%
+}
+.hourContainer {flex-direction: column;}
+}
+@media only screen and (max-width: 599px) {
+  html { font-size: smaller; }
+  li { align-items: center; font-size: 60%; }
+  .module {float: none; width: 94%; }
+  .moduleHeader h2 {margin-top: 0%; }
+  table  { size: 30px;}
+  .module button {width: 85px; height: 40px; font-size: .9em;}
+  .module h3, .innerContainer h3 { font-size: 1.9em; }
+  .module #thisModule{padding-bottom: 8%;}
+  #scaleableWords{padding-top: 3%;}
+#thisModule{
+  padding-bottom: 5%;
+}
+
+
+/* Mobile styles */
+@media only screen and (max-width: 678px) {
+  html { font-size: smaller; }
+  nav ul { align-items: center; }
+  .module {float: none; width: 94%; }
+  .moduleHeader h2 {margin-top: 0%; }
+  table  { size: 30px;}
+  .module button {width: 85px; height: 40px; font-size: .9em;}
+  .module h3, .innerContainer h3 { font-size: 1.9em; }
+  .module #thisModule{padding-bottom: 8%;}
+  #scaleableWords{padding-top: 3%;}
 }

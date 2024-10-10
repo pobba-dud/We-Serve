@@ -14,7 +14,7 @@
 <!-- navbar -->
 <div>
 <ul id = "NavUl">
-  <img src="Images\logo.png">
+  <img class='logo' src="Images\logo.png">
   <li><a href="index.html" style="color: #76a4b5;"><b>Homepage</b></a></li>
   <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
   <li><a href="hourLog.html"><b>Hour log</b></a></li>
@@ -120,7 +120,7 @@
   <h3 style="display: flex; justify-content: center; margin-top: 3%;"><!--make a variable at some point-->
   Total Hours this year: <!-- character for a space -->&#160 <b><span>45</span></b> 
   </h3>
-  <h3 style="display: flex; justify-content: center; margin-top: 3%;margin-bottom: 3%">
+  <h3 id="scaleableWords" style="display: flex; justify-content: center; margin-top: 3%;margin-bottom: 3%">
     Weekly Service Streak: <!-- character for a space -->&#160 <b style="color:orange"> <span>15</span></b> <!--make a variable at some point-->
     </h3>
 </div>
@@ -128,13 +128,14 @@
 
 <div style="margin:2%;"></div>
 
-<div class="module">
+<div  class="module">
   <h2 class = "moduleHeader">Opportunies Coming Up</h2>
-  <div class="innerContainer" style="padding-bottom: 3%;"> 
+  <div id ="thisModule" class="innerContainer" > 
     <div style="margin-left:10%;">
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1"> Get Involved</button>
   <u><h3>Help at the Community center</h3></u>  
     October 12, 6:00 - 7:30 pm
+    <div style="margin-bottom: 7%;"></div>
     <button style="margin-top: 7%;"type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#eventModal2"> Get Involved</button>
   <u><h3>Event title</h3></u> 
   Month XX, XX:XX - XX:XX
