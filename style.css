@@ -272,6 +272,8 @@ margin-bottom: 5%;
   .module h3, .innerContainer h3 { font-size: 1.9em; }
   .module #thisModule{padding-bottom: 8%;padding-top: 4%;}
   #scaleableWords{padding-top: 3%;}
+  li a:link, li a:visited {
+    padding-left: 0;
 }
 #thisModule{
   padding-bottom: 5%;
