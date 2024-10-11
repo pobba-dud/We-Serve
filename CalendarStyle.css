@@ -198,3 +198,13 @@ html {
       padding: 0%;
       margin-right: 5px;
     }
+    footer {
+      margin-top: 15%;
+      margin-bottom: 0%;
+    background-color: #2f4858; /* A shade of blue */
+    color: #f7f7f7; /* A shade of white */
+    text-align: center;
+    clear: both; /* To ensure the footer is below the calendar */
+    padding-top: 2%;
+    font-size: 150%;
+    }

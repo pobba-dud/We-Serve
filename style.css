@@ -277,7 +277,23 @@ margin-bottom: 5%;
   padding-bottom: 5%;
   padding-top: 3%;
 }
-
+footer {
+  margin-top: 15%;
+  margin-bottom: 0%;
+background-color: #2f4858; /* A shade of blue */
+color: #f7f7f7; /* A shade of white */
+text-align: center;
+clear: both; /* To ensure the footer is below the calendar */
+padding-top: 2%;
+font-size: 150%;
+}
+footer ul{
+  background-color: #2f4858;
+  display: inline;
+}
+footer ul li{
+  background-color: #2f4858;
+}
 
 
 /* Mobile styles */
@@ -291,6 +307,9 @@ margin-bottom: 5%;
   .module h3, .innerContainer h3 { font-size: 1.9em; }
   .module #thisModule{padding-bottom: 8%;}
   #scaleableWords{padding-top: 3%;}
+  footer{
+    position: absolute;
+  }
 }
 @media only screen and (max-width: 420px){
   #NavUl li a {
