@@ -317,4 +317,7 @@ footer ul li{
   #NavUl li a {
     padding-left: 0%;
   }
+  footer{
+    font-size: large;
+  }
 }
