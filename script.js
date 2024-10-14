@@ -84,3 +84,5 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("DOMContentLoaded", mapEventsToDays);
 
   mapEventsToDays();
+
+  
