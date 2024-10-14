@@ -173,5 +173,5 @@ function remoteDeleteEvent(date, time) {
   load();
 }
 
-remoteCreateEvent('2024/10/12', 'skibidi sesh', '6:30 AM');
+remoteCreateEvent('2024/10/15', 'skibidi sesh #2', '1:00 PM');
 //remoteDeleteEvent('2024/10/15', '10:00 AM');
