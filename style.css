@@ -310,12 +310,13 @@ footer ul li{
   .module #thisModule{padding-bottom: 8%;}
   #scaleableWords{padding-top: 3%;}
   #table1{float: none;}
-  li a:link, li a:visited {
-    padding-left: 0;
+  
 }
-}
-@media only screen and (max-width: 330px){
-  li a:link, li a:visited {
-    padding-left: 0;
-}
+@media only screen and (max-width: 420px){
+  #NavUl li a {
+    padding-left: 0%;
+  }
+  footer{
+    font-size: large;
+  }
 }
