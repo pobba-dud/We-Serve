@@ -13,6 +13,16 @@ html {
 body{
   background-color: white ;
   margin: 0%;
+  margin: 0;
+  font-family: var(--bs-body-font-family);
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bs-body-font-weight);
+  line-height: var(--bs-body-line-height);
+  color: var(--bs-body-color);
+  text-align: var(--bs-body-text-align);
+  background-color: var(--bs-body-bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 /* start of css for navbar */
 #NavUl {
@@ -249,6 +259,15 @@ th {
 #table1{
   float:right;
 }
+#NavUl img{
+  float: left;
+   display: flex;
+    width: 57px;
+    height:auto;
+   margin: 0%;
+   padding: 0%;
+   margin-right: 5px;
+ }
 
 
 @media only screen and (max-width: 885px) {
