@@ -6,8 +6,30 @@
     <title>WeServe</title>
     <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="scriptCalendar.js">remoteCreateEvent();</script>
+    
     <!-- Start of css -->
     <style>
+      .modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.modal-backdrop.fade {
+  transition: opacity 0.3s linear;
+}
+
+.modal-backdrop.in {
+  opacity: none;
+}
     #NavUl img{
      float: left;
       display: flex;
@@ -18,38 +40,94 @@
       margin-right: 5px;
     }
     .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.4);
-      border-radius: 25px;
-    }
-    .modal-content {
-      background-color: #fefefe;
-      margin: 4% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-    .modalModule{
-    display: inline;
-    }
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  border-radius: 25px;
+}
+
+.modal-content, .modal-lg {
+  background-color: #fefefe;
+  margin: 4% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.modalModule{
+  display: inline;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-body .event-image {
+  width: 100%;
+  height: 200px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #6c757d;
+}
+
+.event-info h5 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.event-details {
+  margin-bottom: 20px;
+}
+
+.event-details p {
+  color: #6c757d;
+}
+
+.event-details span {
+  display: block;
+  color: #6c757d;
+}
+
+.schedule-btn {
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  border: none;
+  margin-top: 20px;
+}
+
+.schedule-btn:hover {
+  background-color: #2a3a44;
+}
+    footer {
+        margin-top: 7%;
+  background-color: #2f4858; /* A shade of blue */
+  color: #f7f7f7; /* A shade of white */
+  padding: 1rem;
+  text-align: center;
+  clear: both; /* To ensure the footer is below the calendar */
+}
   </style>
     <!--End of css-->
   </head>
@@ -80,138 +158,285 @@
     <!--End of navbar -->
 
     <!-- Module 1 -->
-    <div class="module" style="float:left">
-      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button id="btn-modal-1">Get Involved</button>
-      <h3 style="margin-left: 20%;"><u>Event Name 1</u></h3>
-      <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
-    </div>
+<div class="module" style="float:left">
+  <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1" data-bs-backdrop="static">Get Involved</button>
+  <h3 style="margin-left: 20%;"><u>Event Name 1</u></h3>
+  <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
+</div>
 
-    <!-- Modal 1 -->
-    <div class="modal" id="myModal1">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Aidan In your FACE</p>
+<!-- Modal 1 -->
+<div class="modal" id="eventModal1" tabindex="-1" aria-labelledby="eventModalLabel1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel1">Event Name 1</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <!-- Event Image -->
+            <div class="col-md-4">
+              <div class="event-image">
+                Image of Event 1
+              </div>
+              <div class="event-info">
+                <h5>Organization 1</h5>
+                <span>Event Name 1</span>
+                <span>Month 1,</span>
+                <span>10:00 AM - 12:00 PM</span>
+              </div>
+            </div>
+            <!-- Event Description -->
+            <div class="col-md-8">
+              <h5>Event Name 1</h5>
+              <p class="event-details">
+                This paragraph contains a small bio or description for Event 1. It includes details about the organization and the event schedule.
+              </p>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1">Get Involved</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
+  </div>
+</div>
     <!-- Module 2 -->
     <div class="module" style="float:left">
       <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button id="btn-modal-2">Get Involved</button>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal2" data-bs-backdrop="static">Get Involved</button>
       <h3 style="margin-left: 20%;"><u>Event Name 2</u></h3>
       <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
     </div>
 
-    <!-- Modal 2 -->
-    <div class="modal" id="myModal2">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-
-        <div class="modalModule">
-          <img class="displayImg" src="Images/Insert-Image-Here.png"
-            alt="Insert-Image-Here">
-          <h2 style='float: right; margin-right: 15%;'>UISGWUGUISWGSGUIGSU</h2>
+ <!-- Second Modal -->
+<div class="modal fade" id="eventModal2" tabindex="-1" aria-labelledby="eventModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel2">Event Name 2</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Event Image -->
+          <div class="col-md-4">
+            <div class="event-image">
+              Image of Event 2
+            </div>
+            <div class="event-info">
+              <h5>Organization 2</h5>
+              <span>Event Name 2</span>
+              <span>Month 2,</span>
+              <span>02:00 PM - 04:00 PM</span>
+            </div>
+          </div>
+          <!-- Event Description -->
+          <div class="col-md-8">
+            <h5>Event Name 2</h5>
+            <p class="event-details">
+              This paragraph contains a small bio or description for Event 2. It includes details about the organization and the event schedule.
+            </p>
+            <button class="schedule-btn">Get Scheduled</button>
+          </div>
         </div>
-
       </div>
     </div>
+  </div>
+</div>
+
 
     <!-- Module 3 -->
     <div class="module" style="float:left">
       <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button id="btn-modal-3">Get Involved</button>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal3" data-bs-backdrop="static">Get Involved</button>
       <h3 style="margin-left: 20%;"><u>Event Name 3</u></h3>
       <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
     </div>
 
-    <!-- Modal 3 -->
-    <div class="modal" id="myModal3">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="modalModule">
-          <img class="displayImg" src="Images/Insert-Image-Here.png"
-            alt="Insert-Image-Here">
+ <!-- Third Modal -->
+<div class="modal fade" id="eventModal3" tabindex="-1" aria-labelledby="eventModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel3">Event Name 3</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Event Image -->
+          <div class="col-md-4">
+            <div class="event-image">
+              Image of Event 3
+            </div>
+            <div class="event-info">
+              <h5>Organization 3</h5>
+              <span>Event Name 3</span>
+              <span>Month 3,</span>
+              <span>02:00 PM - 04:00 PM</span>
+            </div>
+          </div>
+          <!-- Event Description -->
+          <div class="col-md-8">
+            <h5>Event Name 3</h5>
+            <p class="event-details">
+              This paragraph contains a small bio or description for Event 3. It includes details about the organization and the event schedule.
+            </p>
+            <button class="schedule-btn">Get Scheduled</button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
 
     <!-- Module 4 -->
     <div class="module" style="float:left">
       <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button id="btn-modal-4">Get Involved</button>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal4" data-bs-backdrop="static">Get Involved</button>
       <h3 style="margin-left: 20%;"><u>Event Name 4</u></h3>
       <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
     </div>
 
-    <!-- Modal 4 -->
-    <div class="modal" id="myModal4">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="modalModule">
-          <img class="displayImg" src="Images/Insert-Image-Here.png"
-            alt="Insert-Image-Here">
+ <!-- Fourth Modal -->
+<div class="modal fade" id="eventModal4" tabindex="-1" aria-labelledby="eventModalLabel4" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel4">Event Name 4</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Event Image -->
+          <div class="col-md-4">
+            <div class="event-image">
+              Image of Event 4
+            </div>
+            <div class="event-info">
+              <h5>Organization 4</h5>
+              <span>Event Name 4</span>
+              <span>Month 4,</span>
+              <span>02:00 PM - 04:00 PM</span>
+            </div>
+          </div>
+          <!-- Event Description -->
+          <div class="col-md-8">
+            <h5>Event Name 4</h5>
+            <p class="event-details">
+              This paragraph contains a small bio or description for Event 4. It includes details about the organization and the event schedule.
+            </p>
+            <button class="schedule-btn">Get Scheduled</button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
     <!-- Module 5 -->
     <div class="module" style="float:left">
       <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button id="btn-modal-5">Get Involved</button>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal5" data-bs-backdrop="static">Get Involved</button>
       <h3 style="margin-left: 20%;"><u>Event Name 5</u></h3>
       <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
     </div>
 
-    <!-- Modal 5 -->
-    <div class="modal" id="myModal5">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="modalModule">
-          <img class="displayImg" src="Images/Insert-Image-Here.png"
-            alt="Insert-Image-Here">
+ <!-- Fixth Modal -->
+<div class="modal fade" id="eventModal5" tabindex="-1" aria-labelledby="eventModalLabel5" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel5">Event Name 5</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Event Image -->
+          <div class="col-md-4">
+            <div class="event-image">
+              Image of Event 5
+            </div>
+            <div class="event-info">
+              <h5>Organization 5</h5>
+              <span>Event Name 5</span>
+              <span>Month 5,</span>
+              <span>02:00 PM - 04:00 PM</span>
+            </div>
+          </div>
+          <!-- Event Description -->
+          <div class="col-md-8">
+            <h5>Event Name 5</h5>
+            <p class="event-details">
+              This paragraph contains a small bio or description for Event 5. It includes details about the organization and the event schedule.
+            </p>
+            <button class="schedule-btn">Get Scheduled</button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
     <!-- Module 6 -->
     <div class="module" style="float:left">
       <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button id="btn-modal-6">Get Involved</button>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal6" data-bs-backdrop="static">Get Involved</button>
       <h3 style="margin-left: 20%;"><u>Event Name 6</u></h3>
       <h3 style="margin-left: 20%;"> <b>Organization Name</b></h3>
     </div>
 
-    <!-- Modal 6 -->
-    <div class="modal" id="myModal6">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="modalModule">
-          <img class="displayImg" src="Images/Insert-Image-Here.png"
-            alt="Insert-Image-Here">
+ <!-- Sixth Modal -->
+<div class="modal fade" id="eventModal6" tabindex="-1" aria-labelledby="eventModalLabel6" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel3">Event Name 6</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Event Image -->
+          <div class="col-md-4">
+            <div class="event-image">
+              Image of Event 6
+            </div>
+            <div class="event-info">
+              <h5>Organization 6</h5>
+              <span>Event Name 6</span>
+              <span>Month 6,</span>
+              <span>02:00 PM - 04:00 PM</span>
+            </div>
+          </div>
+          <!-- Event Description -->
+          <div class="col-md-8">
+            <h5>Event Name 6</h5>
+            <p class="event-details">
+              This paragraph contains a small bio or description for Event 6. It includes details about the organization and the event schedule.
+            </p>
+            <button class="schedule-btn">Get Scheduled</button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
     <!-- End of modals -->
 
     <!--Start of java stript -->
     <script>
   // Get the modal
-  var modal1 = document.getElementById("myModal1");
-  var modal2 = document.getElementById("myModal2");
-  var modal3 = document.getElementById("myModal3");
-  var modal4 = document.getElementById("myModal4");
-  var modal5 = document.getElementById("myModal5");
-  var modal6 = document.getElementById("myModal6");
+  var modal1 = document.getElementById("eventModal1");
+  var modal2 = document.getElementById("eventModal2");
+  var modal3 = document.getElementById("eventModal3");
+  var modal4 = document.getElementById("eventModal4");
+  var modal5 = document.getElementById("eventModal5");
+  var modal6 = document.getElementById("eventModal6");
 
   // Get the button that opens the modal
-  var btn1 = document.getElementById("btn-modal-1");
+  var btn1 = document.getElementById("btn btn-primary");
   var btn2 = document.getElementById("btn-modal-2");
   var btn3 = document.getElementById("btn-modal-3");
   var btn4 = document.getElementById("btn-modal-4");
@@ -301,6 +526,7 @@
   </ul>
 </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- End of java script -->
   </body>
 </html>

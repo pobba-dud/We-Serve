@@ -85,4 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   mapEventsToDays();
 
-  
+var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
+  keyboard: false,
+  backDrop: false
+  }) 
