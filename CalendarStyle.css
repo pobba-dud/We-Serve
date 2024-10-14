@@ -208,3 +208,6 @@ html {
     padding-top: 2%;
     font-size: 150%;
     }
+    @media only screen and (max-width: 885px) {
+      #calDiv{width: 20%;margin-right:auto ;}
+    }
