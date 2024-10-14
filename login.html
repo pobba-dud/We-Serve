@@ -134,8 +134,8 @@ body {
     overflow-x: hidden;
     padding-top: 20px;
     position: absolute;
-    top: 70px;
-    width: 250px;
+    top: 10%;
+    width: 25%;
 }
 
 .profile {
@@ -147,6 +147,7 @@ body {
 .profile img {
     border-radius: 50%;
     box-shadow: 0px 0px 5px 1px grey;
+
 }
 
 .name {
@@ -194,7 +195,7 @@ body {
     margin-top: 2%;
     margin-left: 29%;
     font-size: 28px;
-    width: 58%;
+    width: 65%;
 }
 
 .main h2 {
@@ -225,42 +226,14 @@ body {
     color: #e7e7e8;
     right: 14%;
 }
-
-.social-media {
-    text-align: center;
-    width: 90%;
-}
-
-.social-media span {
-    margin: 0 10px;
-}
-
-.fa-facebook:hover {
-    color: #4267b3 !important;
-}
-
-.fa-twitter:hover {
-    color: #1da1f2 !important;
-}
-
-.fa-instagram:hover {
-    color: #ce2b94 !important;
-}
-
-.fa-invision:hover {
-    color: #f83263 !important;
-}
-
-.fa-github:hover {
-    color: #161414 !important;
-}
-
-.fa-whatsapp:hover {
-    color: #25d366 !important;
-}
-
-.fa-snapchat:hover {
-    color: #fffb01 !important;
+@media only screen and (max-width: 700px) {
+#AllignLogin{display: flex;flex-direction: column;}
+.sidenav{position:relative;width: auto; border-radius: 0%;}
+html { font-size: smaller; }
+.nav ul { align-items: center; }
+.main{margin: auto; width: auto;}
+.main h2{margin-left: 10%}
+html{overflow:scroll;}
 }
 
 /* End */
@@ -300,15 +273,15 @@ body {
     <!--End of navbar -->
 
 
-
+<div id="AllignLogin">
 
     <!-- Sidenav -->
     <div class="sidenav">
       <div class="profile">
-          <img src= 'Images/Default_pfp.png' style="width:auto;height:200px;margin-top: 100px;">
+          <img src= 'Images/Default_pfp.png' style="width:70%;height:auto;margin-top: 100px;">
 
           <div class="name">
-              Jon Doe
+              Brent Duncan
           </div>
           <div class="job">
               Student
@@ -338,12 +311,12 @@ body {
                   <tr>
                       <td>Name</td>
                       <td>:</td>
-                      <td>Jon Doe</td>
+                      <td>Brent Duncan</td>
                   </tr>
                   <tr>
                       <td>Email</td>
                       <td>:</td>
-                      <td>JonDoe@gmail.com</td>
+                      <td>BrentDuncan@gmail.com</td>
                   </tr>
                   <tr>
                     <td>Password</td>
@@ -374,7 +347,7 @@ body {
           </table>
       </div>
   </div>
-
+</div>
 <!-- End -->
 
 
