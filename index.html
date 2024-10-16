@@ -9,9 +9,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
   <script src="script.js"></script>
-  <script src="scriptCalendar.js"> remoteCreateEvent(); </script>
+  <script src="scriptCalendar.js">
+function dualCreate(date, title, time){
+  remoteCreateEvent(date, title, time);
+  location.reload();
+} </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<body>
+<body onload="mapEventsToDays()">
 
 <!-- navbar -->
 <div>
@@ -175,7 +179,7 @@
             <p class="event-details">
               This paragraph contains a small bio or description for Event 1. It includes details about the organization and the event schedule.
             </p>
-            <button class="schedule-btn" onclick="remoteCreateEvent('2024/10/19', 'Does this work?', '12:00 pm')" >Get Scheduled</button>
+            <button class="schedule-btn" onclick="dualCreate('2024/10/19', 'Does this work?', '12:00 pm')">Get Scheduled</button>
           </div>
         </div>
       </div>
@@ -211,7 +215,7 @@
             <p class="event-details">
               This paragraph contains a small bio or description for Event 2. It includes details about the organization and the event schedule.
             </p>
-            <button class="schedule-btn" onclick="remoteCreateEvent('2024/10/14', 'Maybe this works?', '12:00 pm')">Get Scheduled</button>
+            <button class="schedule-btn" onclick="remoteCreateEvent('2024/10/14', 'Maybe this works?', '12:00 pm'), location.reload()">Get Scheduled</button>
           </div>
         </div>
       </div>
