@@ -294,3 +294,22 @@ footer ul li{
     font-size: large;
   }
 }
+}
+.event-details p {
+  color:#2f4858;
+}
+.event-details span {
+  display: block;
+  color:#2f4858;
+}
+.schedule-btn {
+  background-color: #2f4858;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  border: none;
+  margin-top: 20px;
+}
+.schedule-btn:hover {
+  background-color: #0a58ca;
+}
