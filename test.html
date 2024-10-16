@@ -18,7 +18,18 @@
       font-size: 18px;
       color: #6c757d;
     }
-    .event-info h5 {
+
+    .dark-mode {
+            background-color: black;
+            color: white;
+        }
+
+        .light-mode {
+            background-color: white;
+            color: black;
+        }
+
+     .event-info h5 {
       font-size: 18px;
       font-weight: bold;
       margin-top: 15px;
@@ -52,6 +63,11 @@
   text-align: center;
   clear: both; /* To ensure the footer is below the calendar */
 }
+
+.dark-mode2 {
+background-color: black;
+color: white;
+}
   </style>
 </head>
 <body>
@@ -65,6 +81,55 @@
 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#eventModal2">
   Open Event 2 Details
 </button>
+
+
+<!--Button for background changes-->
+<h3 id="DarkModetext"> Dark mode is off</h3>
+<!--Dark Mode-->
+<button onclick="darkMode()">Darkmode</button>
+
+<p>This should show dark mode and light mode</p>
+<!--Light Mode-->
+<button onclick="lightMode()">LightMode</button>
+
+<br><br>
+
+<!--Single action button-->
+<button onclick="darkMode2()">Darkmode2</button>
+
+<script>
+function darkMode() {
+  let element = document.body;
+  let content = document.getElementById("DarkModetext");
+  element.className = "dark-mode";
+  content.innerText = "Dark Mode is ON";
+}
+
+function lightMode() {
+  let element = document.body;
+  let content = document.getElementById("DarkModetext");
+  element.className = "light-mode";
+  content.innerText = "Dark Mode is OFF";
+}
+
+function darkMode2() {
+  var element = document.body;
+  element.classList.toggle("dark-mode2");
+  if (element.classList.contains("dark-mode2")) {
+    localStorage.setItem("mode", "dark");
+  } else {
+    localStorage.setItem("mode", "light");
+  }
+}
+
+// Check if mode is already set in local storage
+if (localStorage.getItem("mode") === "dark") {
+  document.body.classList.add("dark-mode2");
+} else {
+  document.body.classList.remove("dark-mode2");
+}
+
+</script>
 
 <!-- First Modal -->
 <div class="modal fade" id="eventModal1" tabindex="-1" aria-labelledby="eventModalLabel1" aria-hidden="true">
