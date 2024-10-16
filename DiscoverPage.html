@@ -12,21 +12,24 @@
     
     <!-- Start of css -->
     <style>
-      .modal-backdrop {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1040;
-  background-color: #000;
-  opacity: 0.5;
-}
 
+.modal-backdrop {
+position: fixed;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+z-index: 0;
+background-color: #000;
+opacity: 0.5;
+transition: opacity 0.3s ease; /* Smooth transition */
+}
 .modal-backdrop.fade {
-  transition: opacity 0.3s linear;
+opacity: 0;
 }
-
+.modal-backdrop.show {
+opacity: 0.5;
+}
 .modal-backdrop.in {
   opacity: none;
 }
@@ -511,6 +514,24 @@
     if (event.target == modal6) {
       modal6.style.display = "none";
     }
+    function closeModal() {
+
+const modalBackdrop = document.querySelector('.modal-backdrop');
+const modal = document.querySelector('#myModal'); // Ensure you select your modal
+
+if (modalBackdrop) {
+modalBackdrop.classList.remove('show');
+modalBackdrop.classList.add('fade');
+
+// Remove from the DOM after transition
+setTimeout(() => {
+modalBackdrop.remove();
+}, 300); // Match the transition duration
+}
+
+modal.style.display = 'none'; // Hide the modal
+}
+
   }
 </script>
 <footer>
