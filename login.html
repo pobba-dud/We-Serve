@@ -171,7 +171,7 @@ body {
     width: 60%;
 }
 
-.url a {
+.url a, .Darkmode {
     color: #818181;
     display: block;
     font-size: 20px;
@@ -180,7 +180,7 @@ body {
     text-decoration: none;
 }
 
-.url a:hover, .url .active {
+.url a:hover, .url .active, .Darkmode {
     background-color: #e8f5ff;
     border-radius: 28px;
     color: #000;
@@ -235,16 +235,55 @@ html { font-size: smaller; }
 .main h2{margin-left: 10%}
 html{overflow:scroll;}
 }
+.dark-mode {
+
+    background-color: rgb(32, 29, 29);
+    color: white;
+
+.sidenav {
+    background-color: black;
+    color: white;
+}
+.card {
+    background-color: black;
+    color: white;
+}
+.main {
+    color: white;
+}
+}
+
+.light-mode {
+background-color: white;
+color: black;
+        }
 
 /* End */
   </style>
 </head>
   <script>
+    function darkMode() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+  if (element.classList.contains("dark-mode")) {
+    localStorage.setItem("mode", "dark");
+  } else {
+    localStorage.setItem("mode", "light");
+  }
+}
 
+// Check if mode is already set in local storage
+if (localStorage.getItem("mode") === "dark") {
+  document.body.classList.add("dark-mode");
+} else {
+  document.body.classList.remove("dark-mode");
+}
 
-
-
-
+function lightMode() {
+  let element = document.body;
+  let content = document.getElementById("DarkModetext");
+  element.className = "light-mode";
+}
   </script>
 
 <body style="margin: 0%;">
@@ -281,7 +320,7 @@ html{overflow:scroll;}
           <img src= 'Images/Default_pfp.png' style="width:70%;height:auto;margin-top: 100px;">
 
           <div class="name">
-              Brent Duncan
+              Jon Doe
           </div>
           <div class="job">
               Student
@@ -294,7 +333,7 @@ html{overflow:scroll;}
               <hr style="align-items: center;">
           </div>
           <div class="url">
-              <a href="#settings">Settings</a>
+            <button class="Darkmode" onclick="darkMode()">Darkmode</button>
               <hr style = 'align-items: center;'>
           </div>
       </div>
@@ -311,12 +350,12 @@ html{overflow:scroll;}
                   <tr>
                       <td>Name</td>
                       <td>:</td>
-                      <td>Brent Duncan</td>
+                      <td>Jon Doe</td>
                   </tr>
                   <tr>
                       <td>Email</td>
                       <td>:</td>
-                      <td>BrentDuncan@gmail.com</td>
+                      <td>Jon Doe@gmail.com</td>
                   </tr>
                   <tr>
                     <td>Password</td>
