@@ -11,7 +11,6 @@ Add logic to handle the recurrence and display of these events.
 Event Notifications
 Implement a notification system to alert users before an event starts (browser notifications or in-app reminders).
 
-
 Search Functionality
 Add a search feature that allows users to find events quickly by title or date.
 
@@ -43,3 +42,27 @@ Provide functionality for users to import/export events in formats like .ics for
 Database storage
 
 Organization accounts
+
+Multi-Day Events
+Implement functionality to support events that span multiple days.
+
+Offline Access
+Enable offline access to the calendar so users can view and manage their events without an internet connection.
+
+Customizable Themes
+Provide options for users to customize the appearance of the calendar with different themes or color schemes.
+
+Collaborative Events
+Allow users to invite others to events and manage RSVPs within the app.
+
+Integration with Task Management
+Integrate task management features to allow users to create tasks related to specific events.
+
+Custom Event Links
+Allow users to generate unique links for events that can be shared with others for easy access.
+
+User Feedback System
+Implement a feedback system for users to suggest improvements or report issues with the calendar.
+
+Analytics Dashboard
+Create an analytics dashboard for users to view statistics about their events (e.g., number of events per month, most common event types)(likely to be in account page or in hours).
