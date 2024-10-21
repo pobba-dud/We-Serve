@@ -11,9 +11,6 @@ Add logic to handle the recurrence and display of these events.
 Event Notifications
 Implement a notification system to alert users before an event starts (browser notifications or in-app reminders).
 
-Search Functionality
-Add a search feature that allows users to find events quickly by title or date.
-
 Event Categories or Tags
 Allow users to categorize events (e.g., work, personal, important).
 Implement filtering of the calendar view based on these categories.
