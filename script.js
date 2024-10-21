@@ -89,3 +89,26 @@ var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
   keyboard: false,
   backDrop: false
   }) 
+  function searchDiscoverEvents() {
+    const input = document.getElementById('discoverSearchInput').value.toLowerCase();
+    const eventListContainer = document.querySelector('.discover-events-list');
+    const eventList = document.querySelectorAll('.discover-events-list .event'); // Select all event elements
+
+    // Show or hide the event list based on input
+    if (input.length > 0) {
+        eventListContainer.style.display = ""; // Show the event list
+    } else {
+        eventListContainer.style.display = "none"; // Hide the event list if input is empty
+    }
+
+    eventList.forEach(event => {
+        const title = event.querySelector('.event-title').textContent.toLowerCase(); // Get the title of the event
+        const date = event.querySelector('.event-date').textContent.toLowerCase(); // Get the date of the event
+        // Check if the title or date includes the search input
+        if (title.includes(input) || date.includes(input)) {
+            event.style.display = ""; // Show the event
+        } else {
+            event.style.display = "none"; // Hide the event
+        }
+    });
+}
