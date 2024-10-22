@@ -248,27 +248,6 @@
   <textarea id="feedback" name="feedback"></textarea><br><br>
   <button type="submit">Submit Feedback</button>
 </form>
-
-<!-- script to handle form submission -->
-<script>
-  const form = document.getElementById('feedback-form');
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const feedback = document.getElementById('feedback').value;
-
-    fetch('/feedback', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, feedback }),
-    })
-      .then((response) => response.text())
-      .then((message) => console.log(message))
-      .catch((error) => console.error(error));
-  });
-</script>
 <script>
 mapEventsToDays();
 </script>
