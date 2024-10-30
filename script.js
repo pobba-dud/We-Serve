@@ -49,8 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function mapEventsToDays() {
   const events = JSON.parse(localStorage.getItem("events")) || [];
   const currentDate = new Date();
-  const firstDayOfWeek = currentDate.getDate() - currentDate.getDay();
-  const lastDayOfWeek = firstDayOfWeek + 6;
+
+  // Calculate the start and end of the week
+  const startOfWeek = new Date(currentDate);
+  startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+
+  const endOfWeek = new Date(currentDate);
+  endOfWeek.setDate(currentDate.getDate() + (6 - currentDate.getDay()));
 
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -61,11 +66,10 @@ function mapEventsToDays() {
 
   events.forEach((event) => {
     const eventDate = new Date(event.date);
-    const dayOfWeek = daysOfWeek[eventDate.getDay()];
 
     // Check if the event falls within the current week
-    if (eventDate.getDate() >= firstDayOfWeek && eventDate.getDate() <= lastDayOfWeek) {
-      const dayOffset = eventDate.getDate() - firstDayOfWeek;
+    if (eventDate >= startOfWeek && eventDate <= endOfWeek) {
+      const dayOffset = eventDate.getDay(); // Get the day of the week (0-6)
       const tableRow = document.querySelector(`tr:nth-child(${dayOffset + 1})`);
 
       // Update the table cell with the event information
@@ -89,6 +93,8 @@ var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
   keyboard: false,
   backDrop: false
   }) 
+
+
   function searchDiscoverEvents() {
     const input = document.getElementById('discoverSearchInput').value.toLowerCase();
     const eventListContainer = document.querySelector('.discover-events-list');
