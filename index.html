@@ -169,9 +169,7 @@
               Help at the Community center . We are looking for volunteers to help with various tasks.
 
             </p>
-            <a href="Calendar.html">
               <button class="schedule-btn" onclick="remoteCreateEvent('2024/11/1', 'Help at the Community center', '10:00 AM - 12:00 PM'), location.reload()">Get Scheduled</button>
-            </a>
           </div> 
         </div>
       </div>
@@ -207,9 +205,13 @@
             <p class="event-details">
               Resounding Joy builds a community rooted in compassion through music therapy. Some of their volunteer opportunities include: visiting, music sessions, and special events.
             </p>
-            <a href="Calendar.html">
-            <button class="schedule-btn" onclick="remoteCreateEvent('2024/11/19', 'Rotary Club of Westfield', '7:00 - 8:30 pm'), location.reload()">Get Scheduled</button>
-            </a>
+            <script src="scriptCalendar.js">
+              function performAction() {
+                remoteCreateEvent('2024/11/19', 'Rotary Club of Westfield', '7:00 - 8:30 pm');
+                location.reload();
+              }
+          </script>
+            <button class="schedule-btn" type="button" onclick= "performAction()">Get Scheduled</button>
           </div>
         </div>
       </div>
