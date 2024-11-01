@@ -31,68 +31,68 @@ function openModal(date) {
 
 // Function to load the calendar for the current month based on navigation
 function load() {
-  const dt = new Date();// Create a new Date object
-  
+  const dt = new Date();
 
-// Calculate the correct month and year based on nav
-const currentMonth = new Date().getMonth();
-const currentYear = new Date().getFullYear();
+  // Calculate the correct month and year based on nav
+  let currentMonth = dt.getMonth();
+  let currentYear = dt.getFullYear();
 
-// Calculate the target month and year based on navigation
-const targetMonth = currentMonth + nav;
-const year = currentYear + Math.floor(targetMonth / 12);
-const month = ((targetMonth % 12) + 12) % 12; // Keeps month in range 0-11
+  // Calculate the target month and year based on navigation
+  currentMonth += nav;
+  currentYear += Math.floor(currentMonth / 12);
+  currentMonth = ((currentMonth % 12) + 12) % 12; // Keeps month in range 0-11
 
-// Get the first day of the month and the number of days in the month
-const firstDayOfMonth = new Date(year, month, 1);
-const daysInMonth = new Date(year, month + 1, 0).getDate();
-  
+  // Get the first day of the month and the number of days in the month
+  const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
   // Get weekday for the first day of the month
   const dateString = firstDayOfMonth.toLocaleDateString('en-us', {
     weekday: 'long',
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',
-});
-const paddingDays = weekdays.indexOf(dateString.split(', ')[0]); // Calculate padding days for the first week
+  });
+  const paddingDays = weekdays.indexOf(dateString.split(', ')[0]); // Calculate padding days for the first week
 
- // Display month and year
- document.getElementById('monthDisplay').innerText =
- `${dt.toLocaleDateString('en-us', { month: 'long' })} ${year}`;
+  // Display month and year
+  document.getElementById('monthDisplay').innerText =
+    `${firstDayOfMonth.toLocaleDateString('en-us', { month: 'long', year: 'numeric' })}`;
 
-calendar.innerHTML = ''; // Clear previous calendar content
+  calendar.innerHTML = ''; // Clear previous calendar content
 
-for (let i = 1; i <= paddingDays + daysInMonth; i++) {
- const daySquare = document.createElement('div');
- daySquare.classList.add('day');
+  // **Corrected loop using updated `currentYear` and `currentMonth`**
+  for (let i = 1; i <= paddingDays + daysInMonth; i++) {
+    const daySquare = document.createElement('div');
+    daySquare.classList.add('day');
 
- const dayString = `${year}/${month + 1}/${i - paddingDays}`;
+    // **Corrected dayString using `currentYear` and `currentMonth`**
+    const dayString = `${currentYear}/${currentMonth + 1}/${i - paddingDays}`;
 
- if (i > paddingDays) {
-     daySquare.innerText = i - paddingDays;
-     const eventForDay = events.find(e => e.date === dayString);
+    if (i > paddingDays) {
+      daySquare.innerText = i - paddingDays;
+      const eventForDay = events.find(e => e.date === dayString);
 
-     // Highlight current day if it matches
-     if (i - paddingDays === new Date().getDate() && nav === 0) {
-         daySquare.id = 'currentDay';
-     }
-     // Display event for the day if available
-     if (eventForDay) {
-         const eventDiv = document.createElement('div');
-         eventDiv.classList.add('event');
-         eventDiv.innerText = eventForDay.title + "\n" + eventForDay.time;
-         daySquare.appendChild(eventDiv);
-     }
+      // Highlight current day if it matches
+      if (i - paddingDays === new Date().getDate() && nav === 0) {
+        daySquare.id = 'currentDay';
+      }
+      // Display event for the day if available
+      if (eventForDay) {
+        const eventDiv = document.createElement('div');
+        eventDiv.classList.add('event');
+        eventDiv.innerText = eventForDay.title + "\n" + eventForDay.time;
+        daySquare.appendChild(eventDiv);
+      }
 
-     daySquare.addEventListener('click', () => openModal(dayString));
- } else {
-     daySquare.classList.add('padding');
- }
+      daySquare.addEventListener('click', () => openModal(dayString));
+    } else {
+      daySquare.classList.add('padding');
+    }
 
- calendar.appendChild(daySquare);
+    calendar.appendChild(daySquare);
+  }
 }
-}
-
 // Function to close all modals
 function closeModal() {
   eventTitleInput.classList.remove('error');
