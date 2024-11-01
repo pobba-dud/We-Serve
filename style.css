@@ -8,7 +8,7 @@ html {
   font-family: "Red Hat Text", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-  color:#2f4858;
+  color:#283A43;
 }
 
 body{
@@ -31,7 +31,7 @@ body{
   margin: 0%;
   padding: 0%;
   overflow: hidden;
-  background-color: #2f4858;
+  background-color: #283A43;
   font-size: 20px;
 }
 li {
@@ -61,7 +61,7 @@ li a:hover{
   text-align: center;
   text-decoration: none;
   color: #9bd1e5;
-  background-color: #496679;
+  background-color: #283A43;
   border-width: 1px;
   border-color: none;
   border-radius: 5px;
@@ -80,7 +80,7 @@ li a:hover{
 
 /* Hour Log Style */
 .hourContainer div{
-  border: 5px solid #0b4161;
+  border: 5px solid #283A43;
   background-color: #9bd1e5;
   color: #0b4161;
   font-size: 160%;
@@ -131,7 +131,7 @@ li a:hover{
   height: auto;
   border-radius: 25px;
   background-color:#9bd1e5;
-  color: #2f4858;
+  color: #283A43;
   padding-bottom:2.5px;
 }
 .innerContainer{
@@ -168,7 +168,7 @@ li a:hover{
   margin-top: 3%;
   float: right;
   color: white;
-  background-color: #2f4858;
+  background-color: #283A43;
   border-radius: 25px;
   border:none;
   font-size: 150%;
@@ -181,7 +181,7 @@ li a:hover{
   margin-left:10%;
   float: right;
   color: white;
-  background-color: #2f4858;
+  background-color: #283A43;
   border-radius: 25px;
   border:none;
   font-size: 150%;
@@ -189,7 +189,7 @@ li a:hover{
   padding: 1.5%;
 }
 table {
-  border: #2f4858;
+  border: #283A43;
   border-radius: 10px;
   background-color: white;
   width: 95%;
@@ -198,7 +198,7 @@ table {
   text-align: center;
 }
 table td, table th {
-  border: 1px solid #2f4858;
+  border: 1px solid #283A43;
   border-collapse: collapse;
 }
 th {
@@ -257,7 +257,7 @@ margin-bottom: 5%;
 footer {
   margin-top: 15%;
   margin-bottom: 0%;
-background-color: #2f4858; /* A shade of blue */
+background-color: #283A43; /* A shade of blue */
 color: #f7f7f7; /* A shade of white */
 text-align: center;
 clear: both; /* To ensure the footer is below the calendar */
@@ -265,11 +265,11 @@ padding-top: 2%;
 font-size: 150%;
 }
 footer ul{
-  background-color: #2f4858;
+  background-color:#283A43;
   display: inline;
 }
 footer ul li{
-  background-color: #2f4858;
+  background-color: #283A43;
 }
 
 

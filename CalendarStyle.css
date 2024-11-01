@@ -153,7 +153,7 @@ html {
     margin: 0%;
     padding: 0%;
     overflow: hidden;
-    background-color: #2f4858;
+    background-color: #283A43;
     font-size: 20px;
   }
   li {
@@ -183,7 +183,7 @@ html {
     text-align: center;
     text-decoration: none;
     color: #9bd1e5;
-    background-color: #496679;
+    background-color: #283A43;
     border-width: 1px;
     border-color: none;
     border-radius: 5px;
@@ -201,7 +201,7 @@ html {
     footer {
       margin-top: 15%;
       margin-bottom: 0%;
-    background-color: #2f4858; /* A shade of blue */
+    background-color: #283A43; /* A shade of blue */
     color: #f7f7f7; /* A shade of white */
     text-align: center;
     clear: both; /* To ensure the footer is below the calendar */
@@ -209,11 +209,11 @@ html {
     font-size: 150%;
     }
     footer ul{
-      background-color: #2f4858;
+      background-color: #283A43;
       display: inline;
     }
     footer ul li{
-      background-color: #2f4858;
+      background-color: #283A43;
     }
     @media only screen and (max-width: 885px) {
       #calDiv{width: 20%;margin-right:auto ;}

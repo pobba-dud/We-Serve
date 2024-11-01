@@ -11,3 +11,7 @@ make sure to use header, footer, main, and nav tags to increase the organization
 Sexy blue:
  #4747c4
  -jordynn
+
+changed our old dark blue to --> #283A43
+if i forgot anything, please change the color to this, thank you.
+     -jordynn
