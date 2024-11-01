@@ -208,6 +208,13 @@ html {
     padding-top: 2%;
     font-size: 150%;
     }
+    footer ul{
+      background-color: #2f4858;
+      display: inline;
+    }
+    footer ul li{
+      background-color: #2f4858;
+    }
     @media only screen and (max-width: 885px) {
       #calDiv{width: 20%;margin-right:auto ;}
     }
