@@ -217,4 +217,9 @@ html {
     }
     @media only screen and (max-width: 885px) {
       #calDiv{width: 20%;margin-right:auto ;}
+      #calDiv{text-align: center ;}
+      body{width:300vw}
+      #NavUl li{font-size: 7vw;}
+      footer{font-size:12vw}
+      #weekdays{font-size: 3vw;}
     }
