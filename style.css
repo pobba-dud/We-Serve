@@ -80,9 +80,9 @@ li a:hover{
 
 /* Hour Log Style */
 .hourContainer div{
-  border: 5px solid #283A43;
+  border: 5px solid #082638; /* Color is different from others because it shows differently, PLEASE don't change it */
   background-color: #9bd1e5;
-  color: #0b4161;
+  color: #283A43;
   font-size: 160%;
   width: 15%;
   margin-left: auto;
