@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
 html {
     height: 100%;
     width: 100%;
@@ -13,7 +14,7 @@ html {
     flex-direction: column;
     margin: 0%;
     justify-content: center;
-    background-color: #FFFCFF;
+    background-color: white;
   }
   button {
     width: 75px;
@@ -28,7 +29,7 @@ html {
   
   #header {
     padding: 10px;
-    color: #d36c6c;
+    color: #2f4858;
     font-size: 26px;
     font-family: sans-serif;
     display: flex;
@@ -112,7 +113,20 @@ html {
     border: none;
     box-shadow: 0px 0px 3px gray;
   }
+  #eventTimeInput {
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    box-shadow: 0px 0px 3px gray;
+  }
   #eventTitleInput.error {
+    border: 2px solid red;
+  }
+  #eventTimeInput.error {
     border: 2px solid red;
   }
   #cancelButton, #deleteButton {
@@ -130,7 +144,7 @@ html {
     left: 0px;
     z-index: 10;
     width: 100vw;
-    height: 100vh;
+    height: 1000%;
     position: absolute;
     background-color: rgba(0,0,0,0.8);
   }
@@ -139,63 +153,73 @@ html {
     margin: 0%;
     padding: 0%;
     overflow: hidden;
-    background-color:#b3b3b3;
-    border-style: solid;
-    border-color: black;
-    border-width: 1px;
+    background-color: #283A43;
     font-size: 20px;
   }
   li {
     float: left;
     display: flex;
     align-content: center;
+    color: #9bd1e5;
   }
-  li a, .dropbtn {
-    display: inline-block;
-    color: black;
+  li a:link, li a:visited{
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-right: 18px;
+    padding-left: 18px;
     text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
-    border-color:none;
-    border-width:1px;
-    border-radius: 5px;
-  }
-  
-  li a:hover, .dropdown:hover .dropbtn {
-    background-color:#9e9a9a;
-    border-style: solid;
+    color: #9bd1e5;
     border-width: 1px;
-    border-color: #333;
+    border-color: none;
     border-radius: 5px;
-  }
-  
-  li.dropdown {
     display: inline-block;
   }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
+  li a:hover{
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-right: 18px;
+    padding-left: 18px;
+    text-align: center;
     text-decoration: none;
-    display: block;
-    text-align: left;
+    color: #9bd1e5;
+    background-color: #283A43;
+    border-width: 1px;
+    border-color: none;
+    border-radius: 5px;
+    display: inline-block;
   }
-  
-  .dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-    height: fit-content;
-  }
+  #NavUl img{
+     float: left;
+      display: flex;
+       width: 57px;
+       height:auto;
+      margin: 0%;
+      padding: 0%;
+      margin-right: 5px;
+    }
+    footer {
+      margin-top: 15%;
+      margin-bottom: 0%;
+    background-color: #283A43; /* A shade of blue */
+    color: #f7f7f7; /* A shade of white */
+    text-align: center;
+    clear: both; /* To ensure the footer is below the calendar */
+    padding-top: 2%;
+    font-size: 150%;
+    }
+    footer ul{
+      background-color: #283A43;
+      display: inline;
+    }
+    footer ul li{
+      background-color: #283A43;
+    }
+    @media only screen and (max-width: 885px) {
+      #calDiv{width: 20%;margin-right:auto ;}
+      #calDiv{text-align: center ;}
+      body{width:300vw}
+      #NavUl li{font-size: 7vw;}
+      footer{font-size:12vw}
+      #weekdays{font-size: 3vw;}
+    }

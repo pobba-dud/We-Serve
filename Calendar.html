@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>WeServe</title>
+    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
     <link href="CalendarStyle.css" rel="stylesheet" type="text/css" />
   </head>
   
@@ -11,20 +12,22 @@
 
 <!-- navbar -->
 
-    <div>
-      <ul id = "NavUl">
-        <li><a href="index.html"><b>Homepage</b></a></li>
-        <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
-        <li><a href="hourLog.html"><b>Hour log</b></a></li>
-        <li><a href="Calendar.html" style="color: #4747c4;"><b>Calendar</b></a></li>
-        <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images\Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
-      </ul>
-    </div>
+<nav>
+  <ul id="NavUl">
+    <img src="Images/logo.png">
+    <li><a href="index.html"><b>Homepage</b></a></li>
+    <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
+    <li><a href="hourLog.html"><b>Hour log</b></a></li>
+    <li><a href="Calendar.html"><b>Calendar</b></a></li>
+    <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+  </ul>
+</nav>
+  <div style="margin-bottom: 50px;"></div>
 
 <!-- end of navbar -->
     <div style="margin:1.5%;">
     </div>
-    <div style="align-self: center;">
+    <div id="calDiv" style="align-self: center;">
       <div id="container">
         <div id="header">
           <div id="monthDisplay">
@@ -49,6 +52,7 @@
       <div id="newEventModal">
         <h2>New Event</h2>
         <input id="eventTitleInput" placeholder="Event Title" />
+        <input id="eventTimeInput" placeholder="Event Time" />
         <button id="saveButton">Save</button>
         <button id="cancelButton">Cancel</button>
       </div>
@@ -61,44 +65,24 @@
       <div id="modalBackDrop">
       </div>
     </div>
+
+
+
     <script src="scriptCalendar.js"></script>
-=======
-  </div>
 
-  <div id="weekdays">
-    <div>Sunday</div>
-    <div>Monday</div>
-    <div>Tuesday</div>
-    <div>Wednesday</div>
-    <div>Thursday</div>
-    <div>Friday</div>
-    <div>Saturday</div>
-  </div>
 
-  <div id="calendar"></div>
-</div>
-
-<div id="newEventModal">
-  <h2>New Event</h2>
-
-  <input id="eventTitleInput" placeholder="Event Title" />
-
-  <button id="saveButton">Save</button>
-  <button id="cancelButton">Cancel</button>
-</div>
-
-<div id="deleteEventModal">
-  <h2>Event</h2>
-
-  <p id="eventText"></p>
-
-  <button id="deleteButton">Delete</button>
-  <button id="closeButton">Close</button>
-</div>
-
-<div id="modalBackDrop"></div>
-</div>
-<script src="scriptCalendar.js"></script>
->>>>>>> afdef6f4e103f79dcacaed4985fbe9ee3205196f
+    <footer>
+      <p>&copy; WeServe</p>
+      <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
+      <ul>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Example Link</a></li>
+        <li><a href="#">Example Link</a></li>
+        <li><a href="#">Example Link</a></li>
+        <li><a href="Proof.html">Example Link</a></li>
+      </ul>
+    </div>
+    </footer>
   <body>
 </html>

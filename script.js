@@ -43,3 +43,78 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDayNumbers();  // Update the day numbers dynamically
     highlightToday();    // Highlight the current day's event
 });
+
+
+
+function mapEventsToDays() {
+  const events = JSON.parse(localStorage.getItem("events")) || [];
+  const currentDate = new Date();
+
+  // Calculate the start and end of the week
+  const startOfWeek = new Date(currentDate);
+  startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+
+  const endOfWeek = new Date(currentDate);
+  endOfWeek.setDate(currentDate.getDate() + (6 - currentDate.getDay()));
+
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  // Clear table first
+  for (let i = 1; i <= 7; i++) {
+    document.getElementById(`event-${i}`).innerHTML = "";
+  }
+
+  events.forEach((event) => {
+    const eventDate = new Date(event.date);
+
+    // Check if the event falls within the current week
+    if (eventDate >= startOfWeek && eventDate <= endOfWeek) {
+      const dayOffset = eventDate.getDay(); // Get the day of the week (0-6)
+      const tableRow = document.querySelector(`tr:nth-child(${dayOffset + 1})`);
+
+      // Update the table cell with the event information
+      if (tableRow && tableRow.cells[1]) {
+        tableRow.cells[1].innerHTML = `<u>${event.title}</u><br>${event.time}`;
+      }
+    }
+  });
+}
+
+// Call mapEventsToDays whenever the DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  mapEventsToDays();
+});
+
+  document.addEventListener("DOMContentLoaded", mapEventsToDays);
+
+  mapEventsToDays();
+
+var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
+  keyboard: false,
+  backDrop: false
+  }) 
+
+
+  function searchDiscoverEvents() {
+    const input = document.getElementById('discoverSearchInput').value.toLowerCase();
+    const eventListContainer = document.querySelector('.discover-events-list');
+    const eventList = document.querySelectorAll('.discover-events-list .event'); // Select all event elements
+
+    // Show or hide the event list based on input
+    if (input.length > 0) {
+        eventListContainer.style.display = ""; // Show the event list
+    } else {
+        eventListContainer.style.display = "none"; // Hide the event list if input is empty
+    }
+
+    eventList.forEach(event => {
+        const title = event.querySelector('.event-title').textContent.toLowerCase(); // Get the title of the event
+        const date = event.querySelector('.event-date').textContent.toLowerCase(); // Get the date of the event
+        // Check if the title or date includes the search input
+        if (title.includes(input) || date.includes(input)) {
+            event.style.display = ""; // Show the event
+        } else {
+            event.style.display = "none"; // Hide the event
+        }
+    });
+}

@@ -4,35 +4,35 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>WeServe</title>
+  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
   <script src="script.js"></script>
-</body>
+  <script src="scriptCalendar.js">
+  remoteCreateEvent(); </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<body onload="mapEventsToDays()">
 
 <!-- navbar -->
-<div>
-<ul id = "NavUl">
-  <li><a href="index.html"style="color: #4747c4;"><b>Homepage</b></a></li>
-  <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
-  <li><a href="hourLog.html"><b>Hours</b></a></li>
-  <!-- <li class="dropdown">
-    <a class="dropbtn">Dropdown</a>
-    <div class="dropdown-content">
-      <a href="">option 1</a>
-      <a href="">option 2</a>
-      <a href="">option 3</a>
-    </div> 
-  </li>-->
-  <li><a href="Calendar.html"><b>Calendar</b></a></li>
-  <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images\Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
-</ul>
-</div>
+<header>
+  <nav>
+  <ul id="NavUl">
+    <img src="Images/logo.png">
+    <li><a href="index.html"><b>Homepage</b></a></li>
+    <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
+    <li><a href="hourLog.html"><b>Hour log</b></a></li>
+    <li><a href="Calendar.html"><b>Calendar</b></a></li>
+    <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+  </ul>
+</nav>
+  <div style="margin-bottom: 50px;"></div>
+</header>
 <!-- end of navbar -->
 
 <!-- spacer -->
-<div style="margin:6%;"></div>
-
-<div class="module" style="float:right">
+<main style="margin:6%;">
+<div id= "table1" class="module">
   <h2 class = "moduleHeader">
     This Week in Advance
     <h4 style="margin:0px; padding:0px;padding-left: 15px" id="date-header">
@@ -77,69 +77,166 @@
 <!-- Table -->
   </h2>
   <div style="padding-bottom: 2%;">
-      <table border="1" style="border: grey;">
-          <tr>
-              <th class="day-number">1<br>Sunday</th>
-              <th><u>Help plant trees</u><br>3:30 - 6:30pm at Cool Creek</th>
-          </tr>
-          <tr>
-              <th class="day-number">2<br>Monday</th>
-              <th>No event</th>
-          </tr>
-          <tr>
-              <th class="day-number">3<br>Tuesday</th>
-              <th><u>Helpout at food pantry</u><br>6:00 - 7:30pm at Food Pantry</th>
-          </tr>
-          <tr>
-              <th class="day-number">4<br>Wednesday</th>
-              <th>No event</th>
-          </tr>
-          <tr>
-              <th class="day-number">5<br>Thursday</th>
-              <th>No event</th>
-          </tr>
-          <tr>
-              <th class="day-number">6<br>Friday</th>
-              <th>No event</th>
-          </tr>
-          <tr>
-              <th class="day-number">7<br>Saturday</th>
-              <th><u>Example Volunteer event</u><br>XX:XXam - XX:XXpm at Example Location</th>
-          </tr>
-      </table>
+    <table style="border: solid 2px black;border-collapse:inherit">
+      <tr>
+        <th class="day-number">1<br>Sunday</th>
+        <th id="event-1"></th>
+      </tr>
+      <tr>
+        <th class="day-number">2<br>Monday</th>
+        <th id="event-2"></th>
+      </tr>
+      <tr>
+        <th class="day-number">3<br>Tuesday</th>
+        <th id="event-3"></th>
+      </tr>
+      <tr>
+        <th class="day-number">4<br>Wednesday</th>
+        <th id="event-4"></th>
+      </tr>
+      <tr>
+        <th class="day-number">5<br>Thursday</th>
+        <th id="event-5"></th>
+      </tr>
+      <tr>
+        <th class="day-number">6<br>Friday</th>
+        <th id="event-6"></th>
+      </tr>
+      <tr>
+        <th class="day-number">7<br>Saturday</th>
+        <th id="event-7"></th>
+      </tr>
+    </table>
       </div>
 </div>
 <!-- End of table -->
-
+<div style="margin: 2%;"></div>
 <div class="module">
 <h2 class = "moduleHeader">Hour Log Recap</h2>
 <div class="innerContainer">
-  <h3 style="display: flex; justify-content: center;"><!--make a variable at some point-->
-  Total Hours this year: <!-- character for a space -->&#160 <b> 45</b> 
+  <h3 style="display: flex; justify-content: center; margin-top: 3%;"><!--make a variable at some point-->
+  Total Hours this year: <!-- character for a space -->&#160 <b><span>45</span></b> 
   </h3>
-  <h3 style="display: flex; justify-content: center;">
-    Weekly Service Streak: <!-- character for a space -->&#160 <b style="color:orange"> 15</b> <!--make a variable at some point-->
+  <h3 id="scaleableWords" style="display: flex; justify-content: center; margin-top: 3%;margin-bottom: 3%">
+    Weekly Service Streak: <!-- character for a space -->&#160 <b style="color:orange"> <span>15</span></b> <!--make a variable at some point-->
     </h3>
 </div>
 </div>
 
 <div style="margin:2%;"></div>
 
-<div class="module">
+<div  class="module">
   <h2 class = "moduleHeader">Opportunies Coming Up</h2>
-  <div class="innerContainer" style="padding-bottom: 3%;"> 
+  <div id ="thisModule" class="innerContainer" > 
     <div style="margin-left:10%;">
-    <button> Get Involved</button>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1"> Get Involved</button>
   <u><h3>Help at the Community center</h3></u>  
-    October 12, 6:00 - 730 pm
-    <button style="margin-top: 7%;"> Get Involved</button>
-  <u><h3>Event title</h3></u> 
-  Month XX, XX:XX - XX:XX
+    October 30, 6:00 - 7:30 pm
+    <div style="margin-bottom: 7%;"></div>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#eventModal2"> Get Involved</button>
+  <u><h3>Rotary Club of Westfield</h3></u> 
+  November 19,  7:00 - 8:30 pm
   </div>
   </div>
   </div>
 
+<!-- First Modal -->
+<div class="modal fade" id="eventModal1" tabindex="-1" aria-labelledby="eventModalLabel1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel1">Help at the Community center</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Event Image -->
+          <div class="col-md-4">
+            <div class="event-image">
+              Image of Community Center
+            </div>
+            <div class="event-info">
+              <h5>The Super Helpers</h5>
+              <span>Help at the Community center</span><br>
+              <span>October 30</span><br>
+              <span>10:00 AM - 12:00 PM</span>
+            </div>
+          </div>
+          <!-- Event Description -->
+          <div class="col-md-8">
+            <h5>Help at the Community center</h5>
+            <p class="event-details">
+              Help at the Community center . We are looking for volunteers to help with various tasks.
 
+            </p>
+              <button class="schedule-btn" onclick="remoteCreateEvent('2024/11/1', 'Help at the Community center', '10:00 AM - 12:00 PM'), location.reload()">Get Scheduled</button>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <body>
+<!-- Second Modal -->
+<div class="modal fade" id="eventModal2" tabindex="-1" aria-labelledby="eventModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel2">Rotary Club of Westfield</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Event Image -->
+          <div class="col-md-4">
+            <div class="event-image">
+              Image of Children
+            </div>
+            <div class="event-info">
+              <h5>Westfield Welcome</h5>
+              <span>Rotary Club of Westfield</span><br>
+              <span>November 19</span><br>
+              <span>7:00 - 8:30 pm</span>
+            </div>
+          </div>
+          <!-- Event Description -->
+          <div class="col-md-8">
+            <h5>Rotary Club of Westfield</h5>
+            <p class="event-details">
+              Resounding Joy builds a community rooted in compassion through music therapy. Some of their volunteer opportunities include: visiting, music sessions, and special events.
+            </p>
+            <script src="scriptCalendar.js">
+              function performAction() {
+                remoteCreateEvent('2024/11/19', 'Rotary Club of Westfield', '7:00 - 8:30 pm');
+                location.reload();
+              }
+          </script>
+            <button class="schedule-btn" type="button" onclick= "performAction()">Get Scheduled</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer>
+  <p>&copy; WeServe</p>
+  <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
+  <ul>
+    <li><a href="#">Terms of Use</a></li>
+    <li><a href="#">Privacy Policy</a></li>
+    <li><a href="#">Example Link</a></li>
+    <li><a href="#">Example Link</a></li>
+    <li><a href="#">Example Link</a></li>
+    <li><a href="Proof.html">Example Link</a></li>
+  </ul>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <button> <a href="test.html">test</a></button> -->
+<script>
+mapEventsToDays();
+</script>
+</body>
 </html>
