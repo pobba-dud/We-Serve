@@ -15,10 +15,10 @@ const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
 function openModal(date) {
   clicked = date; // Set the clicked date
 
-// Find if there is an event for the clicked date
+  // Find if there is an event for the clicked date
   const eventForDay = events.find(e => e.date === clicked);
 
-// If an event exists, show the delete modal; otherwise, show the new event modal
+  // If an event exists, show the delete modal; otherwise, show the new event modal
   if (eventForDay) {
     document.getElementById('eventText').innerText = eventForDay.title + "\n" + eventForDay.time;
     deleteEventModal.style.display = 'block';
@@ -144,7 +144,7 @@ function initButtons() {
     load();// Reload the calendar
   });
 
-// Event listeners for modal buttons
+  // Event listeners for modal buttons
   document.getElementById('saveButton').addEventListener('click', saveEvent);
   document.getElementById('cancelButton').addEventListener('click', closeModal);
   document.getElementById('deleteButton').addEventListener('click', deleteEvent);
