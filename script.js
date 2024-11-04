@@ -1,5 +1,5 @@
 // Function to dynamically update the numbers next to the day names
-function updateDayNumbers() {
+function updateDayNumbers() { // start of updateDayNumbers() function
     const today = new Date();
     const dayOfWeek = today.getDay(); // Get the current day of the week (0 = Sunday, 6 = Saturday)
     const currentDate = today.getDate(); // Get the current day of the month
@@ -21,10 +21,10 @@ function updateDayNumbers() {
         // Add a custom attribute for the current day date
         dayElement.setAttribute('data-day', newDate.getDate());
     });
-}
+} //start of updateDayNumbers() function
 
 // Function to highlight today's event
-function highlightToday() {
+function highlightToday() { //start of highlightToday function
     const today = new Date().getDate(); // Get today's day number
 
     // Get all table rows with the day-number class
@@ -36,7 +36,7 @@ function highlightToday() {
             dayElement.parentElement.classList.add('highlight'); // Highlight today's row
         }
     });
-}
+} // end of highlightToday function
 
 // Run the functions when the page loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-function mapEventsToDays() {
+function mapEventsToDays() { // start of mapEventsToDays() function
   const events = JSON.parse(localStorage.getItem("events")) || [];
   const currentDate = new Date();
 
@@ -78,7 +78,7 @@ function mapEventsToDays() {
       }
     }
   });
-}
+} // end of mapEventsToDays() function
 
 // Call mapEventsToDays whenever the DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -95,7 +95,7 @@ var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
   }) 
 
 
-  function searchDiscoverEvents() {
+  function searchDiscoverEvents() { // start of searchDiscoverEvents() function
     const input = document.getElementById('discoverSearchInput').value.toLowerCase();
     const eventListContainer = document.querySelector('.discover-events-list');
     const eventList = document.querySelectorAll('.discover-events-list .event'); // Select all event elements
@@ -117,4 +117,4 @@ var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
             event.style.display = "none"; // Hide the event
         }
     });
-}
+} // end of searchDiscoverEvents() function
