@@ -376,3 +376,15 @@ footer ul li{
   .schedule-btn:hover {
     background-color: #2a3a44;
   }
+
+  .notification {
+    position: fixed;
+    bottom: 20px; /* Position from the bottom */
+    right: 20px; /* Position from the right */
+    background-color: #283A43; /* Dark blue background */
+    color: white; /* White text */
+    padding: 15px; /* Some padding */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    z-index: 1000; /* Ensure it appears above other content */
+    transition: opacity 0.5s; /* Smooth transition for fade out */

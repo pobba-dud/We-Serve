@@ -14,6 +14,48 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <body onload="mapEventsToDays()">
 
+  <div class="notification" id="notification" style="display: none;">
+    This is a notification message!
+    <button onclick="closeNotification()" style="background-color: #283A43;">X</button>
+</div>
+
+<script>
+function showNotification(message) {
+    const notification = document.getElementById('notification');
+    notification.innerHTML = message + ' <button onclick="closeNotification()">X</button>';
+    notification.style.display = 'block';
+    
+    // Automatically hide the notification after 5 seconds
+    setTimeout(closeNotification, 5000);
+}
+
+function closeNotification() {
+    const notification = document.getElementById('notification');
+    notification.style.display = 'none';
+}
+
+// Function to trigger notification at intervals
+function startNotificationLoop() {
+    const messages = [
+        'Helping with the food court is in 3 hours!',
+        'Helping with Walking the dogs foundation is in 36 hours!',
+        'Helping with cutting the grass is in  1 hour!',
+
+    ];
+    
+    let index = 0;
+
+    // Show notification every 10 seconds (10000 milliseconds)
+    setInterval(() => {
+        showNotification(messages[index]);
+        index = (index + 1) % messages.length; // Loop through messages
+    }, 10000); // Change this value for different intervals
+}
+
+// Start the notification loop when the page loads
+window.onload = startNotificationLoop;
+</script>
+
 <!-- navbar -->
 <header>
   <nav>
@@ -29,6 +71,8 @@
   <div style="margin-bottom: 50px;"></div>
 </header>
 <!-- end of navbar -->
+
+
 
 <!-- spacer -->
 <main style="margin:6%;">
@@ -239,4 +283,5 @@
 mapEventsToDays();
 </script>
 </body>
+
 </html>
