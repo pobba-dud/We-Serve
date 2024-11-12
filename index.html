@@ -57,7 +57,7 @@
             console.log("event is in timespan");  
             console.log(event);
             console.log(eventDate);
-            showNotification(`Upcoming Event: ${event.title} at ${eventDate.toLocaleString()}`);
+            showNotification(`Upcoming Event: ${event.title} at ${event.date}, ${event.time}`);
           }
       });
   }
