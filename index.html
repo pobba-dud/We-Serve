@@ -23,10 +23,12 @@
   // Function to show custom notification
   function showNotification(message) {
     console.log("2nd Function started");
+    console.log(message);
       const notification = document.getElementById("customNotification");
+      console.log(notification);
       notification.textContent = message; // Set the message
       notification.style.display = "block"; // Show the notification
-
+      console.log(notification.textContent);
       // Hide the notification after 5 seconds
       setTimeout(() => {
         console.log("timer Function started");
@@ -50,11 +52,12 @@
       storedEvents.forEach(event => {
         console.log("Events loaded");
           const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
+          console.log(event);
           if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
             console.log("event is in timespan");  
             console.log(event);
             console.log(eventDate);
-            showNotification(`Upcoming Event: ${event.name} at ${eventDate.toLocaleString()}`);
+            showNotification(`Upcoming Event: ${event.title} at ${eventDate.toLocaleString()}`);
           }
       });
   }
