@@ -249,6 +249,63 @@ html{overflow:scroll;}
 
 <body style="margin: 0%;">
 
+    <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
+        This is a notification message!
+        <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
+    </div>
+    
+    <script>
+      // Function to show custom notification
+      function showNotification(message) {
+        console.log("2nd Function started");
+        console.log(message);
+          const notification = document.getElementById("customNotification");
+          console.log(notification);
+          notification.textContent = message; // Set the message
+          notification.style.display = "block"; // Show the notification
+          console.log(notification.textContent);
+          // Hide the notification after 5 seconds
+          setTimeout(() => {
+            console.log("timer Function started");
+              notification.style.opacity = '0'; // Fade out
+              setTimeout(() => {
+                  notification.style.display = "none"; // Hide after fade out
+                  notification.style.opacity = '1'; // Reset opacity for next use
+              }, 500); // Wait for the fade out duration
+          }, 500000); // Display for 5 seconds
+      }
+    
+      // Function to check for events within 36 hours and show notifications
+      function checkUpcomingEvents() {
+        console.log("Function started");
+          const currentTime = new Date();
+          const fourtyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
+    
+          // Retrieve events from local storage
+          const storedEvents = JSON.parse(localStorage.getItem('events')) || []; // Replace 'events' with your actual key
+    
+          storedEvents.forEach(event => {
+            console.log("Events loaded");
+              const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
+              console.log(event);
+              if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
+                console.log("event is in timespan");  
+                console.log(event);
+                console.log(eventDate);
+                showNotification(`Upcoming Event: ${event.title} at ${event.date}, ${event.time}`);
+              }
+          });
+      }
+      function closeNotification() {
+        const notification = document.getElementById("customNotification");
+        notification.style.display = "none"; // Hide the notification
+    }
+      // Call checkUpcomingEvents function at the start or at intervals
+      window.onload = function() {
+          checkUpcomingEvents(); // Check for upcoming events when the page loads
+      };
+    </script>
+    
 <!-- navbar -->
 <nav>
     <ul id="NavUl">
