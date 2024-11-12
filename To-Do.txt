@@ -8,9 +8,6 @@ Recurring Events
 Introduce functionality for creating recurring events (daily, weekly, monthly).
 Add logic to handle the recurrence and display of these events.
 
-Event Notifications
-Implement a notification system to alert users before an event starts (browser notifications or in-app reminders).
-
 Event Categories or Tags
 Allow users to categorize events (e.g., work, personal, important).
 Implement filtering of the calendar view based on these categories.
