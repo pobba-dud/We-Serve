@@ -174,6 +174,7 @@ html {
     border-color: none;
     border-radius: 5px;
     display: inline-block;
+    
   }
   li a:hover{
     padding-top: 18px;
@@ -183,7 +184,7 @@ html {
     text-align: center;
     text-decoration: none;
     color: #9bd1e5;
-    background-color: #283A43;
+    background-color: rgb(57, 94, 112);
     border-width: 1px;
     border-color: none;
     border-radius: 5px;
