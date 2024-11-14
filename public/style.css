@@ -61,7 +61,7 @@ li a:hover{
   text-align: center;
   text-decoration: none;
   color: #9bd1e5;
-  background-color: #283A43;
+  background-color: rgb(57, 94, 112);
   border-width: 1px;
   border-color: none;
   border-radius: 5px;
@@ -388,3 +388,4 @@ footer ul li{
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
     z-index: 1000; /* Ensure it appears above other content */
     transition: opacity 0.5s; /* Smooth transition for fade out */
+  }

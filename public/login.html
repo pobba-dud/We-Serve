@@ -20,55 +20,56 @@ html {
 
 /* start of css for navbar */
 #NavUl {
-    list-style-type: none;
-    margin: 0%;
-    padding: 0%;
-    overflow: hidden;
-    background-color: #2f4858;
-    font-size: 20px;
-  }
-  li {
-    float: left;
-    display: flex;
-    align-content: center;
-    color: #9bd1e5;
-  }
-  li a:link, li a:visited{
-    padding-top: 18px;
-    padding-bottom: 18px;
-    padding-right: 18px;
-    padding-left: 18px;
-    text-align: center;
-    text-decoration: none;
-    color: #9bd1e5;
-    border-width: 1px;
-    border-color: none;
-    border-radius: 5px;
-    display: inline-block;
-  }
-  li a:hover{
-    padding-top: 18px;
-    padding-bottom: 18px;
-    padding-right: 18px;
-    padding-left: 18px;
-    text-align: center;
-    text-decoration: none;
-    color: #9bd1e5;
-    background-color: #496679;
-    border-width: 1px;
-    border-color: none;
-    border-radius: 5px;
-    display: inline-block;
-  }
+  list-style-type: none;
+  margin: 0%;
+  padding: 0%;
+  overflow: hidden;
+  background-color: #283A43;
+  font-size: 20px;
+}
+li {
+  float: left;
+  display: flex;
+  align-content: center;
+  color: #9bd1e5;
+}
+li a:link, li a:visited{
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 18px;
+  padding-left: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #9bd1e5;
+  border-width: 1px;
+  border-color: none;
+  border-radius: 5px;
+  display: inline-block;
+}
+li a:hover{
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 18px;
+  padding-left: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #9bd1e5;
+  background-color: rgb(57, 94, 112);
+  border-width: 1px;
+  border-color: none;
+  border-radius: 5px;
+  display: inline-block;
+}
   #NavUl img{
-     float: left;
-      display: flex;
-       width: 57px;
-       height:auto;
-      margin: 0%;
-      padding: 0%;
-      margin-right: 5px;
-    }
+  float: left;
+   display: flex;
+    width: 57px;
+    height:auto;
+   margin: 0%;
+   padding: 0%;
+   margin-right: 5px;
+ }
+
 /* end of navbar css */
 
 body {
@@ -241,14 +242,67 @@ html{overflow:scroll;}
 </head>
   <script>
 
-
-
-
-
   </script>
 
 <body style="margin: 0%;">
 
+    <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
+        This is a notification message!
+        <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
+    </div>
+    
+    <script>
+      // Function to show custom notification
+      function showNotification(message) {
+        console.log("2nd Function started");
+        console.log(message);
+          const notification = document.getElementById("customNotification");
+          console.log(notification);
+          notification.textContent = message; // Set the message
+          notification.style.display = "block"; // Show the notification
+          console.log(notification.textContent);
+          // Hide the notification after 5 seconds
+          setTimeout(() => {
+            console.log("timer Function started");
+              notification.style.opacity = '0'; // Fade out
+              setTimeout(() => {
+                  notification.style.display = "none"; // Hide after fade out
+                  notification.style.opacity = '1'; // Reset opacity for next use
+              }, 500); // Wait for the fade out duration
+          }, 500000); // Display for 5 seconds
+      }
+    
+      // Function to check for events within 36 hours and show notifications
+      function checkUpcomingEvents() {
+        console.log("Function started");
+          const currentTime = new Date();
+          const fourtyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
+    
+          // Retrieve events from local storage
+          const storedEvents = JSON.parse(localStorage.getItem('events')) || []; // Replace 'events' with your actual key
+    
+          storedEvents.forEach(event => {
+            console.log("Events loaded");
+              const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
+              console.log(event);
+              if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
+                console.log("event is in timespan");  
+                console.log(event);
+                console.log(eventDate);
+                showNotification(`Upcoming Event: ${event.title} at ${event.date}, ${event.time}`);
+              }
+          });
+      }
+      function closeNotification() {
+        const notification = document.getElementById("customNotification");
+        notification.style.display = "none"; // Hide the notification
+    }
+      // Call checkUpcomingEvents function at the start or at intervals
+      window.onload = function() {
+          checkUpcomingEvents(); // Check for upcoming events when the page loads
+      };
+    </script>
+    
 <!-- navbar -->
 <nav>
     <ul id="NavUl">
