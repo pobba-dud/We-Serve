@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 
-// Serve static files
-app.use(express.static('public'));
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Set up a basic route for your homepage
+// Route for the homepage
 app.get('/', (req, res) => {
-  res.send('Hello, World!');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Make the app listen on the port provided by Heroku
