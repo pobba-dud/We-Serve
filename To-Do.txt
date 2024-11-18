@@ -8,9 +8,6 @@ Recurring Events
 Introduce functionality for creating recurring events (daily, weekly, monthly).
 Add logic to handle the recurrence and display of these events.
 
-Event Notifications
-Implement a notification system to alert users before an event starts (browser notifications or in-app reminders).
-
 Event Categories or Tags
 Allow users to categorize events (e.g., work, personal, important).
 Implement filtering of the calendar view based on these categories.
@@ -57,9 +54,6 @@ Integrate task management features to allow users to create tasks related to spe
 
 Custom Event Links
 Allow users to generate unique links for events that can be shared with others for easy access.
-
-User Feedback System
-Implement a feedback system for users to suggest improvements or report issues with the calendar.
 
 Analytics Dashboard
 Create an analytics dashboard for users to view statistics about their events (e.g., number of events per month, most common event types)(likely to be in account page or in hours).

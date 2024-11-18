@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Notification Example</title>
+    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            width: 50%;
+            margin: auto;
+            background-color: rgb(255, 255, 255);
+            border: 3px solid black;
+            color: black;
+            padding: 20px; /* Padding around the container */
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+        }
+        .header {
+            font-size: 30px;
+            text-align: center; /* Center the header text */
+            margin-bottom: 20px; /* Space below the header */
+        }
+        .input-field {
+            margin-bottom: 15px; /* Space between input fields */
+        }
+        .input-field label {
+            display: block;
+            margin-bottom: 5px; /* Space below the label */
+            font-weight: bold; /* Make label text bold */
+        }
+        .input-field input {
+            width: 100%;
+            padding: 10px; /* Inner padding for inputs */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px; /* Increase font size for better readability */
+        }
+        .submit-button {
+            padding: 10px 20px;
+            background-color: #283A43; /* Dark blue background */
+            color: white; /* White text */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px; /* Increase font size */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+        .submit-button:hover {
+            background-color: #4747c4; /* Change color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <p>Event Creation</p>
+        </div>
+        <div class="input-field">
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" placeholder="Enter event name" required>
+        </div>
+        <div class="input-field">
+            <label for="eventDate">Event Date:</label>
+            <input type="date" id="eventDate" required>
+        </div>
+        <div class="input-field">
+            <label for="eventTimeRange">Event Time Range:</label>
+            <input type="text" id="eventTimeRange" placeholder="e.g., 10:00 AM - 12:00 PM" required>
+        </div>
+        <button class="submit-button" onclick="submitEvent()">Create Event</button>
+    </div>
+
+    <script>
+        function submitEvent() {
+            const eventName = document.getElementById('eventName').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const eventTimeRange = document.getElementById('eventTimeRange').value;
+
+            // Handle the event submission logic, e.g., save to local storage or send to server
+            console.log(`Event Created: ${eventName} on ${eventDate} from ${eventTimeRange}`);
+            alert(`Event Created: ${eventName} on ${eventDate} from ${eventTimeRange}`);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>WeServe</title>
+  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
+    This is a notification message!
+    <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
+</div>
+
+<script>
+  // Function to show custom notification
+  function showNotification(message) {
+    console.log("2nd Function started");
+    console.log(message);
+      const notification = document.getElementById("customNotification");
+      console.log(notification);
+      notification.textContent = message; // Set the message
+      notification.style.display = "block"; // Show the notification
+      console.log(notification.textContent);
+      // Hide the notification after 5 seconds
+      setTimeout(() => {
+        console.log("timer Function started");
+          notification.style.opacity = '0'; // Fade out
+          setTimeout(() => {
+              notification.style.display = "none"; // Hide after fade out
+              notification.style.opacity = '1'; // Reset opacity for next use
+          }, 500); // Wait for the fade out duration
+      }, 500000); // Display for 5 seconds
+  }
+
+  // Function to check for events within 36 hours and show notifications
+  function checkUpcomingEvents() {
+    console.log("Function started");
+      const currentTime = new Date();
+      const fourtyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
+
+      // Retrieve events from local storage
+      const storedEvents = JSON.parse(localStorage.getItem('events')) || []; // Replace 'events' with your actual key
+
+      storedEvents.forEach(event => {
+        console.log("Events loaded");
+          const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
+          console.log(event);
+          if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
+            console.log("event is in timespan");  
+            console.log(event);
+            console.log(eventDate);
+            showNotification(`Upcoming Event: ${event.title} at ${event.date}, ${event.time}`);
+          }
+      });
+  }
+  function closeNotification() {
+    const notification = document.getElementById("customNotification");
+    notification.style.display = "none"; // Hide the notification
+}
+  // Call checkUpcomingEvents function at the start or at intervals
+  window.onload = function() {
+      checkUpcomingEvents(); // Check for upcoming events when the page loads
+  };
+</script>
+
+<!-- navbar -->
+<header>
+  <nav>
+  <ul id="NavUl">
+    <img src="Images/logo.png">
+    <li><a href="index.html"><b>Homepage</b></a></li>
+    <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
+    <li><a href="hourLog.html"><b>Hour log</b></a></li>
+    <li><a href="Calendar.html"><b>Calendar</b></a></li>
+    <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+  </ul>
+</nav>
+  <div style="margin-bottom: 50px;"></div>
+</header>
+<!-- end of navbar -->
+
+<!-- Hour Log Content -->
+<div class="hourContainer">
+  <div class="weekStreak">
+    <p>Weekly Streak</p>
+    <br>
+    <p id="loggedNum" style="color:orange;">NaN</p>
+  </div>
+  <div class="monthHours">
+    <p>Hours Served This Month</p>
+    <br>
+   <p id="loggedNum">NaN</p>
+  </div>
+  <div class="yearHours">
+   <p>Hours Served This Year</p>
+   <br>
+    <p id="loggedNum">NaN</p>
+  </div>
+  <div class="careerHours">
+   <p>Total Career Hours Served</p>
+   <br>
+   <p id="loggedNum">NaN</p>
+  </div>
+</div>
+<footer>
+  <p>&copy; WeServe</p>
+  <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
+  <ul>
+    <li><a href="#">Terms of Use</a></li>
+    <li><a href="#">Privacy Policy</a></li>
+    <li><a href="#">Example Link</a></li>
+    <li><a href="#">Example Link</a></li>
+    <li><a href="Feedback.html">Feedback Form</a></li>
+    <li><a href="Proof.html">Example Link</a></li>
+  </ul>
+</div>
+</footer>
+
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 // Initialize navigation state and clicked date
-let nav = 0; // Navigation state (0 for current month, positive for future months, negative for past months)
+let nav1 = 0; // Navigation state (0 for current month, positive for future months, negative for past months)
 let clicked = null; // Holds the currently clicked date
 let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
 
@@ -15,10 +15,10 @@ const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
 function openModal(date) {
   clicked = date; // Set the clicked date
 
-// Find if there is an event for the clicked date
+  // Find if there is an event for the clicked date
   const eventForDay = events.find(e => e.date === clicked);
 
-// If an event exists, show the delete modal; otherwise, show the new event modal
+  // If an event exists, show the delete modal; otherwise, show the new event modal
   if (eventForDay) {
     document.getElementById('eventText').innerText = eventForDay.title + "\n" + eventForDay.time;
     deleteEventModal.style.display = 'block';
@@ -38,7 +38,7 @@ function load() {
   let currentYear = dt.getFullYear();
 
   // Calculate the target month and year based on navigation
-  currentMonth += nav;
+  currentMonth += nav1;
   currentYear += Math.floor(currentMonth / 12);
   currentMonth = ((currentMonth % 12) + 12) % 12; // Keeps month in range 0-11
 
@@ -74,7 +74,7 @@ function load() {
       const eventForDay = events.find(e => e.date === dayString);
 
       // Highlight current day if it matches
-      if (i - paddingDays === new Date().getDate() && nav === 0) {
+      if (i - paddingDays === new Date().getDate() && nav1 === 0) {
         daySquare.id = 'currentDay';
       }
       // Display event for the day if available
@@ -135,16 +135,16 @@ function deleteEvent() {
 
 function initButtons() {
   document.getElementById('nextButton').addEventListener('click', () => {
-    nav++;// Increment navigation state
+    nav1++;// Increment navigation state
     load();// Reload the calendar
   });
 
   document.getElementById('backButton').addEventListener('click', () => {
-    nav--; // Decrement navigation state
+    nav1--; // Decrement navigation state
     load();// Reload the calendar
   });
 
-// Event listeners for modal buttons
+  // Event listeners for modal buttons
   document.getElementById('saveButton').addEventListener('click', saveEvent);
   document.getElementById('cancelButton').addEventListener('click', closeModal);
   document.getElementById('deleteButton').addEventListener('click', deleteEvent);
