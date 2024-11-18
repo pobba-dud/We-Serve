@@ -116,37 +116,15 @@ button:hover {
 }
     </style>
     <script>
-      function handleFeedbackSubmit(event) {
-          event.preventDefault(); // Prevent the default form submission
-      
-          const form = document.getElementById('feedbackForm');
-          const formData = new FormData(form);
-      
-          // Send the feedback data using fetch
-          fetch(form.action, {
-              method: 'POST',
-              body: formData,
-          })
-          .then(response => {
-              if (response.ok) {
-                  // Show the thank you modal
-                  document.getElementById('thankYouModal').style.display = 'flex';
-                  document.getElementById('modalBackdrop').style.display = 'block';
-              } else {
-                  alert('There was a problem submitting your feedback. Please try again.');
-              }
-          })
-          .catch(error => {
-              console.error('Error:', error);
-              alert('There was a problem submitting your feedback. Please try again.');
-          });
-      }
-      
+      function openModal() {
+    document.getElementById('thankYouModal').style.display = 'block';
+    document.getElementById('modalBackdrop').style.display = 'block';
+}
       function closeModal() {
-          document.getElementById('thankYouModal').style.display = 'none';
-          document.getElementById('modalBackdrop').style.display = 'none';
-      }
-      </script>
+    document.getElementById('thankYouModal').style.display = 'none';
+    document.getElementById('modalBackdrop').style.display = 'none';
+}
+    </script>
   </head>
   
   </body>
@@ -161,21 +139,19 @@ button:hover {
     </ul>
   </nav>
 
-  <!-- Feedback Form -->
-<div class="module" style="margin: 3%;">
-  <h1>Feedback Form</h1>
-  <form id="feedbackForm" action="/send-feedback" method="POST" onsubmit="handleFeedbackSubmit(event)">
-      <label for="name">Name:</label><br>
-      <input type="text" id="name" name="name" required><br><br>
-      <label for="email">Email:</label><br>
-      <input type="email" id="email" name="email" required><br><br>
-      <label for="feedback">Feedback:</label><br>
-      <textarea id="feedback" name="feedback" required></textarea><br><br>
-      <button type="submit">Send Feedback</button>
-  </form>
-</div>
-
-<!-- Modal for Thank You Message -->
+  <div class="module" style = "margin: 3%;">
+    <h1>Feedback Form</h1>
+    <form id="feedbackForm" action="/send-feedback" method="POST">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="feedback">Feedback:</label><br>
+        <textarea id="feedback" name="feedback" required></textarea><br><br>
+        <button type="submit" onclick="openModal()">Send Feedback</button>
+    </form>
+  </div>
+  <!-- Modal for Thank You Message -->
 <div id="thankYouModal" class="modal" style="display: none;">
   <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
@@ -186,8 +162,9 @@ button:hover {
 
 <!-- Modal Background -->
 <div id="modalBackdrop" class="modal-backdrop" style="display: none;" onclick="closeModal()"></div>
-  
-<footer>
+  <footer>
+
+
     <p>&copy; WeServe</p>
     <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
     <ul>

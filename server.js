@@ -41,7 +41,7 @@ app.post('/send-feedback', (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
           console.error('Error sending email:', error); // Log the error
-          return res.status(500).send('Error sending email: ' + error.message); // Send detailed error message
+          alert('Error sending email: ' + error.message); // Send detailed error message
       }
       console.log('Email sent: ' + info.response);
   });
