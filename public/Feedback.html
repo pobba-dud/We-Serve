@@ -116,31 +116,6 @@ button:hover {
 }
     </style>
     <script>
-
-document.getElementById('feedbackForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formData = new FormData(this);
-
-    fetch('/send-feedback', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json(); // Parse the JSON response
-    })
-    .then(data => {
-        alert(data.message || 'Feedback sent successfully!'); // Show success message
-        window.location.href = 'https://www.we-serve.net'; // Redirect to the desired page
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-    });
-});
-
       function openModal() {
     document.getElementById('thankYouModal').style.display = 'block';
     document.getElementById('modalBackdrop').style.display = 'block';
@@ -186,7 +161,7 @@ document.getElementById('feedbackForm').addEventListener('submit', function(even
 </div>
 
 <!-- Modal Background -->
-<div id="modalBackdrop" class="modal-backdrop" style="display: none;" onclick="closeModal()"></div>
+<div id="modalBackdrop" class="modal-backdrop" style="display: none; border-radius: 0%;" onclick="closeModal()"></div>
   <footer>
 
 
