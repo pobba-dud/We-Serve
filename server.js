@@ -41,11 +41,10 @@ app.post('/send-feedback', (req, res) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
         console.error('Error sending email:', error); // Log the error
-        return res.status(500).send('Error sending email: ' + error.message); // Send detailed error message
+        return res.status(500).json({ error: 'Error sending email: ' + error.message }); // Send detailed error message
     }
     console.log('Email sent: ' + info.response);
-    res.status(200).send('Feedback sent successfully feel free to navigate back to we-serve.net');
-    stop
+    res.status(200).json({ message: 'Feedback sent successfully!' }); // Send success message
 });
 });
 
