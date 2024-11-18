@@ -44,7 +44,7 @@ app.post('/send-feedback', (req, res) => {
         return res.status(500).json({ error: 'Error sending email: ' + error.message }); // Send detailed error message
     }
     console.log('Email sent: ' + info.response);
-    res.status(200).json({ message: 'Feedback sent successfully!' }); // Send success message
+    res.json({ message: 'Feedback sent successfully!' }); // Send success message
 });
 });
 
