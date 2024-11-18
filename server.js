@@ -34,8 +34,8 @@ app.post('/send-feedback', (req, res) => {
     const mailOptions = {
         from: email,
         to: 'ajbd47@gmail.com', // Your email where you want to receive feedback
-        subject: `Feedback from ${name}`,
-        text: feedback,
+        subject: `(WeServe) Feedback from ${name}`,
+        text: 'You have recieved feedback from '+ name + " and their feedback is: \n" + '"'+feedback+'"',
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
