@@ -15,3 +15,6 @@ Sexy blue:
 changed our old dark blue to --> #283A43
 if i forgot anything, please change the color to this, thank you.
      -jordynn
+
+idiot blue: #9bd1e5
+pulchritudinous grey: #c7c5b8
