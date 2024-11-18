@@ -5,16 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Notification Example</title>
     <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+    <link href="style.css" rel="stylesheet" type="text/css" />
     <style>
+        
         .container {
             display: flex;
+            position: absolute;
+            top: 18%;
+            left: 23%;
+            right: 30%;
             flex-direction: column; /* Stack items vertically */
             width: 50%;
             margin: auto;
             background-color: rgb(255, 255, 255);
             border: 3px solid black;
-            color: black;
+            font-family: "Red Hat Text", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            color:#283A43;
             padding: 20px; /* Padding around the container */
+            padding-right: 40px;
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
         }
@@ -40,6 +50,7 @@
         }
         .submit-button {
             padding: 10px 20px;
+            width: 95%;
             background-color: #283A43; /* Dark blue background */
             color: white; /* White text */
             border: none;
@@ -47,13 +58,31 @@
             cursor: pointer;
             font-size: 16px; /* Increase font size */
             transition: background-color 0.3s; /* Smooth transition for hover effect */
+            margin: auto;
         }
         .submit-button:hover {
-            background-color: #4747c4; /* Change color on hover */
+            background-color: #9bd1e5; /* Change color on hover */
         }
     </style>
 </head>
 <body>
+
+<!-- navbar -->
+<header>
+    <nav>
+    <ul id="NavUl">
+      <img src="Images/logo.png">
+      <li><a href="index.html"><b>Homepage</b></a></li>
+      <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
+      <li><a href="hourLog.html"><b>Hour log</b></a></li>
+      <li><a href="Calendar.html"><b>Calendar</b></a></li>
+      <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+    </ul>
+  </nav>
+    <div style="margin-bottom: 50px;"></div>
+  </header>
+  <!-- end of navbar -->
+
     <div class="container">
         <div class="header">
             <p>Event Creation</p>
@@ -70,8 +99,22 @@
             <label for="eventTimeRange">Event Time Range:</label>
             <input type="text" id="eventTimeRange" placeholder="e.g., 10:00 AM - 12:00 PM" required>
         </div>
+        <div class="input-field">
+            <label for="eventName">Estemated Length of Event:</label>
+            <input type="text" id="eventLength" placeholder="2:00:00" required>
+        </div>
+        <div class="input-field">
+            <label for="eventName">Event Adress:</label>
+            <input type="text" id="eventAdress" placeholder="(added later)" required>
+        </div>
+        <div class="input-field">
+            <label for="eventName">Description of Event:</label>
+            <input type="text" id="eventDescription" placeholder="As a volunteer you will be helping with..." required>
+        </div>
         <button class="submit-button" onclick="submitEvent()">Create Event</button>
     </div>
+    
+    <div style="height: 50px;"></div>
 
     <script>
         function submitEvent() {
