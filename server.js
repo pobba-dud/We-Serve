@@ -45,6 +45,7 @@ app.post('/send-feedback', (req, res) => {
     }
     console.log('Email sent: ' + info.response);
     res.status(200);
+    return;
 });
 });
 
