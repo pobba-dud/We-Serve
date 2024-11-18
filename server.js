@@ -44,7 +44,6 @@ app.post('/send-feedback', (req, res) => {
         return res.status(500).send('Error sending email: ' + error.message); // Send detailed error message
     }
     console.log('Email sent: ' + info.response);
-    res.status(200);
     stop
 });
 });
