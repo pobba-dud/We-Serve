@@ -55,8 +55,5 @@ Integrate task management features to allow users to create tasks related to spe
 Custom Event Links
 Allow users to generate unique links for events that can be shared with others for easy access.
 
-User Feedback System
-Implement a feedback system for users to suggest improvements or report issues with the calendar.
-
 Analytics Dashboard
 Create an analytics dashboard for users to view statistics about their events (e.g., number of events per month, most common event types)(likely to be in account page or in hours).

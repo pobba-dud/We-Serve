@@ -39,13 +39,13 @@ app.post('/send-feedback', (req, res) => {
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error('Error sending email:', error);
-            return res.status(500).send('Error sending email');
-        }
-        console.log('Email sent: ' + info.response);
-        res.status(200).send('Feedback sent successfully');
-    });
+      if (error) {
+          console.error('Error sending email:', error); // Log the error
+          return res.status(500).send('Error sending email: ' + error.message); // Send detailed error message
+      }
+      console.log('Email sent: ' + info.response);
+      res.status(200).send('Feedback sent successfully');
+  });
 });
 
 // Make the app listen on the port provided by Heroku
