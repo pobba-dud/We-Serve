@@ -197,6 +197,7 @@ opacity: 0.5;
         storedEvents.forEach(event => {
           console.log("Events loaded");
             const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
+            eventDate.setHours(24,0,0,0);
             console.log(event);
             if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
               console.log("event is in timespan");  
