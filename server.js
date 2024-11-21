@@ -18,6 +18,58 @@ app.use(bodyParser.json());
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Redirects
+app.get('/index.html', (req, res) => {
+    res.redirect(301, '/');
+});
+
+app.get('/dashboard.html', (req, res) => {
+    res.redirect(301, '/Dashboard');
+});
+
+app.get('/calendar.html', (req, res) => {
+    res.redirect(301, '/Calendar');
+});
+
+app.get('/hourLog.html', (req, res) => {
+    res.redirect(301, '/HourLog');
+});
+
+app.get('/DiscoverPage.html', (req, res) => {
+    res.redirect(301, '/DiscoverPage');
+});
+
+app.get('/Proof.html', (req, res) => {
+    res.redirect(301, '/Proof');
+});
+
+app.get('/Feedback.html', (req, res) => {
+    res.redirect(301, '/Feedback');
+});
+
+app.get('/login.html', (req, res) => {
+    res.redirect(301, '/Login');
+});
+
+app.get('/SignUp.html', (req, res) => {
+    res.redirect(301, '/SignUp');
+});
+app.get('/Notfication Test.html', (req, res) => {
+    res.redirect(301, '/NotficationTest');
+});
+app.get('/Notfication Test2.html', (req, res) => {
+    res.redirect(301, '/NotficationTest2');
+});
+app.get('/organizationEvent.html', (req, res) => {
+    res.redirect(301, '/OrganizationEvent');
+});
+app.get('/test.html', (req, res) => {
+    res.redirect(301, '/Test');
+});
+app.get('/Proof.html', (req, res) => {
+    res.redirect(301, '/Proof');
+});
+
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Use your email service (e.g., Gmail)
