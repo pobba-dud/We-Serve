@@ -1,0 +1,74 @@
+{
+    "redirects": [
+      {
+        "source": "/index.html",
+        "destination": "/",
+        "status": 301
+      },
+      {
+        "source": "/dashboard.html",
+        "destination": "/Dashboard",
+        "status": 301
+      },
+      {
+        "source": "/calendar.html",
+        "destination": "/Calendar",
+        "status": 301
+      },
+      {
+        "source": "/hourLog.html",
+        "destination": "/HourLog",
+        "status": 301
+      },
+      {
+        "source": "/DiscoverPage.html",
+        "destination": "/DiscoverPage",
+        "status": 301
+      },
+      {
+        "source": "/Proof.html",
+        "destination": "/Proof",
+        "status": 301
+      },
+      {
+        "source": "/Feedback.html",
+        "destination": "/Feedback",
+        "status": 301
+      },
+      {
+        "source": "/login.html",
+        "destination": "/Login",
+        "status": 301
+      },
+      {
+        "source": "/SignUp.html",
+        "destination": "/SignUp",
+        "status": 301
+      },
+      {
+        "source": "/Notfication Test.html",
+        "destination": "/NotficationTest",
+        "status": 301
+      },
+      {
+        "source": "/Notfication Test2.html",
+        "destination": "/NotficationTest2",
+        "status": 301
+      },
+      {
+        "source": "/organizationEvent.html",
+        "destination": "/OrganizationEvent",
+        "status": 301
+      },
+      {
+        "source": "/test.html",
+        "destination": "/Test",
+        "status": 301
+      },
+      {
+        "source": "/Proof.html",
+        "destination": "/Proof",
+        "status": 301
+      }
+    ]
+  }
