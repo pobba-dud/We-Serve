@@ -31,8 +31,8 @@
             padding: 50px;
         }
         .button {
-            background-color: #4747c4; /* Sexy blue */
-            color: white;
+            background-color: #9bd1e5; /* Sexy blue */
+            color: #283A43;
             padding: 15px 30px;
             border: none;
             border-radius: 5px;
@@ -96,15 +96,31 @@
 nav {
   padding-top: 20px;
 }
+@keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated {
+            animation: fadeInUp 1s ease forwards;
+        }
     </style>
 </head>
 <body>
 
   <header>
+    
     <nav style="align-self: center;">
       <div>
+        <img style="float: left; display: flex; width: 57px; height: 57px; margin: 0%; padding: 0%; margin-right: 5px;" src="Images/logo.png">
         <div class="dropdown">
-          <button class="dropbtn">Dropdown 1</button>
+          <button class="dropbtn"><b>Dropdown 1</b></button>
           <div class="dropdown-content">
             <a href="#">Link 1</a>
             <a href="#">Link 2</a>
@@ -113,7 +129,7 @@ nav {
         </div>
         
         <div class="dropdown">
-          <button class="dropbtn">Dropdown 2</button>
+          <button class="dropbtn"><b>Dropdown 2</b></button>
           <div class="dropdown-content">
             <a href="#">Link 1</a>
             <a href="#">Link 2</a>
@@ -122,7 +138,7 @@ nav {
         </div>
         
         <div class="dropdown">
-          <button class="dropbtn">Dropdown 3</button>
+          <button class="dropbtn"><b>Dropdown 3</b></button>
           <div class="dropdown-content">
             <a href="#">Link 1</a>
             <a href="#">Link 2</a>
@@ -132,15 +148,15 @@ nav {
       </div>
     </nav>
   </header>
-<h1 style="text-align: center;color: #9bd1e5;">Welcome to WeServe</h1>
+<h1 class="animated" style="text-align: center;color: white; margin-top: 50px;">Welcome to WeServe</h1>
 <div class="container">
-    <h2 style="color: #9bd1e5;">Your journey to making a difference starts here!</h2>
-    <p style="color: #9bd1e5;">Join us in our mission to serve the community and create a positive impact.</p>
-    <a href="dashboard.html" class="button">Get Started</a>
+    <h2 class="animated" style="color: white;">Your journey to making a difference starts here!</h2>
+    <p class="animated" style="color: white">Join us in our mission to serve the community and create a positive impact.</p>
+    <div class="animated" style="margin-top: 50px;"></div><a href="dashboard.html" class="button"><b>Get Started</b></a>
 </div>
 <footer>
     <p>&copy; WeServe</p>
-    <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:20%;">
+    <div style=" width: 100%;background-color: #283A43; padding-bottom: 5%;height:5%;">
     <ul>
       <li><a href="#">Terms of Use</a></li>
       <li><a href="#">Privacy Policy</a></li>
