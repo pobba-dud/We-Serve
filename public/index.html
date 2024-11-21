@@ -9,7 +9,9 @@
     <style>
         body {
             font-family: 'Red Hat Text', sans-serif;
-            background-color: #f7f7f7; /* Light background for contrast */
+            background-image: url('images/Helping.png'); /* Set the background image */
+            background-size: cover; /* Make the background cover the entire area */
+            background-position: center; /* Center the background image */
             color: #283A43; /* Text color */
             margin: 0;
             padding: 0;
@@ -51,22 +53,94 @@
             bottom: 0;
             width: 100%;
         }
+        .dropbtn {
+  background-color: #283A43;
+  color: #9bd1e5;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-top: -20px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #283A43;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #9bd1e5;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #283A43}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #283A43;
+}
+nav {
+  padding-top: 20px;
+}
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Welcome to WeServe</h1>
-</header>
-
+  <header>
+    <nav style="align-self: center;">
+      <div>
+        <div class="dropdown">
+          <button class="dropbtn">Dropdown 1</button>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
+        
+        <div class="dropdown">
+          <button class="dropbtn">Dropdown 2</button>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
+        
+        <div class="dropdown">
+          <button class="dropbtn">Dropdown 3</button>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+<h1 style="text-align: center;color: #9bd1e5;">Welcome to WeServe</h1>
 <div class="container">
-    <h2>Your journey to making a difference starts here!</h2>
-    <p>Join us in our mission to serve the community and create a positive impact.</p>
+    <h2 style="color: #9bd1e5;">Your journey to making a difference starts here!</h2>
+    <p style="color: #9bd1e5;">Join us in our mission to serve the community and create a positive impact.</p>
     <a href="dashboard.html" class="button">Get Started</a>
 </div>
 <footer>
     <p>&copy; WeServe</p>
-    <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
+    <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:20%;">
     <ul>
       <li><a href="#">Terms of Use</a></li>
       <li><a href="#">Privacy Policy</a></li>
