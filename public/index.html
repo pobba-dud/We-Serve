@@ -54,45 +54,60 @@
             bottom: 0;
             width: 100%;
         }
-        .dropbtn {
-  background-color: #283A43;
-  color: #9bd1e5;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
+/* Dropdown Button */
+.dropbtn {
+    background-color: #283A43;
+    color: #9bd1e5;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth background color change */
 }
 
+/* Dropdown Container */
 .dropdown {
-  position: relative;
-  display: inline-block;
-  margin-top: -20px;
+    position: relative;
+    display: inline-block;
 }
 
+/* Dropdown Content */
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #283A43;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+    display: none; /* Initially hidden */
+    position: absolute;
+    background-color: #283A43;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    opacity: 0; /* Start as invisible */
+    transform: translateY(-10px); /* Start slightly above */
+    transition: opacity 0.4s ease, transform 0.4s ease; /* Smooth transition */
 }
 
+/* Links inside the dropdown */
 .dropdown-content a {
-  color: #9bd1e5;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+    color: #9bd1e5;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease; /* Smooth background color change on hover */
 }
 
-.dropdown-content a:hover {background-color: #283A43}
+/* Change background color on hover */
+.dropdown-content a:hover {
+    background-color: #273238; /* Change this to your desired hover color */
+}
 
+/* Show dropdown on hover */
 .dropdown:hover .dropdown-content {
-  display: block;
+    display: block; /* Show dropdown */
+    opacity: 1; /* Fade in */
+    transform: translateY(0); /* Move to original position */
 }
 
+/* Change button background on hover */
 .dropdown:hover .dropbtn {
-  background-color: #283A43;
+    background-color: #273238; /* Change this to your desired hover color */
 }
 nav {
   padding-top: 20px;
