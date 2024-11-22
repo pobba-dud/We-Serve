@@ -20,22 +20,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Redirects
 app.get('/index.html', (req, res) => {
+    console.log('Redirecting /index.html to /');
     res.redirect(301, '/');
 });
 
 app.get('/dashboard.html', (req, res) => {
+    console.log('Redirecting /Dashboard.html to /');
     res.redirect(301, '/Dashboard');
 });
 
 app.get('/calendar.html', (req, res) => {
+    console.log('Redirecting /Calendar.html to /');
     res.redirect(301, '/Calendar');
 });
 
 app.get('/hourLog.html', (req, res) => {
+    console.log('Redirecting /HourLog.html to /');
     res.redirect(301, '/HourLog');
 });
 
 app.get('/DiscoverPage.html', (req, res) => {
+    console.log('Redirecting /DiscoverPage.html to /');
     res.redirect(301, '/DiscoverPage');
 });
 
@@ -68,6 +73,11 @@ app.get('/test.html', (req, res) => {
 });
 app.get('/Proof.html', (req, res) => {
     res.redirect(301, '/Proof');
+});
+
+// Fallback route
+app.get('*', (req, res) => {
+    res.redirect(404, '/'); // Redirects to homepage for undefined routes
 });
 
 // Nodemailer configuration
