@@ -12,9 +12,10 @@
             background-image: url('Images/Helping.png'); /* Set the background image */
             background-size: cover; /* Make the background cover the entire area */
             background-position: center; /* Center the background image */
+            background-repeat: no-repeat;
             color: #283A43; /* Text color */
             margin: 0;
-            padding: 0;
+            padding-bottom: 0;
         }
         header {
             background-color: #283A43; /* Changed blue */
@@ -48,8 +49,8 @@
             background-color: #283A43; /* Changed blue */
             color: #f7f7f7; /* Light text color */
             text-align: center;
-            padding: 20px;
-            position: absolute;
+            padding-top: 20px; padding-left: 20px; padding-right: 20px; padding-bottom: 0;
+            position: relative;
             bottom: 0;
             width: 100%;
         }
@@ -110,9 +111,18 @@ nav {
         .animated {
             animation: fadeInUp 1s ease forwards;
         }
-@media only screen and (max-width: 599px) {
-  .Space {margin-top: -5px;}
+        @media only screen and (max-width: 977px) {
+    body {
+        padding-bottom: 0px; /* Ensure enough space for the footer */
+    }
+    
+    footer {
+        position: relative; /* Ensure footer does not overlap */
+        padding-bottom: 40%;
+    }
+
  
+
 }
     </style>
 </head>
@@ -160,7 +170,7 @@ nav {
 </div>
 <footer>
     <p>&copy; WeServe</p>
-    <div class="Space" style=" width: 100%;background-color: #283A43; padding-bottom: 5%;height:5%; margin-top: -25px;">
+    <div class="Space" style=" width: 100%;background-color: #283A43; padding-bottom: 13%;height:5%; ">
     <ul>
       <li><a href="#">Terms of Use</a></li>
       <li><a href="#">Privacy Policy</a></li>
