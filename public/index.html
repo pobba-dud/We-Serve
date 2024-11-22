@@ -146,11 +146,27 @@ nav {
     background-color: #7fb8d4; /* Change background color on hover */
     transform: scale(1.05); /* Slightly increase the size on hover */
 }
+.donate-button {
+    background-color: #283A43; /* Button background color */
+    color: #9bd1e5; /* Button text color */
+    padding: 15px 30px; /* Padding for the button */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 18px; /* Font size */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    display: inline-block; /* Make it inline-block */
+}
+
+.donate-button:hover {
+    background-color: #18183b; /* Change color on hover */
+    color: white; /* Change text color on hover */
+}
     </style>
 </head>
 <body>
 
   <header>
+   
     
     <nav style="align-self: center;">
       <div>
@@ -180,7 +196,10 @@ nav {
             <a href="#">Link 2</a>
             <a href="#">Link 3</a>
           </div>
-        </div>
+        </div> 
+        <div class="donate-container" style="text-align: center; position: relative; float: right;">
+      <a href="donate.html" class="donate-button">Donate</a>
+  </div>
       </div>
     </nav>
   </header>
