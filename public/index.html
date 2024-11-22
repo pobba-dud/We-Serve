@@ -97,6 +97,9 @@
 nav {
   padding-top: 20px;
 }
+*, *::before, *::after { /*This looks stupid but it's important for mobile and laptop..DON'T DELETE*/
+    box-sizing: border-box;
+}
 @keyframes fadeInUp {
             from {
                 opacity: 0;
