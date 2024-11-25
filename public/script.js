@@ -99,9 +99,10 @@ function searchDiscoverEvents() { // start of searchDiscoverEvents() function
   const input = document.getElementById('discoverSearchInput').value.toLowerCase();
   const eventListContainer = document.querySelector('.discover-events-list');
   const eventList = document.querySelectorAll('.discover-events-list .event'); // Select all event elements
+  const locationInput = document.getElementById('locationSearchInput').value.toLowerCase();
 
   // Show or hide the event list based on input
-  if (input.length > 0) {
+  if (input.length > 0 || locationInput.length > 0) {
     eventListContainer.style.display = ""; // Show the event list
   } else {
     eventListContainer.style.display = "none"; // Hide the event list if input is empty
@@ -110,6 +111,7 @@ function searchDiscoverEvents() { // start of searchDiscoverEvents() function
   eventList.forEach(event => {
     const title = event.querySelector('.event-title').textContent.toLowerCase(); // Get the title of the event
     const date = event.querySelector('.event-date').textContent.toLowerCase(); // Get the date of the event
+    const location = event.querySelector('.event-location').textContent.toLowerCase(); // Get the location of the event
     // Check if the title or date includes the search input
     if (title.includes(input) || date.includes(input)) {
       event.style.display = ""; // Show the event

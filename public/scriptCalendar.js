@@ -81,7 +81,7 @@ function load() {
       if (eventForDay) {
         const eventDiv = document.createElement('div');
         eventDiv.classList.add('event');
-        eventDiv.innerText = eventForDay.title + "\n" + eventForDay.time;
+        eventDiv.innerText = `${eventForDay.title}\n${eventForDay.time}\nLocation: ${eventForDay.location}`;
         daySquare.appendChild(eventDiv);
       }
 
@@ -111,11 +111,13 @@ function saveEvent() {
   if (eventTitleInput.value + eventTimeInput.value) {
     eventTitleInput.classList.remove('error');
     eventTimeInput.classList.remove('error');
+    eventLocationInput.classList.remove('error'); // Remove error class for location
 
     events.push({
       date: clicked,
       title: eventTitleInput.value,
       time: eventTimeInput.value,
+      location: eventLocationInput.value // Store the location
     });
 
     localStorage.setItem('events', JSON.stringify(events));
@@ -123,6 +125,7 @@ function saveEvent() {
   } else {
     eventTitleInput.classList.add('error');
     eventTimeInput.classList.add('error')
+    eventLocationInput.classList.add('error'); // Add error class for location if empty
   }
 }
 
@@ -189,6 +192,17 @@ function remoteDeleteEvent(date, time) {
 
   localStorage.setItem('events', JSON.stringify(events));
   load();
+}
+
+function openDeleteModal(event) {
+  const eventToDelete = events.find(e => e.date === event.date && e.title === event.title);
+  deleteModal.innerHTML = `
+      <h2>Delete Event</h2>
+      <p>Are you sure you want to delete the event "${eventToDelete.title}" scheduled for ${eventToDelete.time} at ${eventToDelete.location}?</p>
+      <button id="confirmDeleteButton">Yes</button>
+      <button id="cancelDeleteButton">No</button>
+  `;
+  deleteModal.style.display = 'block';
 }
 
 remoteCreateEvent('2024/10/15', 'skibidi sesh #2', '1:00 PM');

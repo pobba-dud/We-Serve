@@ -143,6 +143,22 @@ opacity: 0.5;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+#locationSearchInput {
+    margin-left: 2.5%;
+    margin-bottom: .5%;
+    width: 95%;
+    padding: 10px; /* Add padding for better spacing */
+    font-size: 16px;
+    border: 1px solid #ccc; /* Light border for better visibility */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+}
+
+#locationSearchInput:focus {
+    border-color: #283A43; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
 
 .discover-events-list {
     margin-top: 20px; /* Adding some space between search and events */
@@ -238,32 +254,39 @@ opacity: 0.5;
 
 
     <div class="discover-search-container">
+      <input type="text" id="locationSearchInput" placeholder="Search events by location..." onkeyup="searchDiscoverEvents()">
       <input type="text" id="discoverSearchInput" placeholder="Search events by title or date..." onkeyup="searchDiscoverEvents()">
   </div>
   <div class="discover-events-list" style="display: none;"> <!-- Initially hidden -->
       <div class="event">
           <div class="event-title">Lions Club Pancake Breakfast</div>
           <div class="event-date">2024-28-10</div>
+          <div class="event-location">location</div>
       </div>
       <div class="event">
           <div class="event-title">Plant Vegtables</div>
           <div class="event-date">2024-30-10</div>
+          <div class="event-location">location</div>
       </div>
       <div class="event">
         <div class="event-title">Charity Car Wash</div>
         <div class="event-date">2024-11-10</div>
+        <div class="event-location">location</div>
     </div>
     <div class="event">
       <div class="event-title">Soup Kitchen Volunteer</div>
       <div class="event-date">2024-15-10</div>
+      <div class="event-location">location</div>
   </div>
   <div class="event">
     <div class="event-title">Collect Resuable Plastics</div>
     <div class="event-date">2024-21-10</div>
+    <div class="event-location">location</div>
 </div>
 <div class="event">
   <div class="event-title">Clothes Drive</div>
   <div class="event-date">2024-23-10</div>
+  <div class="event-location">location</div>
 </div>
       <!-- Add more event elements here -->
   </div>
@@ -294,9 +317,10 @@ opacity: 0.5;
                 Image of food court
               </div>
               <div class="event-info">
-                <h5>Helper Heroes</h5>
-                <span>Helping at the food court</span>
-                <span>October 28th</span>
+                <h5>Helper Heroes</h5><br>
+                <span>Helping at the food court</span><br>
+                <span>location</span><br>
+                <span>October 28th</span><br>
                 <span>10:00 AM - 12:00 PM</span>
               </div>
             </div>
@@ -340,9 +364,10 @@ opacity: 0.5;
               Image of Recyling Event 
             </div>
             <div class="event-info">
-              <h5>Community Changers</h5>
-              <span>Recycling trash</span>
-              <span>October 31th</span>
+              <h5>Community Changers</h5><br>
+              <span>Recycling trash</span><br>
+              <span>location</span><br>
+              <span>October 31th</span><br>
               <span>02:00 PM - 06:00 PM</span>
             </div>
           </div>
@@ -387,9 +412,10 @@ opacity: 0.5;
               Image of Dogs
             </div>
             <div class="event-info">
-              <h5>Service Solidarians</h5>
-              <span>Dog walking</span>
-              <span>November 2nd</span>
+              <h5>Service Solidarians</h5><br>
+              <span>Dog walking</span><br>
+              <span>location</span><br>
+              <span>November 2nd</span><br>
               <span>01:00 PM - 09:00 PM</span>
             </div>
           </div>
@@ -434,9 +460,10 @@ opacity: 0.5;
               Image of Grass cutting
             </div>
             <div class="event-info">
-              <h5>Grass Roots Rockers</h5>
-              <span>Cutting grass</span>
-              <span>November 8th</span>
+              <h5>Grass Roots Rockers</h5><br>
+              <span>Cutting grass</span><br>
+              <span>location</span><br>
+              <span>November 8th</span><br>
               <span>11:00 am -  03:00 pm</span>
 
             </div>
@@ -482,9 +509,10 @@ opacity: 0.5;
               Image of Stickers
             </div>
             <div class="event-info">
-              <h5>Random Kindess Crew</h5>
-              <span>Kindness sticker making</span>
-              <span>November 20th</span>
+              <h5>Random Kindess Crew</h5><br>
+              <span>Kindness sticker making</span><br>
+              <span>location</span><br>
+              <span>November 20th</span><br>
               <span>02:00 PM - 04:00 PM</span>
             </div>
           </div>
@@ -528,9 +556,10 @@ opacity: 0.5;
               Image of Volunteering
             </div>
             <div class="event-info">
-              <h5>Poverty Eradiators</h5>
-              <span>Assist the Homeless</span>
-              <span>November,16</span>
+              <h5>Poverty Eradiators</h5><br>
+              <span>Assist the Homeless</span><br>
+              <span>location</span><br>
+              <span>November,16</span><br>
               <span>03:00 PM - 05:00 PM</span>
             </div>
           </div>
