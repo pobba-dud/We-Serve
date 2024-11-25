@@ -55,6 +55,20 @@
             background-color: #283A43;
             color: white;
         }
+        nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex; /* Use flexbox for alignment */
+        justify-content: center; /* Center the items */
+        background-color: #283A43; /* Background color of the navbar */
+        font-size: 20px;
+    }
+
+    nav ul li {
+        margin: 0 15px; /* Add some space between items */
+        color: #9bd1e5; /* Text color */
+    }
     </style>
 </head>
 <body>
@@ -62,17 +76,20 @@
 <header>
     <h1>WeServe Donation Page</h1>
     <nav>
-        <div style="align-content: center;">
         <ul id="NavUl">
-          <a href="index.html"><img src="Images/logo.png"></a>
-          <li><a href="dashboard.html"><b>Homepage</b></a></li>
-          <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
-          <li><a href="hourLog.html"><b>Hour log</b></a></li>
-          <li><a href="Calendar.html"><b>Calendar</b></a></li>
-          <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+            <a href="index.html"><img src="Images/logo.png"></a>
+            <li><a href="dashboard.html"><b>Homepage</b></a></li>
+            <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
+            <li><a href="hourLog.html"><b>Hour log</b></a></li>
+            <li><a href="Calendar.html"><b>Calendar</b></a></li>
+            <li style="float:right; display:flex; align-content: center;">
+            <div style="margin-left: 615%;">
+                <a href="login.html"> 
+                    <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> 
+                </a>
+            </li></div>
         </ul>
-    </div>
-      </nav>
+    </nav>
 </header>
 
 <div class="donation-container">
