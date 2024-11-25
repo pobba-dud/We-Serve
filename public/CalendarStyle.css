@@ -215,20 +215,23 @@ html {
     footer {
       margin-top: 15%;
       margin-bottom: 0%;
-    background-color: #283A43; /* A shade of blue */
-    color: #f7f7f7; /* A shade of white */
-    text-align: center;
-    clear: both; /* To ensure the footer is below the calendar */
-    padding-top: 2%;
-    font-size: 150%;
-    }
-    footer ul{
+      background-color: #283A43; /* A shade of blue */
+      color: #f7f7f7; /* A shade of white */
+      text-align: center; /* Center the text */
+      clear: both; /* To ensure the footer is below the content */
+      padding-top: 2%;
+      font-size: 150%;
+  }
+  footer ul {
       background-color: #283A43;
-      display: inline;
-    }
-    footer ul li{
-      background-color: #283A43;
-    }
+      display: inline-block; /* Ensure the list is centered */
+      padding: 0; /* Remove padding */
+      margin: 0; /* Remove margin */
+  }
+  footer ul li {
+      display: inline; /* Display list items inline */
+      margin: 0 10px; /* Add some space between list items */
+  }
     @media only screen and (max-width: 885px) {
       #calDiv{width: 20%;margin-right:auto ;}
       #calDiv{text-align: center ;}
