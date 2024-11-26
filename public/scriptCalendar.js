@@ -165,6 +165,64 @@ function saveEvent() {
   }
 }
 
+function saveEvent() {
+  const title = document.getElementById('eventTitleInput').value;
+  const time = document.getElementById('eventTimeInput').value;
+  const location = document.getElementById('eventLocationInput').value;
+  const type = document.getElementById('eventTypeInput').value; // Get the selected event type
+
+  if (title && time) {
+      const newEvent = {
+          date: clicked, // Make sure 'clicked' is set to the correct date
+          title,
+          time,
+          location,
+          type
+      };
+
+      // Add the new event to the events array
+      events.push(newEvent);
+
+      // Save events to localStorage
+      localStorage.setItem('events', JSON.stringify(events));
+      closeModal(); // Close the modal after saving
+      load(); // Reload the calendar to display the new event
+  } else {
+      alert('Please fill in all fields');
+  }
+}
+
+function renderEvents() {
+  const calendar = document.getElementById('calendar'); // Your calendar element
+  calendar.innerHTML = ''; // Clear existing events
+
+      events.forEach(event => {
+        const eventDiv = document.createElement('div');
+        eventDiv.classList.add('event');
+        eventDiv.innerText = `${event.title} - ${event.time} - ${event.location}`;
+
+        // Set color based on event type
+        switch (event.type) {
+            case 'personal':
+                eventDiv.style.backgroundColor = '#58bae4'; // Blue
+                break;
+            case 'work':
+                eventDiv.style.backgroundColor = '#ffcc00'; // Yellow
+                break;
+            case 'important':
+                eventDiv.style.backgroundColor = '#ff5733'; // Red
+                break;
+            case 'other':
+                eventDiv.style.backgroundColor = '#28a745'; // Green
+                break;
+            default:
+                eventDiv.style.backgroundColor = '#ffffff'; // Default color
+        }
+
+        calendar.appendChild(eventDiv); // Add event to calendar
+    });
+}
+
 // Function to delete an event from localStorage
 function deleteEvent() {
   events = events.filter(e => e.date !== clicked);
@@ -240,6 +298,7 @@ function openDeleteModal(event) {
   `;
   deleteModal.style.display = 'block';
 }
+
 
 remoteCreateEvent('2024/10/15', 'skibidi sesh #2', '1:00 PM');
 //remoteDeleteEvent('2024/10/15', '10:00 AM');

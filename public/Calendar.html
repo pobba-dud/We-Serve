@@ -58,6 +58,40 @@
           }
       });
   }
+
+  function load() {
+    const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
+    events = storedEvents;
+
+    calendar.innerHTML = ''; // Clear the calendar before rendering new events
+
+    events.forEach(event => {
+        const eventDiv = document.createElement('div');
+        eventDiv.classList.add('event');
+        eventDiv.innerText = `${event.title} - ${event.time} - ${event.location}`;
+
+        // Set color based on event type
+        switch (event.type) {
+            case 'personal':
+                eventDiv.style.backgroundColor = '#58bae4'; // Blue
+                break;
+            case 'work':
+                eventDiv.style.backgroundColor = '#ffcc00'; // Yellow
+                break;
+            case 'important':
+                eventDiv.style.backgroundColor = '#ff5733'; // Red
+                break;
+            case 'other':
+                eventDiv.style.backgroundColor = '#28a745'; // Green
+                break;
+            default:
+                eventDiv.style.backgroundColor = '#ffffff'; // Default color
+        }
+
+        calendar.appendChild(eventDiv); // Add event to calendar
+    });
+}
+
   function closeNotification() {
     const notification = document.getElementById("customNotification");
     notification.style.display = "none"; // Hide the notification
@@ -111,10 +145,17 @@
         <h2>New Event</h2>
         <input id="eventTitleInput" placeholder="Event Title" />
         <input id="eventTimeInput" placeholder="Event Time" />
-        <input id="eventLocationInput" placeholder="Event Location" /> <!-- New input field for location -->
+        <input id="eventLocationInput" placeholder="Event Location" />
+        <label for="eventTypeInput">Event Type:</label>
+        <select id="eventTypeInput">
+            <option value="personal">Personal</option>
+            <option value="work">Work</option>
+            <option value="important">Important</option>
+            <option value="other">Other</option>
+        </select>
         <button id="saveButton">Save</button>
         <button id="cancelButton">Cancel</button>
-      </div>
+    </div>
       <div id="deleteEventModal">
         <h2>Event</h2>
         <p id="eventText"></p>
