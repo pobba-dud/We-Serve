@@ -204,7 +204,7 @@ function renderEvents() {
         // Set color based on event type
         switch (event.type) {
             case 'personal':
-                eventDiv.style.backgroundColor = '#58bae4'; // Blue
+                eventDiv.style.backgroundColor = '#ff6505'; // Orange
                 break;
             case 'work':
                 eventDiv.style.backgroundColor = '#ffcc00'; // Yellow
@@ -216,7 +216,7 @@ function renderEvents() {
                 eventDiv.style.backgroundColor = '#28a745'; // Green
                 break;
             default:
-                eventDiv.style.backgroundColor = '#ffffff'; // Default color
+                eventDiv.style.backgroundColor = '#4290f5'; // Default color
         }
 
         calendar.appendChild(eventDiv); // Add event to calendar
