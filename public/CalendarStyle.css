@@ -232,6 +232,20 @@ html {
       display: inline; /* Display list items inline */
       margin: 0 10px; /* Add some space between list items */
   }
+
+  .edit-button {
+    background-color: orange; /* Set the background color to orange */
+    color: white; /* Set the text color to white for contrast */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Add rounded corners */
+    padding: 10px 20px; /* Add some padding */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.edit-button:hover {
+    background-color: darkorange; /* Change to a darker shade on hover */
+}
     @media only screen and (max-width: 885px) {
       #calDiv{width: 20%;margin-right:auto ;}
       #calDiv{text-align: center ;}

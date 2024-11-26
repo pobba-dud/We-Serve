@@ -12,6 +12,7 @@ const eventTimeInput = document.getElementById('eventTimeInput');
 const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 // Function to open the modal for creating or deleting an event
+// Function to open the modal for creating or deleting an event
 function openModal(date) {
   clicked = date; // Set the clicked date
 
@@ -20,14 +21,31 @@ function openModal(date) {
 
   // If an event exists, show the delete modal; otherwise, show the new event modal
   if (eventForDay) {
-    document.getElementById('eventText').innerText = eventForDay.title + "\n" + eventForDay.time;
-    deleteEventModal.style.display = 'block';
+      document.getElementById('eventText').innerText = eventForDay.title + "\n" + eventForDay.time + "\nLocation: " + eventForDay.location;
+      document.getElementById('editButton').style.display = 'inline'; // Show the edit button
+      deleteEventModal.style.display = 'block';
   } else {
-    newEventModal.style.display = 'block';
+      newEventModal.style.display = 'block';
+      document.getElementById('editButton').style.display = 'none'; // Hide the edit button
   }
 
   backDrop.style.display = 'block'; // Show the backdrop
 }
+
+// Function to handle the edit event
+function editEvent() {
+  const eventForDay = events.find(e => e.date === clicked);
+  if (eventForDay) {
+      eventTitleInput.value = eventForDay.title; // Populate title
+      eventTimeInput.value = eventForDay.time; // Populate time
+      eventLocationInput.value = eventForDay.location; // Populate location
+      newEventModal.style.display = 'block'; // Show the new event modal
+      deleteEventModal.style.display = 'none'; // Hide delete modal
+  }
+}
+
+// Add event listener for the edit button
+document.getElementById('editButton').addEventListener('click', editEvent);
 
 // Function to load the calendar for the current month based on navigation
 function load() {
@@ -109,23 +127,41 @@ function closeModal() {
 // Function to save an event to localStorage
 function saveEvent() {
   if (eventTitleInput.value + eventTimeInput.value) {
-    eventTitleInput.classList.remove('error');
-    eventTimeInput.classList.remove('error');
-    eventLocationInput.classList.remove('error'); // Remove error class for location
+      eventTitleInput.classList.remove('error');
+      eventTimeInput.classList.remove('error');
+      eventLocationInput.classList.remove('error'); // Remove error class for location
 
-    events.push({
-      date: clicked,
-      title: eventTitleInput.value,
-      time: eventTimeInput.value,
-      location: eventLocationInput.value // Store the location
-    });
+      // Check if we are editing an existing event
+      const existingEventIndex = events.findIndex(e => e.date === clicked);
+      if (existingEventIndex > -1) {
+          // Update existing event
+          events[existingEventIndex] = {
+              date: clicked,
+              title: eventTitleInput.value,
+              time: eventTimeInput.value,
+              location: eventLocationInput.value // Store the location
+          };
+      } else {
+          // Create a new event
+          events.push({
+              date: clicked,
+              title: eventTitleInput.value,
+              time: eventTimeInput.value,
+              location: eventLocationInput.value // Store the location
+          });
+      }
 
-    localStorage.setItem('events', JSON.stringify(events));
-    closeModal();
+      // Save events to localStorage
+      localStorage.setItem('events', JSON.stringify(events));
+      closeModal(); // Close the modal after saving
   } else {
-    eventTitleInput.classList.add('error');
-    eventTimeInput.classList.add('error')
-    eventLocationInput.classList.add('error'); // Add error class for location if empty
+      // Handle validation errors
+      if (!eventTitleInput.value) {
+          eventTitleInput.classList.add('error');
+      }
+      if (!eventTimeInput.value) {
+          eventTimeInput.classList.add('error');
+      }
   }
 }
 
