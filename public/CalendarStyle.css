@@ -79,6 +79,7 @@ html {
   .event {
     font-size: 10px;
     padding: 3px;
+    background-color: #247ba0;
     color: white;
     border-radius: 5px;
     max-height: 55px;
