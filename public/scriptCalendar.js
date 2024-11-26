@@ -204,16 +204,16 @@ function renderEvents() {
         // Set color based on event type
         switch (event.type) {
             case 'personal':
-                eventDiv.style.backgroundColor = '#ff6505'; // Orange
+                event.style.backgroundColor = '#ff6505'; // Orange
                 break;
             case 'work':
-                eventDiv.style.backgroundColor = '#ffcc00'; // Yellow
+                event.style.backgroundColor = '#ffcc00'; // Yellow
                 break;
             case 'important':
-                eventDiv.style.backgroundColor = '#ff5733'; // Red
+                event.style.backgroundColor = '#ff5733'; // Red
                 break;
             case 'other':
-                eventDiv.style.backgroundColor = '#28a745'; // Green
+                event.style.backgroundColor = '#28a745'; // Green
                 break;
             default:
                 eventDiv.style.backgroundColor = '#4290f5'; // Default color
