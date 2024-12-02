@@ -18,3 +18,5 @@ if i forgot anything, please change the color to this, thank you.
 
 idiot blue: #9bd1e5
 pulchritudinous grey: #c7c5b8
+
+29 days untill Brent can google external login
