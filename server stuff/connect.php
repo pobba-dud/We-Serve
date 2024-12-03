@@ -13,6 +13,7 @@
         }
         printf("connected sucessfully");
         $mysqli -> close();
+        mysqli_query($connection, '')
         ?>
     </body>
 </html>
