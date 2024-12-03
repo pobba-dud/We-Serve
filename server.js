@@ -19,60 +19,54 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Redirects
-app.get('/index.html', (req, res) => {
-    console.log('Redirecting /index.html to /');
-    res.redirect(301, '/');
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
-app.get('/dashboard.html', (req, res) => {
+app.get('/index', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.get('/dashboard', (req, res) => {
     console.log('Redirecting /Dashboard.html to /');
-    res.redirect(301, '/Dashboard');
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
-app.get('/calendar.html', (req, res) => {
+app.get('/Calendar', (req, res) => {
     console.log('Redirecting /Calendar.html to /');
-    res.redirect(301, '/Calendar');
+    res.sendFile(path.join(__dirname, 'public', 'Calendar.html'));
+
 });
 
-app.get('/hourLog.html', (req, res) => {
+app.get('/hourLog', (req, res) => {
     console.log('Redirecting /HourLog.html to /');
-    res.redirect(301, '/HourLog');
+    res.sendFile(path.join(__dirname, 'public', 'hourLog.html'));
 });
 
-app.get('/DiscoverPage.html', (req, res) => {
+app.get('/DiscoverPage', (req, res) => {
     console.log('Redirecting /DiscoverPage.html to /');
-    res.redirect(301, '/DiscoverPage');
+    res.sendFile(path.join(__dirname, 'public', 'DiscoverPage.html'));
 });
 
-app.get('/Proof.html', (req, res) => {
-    res.redirect(301, '/Proof');
+app.get('/Proof', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Proof.html'));
 });
 
-app.get('/Feedback.html', (req, res) => {
-    res.redirect(301, '/Feedback');
+app.get('/Feedback', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Feedback.html'));
 });
 
-app.get('/login.html', (req, res) => {
-    res.redirect(301, '/Login');
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
-app.get('/SignUp.html', (req, res) => {
-    res.redirect(301, '/SignUp');
+app.get('/SignUp', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'SignUp.html'));
 });
-app.get('/Notfication Test.html', (req, res) => {
-    res.redirect(301, '/NotficationTest');
-});
-app.get('/Notfication Test2.html', (req, res) => {
-    res.redirect(301, '/NotficationTest2');
-});
-app.get('/organizationEvent.html', (req, res) => {
-    res.redirect(301, '/OrganizationEvent');
+
+app.get('/organizationEvent', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'organizationEvent.html'));
 });
 app.get('/test.html', (req, res) => {
-    res.redirect(301, '/Test');
-});
-app.get('/Proof.html', (req, res) => {
-    res.redirect(301, '/Proof');
+    res.sendFile(path.join(__dirname, 'public', 'test.html'));
 });
 
 // Fallback route
