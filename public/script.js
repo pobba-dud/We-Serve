@@ -1,3 +1,4 @@
+//code for dashboard.html
 // Function to dynamically update the numbers next to the day names
 function updateDayNumbers() { // start of updateDayNumbers() function
   const today = new Date();
@@ -93,6 +94,7 @@ var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
   keyboard: false,
   backDrop: false
 })
+//end of dashboard code
 
 
 function searchDiscoverEvents() { // start of searchDiscoverEvents() function
@@ -119,3 +121,52 @@ function searchDiscoverEvents() { // start of searchDiscoverEvents() function
     }
   });
 } // end of searchDiscoverEvents() function
+
+//universally used code
+// Function to show custom notification
+function showNotification(message) {
+  console.log("2nd Function started");
+  console.log(message);
+    const notification = document.getElementById("customNotification");
+    console.log(notification);
+    notification.textContent = message; // Set the message
+    notification.style.display = "block"; // Show the notification
+    console.log(notification.textContent);
+    // Hide the notification after 5 seconds
+    setTimeout(() => {
+      console.log("timer Function started");
+        notification.style.opacity = '0'; // Fade out
+        setTimeout(() => {
+            notification.style.display = "none"; // Hide after fade out
+            notification.style.opacity = '1'; // Reset opacity for next use
+        }, 500); // Wait for the fade out duration
+    }, 500000); // Display for 5 seconds
+}
+
+// Function to check for events within 36 hours and show notifications
+function checkUpcomingEvents() {
+  console.log("Function started");
+    const currentTime = new Date();
+    const fourtyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
+
+    // Retrieve events from local storage
+    const storedEvents = JSON.parse(localStorage.getItem('events')) || []; // Replace 'events' with your actual key
+
+    storedEvents.forEach(event => {
+      console.log("Events loaded");
+        const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
+        eventDate.setHours(24,0,0,0);
+        console.log(event);
+        if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
+          console.log("event is in timespan");  
+          console.log(event);
+          console.log(eventDate);
+          showNotification(`Upcoming Event: ${event.title} at ${event.location} on ${event.date} at ${event.time}`);
+        }
+    });
+}
+function closeNotification() {
+  const notification = document.getElementById("customNotification");
+  notification.style.display = "none"; // Hide the notification
+}
+//end of universally used code
