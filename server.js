@@ -28,9 +28,9 @@ app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
-app.get('/calendar', (req, res) => {
+app.get('/Calendar', (req, res) => {
     console.log('Redirecting /Calendar.html to /');
-    res.sendFile(path.join(__dirname, 'public', 'calendar.html'));
+    res.sendFile(path.join(__dirname, 'public', 'Calendar.html'));
 
 });
 
