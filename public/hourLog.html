@@ -15,6 +15,36 @@
     <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
 </div>
 
+<style>
+  #nav {
+    padding-bottom: -1px;
+  }
+  #NavUl {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #283A43; /* Ensure this matches */
+    font-size: 20px;
+}
+li {
+    margin-bottom: -1%;
+    float: left;
+    display: flex;
+    align-content: center;
+    color: #9bd1e5; /* Ensure this matches */
+}
+li a:link, li a:visited {
+    padding: 18px;
+    text-align: center;
+    text-decoration: none;
+    color: #9bd1e5; /* Ensure this matches */
+    display: inline-block;
+}
+li a:hover {
+    background-color: rgb(57, 94, 112); /* Ensure this matches */
+}
+</style>
 <script>
   // Call checkUpcomingEvents function at the start or at intervals
   window.onload = function() {
@@ -25,14 +55,14 @@
 <!-- navbar -->
 <header>
   <nav>
-  <ul id="NavUl">
-    <a href="index.html"><img src="Images/logo.png"></a>
-    <li><a href="dashboard.html"><b>Homepage</b></a></li>
-    <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
-    <li><a href="hourLog.html"><b>Hour log</b></a></li>
-    <li><a href="Calendar.html"><b>Calendar</b></a></li>
-    <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
-  </ul>
+    <ul id="NavUl" style="padding-bottom: 2px;">
+        <a href="index.html"><img src="Images/logo.png"></a>
+        <li style="margin-bottom: .1%; margin-top: .1%;font-size: 2.5vh;"><a href="dashboard.html"><b>Homepage</b></a></li>
+        <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
+        <li><a href="hourLog.html"><b>Hour log</b></a></li>
+        <li><a href="Calendar.html"><b>Calendar</b></a></li>
+        <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+    </ul>
 </nav>
   <div style="margin-bottom: 50px;"></div>
 </header>
