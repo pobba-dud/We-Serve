@@ -22,7 +22,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
+app.get('/index', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 app.get('/dashboard', (req, res) => {
     console.log('Redirecting /Dashboard.html to /');
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
