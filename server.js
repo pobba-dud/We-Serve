@@ -38,11 +38,11 @@ app.get('/calendar', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Calendar.html'));
 });
 
-app.get('/hour-log', (req, res) => {
+app.get('/hour', (req, res) => {
     console.log('Redirecting /HourLog.html to /');
     res.sendFile(path.join(__dirname, 'public', 'hourLog.html'));
 });
-app.get('/discover-page', (req, res) => {
+app.get('/discover', (req, res) => {
     console.log('Redirecting /DiscoverPage.html to /');
     res.sendFile(path.join(__dirname, 'public', 'DiscoverPage.html'));
 });
