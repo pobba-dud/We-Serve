@@ -39,7 +39,11 @@ app.get('/hourLog.html', (req, res) => {
     res.redirect(301, '/HourLog');
 });
 
+<<<<<<< Updated upstream
 app.get('/DiscoverPage.html', (req, res) => {
+=======
+app.get('/discover-page', (req, res) => {
+>>>>>>> Stashed changes
     console.log('Redirecting /DiscoverPage.html to /');
     res.redirect(301, '/DiscoverPage');
 });
@@ -48,14 +52,20 @@ app.get('/Proof.html', (req, res) => {
     res.redirect(301, '/Proof');
 });
 
+<<<<<<< Updated upstream
 app.get('/Feedback.html', (req, res) => {
     res.redirect(301, '/Feedback');
+=======
+app.get('/feedback', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Feedback.html'));
+>>>>>>> Stashed changes
 });
 
 app.get('/login.html', (req, res) => {
     res.redirect(301, '/Login');
 });
 
+<<<<<<< Updated upstream
 app.get('/SignUp.html', (req, res) => {
     res.redirect(301, '/SignUp');
 });
@@ -75,6 +85,21 @@ app.get('/Proof.html', (req, res) => {
     res.redirect(301, '/Proof');
 });
 
+=======
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'SignUp.html'));
+});
+
+app.get('/organizationEvent', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'organizationEvent.html'));
+});
+app.get('/test', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'test.html'));
+});
+app.get('/donation', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Donation.html'));
+});
+>>>>>>> Stashed changes
 // Fallback route
 app.get('*', (req, res) => {
     res.redirect(404, '/'); // Redirects to homepage for undefined routes
