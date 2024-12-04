@@ -21,30 +21,34 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Redirects
 app.get('/', (req, res) => {
     console.log('Redirecting /index.html to /');
-    res.redirect(301, '/');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.get('/index', (req, res) => {
+    console.log('Redirecting /index.html to /');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/dashboard', (req, res) => {
     console.log('Redirecting /Dashboard.html to /');
-    res.redirect(301, '/Dashboard');
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
 app.get('/calendar', (req, res) => {
     console.log('Redirecting /Calendar.html to /');
-    res.redirect(301, '/Calendar');
+    res.sendFile(path.join(__dirname, 'public', 'Calendar.html'));
 });
 
-app.get('/hourLog', (req, res) => {
+app.get('/hour-log', (req, res) => {
     console.log('Redirecting /HourLog.html to /');
-    res.redirect(301, '/HourLog');
+    res.sendFile(path.join(__dirname, 'public', 'hourLog.html'));
 });
 app.get('/discover-page', (req, res) => {
     console.log('Redirecting /DiscoverPage.html to /');
-    res.redirect(301, '/DiscoverPage');
+    res.sendFile(path.join(__dirname, 'public', 'DiscoverPage.html'));
 });
 
 app.get('/proof', (req, res) => {
-    res.redirect(301, '/Proof');
+    res.sendFile(path.join(__dirname, 'public', 'Proof.html'));
 });
 
 app.get('/feedback', (req, res) => {
@@ -52,7 +56,7 @@ app.get('/feedback', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.redirect(301, '/Login');
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 app.get('/signup', (req, res) => {
