@@ -19,22 +19,22 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Redirects
-app.get('/index.html', (req, res) => {
+app.get('/', (req, res) => {
     console.log('Redirecting /index.html to /');
     res.redirect(301, '/');
 });
 
-app.get('/dashboard.html', (req, res) => {
+app.get('/dashboard', (req, res) => {
     console.log('Redirecting /Dashboard.html to /');
     res.redirect(301, '/Dashboard');
 });
 
-app.get('/calendar.html', (req, res) => {
+app.get('/calendar', (req, res) => {
     console.log('Redirecting /Calendar.html to /');
     res.redirect(301, '/Calendar');
 });
 
-app.get('/hourLog.html', (req, res) => {
+app.get('/hourLog', (req, res) => {
     console.log('Redirecting /HourLog.html to /');
     res.redirect(301, '/HourLog');
 });
@@ -43,7 +43,7 @@ app.get('/discover-page', (req, res) => {
     res.redirect(301, '/DiscoverPage');
 });
 
-app.get('/Proof.html', (req, res) => {
+app.get('/proof', (req, res) => {
     res.redirect(301, '/Proof');
 });
 
@@ -51,7 +51,7 @@ app.get('/feedback', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Feedback.html'));
 });
 
-app.get('/login.html', (req, res) => {
+app.get('/login', (req, res) => {
     res.redirect(301, '/Login');
 });
 
