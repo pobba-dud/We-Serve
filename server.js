@@ -65,10 +65,12 @@ app.get('/SignUp', (req, res) => {
 app.get('/organizationEvent', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'organizationEvent.html'));
 });
-app.get('/test.html', (req, res) => {
+app.get('/test', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'test.html'));
 });
-
+app.get('/Donation', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'Donation.html'));
+});
 // Fallback route
 app.get('*', (req, res) => {
     res.redirect(404, '/'); // Redirects to homepage for undefined routes
