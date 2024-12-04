@@ -38,7 +38,7 @@ app.get('/calendar', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Calendar.html'));
 });
 
-app.get('/hour', (req, res) => {
+app.get('/hours', (req, res) => {
     console.log('Redirecting /HourLog.html to /');
     res.sendFile(path.join(__dirname, 'public', 'hourLog.html'));
 });
