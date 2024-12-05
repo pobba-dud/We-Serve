@@ -2,7 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const path = require('path');
-
+const db = require('./db'); // Import the database utility
 const app = express();
 
 // Middleware for logging requests
@@ -109,6 +109,15 @@ app.post('/send-feedback', (req, res) => {
 
 // Make the app listen on the port provided by Heroku
 const PORT = process.env.PORT || 3000;
+app.get('/users', async (req, res) => {
+    try {
+      const result = await db.query('SELECT * FROM users');
+      res.json(result.rows); // Send the rows back as JSON
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+    }
+  });
 app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}`);
 });
