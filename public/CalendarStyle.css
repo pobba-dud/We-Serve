@@ -79,7 +79,7 @@ html {
   .event {
     font-size: 10px;
     padding: 3px;
-    background-color: #58bae4;
+    background-color: #247ba0;
     color: white;
     border-radius: 5px;
     max-height: 55px;
@@ -123,10 +123,23 @@ html {
     border: none;
     box-shadow: 0px 0px 3px gray;
   }
+  #eventLocationInput {
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    box-shadow: 0px 0px 3px gray;
+  }
   #eventTitleInput.error {
     border: 2px solid red;
   }
   #eventTimeInput.error {
+    border: 2px solid red;
+  }
+  #eventLocationInput.error {
     border: 2px solid red;
   }
   #cancelButton, #deleteButton {
@@ -202,20 +215,25 @@ html {
     footer {
       margin-top: 15%;
       margin-bottom: 0%;
-    background-color: #283A43; /* A shade of blue */
-    color: #f7f7f7; /* A shade of white */
-    text-align: center;
-    clear: both; /* To ensure the footer is below the calendar */
-    padding-top: 2%;
-    font-size: 150%;
-    }
-    footer ul{
+      background-color: #283A43; /* A shade of blue */
+      color: #f7f7f7; /* A shade of white */
+      text-align: center; /* Center the text */
+      clear: both; /* To ensure the footer is below the content */
+      padding-top: 2%;
+      font-size: 150%;
+  }
+  footer ul {
       background-color: #283A43;
-      display: inline;
-    }
-    footer ul li{
-      background-color: #283A43;
-    }
+      display: inline-block; /* Ensure the list is centered */
+      padding: 0; /* Remove padding */
+      margin: 0; /* Remove margin */
+  }
+  footer ul li {
+      display: inline; /* Display list items inline */
+      margin: 0 10px; /* Add some space between list items */
+  }
+
+
     @media only screen and (max-width: 885px) {
       #calDiv{width: 20%;margin-right:auto ;}
       #calDiv{text-align: center ;}

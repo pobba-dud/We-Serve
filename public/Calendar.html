@@ -6,6 +6,7 @@
     <title>Calendar</title>
     <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
     <link href="CalendarStyle.css" rel="stylesheet" type="text/css" />
+    <script src="script.js"></script>
   </head>
   
   </body>
@@ -16,48 +17,45 @@
 </div>
 
 <script>
-  // Function to show custom notification
-  function showNotification(message) {
-    console.log("2nd Function started");
-    console.log(message);
-      const notification = document.getElementById("customNotification");
-      console.log(notification);
-      notification.textContent = message; // Set the message
-      notification.style.display = "block"; // Show the notification
-      console.log(notification.textContent);
-      // Hide the notification after 5 seconds
-      setTimeout(() => {
-        console.log("timer Function started");
-          notification.style.opacity = '0'; // Fade out
-          setTimeout(() => {
-              notification.style.display = "none"; // Hide after fade out
-              notification.style.opacity = '1'; // Reset opacity for next use
-          }, 500); // Wait for the fade out duration
-      }, 500000); // Display for 5 seconds
-  }
 
-  // Function to check for events within 36 hours and show notifications
-  function checkUpcomingEvents() {
-    console.log("Function started");
-      const currentTime = new Date();
-      const fourtyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
+  // Call checkUpcomingEvents function at the start or at intervals
+window.onload = function() {
+    checkUpcomingEvents(); // Check for upcoming events when the page loads
+};
 
-      // Retrieve events from local storage
-      const storedEvents = JSON.parse(localStorage.getItem('events')) || []; // Replace 'events' with your actual key
+  function load() {
+    const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
+    events = storedEvents;
 
-      storedEvents.forEach(event => {
-        console.log("Events loaded");
-          const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
-          eventDate.setHours(24,0,0,0);
-          console.log(event);
-          if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
-            console.log("event is in timespan");  
-            console.log(event);
-            console.log(eventDate);
-            showNotification(`Upcoming Event: ${event.title} at ${event.date}, ${event.time}`);
-          }
-      });
-  }
+    calendar.innerHTML = ''; // Clear the calendar before rendering new events
+
+    events.forEach(event => {
+        const eventDiv = document.createElement('div');
+        eventDiv.classList.add('event');
+        eventDiv.innerText = `${event.title} - ${event.time} - ${event.location}`;
+
+        // Set color based on event type
+        switch (event.type) {
+            case 'personal':
+                eventDiv.style.backgroundColor = '#58bae4'; // Blue
+                break;
+            case 'work':
+                eventDiv.style.backgroundColor = '#ffcc00'; // Yellow
+                break;
+            case 'important':
+                eventDiv.style.backgroundColor = '#ff5733'; // Red
+                break;
+            case 'other':
+                eventDiv.style.backgroundColor = '#28a745'; // Green
+                break;
+            default:
+                eventDiv.style.backgroundColor = '#ffffff'; // Default color
+        }
+
+        calendar.appendChild(eventDiv); // Add event to calendar
+    });
+}
+
   function closeNotification() {
     const notification = document.getElementById("customNotification");
     notification.style.display = "none"; // Hide the notification
@@ -72,12 +70,12 @@
 
 <nav>
   <ul id="NavUl">
-    <a href="index.html"><img src="Images/logo.png"></a>
-    <li><a href="dashboard.html"><b>Homepage</b></a></li>
-    <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
-    <li><a href="hourLog.html"><b>Hour log</b></a></li>
-    <li><a href="Calendar.html"><b>Calendar</b></a></li>
-    <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+    <a href="index"><img src="Images/logo.png"></a>
+    <li><a href="dashboard"><b>Homepage</b></a></li>
+    <li><a href="discover"><b>Discover</b></a></li>
+    <li><a href="hours"><b>Hour log</b></a></li>
+    <li><a href="calendar"><b>Calendar</b></a></li>
+    <li style="float:right; display:flex; align-content: center;"><a href="login"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
   </ul>
 </nav>
   <div style="margin-bottom: 50px;"></div>
@@ -111,15 +109,24 @@
         <h2>New Event</h2>
         <input id="eventTitleInput" placeholder="Event Title" />
         <input id="eventTimeInput" placeholder="Event Time" />
+        <input id="eventLocationInput" placeholder="Event Location" />
+        <label for="eventTypeInput">Event Type:</label>
+        <select id="eventTypeInput">
+            <option value="personal">Personal</option>
+            <option value="work">Work</option>
+            <option value="important">Important</option>
+            <option value="other">Other</option>
+        </select>
         <button id="saveButton">Save</button>
         <button id="cancelButton">Cancel</button>
-      </div>
+    </div>
       <div id="deleteEventModal">
         <h2>Event</h2>
         <p id="eventText"></p>
+        <button id="editButton" style="background-color: rgb(218, 114, 45);">Edit</button> 
         <button id="deleteButton">Delete</button>
         <button id="closeButton">Close</button>
-      </div>
+    </div>
       <div id="modalBackDrop">
       </div>
     </div>
@@ -132,14 +139,14 @@
     <footer>
       <p>&copy; WeServe</p>
       <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
-      <ul>
-        <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Example Link</a></li>
-        <li><a href="#">Example Link</a></li>
-        <li><a href="Feedback.html">Feedback Form</a></li>
-        <li><a href="Proof.html">Example Link</a></li>
-      </ul>
+        <ul>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Example Link 1</a></li>
+          <li><a href="#">Example Link 2</a></li>
+          <li><a href="feedback">Feedback Form</a></li>
+          <li><a href="proof">Example Link</a></li>
+        </ul>
     </div>
     </footer>
   <body>

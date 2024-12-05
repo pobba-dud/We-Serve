@@ -6,156 +6,10 @@
     <title>Discover Page</title>
     <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="discover.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <script src="script.js">remoteCreateEvent();</script>
     <script src="scriptCalendar.js">remoteCreateEvent();</script>
-    
-    <!-- Start of css -->
-    <style>
-
-.modal-backdrop {
-position: fixed;
-top: 0;
-right: 0;
-bottom: 0;
-left: 0;
-z-index: 0;
-background-color: #000;
-opacity: 0.5;
-transition: opacity 0.3s ease; /* Smooth transition */
-}
-.modal-backdrop.fade {
-opacity: 0;
-}
-.modal-backdrop.show {
-opacity: 0.5;
-}
-.modal-backdrop.in {
-  opacity: none;
-}
-    #NavUl img{
-     float: left;
-      display: flex;
-       width: 57px;
-       height:auto;
-      margin: 0%;
-      padding: 0%;
-      margin-right: 5px;
-    }
-    .modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.4);
-  border-radius: 25px;
-}
-
-.modal-content, .modal-lg {
-  background-color: #fefefe;
-  margin: 4% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-.modalModule{
-  display: inline;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.modal-body .event-image {
-  width: 100%;
-  height: 200px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  color: #6c757d;
-}
-
-.event-info h5 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 15px;
-}
-
-.event-details {
-  margin-bottom: 20px;
-}
-
-.event-details p {
-  color: #6c757d;
-}
-
-.event-details span {
-  display: block;
-  color: #6c757d;
-}
-
-.schedule-btn {
-  background-color: #0d6efd;
-  color: white;
-  border-radius: 25px;
-  padding: 10px 20px;
-  border: none;
-  margin-top: 20px;
-}
-
-.schedule-btn:hover {
-  background-color: #283A43;
-}
-    footer {
-        margin-top: 7%;
-  background-color: #283A43; /* A shade of blue */
-  color: #f7f7f7; /* A shade of white */
-  padding: 1rem;
-  text-align: center;
-  clear: both; /* To ensure the footer is below the calendar */
-}
-.discover-search-container {
-    margin: 20px;
-}
-
-#discoverSearchInput {
-    margin-left: 2.5%;
-    width: 95%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.discover-events-list {
-    margin-top: 20px; /* Adding some space between search and events */
-}
-
-.event {
-    margin: 10px 0; /* Space between individual events */
-    padding: 10px;
-    border: 1px solid #ccc; /* Optional: to visually separate events */
-    border-radius: 4px; /* Optional: rounded corners */
-}
-  </style>
-    <!--End of css-->
   </head>
 
   <body>
@@ -165,52 +19,6 @@ opacity: 0.5;
   </div>
   
   <script>
-    // Function to show custom notification
-    function showNotification(message) {
-      console.log("2nd Function started");
-      console.log(message);
-        const notification = document.getElementById("customNotification");
-        console.log(notification);
-        notification.textContent = message; // Set the message
-        notification.style.display = "block"; // Show the notification
-        console.log(notification.textContent);
-        // Hide the notification after 5 seconds
-        setTimeout(() => {
-          console.log("timer Function started");
-            notification.style.opacity = '0'; // Fade out
-            setTimeout(() => {
-                notification.style.display = "none"; // Hide after fade out
-                notification.style.opacity = '1'; // Reset opacity for next use
-            }, 500); // Wait for the fade out duration
-        }, 500000); // Display for 5 seconds
-    }
-  
-    // Function to check for events within 36 hours and show notifications
-    function checkUpcomingEvents() {
-      console.log("Function started");
-        const currentTime = new Date();
-        const fourtyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
-  
-        // Retrieve events from local storage
-        const storedEvents = JSON.parse(localStorage.getItem('events')) || []; // Replace 'events' with your actual key
-  
-        storedEvents.forEach(event => {
-          console.log("Events loaded");
-            const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
-            eventDate.setHours(24,0,0,0);
-            console.log(event);
-            if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
-              console.log("event is in timespan");  
-              console.log(event);
-              console.log(eventDate);
-              showNotification(`Upcoming Event: ${event.title} at ${event.date}, ${event.time}`);
-            }
-        });
-    }
-    function closeNotification() {
-      const notification = document.getElementById("customNotification");
-      notification.style.display = "none"; // Hide the notification
-  }
     // Call checkUpcomingEvents function at the start or at intervals
     window.onload = function() {
         checkUpcomingEvents(); // Check for upcoming events when the page loads
@@ -221,12 +29,12 @@ opacity: 0.5;
      <header>
     <nav>
       <ul id="NavUl">
-        <a href="index.html"><img src="Images/logo.png"></a>
-        <li><a href="dashboard.html"><b>Homepage</b></a></li>
-        <li><a href="DiscoverPage.html"><b>Discover</b></a></li>
-        <li><a href="hourLog.html"><b>Hour log</b></a></li>
-        <li><a href="Calendar.html"><b>Calendar</b></a></li>
-        <li style="float:right; display:flex; align-content: center;"><a href="login.html"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+        <a href="index"><img src="Images/logo.png"></a>
+        <li><a href="dashboard"><b>Homepage</b></a></li>
+        <li><a href="discover"><b>Discover</b></a></li>
+        <li><a href="hours"><b>Hour log</b></a></li>
+        <li><a href="calendar"><b>Calendar</b></a></li>
+        <li style="float:right; display:flex; align-content: center;"><a href="login"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
       </ul>
     </nav>
 
@@ -238,32 +46,38 @@ opacity: 0.5;
 
 
     <div class="discover-search-container">
-      <input type="text" id="discoverSearchInput" placeholder="Search events by title or date..." onkeyup="searchDiscoverEvents()">
+      <input type="text" id="discoverSearchInput" placeholder="Search events by title, location, or date..." onkeyup="searchDiscoverEvents()">
   </div>
   <div class="discover-events-list" style="display: none;"> <!-- Initially hidden -->
       <div class="event">
           <div class="event-title">Lions Club Pancake Breakfast</div>
           <div class="event-date">2024-28-10</div>
+          <div class="event-location">Carmel</div>
       </div>
       <div class="event">
           <div class="event-title">Plant Vegtables</div>
           <div class="event-date">2024-30-10</div>
+          <div class="event-location">Westfield</div>
       </div>
       <div class="event">
         <div class="event-title">Charity Car Wash</div>
         <div class="event-date">2024-11-10</div>
+        <div class="event-location">Fishers</div>
     </div>
     <div class="event">
       <div class="event-title">Soup Kitchen Volunteer</div>
       <div class="event-date">2024-15-10</div>
+      <div class="event-location">Noblesville</div>
   </div>
   <div class="event">
     <div class="event-title">Collect Resuable Plastics</div>
     <div class="event-date">2024-21-10</div>
+    <div class="event-location">Zionsville</div>
 </div>
 <div class="event">
   <div class="event-title">Clothes Drive</div>
   <div class="event-date">2024-23-10</div>
+  <div class="event-location">Indianapolis</div>
 </div>
       <!-- Add more event elements here -->
   </div>
@@ -294,9 +108,10 @@ opacity: 0.5;
                 Image of food court
               </div>
               <div class="event-info">
-                <h5>Helper Heroes</h5>
-                <span>Helping at the food court</span>
-                <span>October 28th</span>
+                <h5>Helper Heroes</h5><br>
+                <span>Helping at the food court</span><br>
+                <span>location</span><br>
+                <span>October 28th</span><br>
                 <span>10:00 AM - 12:00 PM</span>
               </div>
             </div>
@@ -340,9 +155,10 @@ opacity: 0.5;
               Image of Recyling Event 
             </div>
             <div class="event-info">
-              <h5>Community Changers</h5>
-              <span>Recycling trash</span>
-              <span>October 31th</span>
+              <h5>Community Changers</h5><br>
+              <span>Recycling trash</span><br>
+              <span>location</span><br>
+              <span>October 31th</span><br>
               <span>02:00 PM - 06:00 PM</span>
             </div>
           </div>
@@ -387,9 +203,10 @@ opacity: 0.5;
               Image of Dogs
             </div>
             <div class="event-info">
-              <h5>Service Solidarians</h5>
-              <span>Dog walking</span>
-              <span>November 2nd</span>
+              <h5>Service Solidarians</h5><br>
+              <span>Dog walking</span><br>
+              <span>location</span><br>
+              <span>November 2nd</span><br>
               <span>01:00 PM - 09:00 PM</span>
             </div>
           </div>
@@ -434,9 +251,10 @@ opacity: 0.5;
               Image of Grass cutting
             </div>
             <div class="event-info">
-              <h5>Grass Roots Rockers</h5>
-              <span>Cutting grass</span>
-              <span>November 8th</span>
+              <h5>Grass Roots Rockers</h5><br>
+              <span>Cutting grass</span><br>
+              <span>location</span><br>
+              <span>November 8th</span><br>
               <span>11:00 am -  03:00 pm</span>
 
             </div>
@@ -482,9 +300,10 @@ opacity: 0.5;
               Image of Stickers
             </div>
             <div class="event-info">
-              <h5>Random Kindess Crew</h5>
-              <span>Kindness sticker making</span>
-              <span>November 20th</span>
+              <h5>Random Kindess Crew</h5><br>
+              <span>Kindness sticker making</span><br>
+              <span>location</span><br>
+              <span>November 20th</span><br>
               <span>02:00 PM - 04:00 PM</span>
             </div>
           </div>
@@ -528,9 +347,10 @@ opacity: 0.5;
               Image of Volunteering
             </div>
             <div class="event-info">
-              <h5>Poverty Eradiators</h5>
-              <span>Assist the Homeless</span>
-              <span>November,16</span>
+              <h5>Poverty Eradiators</h5><br>
+              <span>Assist the Homeless</span><br>
+              <span>location</span><br>
+              <span>November,16</span><br>
               <span>03:00 PM - 05:00 PM</span>
             </div>
           </div>
@@ -660,14 +480,14 @@ modal.style.display = 'none'; // Hide the modal
 <footer>
   <p>&copy; WeServe</p>
   <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
-  <ul>
-    <li><a href="#">Terms of Use</a></li>
-    <li><a href="#">Privacy Policy</a></li>
-    <li><a href="#">Example Link</a></li>
-    <li><a href="#">Example Link</a></li>
-    <li><a href="Feedback.html">Feedback Form</a></li>
-    <li><a href="Proof.html">Example Link</a></li>
-  </ul>
+    <ul>
+      <li><a href="#">Terms of Use</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Example Link 1</a></li>
+      <li><a href="#">Example Link 2</a></li>
+      <li><a href="feedback">Feedback Form</a></li>
+      <li><a href="proof">Example Link</a></li>
+    </ul>
 </div>
 </footer>
 <script src="script.js"></script>
