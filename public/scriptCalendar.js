@@ -245,10 +245,14 @@ function remoteCreateEvent(date, title, time) {
   if (date && title && time) {
 
     const newEvent = {
-      date: date,
-      title: title,
-      time: time,
-    };
+      title,
+      time,
+      location,
+      type,
+      startDate: document.getElementById('startDateInput').value, // New start date input
+      endDate: document.getElementById('endDateInput').value // New end date input
+  };
+  
 
     events.push(newEvent);
 
