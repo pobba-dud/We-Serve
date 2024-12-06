@@ -244,14 +244,32 @@ function remoteCreateEvent(date, title, time) {
 
   if (date && title && time) {
 
-    const newEvent = {
-      title,
-      time,
-      location,
-      type,
-      startDate: document.getElementById('startDateInput').value, // New start date input
-      endDate: document.getElementById('endDateInput').value // New end date input
-  };
+    document.getElementById('saveButton').addEventListener('click', () => {
+      const title = document.getElementById('eventTitleInput').value;
+      const time = document.getElementById('eventTimeInput').value;
+      const location = document.getElementById('eventLocationInput').value;
+      const type = document.getElementById('eventTypeInput').value;
+      const startDate = document.getElementById('startDateInput').value;
+      const endDate = document.getElementById('endDateInput').value;
+  
+      // Store the event with start and end dates
+      const newEvent = {
+          title,
+          time,
+          location,
+          type,
+          startDate,
+          endDate
+      };
+  
+      const events = JSON.parse(localStorage.getItem('events')) || [];
+      events.push(newEvent);
+      localStorage.setItem('events', JSON.stringify(events));
+  
+      load(); // Refresh the calendar
+  });
+  
+  
   
 
     events.push(newEvent);
@@ -290,3 +308,34 @@ function openDeleteModal(event) {
 
 remoteCreateEvent('2024/10/15', 'skibidi sesh #2', '1:00 PM');
 //remoteDeleteEvent('2024/10/15', '10:00 AM');
+
+const startDate = document.getElementById('startDateInput').value;
+const endDate = document.getElementById('endDateInput').value;
+
+if (startDate && endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Check if the date objects are valid
+    if (isNaN(start) || isNaN(end)) {
+        console.error('Invalid date format!');
+    } else {
+        // Proceed with the event logic
+        const newEvent = {
+            title,
+            time,
+            location,
+            type,
+            startDate: start.toISOString().split('T')[0],  // Store in YYYY-MM-DD format
+            endDate: end.toISOString().split('T')[0],      // Store in YYYY-MM-DD format
+        };
+
+        const events = JSON.parse(localStorage.getItem('events')) || [];
+        events.push(newEvent);
+        localStorage.setItem('events', JSON.stringify(events));
+
+        load(); // Refresh the calendar
+    }
+} else {
+    console.error('Start and End date are required!');
+}

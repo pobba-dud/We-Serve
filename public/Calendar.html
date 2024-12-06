@@ -23,18 +23,21 @@ window.onload = function() {
     checkUpcomingEvents(); // Check for upcoming events when the page loads
 };
 
-  function load() {
+function load() {
     const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
-    events = storedEvents;
-
+    const calendar = document.getElementById('calendar');
     calendar.innerHTML = ''; // Clear the calendar before rendering new events
 
-    events.forEach(event => {
+    // Loop through the events and display them
+    storedEvents.forEach(event => {
+        const startDate = new Date(event.startDate);  // Convert start date string to Date object
+        const endDate = new Date(event.endDate);      // Convert end date string to Date object
+
         const eventDiv = document.createElement('div');
         eventDiv.classList.add('event');
         eventDiv.innerText = `${event.title} - ${event.time} - ${event.location}`;
 
-        // Set color based on event type
+        // Set the background color based on event type
         switch (event.type) {
             case 'personal':
                 eventDiv.style.backgroundColor = '#58bae4'; // Blue
@@ -52,9 +55,27 @@ window.onload = function() {
                 eventDiv.style.backgroundColor = '#ffffff'; // Default color
         }
 
-        calendar.appendChild(eventDiv); // Add event to calendar
+        // Loop through each day between the start and end dates
+        let currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+            const dayDiv = document.createElement('div');
+            dayDiv.classList.add('day');
+            dayDiv.innerText = currentDate.getDate(); // Display the day number
+
+            // Append the event to each day within the range
+            const eventClone = eventDiv.cloneNode(true);
+            dayDiv.appendChild(eventClone);
+
+            calendar.appendChild(dayDiv);
+
+            // Move to the next day
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
     });
 }
+
+
+
 
   function closeNotification() {
     const notification = document.getElementById("customNotification");
@@ -110,8 +131,8 @@ window.onload = function() {
         <input id="eventTitleInput" placeholder="Event Title" />
         <input id="eventTimeInput" placeholder="Event Time" />
         <input id="eventLocationInput" placeholder="Event Location" />
-        <input id="startDateInput" type="date" placeholder="Start Date" />
-<input id="endDateInput" type="date" placeholder="End Date" />
+        <input type="date" id="startDateInput" />
+<input type="date" id="endDateInput" />
 
         <label for="eventTypeInput">Event Type:</label>
         <select id="eventTypeInput">
