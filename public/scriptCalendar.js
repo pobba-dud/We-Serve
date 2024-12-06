@@ -201,23 +201,6 @@ function renderEvents() {
         eventDiv.classList.add('event');
         eventDiv.innerText = `${event.title} - ${event.time} - ${event.location}`;
 
-        // Set color based on event type
-        switch (event.type) {
-            case 'personal':
-                event.style.backgroundcolor = '#ff6505'; // Orange
-                break;
-            case 'work':
-                event.style.backgroundcolor = '#ffcc00'; // Yellow
-                break;
-            case 'important':
-                event.style.backgroundcolor = '#ff5733'; // Red
-                break;
-            case 'other':
-                event.style.backgroundcolor = '#28a745'; // Green
-                break;
-            default:
-                eventDiv.style.backgroundcolor = '#4290f5'; // Default color
-        }
 
         calendar.appendChild(eventDiv); // Add event to calendar
     });

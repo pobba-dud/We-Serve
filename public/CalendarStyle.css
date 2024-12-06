@@ -86,11 +86,6 @@ html {
     overflow: hidden;
   }
 
-  .event.Personal {background-color: #247BA0;}
-  .event.Work {background-color: #1c4923;}
-  .event.Important {background-color: #d36c6c;}
-  .event.Other {background-color: #ff6932;}
-
 
   .padding {
     cursor: default !important;
