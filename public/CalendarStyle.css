@@ -56,10 +56,19 @@ html {
     display: flex;
     flex-wrap: wrap;
   }
+
+  .day:hover {
+    background-color: #e8faed;
+  }
+  
+  .day + #currentDay {
+    background-color:#e8f4fa;
+  }
   .day {
     width: 100px;
-    padding: 10px;
     height: 100px;
+    padding-left: 1%;
+    padding-top: 1%;
     cursor: pointer;
     box-sizing: border-box;
     background-color: white;
@@ -68,15 +77,10 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-  }
-  .day:hover {
-    background-color: #e8faed;
-  }
-  
-  .day + #currentDay {
-    background-color:#e8f4fa;
-  }
-  .event {
+    position: relative; /* Make room for events to be stacked inside each day */
+}
+
+.event {
     font-size: 10px;
     padding: 3px;
     background-color: #247ba0;
@@ -84,7 +88,12 @@ html {
     border-radius: 5px;
     max-height: 55px;
     overflow: hidden;
-  }
+    position: absolute;
+    width: 90%;
+    bottom: 5px;  /* Place event at the bottom of the day cell */
+}
+
+
   .padding {
     cursor: default !important;
     background-color: #FFFCFF !important;
