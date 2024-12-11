@@ -22,6 +22,7 @@ pulchritudinous grey: #c7c5b8
 20 days untill Brent can google external login
 
 to test with node.js:
+     -type in "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned" in the command prompt
      -go to "https://nodejs.org/en/download/package-manager"
      -install node.js (I can help u)
      -type in the terminal "node server.js"
