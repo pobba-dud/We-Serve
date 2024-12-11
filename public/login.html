@@ -78,6 +78,64 @@ body {
     overflow: hidden;
 }
 
+/* dark mode */
+body.dark-mode {
+  background-color: #121212; /* Dark background */
+  color: #f7f7f7; /* Light text color */
+}
+
+body.dark-mode h2 {
+    color: white;
+}
+
+
+body.dark-mode .sidenav {
+    background-color: #3f3e3e;
+    color: white;
+}
+
+body.dark-mode .active {
+    background-color: #6e6e6e;
+    color: white;
+}
+
+body.dark-mode .active:hover {
+    background-color: #868686;
+    color: white;
+}
+
+body.dark-mode .url a:hover {
+    background-color: #868686;
+    color: white;
+}
+
+body.dark-mode .card {
+background-color: #3f3e3e;  
+} 
+
+body.dark-mode table {
+  background-color: #3f3e3e; /* Dark table background */
+  color: #f7f7f7; /* Light text color */
+  border: #070707;
+}
+
+body.dark-mode .innerContainer {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode .highlight {
+  background-color: #535353;
+}
+
+body.dark-mode .schedule-btn {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode .schedule-btn:hover {
+  background-color: #535353;
+}
+
+
 /* NavbarTop */
 .navbar-top {
     background-color: #fff;
@@ -185,8 +243,8 @@ body {
     background-color: #e8f5ff;
     border-radius: 28px;
     color: #000;
-    margin-left: 14%;
-    width: 65%;
+    margin-left: 14%; /* This margin is added on hover */
+    width: 65%; /* This width is also applied */
 }
 
 /* End */
@@ -394,7 +452,26 @@ html{overflow:scroll;}
   </div>
 </div>
 <!-- End -->
+<script>
+    function setTheme(theme) {
+        document.body.className = theme === 'dark' ? 'dark-mode' : '';
+        localStorage.setItem('theme', theme); // Save the theme preference
+    }
 
+    // Load the theme from local storage when the page loads
+    window.onload = function() {
+        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+        setTheme(savedTheme);
+        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+    };
+
+    // Add event listener for form submission
+    document.getElementById('settings-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        // Here you can add any code to save settings if needed
+        window.location.href = 'login.html'; // Redirect to the login page
+    });
+</script>
 
 
 </body>

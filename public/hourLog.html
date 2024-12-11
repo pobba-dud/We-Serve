@@ -8,27 +8,46 @@
   <link href="style.css" rel="stylesheet" type="text/css" />
   <script src="script.js"></script>
 </head>
-<!-- Dark mode JS -->
-<script>
-  function setTheme(theme) {
-      document.body.className = theme === 'dark' ? 'dark-mode' : '';
-      localStorage.setItem('theme', theme); // Save the theme preference
-  }
-
-  // Load the theme from local storage when the page loads
-  window.onload = function() {
-      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-      setTheme(savedTheme);
-      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-  };
-</script>
 <style>
   
+
   body {
       font-family: Arial, sans-serif;
       background-color: #ffffff;
       margin: 0;
   }
+
+  body.dark-mode {
+  background-color: #121212; /* Dark background */
+  color: #f7f7f7; /* Light text color */
+}
+
+body.dark-mode .module {
+  background-color: rgb(36, 36, 36); /* Dark module background */
+  color: white; /* Light text color */
+}
+
+body.dark-mode table {
+  background-color: #3f3e3e; /* Dark table background */
+  color: #f7f7f7; /* Light text color */
+  border: #070707;
+}
+
+body.dark-mode .innerContainer {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode .highlight {
+  background-color: #535353;
+}
+
+body.dark-mode .schedule-btn {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode .schedule-btn:hover {
+  background-color: #535353;
+}
 
   .hourContainer {
       margin-bottom: 20px;
@@ -111,7 +130,20 @@ li a:hover {
 </style>
 
 </style>
+<!-- Dark mode JS -->
+<script>
+  function setTheme(theme) {
+      document.body.className = theme === 'dark' ? 'dark-mode' : '';
+      localStorage.setItem('theme', theme); // Save the theme preference
+  }
 
+  // Load the theme from local storage when the page loads
+  window.onload = function() {
+      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+      setTheme(savedTheme);
+      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+  };
+</script>
 <body>
   <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
     This is a notification message!
