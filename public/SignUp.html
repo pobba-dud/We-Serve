@@ -11,7 +11,20 @@
     <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
     <link href="SignUpStyle.css" rel="stylesheet" type="text/css" />
   </head>
-  
+  <!-- Dark mode JS -->
+  <script>
+    function setTheme(theme) {
+        document.body.className = theme === 'dark' ? 'dark-mode' : '';
+        localStorage.setItem('theme', theme); // Save the theme preference
+    }
+
+    // Load the theme from local storage when the page loads
+    window.onload = function() {
+        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+        setTheme(savedTheme);
+        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+    };
+</script>
   <body>
     <script>
         // Show Password

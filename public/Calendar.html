@@ -15,7 +15,20 @@
     This is a notification message!
     <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
 </div>
+<!-- Dark mode JS -->
+<script>
+  function setTheme(theme) {
+      document.body.className = theme === 'dark' ? 'dark-mode' : '';
+      localStorage.setItem('theme', theme); // Save the theme preference
+  }
 
+  // Load the theme from local storage when the page loads
+  window.onload = function() {
+      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+      setTheme(savedTheme);
+      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+  };
+</script>
 <script>
 
   // Call checkUpcomingEvents function at the start or at intervals
