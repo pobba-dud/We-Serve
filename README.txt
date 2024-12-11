@@ -28,3 +28,4 @@ to test with node.js:
      -test if it installed by typing "node -v" in the command prompt (should return an number)
      -type in the terminal "node server.js"
      -then go to ur browser and type "http://localhost:3000"
+     -and bam buttons and links work again
