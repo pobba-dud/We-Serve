@@ -100,13 +100,20 @@
             document.body.className = theme === 'dark' ? 'dark-mode' : '';
             localStorage.setItem('theme', theme); // Save the theme preference
         }
-
+    
         // Load the theme from local storage when the page loads
         window.onload = function() {
             const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
             setTheme(savedTheme);
             document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
         };
+    
+        // Add event listener for form submission
+        document.getElementById('settings-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            // Here you can add any code to save settings if needed
+            window.location.href = 'login.html'; // Redirect to the login page
+        });
     </script>
 </body>
 </html>
