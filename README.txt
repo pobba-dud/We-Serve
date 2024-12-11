@@ -23,8 +23,26 @@ pulchritudinous grey: #c7c5b8
 
 to test with node.js:
      -type in "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned" in the command prompt
+     - install Chocolatey with this line of code:
+          "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.WebClient]::New().DownloadString('https://community.chocolatey.org/install.ps1') | Invoke-Expression" 
+     -install fnm with this line of code:
+          "choco install fnm"     
      -go to "https://nodejs.org/en/download/package-manager"
      -install node.js (I can help u)
+          "# installs fnm (Fast Node Manager)
+          winget install Schniz.fnm
+
+          # configure fnm environment
+          fnm env --use-on-cd | Out-String | Invoke-Expression
+
+          # download and install Node.js
+          fnm use --install-if-missing 22
+
+          # verifies the right Node.js version is in the environment
+          node -v # should print `v22.12.0`
+
+          # verifies the right npm version is in the environment
+          npm -v # should print `10.9.0`"
      -test if it installed by typing "node -v" in the command prompt (should return an number)
      -type in the terminal "node server.js"
      -then go to ur browser and type "http://localhost:3000"
