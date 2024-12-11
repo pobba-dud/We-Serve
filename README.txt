@@ -21,7 +21,7 @@ pulchritudinous grey: #c7c5b8
 
 20 days untill Brent can google external login
 
-to test:
+to test with node.js:
      -install node.js (I can help u)
      -type in the terminal "node server.js"
      -then go to ur browser and type "http://localhost:3000"
