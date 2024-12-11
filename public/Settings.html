@@ -11,6 +11,11 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
+            transition: background-color 0.3s; /* Smooth transition for background color */
+        }
+
+        body.dark-mode {
+            background-color: #121212; /* Dark background */
         }
 
         .settings-container {
@@ -56,21 +61,8 @@
         }
 
         button:hover {
-            background-color: #2a3a44;
+            background-color: #0056b3; /* Darker button on hover */
         }
-        body.dark-mode {
-    background-color: #121212; /* Dark background *//
-}
-
-
-button {
-    background-color: #007bff; /* Button color */
-    color: white; /* Button text color */
-}
-
-button:hover {
-    background-color: #0056b3; /* Darker button on hover */
-}
     </style>
 </head>
 <body>
@@ -79,48 +71,41 @@ button:hover {
         <form id="settings-form">
             <div class="setting-item">
                 <label for="email">Email:</label>
-                <div style="margin-right: 3.5%;">
-                <input  type="email" id="email" name="email" >
-                </div>
+                <input type="email" id="email" name="email">
             </div>
             <div class="setting-item">
                 <label for="notifications">Email Notifications: <input type="checkbox" id="notifications" name="notifications" checked></label> 
             </div>
             <div class="setting-item">
                 <label for="password">Current Password:</label>
-                <div style="margin-right: 3.5%;">
-                <input type="password" id="password" name="password" >
+                <input type="password" id="password" name="password">
             </div>
-        </div>
             <div class="setting-item">
                 <label for="new-password">New Password:</label>
-                <div style="margin-right: 3.5%;">
                 <input type="password" id="new-password" name="new-password">
             </div>
-        </div>
-
-        <div class="setting-item">
-            <label for="theme">Theme:</label>
-            <select id="theme" name="theme" onchange="setTheme(this.value)">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-            </select>
-        </div>
+            <div class="setting-item">
+                <label for="theme">Theme:</label>
+                <select id="theme" name="theme" onchange="setTheme(this.value)">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
             <button type="submit">Save Settings</button>
         </form>
     </div>
     <script>
         function setTheme(theme) {
-    document.body.className = theme === 'dark' ? 'dark-mode' : '';
-    localStorage.setItem('theme', theme); // Save the theme preference
-}
+            document.body.className = theme === 'dark' ? 'dark-mode' : '';
+            localStorage.setItem('theme', theme); // Save the theme preference
+        }
 
-// Load the theme from local storage when the page loads
-window.onload = function() {
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-    setTheme(savedTheme);
-    document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-};
+        // Load the theme from local storage when the page loads
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+            setTheme(savedTheme);
+            document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+        };
     </script>
 </body>
 </html>

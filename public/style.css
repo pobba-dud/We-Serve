@@ -25,6 +25,9 @@ body{
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
+body.dark-mode {
+  background-color: #121212; /* Dark background */
+}
 /* start of css for navbar */
 #NavUl {
   list-style-type: none;
