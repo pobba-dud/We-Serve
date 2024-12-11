@@ -47,3 +47,5 @@ to test with node.js:
      -type in the terminal "node server.js"
      -then go to ur browser and type "http://localhost:3000"
      -and bam buttons and links work again
+
+     CALENDAR AND HOUR LOG DARK MODE DONT WORK FOR NOW
