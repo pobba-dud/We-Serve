@@ -165,15 +165,40 @@ body.dark-mode .container {
     <div style="height: 50px;"></div>
 
     <script>
+        //Functionality
         function submitEvent() {
-            const eventName = document.getElementById('eventName').value;
-            const eventDate = document.getElementById('eventDate').value;
-            const eventTimeRange = document.getElementById('eventTimeRange').value;
+        const eventName = document.getElementById('eventName').value;
+        const eventDate = document.getElementById('eventDate').value;
+        const eventTimeRange = document.getElementById('eventTimeRange').value;
+        const eventLength = document.getElementById('eventLength').value;
+        const eventAddress = document.getElementById('eventAdress').value;
+        const eventDescription = document.getElementById('eventDescription').value;
 
-            // Handle the event submission logic, e.g., save to local storage or send to server
-            console.log(`Event Created: ${eventName} on ${eventDate} from ${eventTimeRange}`);
-            alert(`Event Created: ${eventName} on ${eventDate} from ${eventTimeRange}`);
-        }
+        // Create an event object
+        const newEvent = {
+            title: eventName,
+            date: eventDate,
+            time: eventTimeRange,
+            length: eventLength,
+            address: eventAddress,
+            description: eventDescription
+        };
+
+        // Get existing events from local storage
+        let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
+        
+        // Add the new event to the events array
+        events.push(newEvent);
+        
+        // Save the updated events array back to local storage
+        localStorage.setItem('events', JSON.stringify(events));
+
+        // Notify the user
+        alert(`Event Created: ${eventName} on ${eventDate} from ${eventTimeRange}`);
+        
+        // Optionally, redirect to the Discover page
+        window.location.href = 'DiscoverPage.html';
+    }
     </script>
 </body>
 </html>

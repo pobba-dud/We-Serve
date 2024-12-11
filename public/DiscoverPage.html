@@ -19,6 +19,42 @@
   </div>
   
   <script>
+    function loadEvents() {
+        const events = JSON.parse(localStorage.getItem('events')) || [];
+        const eventListContainer = document.querySelector('.discover-events-list');
+
+        // Clear existing events
+        eventListContainer.innerHTML = '';
+
+        // Loop through the events and create HTML elements for each
+        events.forEach(event => {
+            const eventDiv = document.createElement('div');
+            eventDiv.classList.add('event');
+            eventDiv.innerHTML = `
+                <div class="event-title">${event.title}</div>
+                <div class="event-date">${event.date}</div>
+                <div class="event-location">${event.address}</div>
+                <div class="event-description">${event.description}</div>
+            `;
+            eventListContainer.appendChild(eventDiv);
+        });
+
+        // Show the event list if there are events
+        if (events.length > 0) {
+            eventListContainer.style.display = 'block';
+        } else {
+            eventListContainer.style.display = 'none'; // Hide if no events
+        }
+    }
+
+    // Call loadEvents when the page loads
+    window.onload = function() {
+        loadEvents();
+        checkUpcomingEvents(); // If you have this function to check for upcoming events
+    };
+</script>
+
+  <script>
     // Call checkUpcomingEvents function at the start or at intervals
     window.onload = function() {
         checkUpcomingEvents(); // Check for upcoming events when the page loads
@@ -383,6 +419,10 @@
   </div>
 </div>
     <!-- End of modals -->
+
+    <div class="discover-events-list" style="display: none;"> <!-- Initially hidden -->
+      <!-- Events will be dynamically added here -->
+  </div>
 
     <!--Start of java stript -->
     <script>
