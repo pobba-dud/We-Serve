@@ -54,6 +54,9 @@ body.dark-mode .schedule-btn {
   background-color: #3f3e3e;
 }
 
+body.dark-mode .schedule-btn:hover {
+  background-color: #535353;
+}
 
 /* start of css for navbar */
 #NavUl {
