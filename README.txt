@@ -22,7 +22,7 @@ pulchritudinous grey: #c7c5b8
 20 days untill Brent can google external login
 
 to test with node.js:
-     -type in "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned" in the command prompt
+     -type in "Set-ExecutionPolicy Bypass -Scope Process" in the command prompt
      - install Chocolatey with this line of code:
           "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.WebClient]::New().DownloadString('https://community.chocolatey.org/install.ps1') | Invoke-Expression" 
      -install fnm with this line of code:
