@@ -131,7 +131,16 @@ li a:hover {
 
 </style>
 <!-- Dark mode JS -->
+
+
+<body>
+  <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
+    This is a notification message!
+    <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
+</div>
+
 <script>
+  // Call checkUpcomingEvents function at the start or at intervals
   function setTheme(theme) {
       document.body.className = theme === 'dark' ? 'dark-mode' : '';
       localStorage.setItem('theme', theme); // Save the theme preference
@@ -141,20 +150,10 @@ li a:hover {
   window.onload = function() {
       const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
       setTheme(savedTheme);
-      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+      document.getElementById('theme').value = savedTheme; 
+      checkUpcomingEvents();// Set the select box to the saved theme
   };
-</script>
-<body>
-  <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
-    This is a notification message!
-    <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
-</div>
 
-<script>
-  // Call checkUpcomingEvents function at the start or at intervals
-  window.onload = function() {
-      checkUpcomingEvents(); // Check for upcoming events when the page loads
-  };
 </script>
 
 <!-- navbar -->
