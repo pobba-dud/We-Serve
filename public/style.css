@@ -141,6 +141,11 @@ li a:hover{
   height: inherit;
 }
 
+body.dark-mode .hourContainer div {
+  border: 5px solid #2b2c2c; /* Color is different from others because it shows differently, PLEASE don't change it */
+  background-color: #575757;
+  color: #ffffff;
+}
 .hourContainer {
   display: flex;
   flex-direction: row;
