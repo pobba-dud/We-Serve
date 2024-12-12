@@ -223,6 +223,9 @@ li a:hover{
   cursor: pointer;
   padding: 1.5%;
 }
+#module-buttons:hover {
+  background-color: #3d5764;
+}
 table {
   border: #283A43;
   border-radius: 10px;
