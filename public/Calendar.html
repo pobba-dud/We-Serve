@@ -32,10 +32,6 @@
 <script>
 
   // Call checkUpcomingEvents function at the start or at intervals
-window.onload = function() {
-    checkUpcomingEvents(); // Check for upcoming events when the page loads
-};
-
 function load() {
     const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
     const calendar = document.getElementById('calendar');
@@ -93,11 +89,7 @@ function load() {
   function closeNotification() {
     const notification = document.getElementById("customNotification");
     notification.style.display = "none"; // Hide the notification
-}
-  // Call checkUpcomingEvents function at the start or at intervals
-  window.onload = function() {
-      checkUpcomingEvents(); // Check for upcoming events when the page loads
-  };
+  }
 </script>
 
 <!-- navbar -->
