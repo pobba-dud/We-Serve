@@ -31,6 +31,10 @@ body.dark-mode div.day {
   color: #535353; /* Light text color */
   background-color:#929292 ;
 }
+body.dark-mode div.day:hover {
+  color: #535353; /* Light text color */
+  background-color:#b3b3b3 ;
+}
 
 body.dark-mode div #currentDay.day {
   color: #535353; /* Light text color */
