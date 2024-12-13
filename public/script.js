@@ -170,3 +170,11 @@ function closeNotification() {
   notification.style.display = "none"; // Hide the notification
 }
 //end of universally used code
+function clearEvents(){
+  let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
+  console.log(events);
+  events=[];
+  console.log(events); // []
+  localStorage.setItem('events', JSON.stringify(events));
+  console.log(events)
+}

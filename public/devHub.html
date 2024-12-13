@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Template</title>
+    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="script.js"></script>
+  </head>
+  <!-- Dark mode JS -->
+  <script>
+    function setTheme(theme) {
+        document.body.className = theme === 'dark' ? 'dark-mode' : '';
+        localStorage.setItem('theme', theme); // Save the theme preference
+    }
+
+    // Load the theme from local storage when the page loads
+    window.onload = function() {
+        checkUpcomingEvents();
+        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+        setTheme(savedTheme);
+        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+    };
+</script>
+  </body>
+  <a href="organizationEvent.html">org event</a>
+  <br>
+  <a href="Calendartest.html"> cal test</a>
+  <br>
+  <a href="SignUp.html">signup</a>
+  <br>
+  <a href="template.html">template</a>
+  <br>
+  <a href="test.hTml">test</a>
+
+
+
+  
+<body>
+</html>

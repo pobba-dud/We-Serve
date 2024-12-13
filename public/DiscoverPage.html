@@ -33,7 +33,7 @@
             eventDiv.innerHTML = `
                 <div class="event-title">${event.title}</div>
                 <div class="event-date">${event.date}</div>
-                <div class="event-location">${event.address}</div>
+                <div class="event-location">${event.location}</div>
                 <div class="event-description">${event.description}</div>
             `;
             eventListContainer.appendChild(eventDiv);
@@ -56,6 +56,7 @@
     window.onload = function() {
         loadEvents();
         checkUpcomingEvents(); // If you have this function to check for upcoming events
+        searchDiscoverEvents();
         const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
         setTheme(savedTheme);
         document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
