@@ -16,6 +16,31 @@ html {
     justify-content: center;
     background-color: white;
   }
+
+  /* dark mode */
+body.dark-mode {
+  background-color: #121212; /* Dark background */
+  color: #f7f7f7; /* Light text color */
+}
+
+body.dark-mode div {
+  color: #f7f7f7; /* Light text color */
+}
+
+body.dark-mode div.day {
+  color: #535353; /* Light text color */
+  background-color:#929292 ;
+}
+
+body.dark-mode div #currentDay.day {
+  color: #535353; /* Light text color */
+  background-color: #c5c5c5;
+}
+
+body.dark-mode .event {
+  color: white; /* Light text color */
+  background-color: #2f4858;
+}
   button {
     width: 75px;
     cursor: pointer;
