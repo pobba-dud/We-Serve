@@ -111,6 +111,7 @@ body.dark-mode .event {
 
 .event {
     font-size: 10px;
+    /* fix the offcenteredness Jordynn! */
     padding: 3px;
     background-color: #247ba0;
     color: white;
