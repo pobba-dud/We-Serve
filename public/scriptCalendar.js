@@ -126,46 +126,6 @@ function closeModal() {
 
 // Function to save an event to localStorage
 function saveEvent() {
-  if (eventTitleInput.value + eventTimeInput.value) {
-      eventTitleInput.classList.remove('error');
-      eventTimeInput.classList.remove('error');
-      eventLocationInput.classList.remove('error'); // Remove error class for location
-
-      // Check if we are editing an existing event
-      const existingEventIndex = events.findIndex(e => e.date === clicked);
-      if (existingEventIndex > -1) {
-          // Update existing event
-          events[existingEventIndex] = {
-              date: clicked,
-              title: eventTitleInput.value,
-              time: eventTimeInput.value,
-              location: eventLocationInput.value // Store the location
-          };
-      } else {
-          // Create a new event
-          events.push({
-              date: clicked,
-              title: eventTitleInput.value,
-              time: eventTimeInput.value,
-              location: eventLocationInput.value // Store the location
-          });
-      }
-
-      // Save events to localStorage
-      localStorage.setItem('events', JSON.stringify(events));
-      closeModal(); // Close the modal after saving
-  } else {
-      // Handle validation errors
-      if (!eventTitleInput.value) {
-          eventTitleInput.classList.add('error');
-      }
-      if (!eventTimeInput.value) {
-          eventTimeInput.classList.add('error');
-      }
-  }
-}
-
-function saveEvent() {
   const title = document.getElementById('eventTitleInput').value;
   const time = document.getElementById('eventTimeInput').value;
   const location = document.getElementById('eventLocationInput').value;
@@ -268,15 +228,6 @@ function remoteCreateEvent(date, title, time) {
   
       load(); // Refresh the calendar
   });
-  
-  
-  
-
-    events.push(newEvent);
-
-    localStorage.setItem('events', JSON.stringify(events));
-
-    load();
   } else {
     console.error("Invalid event details.");
   }
@@ -304,11 +255,6 @@ function openDeleteModal(event) {
   `;
   deleteModal.style.display = 'block';
 }
-
-
-remoteCreateEvent('2024/10/15', 'skibidi sesh #2', '1:00 PM');
-//remoteDeleteEvent('2024/10/15', '10:00 AM');
-
 const startDate = document.getElementById('startDateInput').value;
 const endDate = document.getElementById('endDateInput').value;
 
