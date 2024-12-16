@@ -178,3 +178,20 @@ function clearEvents(){
   localStorage.setItem('events', JSON.stringify(events));
   console.log(events)
 }
+
+//clear old events (in progress)
+function clearOldEvents(){
+  let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
+  const timeElapsed = Date.now();
+  const today = new Date(timeElapsed);
+  console.log(events);
+  console.log(today);
+  for(let i;i=0;i<events.length){
+    console.log(events[i].date)
+if(events[i].date<timeElapsed){
+events[i].pop;
+}
+}
+console.log(events);
+localStorage.setItem('events', JSON.stringify(events));
+}
