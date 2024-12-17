@@ -45,6 +45,16 @@ body.dark-mode .event {
   color: white; /* Light text color */
   background-color: #2f4858;
 }
+
+body.dark-mode #newEventModal{
+  color: white; /* Light text color */
+  background-color: #3f3e3e;
+}
+
+body.dark-mode #deleteEventModal{
+  color: white; /* Light text color */
+  background-color: #3f3e3e;
+}
   button {
     width: 75px;
     cursor: pointer;
