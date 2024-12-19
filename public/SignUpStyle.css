@@ -1,23 +1,138 @@
-html {
-    height: 100%;
-    width: 100%;
-  
-    /* testing fonts  \/ */
-    font-family: "Red Hat Text", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
+/* General HTML and Body Styles */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Red Hat Text", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  background-color: #f4f4f9; /* Soft background for better contrast */
+  color: #333; /* Standard text color for readability */
+  box-sizing: border-box; /* Include padding and border in width/height */
+}
+
+label {
+  margin-right: 20%;
+}
+/* Apply box-sizing to all elements */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* Container for the Main Section */
+.container {
+justify-content: center;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(to bottom right, #ffffff, #ffffff); /* Gradient background */
+  border: none; /* Removed the grey border */
+}
+
+/* Form Wrapper for Signup */
+.form-wrapper {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a card effect */
+  text-align: left;
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Form Heading */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #066aad;
+  margin-left: 41%;
+}
+
+/* Form Group Styles */
+.form-group {
+  margin-bottom: 20px; /* Adds spacing between form groups */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Label Styles */
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+  flex-direction: left;
+}
+
+/* Input, Textarea, and Select Styles */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #066aad; /* Highlight border on focus */
+  outline: none;
+}
+
+/* Button Styles */
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  background-color: #066aad;
+  border: none;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+  background-color: #005a8d; /* Darken on hover */
+}
+
+/* Add Responsive Design */
+@media (max-width: 768px) {
+  .form-wrapper {
+      padding: 20px;
   }
 
-.container, h1, p {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  h1 {
+      font-size: 1.5rem;
+  }
 }
 
-.form-group{
-    
+.form-row {
+  display: flex;
+  align-items: center; /* Aligns items vertically centered */
+  margin-bottom: 10px; /* Adds space between rows */
 }
 
+.form-row label {
+  width: 150px; /* Set a fixed width for labels */
+  margin-right: 10px; /* Space between label and input */
+}
 
+.form-row input,
+.form-row select {
+  flex: 1; /* Makes the input/select take the remaining space */
+}
+
+.CHECKBOX {
+  margin-left: 5%;
+}

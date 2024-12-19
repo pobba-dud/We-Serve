@@ -37,12 +37,12 @@
       }
     }
       </script>
-      <div style="padding-top: 5%;"></div>
-      <h1>Create an Account</h1>
+      <div style="align-items: center;align-items: center;"><h1>Create an Account</h1></div>
     <div class="container">
+      
         <form action="#" method="POST">
             <div class="form-group">
-                <label for="username">Username</label>
+                <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
@@ -63,11 +63,12 @@
               </select>
             </div>
             <div class="form-group">
+
               <label for="birthday">Birthday:</label>
               <input type="date" id="birthday" name="birthday">
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
@@ -75,25 +76,27 @@
               <input type="tel" id="phone" name="phone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">Password:</label>
                 <input type="password" value="" id="myInput" required>
             </div>
 
             <!-- show password button -->
             <div class="form-group">
-                <input type="checkbox" onclick="showPass()">Show Password
+                <input class= "CHECKBOX" type="checkbox" onclick="showPass()">Show Password
             </div>
 
             <div class="form-group">
-                <label for="confirm-password">Confirm Password</label>
+                <label for="confirm-password">Confirm Password:</label>
                 <input type="confirm-password" value="" id="myInput" required>
             </div>
 
 
-            <button type="submit">Sign Up</button>
+            <button type="submit">Sign Up</button>      
+            <div style="margin: 5%;"></div>
+            <p>Already have an account? <a href="login">Log in</a></p>
         </form>
-        
+
     </div>
-    <p>Already have an account? <a href="login">Log in</a></p>
+    
 </body>
 </html>
