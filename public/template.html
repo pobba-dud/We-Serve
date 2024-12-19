@@ -6,6 +6,7 @@
     <title>Template</title>
     <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="script.js"></script>
   </head>
   <!-- Dark mode JS -->
   <script>
@@ -16,6 +17,7 @@
 
     // Load the theme from local storage when the page loads
     window.onload = function() {
+        checkUpcomingEvents();
         const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
         setTheme(savedTheme);
         document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
@@ -44,7 +46,7 @@
         <li><a href="#">Example Link 1</a></li>
         <li><a href="#">Example Link 2</a></li>
         <li><a href="feedback">Feedback Form</a></li>
-        <li><a href="proof">Example Link</a></li>
+        <li><a href="" onClick="clearEvents();">Button to clear all events</a></li>
       </ul>
   </div>
   </footer>

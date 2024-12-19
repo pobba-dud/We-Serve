@@ -16,6 +16,45 @@ html {
     justify-content: center;
     background-color: white;
   }
+
+  /* dark mode */
+body.dark-mode {
+  background-color: #121212; /* Dark background */
+  color: #f7f7f7; /* Light text color */
+}
+
+body.dark-mode div {
+  color: #f7f7f7; /* Light text color */
+}
+
+body.dark-mode div.day {
+  color: #535353; /* Light text color */
+  background-color:#929292 ;
+}
+body.dark-mode div.day:hover {
+  color: #535353; /* Light text color */
+  background-color:#b3b3b3 ;
+}
+
+body.dark-mode div #currentDay.day {
+  color: #535353; /* Light text color */
+  background-color: #c5c5c5;
+}
+
+body.dark-mode .event {
+  color: white; /* Light text color */
+  background-color: #2f4858;
+}
+
+body.dark-mode #newEventModal{
+  color: white; /* Light text color */
+  background-color: #3f3e3e;
+}
+
+body.dark-mode #deleteEventModal{
+  color: white; /* Light text color */
+  background-color: #3f3e3e;
+}
   button {
     width: 75px;
     cursor: pointer;
@@ -82,6 +121,7 @@ html {
 
 .event {
     font-size: 10px;
+    /* fix the offcenteredness Jordynn! */
     padding: 3px;
     background-color: #247ba0;
     color: white;
@@ -251,3 +291,15 @@ html {
       footer{font-size:12vw}
       #weekdays{font-size: 3vw;}
     }
+
+    @media screen and (max-width: 768px) {
+      #calendar {
+          grid-template-columns: repeat(2, 1fr);
+      }
+  
+      nav ul {
+          flex-direction: column;
+          align-items: center;
+      }
+  }
+  

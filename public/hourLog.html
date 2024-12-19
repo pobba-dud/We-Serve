@@ -8,27 +8,46 @@
   <link href="style.css" rel="stylesheet" type="text/css" />
   <script src="script.js"></script>
 </head>
-<!-- Dark mode JS -->
-<script>
-  function setTheme(theme) {
-      document.body.className = theme === 'dark' ? 'dark-mode' : '';
-      localStorage.setItem('theme', theme); // Save the theme preference
-  }
-
-  // Load the theme from local storage when the page loads
-  window.onload = function() {
-      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-      setTheme(savedTheme);
-      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-  };
-</script>
 <style>
   
+
   body {
       font-family: Arial, sans-serif;
       background-color: #ffffff;
       margin: 0;
   }
+
+  body.dark-mode {
+  background-color: #121212; /* Dark background */
+  color: #f7f7f7; /* Light text color */
+}
+
+body.dark-mode .module {
+  background-color: rgb(36, 36, 36); /* Dark module background */
+  color: white; /* Light text color */
+}
+
+body.dark-mode table {
+  background-color: #3f3e3e; /* Dark table background */
+  color: #f7f7f7; /* Light text color */
+  border: #070707;
+}
+
+body.dark-mode .innerContainer {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode .highlight {
+  background-color: #535353;
+}
+
+body.dark-mode .schedule-btn {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode .schedule-btn:hover {
+  background-color: #535353;
+}
 
   .hourContainer {
       margin-bottom: 20px;
@@ -52,6 +71,20 @@
     opacity: 0.7;
     margin-left: 4.5%; /* Add margin for spacing between leaderboards */
     margin-right: 4.5%;
+}
+
+
+body.dark-mode .leaderboard {
+  background-color:#575757;
+  border: 5px solid #2b2c2c;
+}
+
+body.dark-mode .leaderboard li {
+  color: white;
+}
+
+body.dark-mode .leaderboard h4 {
+  color: white;
 }
 
   .leaderboard h4 {
@@ -111,6 +144,8 @@ li a:hover {
 </style>
 
 </style>
+<!-- Dark mode JS -->
+
 
 <body>
   <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
@@ -120,9 +155,19 @@ li a:hover {
 
 <script>
   // Call checkUpcomingEvents function at the start or at intervals
+  function setTheme(theme) {
+      document.body.className = theme === 'dark' ? 'dark-mode' : '';
+      localStorage.setItem('theme', theme); // Save the theme preference
+  }
+
+  // Load the theme from local storage when the page loads
   window.onload = function() {
-      checkUpcomingEvents(); // Check for upcoming events when the page loads
+      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+      setTheme(savedTheme);
+      document.getElementById('theme').value = savedTheme; 
+      checkUpcomingEvents();// Set the select box to the saved theme
   };
+
 </script>
 
 <!-- navbar -->
@@ -146,22 +191,22 @@ li a:hover {
   <div class="weekStreak">
     <p>Weekly Streak</p>
     <br>
-    <p id="loggedNum" style="color:orange;">NaN</p>
+    <p id="loggedNum" style="color:orange;">0</p>
   </div>
   <div class="monthHours">
     <p>Hours Served This Month</p>
     <br>
-   <p id="loggedNum">NaN</p>
+   <p id="loggedNum">0</p>
   </div>
   <div class="yearHours">
    <p>Hours Served This Year</p>
    <br>
-    <p id="loggedNum">NaN</p>
+    <p id="loggedNum">0</p>
   </div>
   <div class="careerHours">
    <p>Total Career Hours Served</p>
    <br>
-   <p id="loggedNum">NaN</p>
+   <p id="loggedNum">0</p>
   </div>
 </div>
 

@@ -6,10 +6,12 @@
     <title>Calendar</title>
     <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
     <link href="CalendarStyle.css" rel="stylesheet" type="text/css" />
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <script src="scriptCalendar.js" defer></script>
+
   </head>
   
-  </body>
+  <body>
 
   <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
     This is a notification message!
@@ -32,10 +34,6 @@
 <script>
 
   // Call checkUpcomingEvents function at the start or at intervals
-window.onload = function() {
-    checkUpcomingEvents(); // Check for upcoming events when the page loads
-};
-
 function load() {
     const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
     const calendar = document.getElementById('calendar');
@@ -93,11 +91,7 @@ function load() {
   function closeNotification() {
     const notification = document.getElementById("customNotification");
     notification.style.display = "none"; // Hide the notification
-}
-  // Call checkUpcomingEvents function at the start or at intervals
-  window.onload = function() {
-      checkUpcomingEvents(); // Check for upcoming events when the page loads
-  };
+  }
 </script>
 
 <!-- navbar -->
@@ -170,7 +164,6 @@ function load() {
 
 
 
-    <script src="scriptCalendar.js"></script>
 
 
     <footer>
@@ -182,9 +175,9 @@ function load() {
           <li><a href="#">Example Link 1</a></li>
           <li><a href="#">Example Link 2</a></li>
           <li><a href="feedback">Feedback Form</a></li>
-          <li><a href="proof">Example Link</a></li>
+          <li><a href="" onClick="clearEvents();">Button to clear all events</a></li>
         </ul>
     </div>
     </footer>
-  <body>
+  </body>
 </html>

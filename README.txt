@@ -19,10 +19,10 @@ if i forgot anything, please change the color to this, thank you.
 idiot blue: #9bd1e5
 pulchritudinous grey: #c7c5b8
 
-20 days untill Brent can google external login
+12 days untill Brent can google external login
 
 to test with node.js:
-     -type in "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned" in the command prompt
+     -type in "Set-ExecutionPolicy Bypass -Scope Process" in the command prompt
      - install Chocolatey with this line of code:
           "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.WebClient]::New().DownloadString('https://community.chocolatey.org/install.ps1') | Invoke-Expression" 
      -install fnm with this line of code:
@@ -47,3 +47,5 @@ to test with node.js:
      -type in the terminal "node server.js"
      -then go to ur browser and type "http://localhost:3000"
      -and bam buttons and links work again
+
+Creating events in calendar causes dultipcate events in discover one being undefinted 

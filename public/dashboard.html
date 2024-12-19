@@ -7,24 +7,32 @@
   <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Dark mode JS -->
+     <script>
+      function setTheme(theme) {
+          document.body.className = theme === 'dark' ? 'dark-mode' : '';
+          localStorage.setItem('theme', theme); // Save the theme preference
+      }
+
+      // Load the theme from local storage when the page loads
+      window.onload = function() {
+        checkUpcomingEvents();
+          const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+          setTheme(savedTheme);
+          document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+      };
+  </script>
+ <!-- End of java script -->
 </head>
   <script src="script.js"></script>
   <script src="scriptCalendar.js">
   remoteCreateEvent(); </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <body onload="mapEventsToDays()">
-
   <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
     This is a notification message!
     <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
 </div>
-
-<script>
-  // Call checkUpcomingEvents function at the start or at intervals
-window.onload = function() {
-    checkUpcomingEvents(); // Check for upcoming events when the page loads
-};
-</script>
 
 <!-- navbar -->
 <header>
@@ -95,6 +103,7 @@ window.onload = function() {
 
       // Load the theme from local storage when the page loads
       window.onload = function() {
+        checkUpcomingEvents();
           const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
           setTheme(savedTheme);
           document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
@@ -143,10 +152,10 @@ window.onload = function() {
 <h2 class = "moduleHeader">Hour Log Recap</h2>
 <div class="innerContainer">
   <h3 style="display: flex; justify-content: center; margin-top: 3%;"><!--make a variable at some point-->
-  Total Hours this year: <!-- character for a space -->&#160 <b><span>NaN</span></b> 
+  Total Hours this year: <!-- character for a space -->&#160 <b><span>0</span></b> 
   </h3>
   <h3 id="scaleableWords" style="display: flex; justify-content: center; margin-top: 3%;margin-bottom: 3%">
-    Weekly Service Streak: <!-- character for a space -->&#160 <b style="color:orange"> <span>NaN</span></b> <!--make a variable at some point-->
+    Weekly Service Streak: <!-- character for a space -->&#160 <b style="color:orange"> <span>0</span></b> <!--make a variable at some point-->
     </h3>
 </div>
 </div>
@@ -157,11 +166,11 @@ window.onload = function() {
   <h2 class = "moduleHeader">Opportunies Coming Up</h2>
   <div id ="thisModule" class="innerContainer" > 
     <div style="margin-left:10%;">
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1"> Get Involved</button>
+    <button id = "module-buttons" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1"> Get Involved</button>
   <u><h3>Help at the Community center</h3></u>  
     October 30, 6:00 - 7:30 pm
     <div style="margin-bottom: 7%;"></div>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#eventModal2"> Get Involved</button>
+    <button id = "module-buttons" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#eventModal2"> Get Involved</button>
   <u><h3>Rotary Club of Westfield</h3></u> 
   November 19,  7:00 - 8:30 pm
   </div>
@@ -198,7 +207,7 @@ window.onload = function() {
               Help at the Community center . We are looking for volunteers to help with various tasks.
 
             </p>
-              <button class="schedule-btn" onclick="remoteCreateEvent('2024/11/1', 'Help at the Community center', '10:00 AM - 12:00 PM'), location.reload()">Get Scheduled</button>
+              <button class="schedule-btn" onclick="remoteCreateEvent('2024/12/20', 'Help at the Community center', '10:00 AM - 12:00 PM'), location.reload()">Get Scheduled</button>
           </div> 
         </div>
       </div>
@@ -237,7 +246,7 @@ window.onload = function() {
             </p>
             <script src="scriptCalendar.js">
               function performAction() {
-                remoteCreateEvent('2024/11/19', 'Rotary Club of Westfield', '7:00 - 8:30 pm');
+                remoteCreateEvent('2024/12/19', 'Rotary Club of Westfield', '7:00 - 8:30 pm');
                 location.reload();
               }
           </script>
@@ -259,7 +268,7 @@ window.onload = function() {
       <li><a href="#">Example Link 1</a></li>
       <li><a href="#">Example Link 2</a></li>
       <li><a href="feedback">Feedback Form</a></li>
-      <li><a href="proof">Example Link</a></li>
+      <li><a href="" onClick="clearEvents();">Button to clear all events</a></li>
     </ul>
 </div>
 </footer>

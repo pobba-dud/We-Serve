@@ -19,24 +19,126 @@
   </div>
   
   <script>
-    // Call checkUpcomingEvents function at the start or at intervals
-    window.onload = function() {
-        checkUpcomingEvents(); // Check for upcoming events when the page loads
-    };
-  </script>
-  <!-- Dark mode JS -->
-  <script>
+    function loadEvents() {
+        const events = JSON.parse(localStorage.getItem('events')) || [];
+        const eventListContainer = document.querySelector('.discover-events-list');
+
+        // Clear existing events
+        eventListContainer.innerHTML = '';
+
+        // Loop through the events and create HTML elements for each
+        events.forEach(event => {
+            const eventDiv = document.createElement('div');
+            eventDiv.classList.add('event');
+            eventDiv.innerHTML = `
+                <div class="event-title">${event.title}</div>
+                <div class="event-date">${event.date}</div>
+                <div class="event-location">${event.location}</div>
+                <div class="event-description">${event.description}</div>
+            `;
+            eventListContainer.appendChild(eventDiv);
+        });
+
+        // Show the event list if there are events
+        if (events.length > 0) {
+            eventListContainer.style.display = 'block';
+        } else {
+            eventListContainer.style.display = 'none'; // Hide if no events
+        }
+    }
+    function loadEvents2() {
+        const events = JSON.parse(localStorage.getItem('events')) || [];
+        const moduleContainer = document.querySelector('.module-container');
+
+        // Clear existing modules
+        moduleContainer.innerHTML = '';
+
+        events.forEach((event, index) => {
+            // Create a module for the event
+            const moduleDiv = document.createElement('div');
+            moduleDiv.classList.add('module');
+            moduleDiv.style.float = 'left';
+            moduleDiv.innerHTML = `
+                <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${event.title}">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal${index}" data-bs-backdrop="static">Get Involved</button>
+                <h3 style="margin-left: 20%;"><u>${event.title}</u></h3>
+                <h3 style="margin-left: 20%;"><b>${event.organizer || 'Unknown Organizer'}</b></h3>
+            `;
+
+            // Append module to container
+            moduleContainer.appendChild(moduleDiv);
+
+            // Create a modal for the event
+            const modalDiv = document.createElement('div');
+            modalDiv.classList.add('modal');
+            modalDiv.id = `eventModal${index}`;
+            modalDiv.tabIndex = -1;
+            modalDiv.setAttribute('aria-labelledby', `eventModalLabel${index}`);
+            modalDiv.setAttribute('aria-hidden', 'true');
+            modalDiv.innerHTML = `
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="eventModalLabel${index}">${event.title}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <!-- Event Image -->
+                                    <div class="col-md-4">
+                                        <div class="event-image">
+                                            <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${event.title}" style="width: 100%;">
+                                        </div>
+                                        <div class="event-info">
+                                            <h5>${event.organizer || 'Unknown Organizer'}</h5><br>
+                                            <span>${event.title}</span><br>
+                                            <span>${event.location}</span><br>
+                                            <span>${event.date}</span><br>
+                                            <span>${event.time}</span>
+                                        </div>
+                                    </div>
+                                    <!-- Event Description -->
+                                    <div class="col-md-8">
+                                        <h5>${event.title}</h5>
+                                        <p class="event-details">
+                                            ${event.description}
+                                        </p>
+                                        <a href="Calendar.html">
+                                            <button class="btn btn-primary" onclick="remoteCreateEvent('${event.date}', '${event.title}', '${event.time}')">Get Involved</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Append modal to body
+            document.body.appendChild(modalDiv);
+        });
+    }
     function setTheme(theme) {
         document.body.className = theme === 'dark' ? 'dark-mode' : '';
         localStorage.setItem('theme', theme); // Save the theme preference
     }
 
-    // Load the theme from local storage when the page loads
+    // Load the theme from local storage when the page load
+    // Call loadEvents when the page loads
     window.onload = function() {
+        loadEvents();
+        loadEvents2();
+        checkUpcomingEvents(); // If you have this function to check for upcoming events
+        searchDiscoverEvents();
         const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
         setTheme(savedTheme);
         document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
     };
+</script>
+  <!-- Dark mode JS -->
+  <script>
+    
 </script>
     <!-- navbar -->
      <header>
@@ -54,421 +156,41 @@
       <div style="margin-bottom: 50px;"></div>
       </header>
     <!--End of navbar -->
-
-
-
-
     <div class="discover-search-container">
       <input type="text" id="discoverSearchInput" placeholder="Search events by title, location, or date..." onkeyup="searchDiscoverEvents()">
   </div>
   <div class="discover-events-list" style="display: none;"> <!-- Initially hidden -->
-      <div class="event">
-          <div class="event-title">Lions Club Pancake Breakfast</div>
-          <div class="event-date">2024-28-10</div>
-          <div class="event-location">Carmel</div>
-      </div>
-      <div class="event">
-          <div class="event-title">Plant Vegtables</div>
-          <div class="event-date">2024-30-10</div>
-          <div class="event-location">Westfield</div>
-      </div>
-      <div class="event">
-        <div class="event-title">Charity Car Wash</div>
-        <div class="event-date">2024-11-10</div>
-        <div class="event-location">Fishers</div>
-    </div>
-    <div class="event">
-      <div class="event-title">Soup Kitchen Volunteer</div>
-      <div class="event-date">2024-15-10</div>
-      <div class="event-location">Noblesville</div>
-  </div>
-  <div class="event">
-    <div class="event-title">Collect Resuable Plastics</div>
-    <div class="event-date">2024-21-10</div>
-    <div class="event-location">Zionsville</div>
-</div>
-<div class="event">
-  <div class="event-title">Clothes Drive</div>
-  <div class="event-date">2024-23-10</div>
-  <div class="event-location">Indianapolis</div>
-</div>
       <!-- Add more event elements here -->
   </div>
-
-
-    <!-- Module 1 -->
-<div class="module" style="float:left">
-  <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1" data-bs-backdrop="static">Get Involved</button>
-  <h3 style="margin-left: 20%;"><u>Helping at the food court</u></h3>
-  <h3 style="margin-left: 20%;"> <b>Helper Heroes</b></h3>
-</div>
-
-<!-- Modal 1 -->
-<div class="modal" id="eventModal1" tabindex="-1" aria-labelledby="eventModalLabel1" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventModalLabel1">Helping at the food court</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-          <div class="row">
-            <!-- Event Image -->
-            <div class="col-md-4">
-              <div class="event-image">
-                Image of food court
-              </div>
-              <div class="event-info">
-                <h5>Helper Heroes</h5><br>
-                <span>Helping at the food court</span><br>
-                <span>location</span><br>
-                <span>October 28th</span><br>
-                <span>10:00 AM - 12:00 PM</span>
-              </div>
-            </div>
-            <!-- Event Description -->
-            <div class="col-md-8">
-              <h5>Helping at the food court</h5>
-              <p class="event-details">
-                You will come in and help at the food court giving out food for people in need.
-              </p>
-              <a href="Calendar.html">
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1"  onclick="remoteCreateEvent('2024/10/28', 'Helping in food court', '10:00 am - 12:00pm')">Get Involved</button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="discover-events-list" style="display: none;"> <!-- Initially hidden -->
+      <!-- Events will be dynamically added here -->
   </div>
-</div>
-    <!-- Module 2 -->
-    <div class="module" style="float:right">
-      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal2" data-bs-backdrop="static">Get Involved</button>
-      <h3 style="margin-left: 20%;"><u>Recycling trash</u></h3>
-      <h3 style="margin-left: 20%;"> <b>Community Changers</b></h3>
-    </div>
-
- <!-- Second Modal -->
-<div class="modal fade" id="eventModal2" tabindex="-1" aria-labelledby="eventModalLabel2" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventModalLabel2">Recyling trash</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <!-- Event Image -->
-          <div class="col-md-4">
-            <div class="event-image">
-              Image of Recyling Event 
-            </div>
-            <div class="event-info">
-              <h5>Community Changers</h5><br>
-              <span>Recycling trash</span><br>
-              <span>location</span><br>
-              <span>October 31th</span><br>
-              <span>02:00 PM - 06:00 PM</span>
-            </div>
-          </div>
-          <!-- Event Description -->
-          <div class="col-md-8">
-            <h5>Recycling trash</h5>
-            <p class="event-details">
-              We will go out together and pick up some trash to recycle.
-            </p>
-            <a href="Calendar.html">
-            <button class="schedule-btn" onclick="remoteCreateEvent('2024/10/31', 'Recycling trash', '2:00 pm - 6:00 pm')">Get Scheduled</button>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-    <!-- Module 3 -->
-    <div class="module" style="float:right">
-      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal3" data-bs-backdrop="static">Get Involved</button>
-      <h3 style="margin-left: 20%;"><u>Dog walking</u></h3>
-      <h3 style="margin-left: 20%;"> <b>Service Solidarians</b></h3>
-    </div>
-
- <!-- Third Modal -->
-<div class="modal fade" id="eventModal3" tabindex="-1" aria-labelledby="eventModalLabel2" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventModalLabel3">Dog walking</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <!-- Event Image -->
-          <div class="col-md-4">
-            <div class="event-image">
-              Image of Dogs
-            </div>
-            <div class="event-info">
-              <h5>Service Solidarians</h5><br>
-              <span>Dog walking</span><br>
-              <span>location</span><br>
-              <span>November 2nd</span><br>
-              <span>01:00 PM - 09:00 PM</span>
-            </div>
-          </div>
-          <!-- Event Description -->
-          <div class="col-md-8">
-            <h5>Dog walking</h5>
-            <p class="event-details">
-              We go out and walk dogs for the people who are at work and don't have the time to.
-            </p>
-            <a href="Calendar.html">
-            <button class="schedule-btn" onclick="remoteCreateEvent('2024/11/2', 'Dog walking', '1:00 PM - 9:00 PM')">Get Scheduled</button>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-    <!-- Module 4 -->
-    <div class="module" style="float:left">
-      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal4" data-bs-backdrop="static">Get Involved</button>
-      <h3 style="margin-left: 20%;"><u>Cutting grass</u></h3>
-      <h3 style="margin-left: 20%;"> <b>Grass Roots Rockers</b></h3>
-    </div>
-
- <!-- Fourth Modal -->
-<div class="modal fade" id="eventModal4" tabindex="-1" aria-labelledby="eventModalLabel4" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventModalLabel4">Cutting grass</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <!-- Event Image -->
-          <div class="col-md-4">
-            <div class="event-image">
-              Image of Grass cutting
-            </div>
-            <div class="event-info">
-              <h5>Grass Roots Rockers</h5><br>
-              <span>Cutting grass</span><br>
-              <span>location</span><br>
-              <span>November 8th</span><br>
-              <span>11:00 am -  03:00 pm</span>
-
-            </div>
-          </div>
-          <!-- Event Description -->
-          <div class="col-md-8">
-            <h5>Grass cutting</h5>
-            <p class="event-details">
-              Cutting grass early in the moring helping out the others  who are busy with work.
-
-            </p>
-            <a href="Calendar.html">
-            <button class="schedule-btn" onclick="remoteCreateEvent('2024/11/8', 'Cutting grass', '11:00 am -  03:00 pm')">Get Scheduled</button>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    <!-- Module 5 -->
-    <div class="module" style="float:right">
-      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal5" data-bs-backdrop="static">Get Involved</button>
-      <h3 style="margin-left: 20%;"><u>Kindness sticker making</u></h3>
-      <h3 style="margin-left: 20%;"> <b>Random Kindness Crew</b></h3>
-    </div>
-
- <!-- Fixth Modal -->
-<div class="modal fade" id="eventModal5" tabindex="-1" aria-labelledby="eventModalLabel5" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventModalLabel5">Kindness sticker making</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <!-- Event Image -->
-          <div class="col-md-4">
-            <div class="event-image">
-              Image of Stickers
-            </div>
-            <div class="event-info">
-              <h5>Random Kindess Crew</h5><br>
-              <span>Kindness sticker making</span><br>
-              <span>location</span><br>
-              <span>November 20th</span><br>
-              <span>02:00 PM - 04:00 PM</span>
-            </div>
-          </div>
-          <!-- Event Description -->
-          <div class="col-md-8">
-            <h5>Kindness sticker making</h5>
-            <p class="event-details">
-              Make some kindness stickers of your choice.
-            </p>
-            <a href="Calendar.html">
-            <button class="schedule-btn" onclick="remoteCreateEvent('2024/11/20', 'Kindess Sticker making', '2:00 PM - 4:00 PM')">Get Scheduled</button>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    <!-- Module 6 -->
-    <div class="module" style="float:left">
-      <img src="Images/Insert-Image-Here.png" alt="Insert-Image-Here">
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal6" data-bs-backdrop="static">Get Involved</button>
-      <h3 style="margin-left: 20%;"><u>Assist the Homeless</u></h3>
-      <h3 style="margin-left: 20%;"> <b>Poverty Eradiators</b></h3>
-    </div>
-
- <!-- Sixth Modal -->
-<div class="modal fade" id="eventModal6" tabindex="-1" aria-labelledby="eventModalLabel6" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventModalLabel3">Assist the Homeless</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <!-- Event Image -->
-          <div class="col-md-4">
-            <div class="event-image">
-              Image of Volunteering
-            </div>
-            <div class="event-info">
-              <h5>Poverty Eradiators</h5><br>
-              <span>Assist the Homeless</span><br>
-              <span>location</span><br>
-              <span>November,16</span><br>
-              <span>03:00 PM - 05:00 PM</span>
-            </div>
-          </div>
-          <!-- Event Description -->
-          <div class="col-md-8">
-            <h5>Assist the Homeless</h5>
-            <p class="event-details">
-              This paragraph contains a small bio or description for Event 6. It includes details about the organization and the event schedule.
-            </p>
-            <a href="Calendar.html">
-            <button class="schedule-btn" onclick="remoteCreateEvent('2024/11/16', 'Assist the Homeless', '3:00 PM')">Get Scheduled</button>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-    <!-- End of modals -->
-
+  <div class="module-container" style="margin-bottom: 20%;"></div>
     <!--Start of java stript -->
     <script>
   // Get the modal
   var modal1 = document.getElementById("eventModal1");
-  var modal2 = document.getElementById("eventModal2");
-  var modal3 = document.getElementById("eventModal3");
-  var modal4 = document.getElementById("eventModal4");
-  var modal5 = document.getElementById("eventModal5");
-  var modal6 = document.getElementById("eventModal6");
 
   // Get the button that opens the modal
   var btn1 = document.getElementById("btn btn-primary");
-  var btn2 = document.getElementById("btn-modal-2");
-  var btn3 = document.getElementById("btn-modal-3");
-  var btn4 = document.getElementById("btn-modal-4");
-  var btn5 = document.getElementById("btn-modal-5");
-  var btn6 = document.getElementById("btn-modal-6");
 
   // Get the <span> element that closes the modal
   var span1 = document.getElementsByClassName("close")[0];
-  var span2 = document.getElementsByClassName("close")[1];
-  var span3 = document.getElementsByClassName("close")[2];
-  var span4 = document.getElementsByClassName("close")[3];
-  var span5 = document.getElementsByClassName("close")[4];
-  var span6 = document.getElementsByClassName("close")[5];
 
   // When the user clicks the button, open the modal
   btn1.onclick = function() {
     modal1.style.display = "block";
-  }
-  btn2.onclick = function() {
-    modal2.style.display = "block";
-  }
-  btn3.onclick = function() {
-    modal3.style.display = "block";
-  }
-  btn4.onclick = function() {
-    modal4.style.display = "block";
-  }
-  btn5.onclick = function() {
-    modal5.style.display = "block";
-  }
-  btn6.onclick = function() {
-    modal6 .style.display = "block";
   }
 
   // When the user clicks on <span> (x), close the modal
   span1.onclick = function() {
     modal1.style.display = "none";
   }
-  span2.onclick = function() {
-    modal2.style.display = "none";
-  }
-  span3.onclick = function() {
-    modal3.style.display = "none";
-  }
-  span4.onclick = function() {
-    modal4.style.display = "none";
-  }
-  span5.onclick = function() {
-    modal5.style.display = "none";
-  }
-  span6.onclick = function() {
-    modal6.style.display = "none";
-  }
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
     if (event.target == modal1) {
       modal1.style.display = "none";
-    }
-    if (event.target == modal2) {
-      modal2.style.display = "none";
-    }
-    if (event.target == modal3) {
-      modal3.style.display = "none";
-    }
-    if (event.target == modal4) {
-      modal4.style.display = "none";
-    }
-    if (event.target == modal5) {
-      modal5.style.display = "none";
-    }
-    if (event.target == modal6) {
-      modal6.style.display = "none";
     }
     function closeModal() {
 
@@ -499,7 +221,7 @@ modal.style.display = 'none'; // Hide the modal
       <li><a href="#">Example Link 1</a></li>
       <li><a href="#">Example Link 2</a></li>
       <li><a href="feedback">Feedback Form</a></li>
-      <li><a href="proof">Example Link</a></li>
+      <li><a href="" onClick="clearEvents();">Button to clear all events</a></li>
     </ul>
 </div>
 </footer>

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./db'); // Import the database utility
 const app = express();
+const something = require("dotenv").config();
 
 // Middleware for logging requests
 app.use((req, res, next) => {
@@ -106,6 +107,28 @@ app.post('/send-feedback', (req, res) => {
     res.status(200).send("Success")
 });
 });
+
+
+app.get('/test-db', async (req, res) => {
+    try {
+      const result = await pool.query('SELECT NOW()');
+      res.json({
+        message: 'Database connection successful!',
+        serverTime: result.rows[0].now,
+      });
+    } catch (err) {
+      console.error('Database connection error:', err);
+      res.status(500).json({ error: 'Failed to connect to the database.' });
+    }
+  });
+  
+  app.get('/test-env', (req, res) => {
+    res.json({
+      message: 'Environment variables loaded!',
+      databaseUrl: process.env.DATABASE_URL ? 'Loaded' : 'Not loaded',
+    });
+  });
+  
 
 // Make the app listen on the port provided by Heroku
 const PORT = process.env.PORT || 3000;

@@ -58,6 +58,15 @@ body.dark-mode .schedule-btn:hover {
   background-color: #535353;
 }
 
+body.dark-mode .modal-content {
+  background-color: #535353;
+  border-color: #535353;
+}
+
+body.dark-mode .modal-lg {
+  background-color: #535353;
+}
+
 /* start of css for navbar */
 #NavUl {
   list-style-type: none;
@@ -132,6 +141,11 @@ li a:hover{
   height: inherit;
 }
 
+body.dark-mode .hourContainer div {
+  border: 5px solid #2b2c2c; /* Color is different from others because it shows differently, PLEASE don't change it */
+  background-color: #575757;
+  color: #ffffff;
+}
 .hourContainer {
   display: flex;
   flex-direction: row;
@@ -222,6 +236,9 @@ li a:hover{
   font-size: 150%;
   cursor: pointer;
   padding: 1.5%;
+}
+#module-buttons:hover {
+  background-color: #3d5764;
 }
 table {
   border: #283A43;
@@ -349,7 +366,6 @@ footer ul li {
     background-color: #fefefe;
     margin: 4% auto;
     padding: 20px;
-    border: 1px solid #888;
     width: 80%;
   }
   

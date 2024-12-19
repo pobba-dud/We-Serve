@@ -170,3 +170,83 @@ function closeNotification() {
   notification.style.display = "none"; // Hide the notification
 }
 //end of universally used code
+function clearEvents(){
+  let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
+  console.log(events);
+  events=[];
+  console.log(events); // []
+  localStorage.setItem('events', JSON.stringify(events));
+  console.log(events)
+}
+
+//clear old events (in progress)
+function clearOldEvents() {
+  // Retrieve events from local storage
+  let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
+  const currentTime = Date.now(); // Get the current time in milliseconds since epoch
+
+  console.log("Current Time:", new Date(currentTime)); // Debugging: Log current time
+
+  // Filter out old events
+  events = events.filter(event => {
+      // Check if the event has a date property
+      if (!event.date) {
+          console.warn("Event does not have a date property:", event);
+          return false; // Exclude this event
+      }
+
+      // Convert the event date to epoch time
+      let eventDateEpoch;
+      try {
+          eventDateEpoch = convertToEpoch(event.date);
+      } catch (error) {
+          console.error("Error converting event date:", error);
+          return false; // Exclude this event if there's an error
+      }
+
+      console.log(`Event: ${event.title}, Date: ${event.date}, Epoch: ${eventDateEpoch}`); // Debugging: Log event details
+
+      // Check if the event date has passed
+      if (eventDateEpoch < currentTime) {
+          console.log(`Removing past event: ${event.title} on ${event.date}`);
+          return false; // Exclude this event (it has passed)
+      }
+
+      // Keep events that are greater than or equal to the current time
+      return true; // Keep this event
+  });
+
+  // Save the updated events back to local storage
+  localStorage.setItem('events', JSON.stringify(events));
+  console.log("Updated events:", events); // Debugging: Log updated events
+}
+
+/**
+ * Converts a date string into a timestamp (milliseconds since epoch).
+ */
+function convertToEpoch(dateString) {
+  if (!dateString) {
+      throw new Error("Date string is undefined or empty.");
+  }
+
+  let year, month, day;
+
+  if (dateString.includes('-')) {
+      // Format: YYYY-MM-DD
+      [year, month, day] = dateString.split('-').map(Number);
+  } else if (dateString.includes('/')) {
+      // Format: MM/DD/YYYY
+      [month, day, year] = dateString.split('/').map(Number);
+  } else {
+      throw new Error("Invalid date format. Use 'YYYY-MM-DD' or 'MM/DD/YYYY'.");
+  }
+
+  const date = new Date(year, month - 1, day);
+
+  if (isNaN(date.getTime())) {
+      throw new Error("Invalid date.");
+  }
+
+  return date.getTime();
+}
+
