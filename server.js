@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./db'); // Import the database utility
 const app = express();
+const something = require("dotenv").config();
 
 // Middleware for logging requests
 app.use((req, res, next) => {
