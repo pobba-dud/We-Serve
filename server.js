@@ -108,6 +108,28 @@ app.post('/send-feedback', (req, res) => {
 });
 });
 
+
+app.get('/test-db', async (req, res) => {
+    try {
+      const result = await pool.query('SELECT NOW()');
+      res.json({
+        message: 'Database connection successful!',
+        serverTime: result.rows[0].now,
+      });
+    } catch (err) {
+      console.error('Database connection error:', err);
+      res.status(500).json({ error: 'Failed to connect to the database.' });
+    }
+  });
+  
+  app.get('/test-env', (req, res) => {
+    res.json({
+      message: 'Environment variables loaded!',
+      databaseUrl: process.env.DATABASE_URL ? 'Loaded' : 'Not loaded',
+    });
+  });
+  
+
 // Make the app listen on the port provided by Heroku
 const PORT = process.env.PORT || 3000;
 app.get('/users', async (req, res) => {
