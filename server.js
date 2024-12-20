@@ -4,7 +4,19 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./db'); // Import the database utility
 const app = express();
-const something = require("dotenv").config();
+require("dotenv").config();
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL, // Heroku provides this variable automatically
+  ssl: {
+    rejectUnauthorized: false, // Required for Heroku-managed databases
+  },
+});
+
+module.exports = {
+  query: (text, params) => pool.query(text, params), // For running queries
+};
 
 // Middleware for logging requests
 app.use((req, res, next) => {
@@ -20,10 +32,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Redirects
-app.get('/', (req, res) => {
-    console.log('Redirecting /index.html to /');
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
 app.get('/index', (req, res) => {
     console.log('Redirecting /index.html to /');
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -73,10 +81,7 @@ app.get('/test', (req, res) => {
 app.get('/donation', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Donation.html'));
 });
-// Fallback route
-app.get('*', (req, res) => {
-    res.redirect(404, '/'); // Redirects to homepage for undefined routes
-});
+
 
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
@@ -130,6 +135,12 @@ app.get('/test-db', async (req, res) => {
   });
   
 
+
+
+  // Fallback route
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Redirects to homepage for undefined routes
+});
 // Make the app listen on the port provided by Heroku
 const PORT = process.env.PORT || 3000;
 app.get('/users', async (req, res) => {
