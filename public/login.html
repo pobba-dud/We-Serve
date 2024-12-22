@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width">
   <title>Profile</title>
   <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+  <script src="script.js"></script>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
 
@@ -312,8 +313,6 @@ html{overflow:scroll;}
     <script>
       // Function to show custom notification
       function showNotification(message) {
-        console.log("2nd Function started");
-        console.log(message);
           const notification = document.getElementById("customNotification");
           console.log(notification);
           notification.textContent = message; // Set the message
@@ -331,26 +330,6 @@ html{overflow:scroll;}
       }
     
       // Function to check for events within 36 hours and show notifications
-      function checkUpcomingEvents() {
-        console.log("Function started");
-          const currentTime = new Date();
-          const fourtyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
-    
-          // Retrieve events from local storage
-          const storedEvents = JSON.parse(localStorage.getItem('events')) || []; // Replace 'events' with your actual key
-    
-          storedEvents.forEach(event => {
-            console.log("Events loaded");
-              const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
-              console.log(event);
-              if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
-                console.log("event is in timespan");  
-                console.log(event);
-                console.log(eventDate);
-                showNotification(`Upcoming Event: ${event.title} at ${event.location} on ${event.date} at ${event.time}`);
-              }
-          });
-      }
       function closeNotification() {
         const notification = document.getElementById("customNotification");
         notification.style.display = "none"; // Hide the notification

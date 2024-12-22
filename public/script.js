@@ -169,6 +169,12 @@ function closeNotification() {
   const notification = document.getElementById("customNotification");
   notification.style.display = "none"; // Hide the notification
 }
+
+function setTheme(theme) {
+  document.body.className = theme === 'dark' ? 'dark-mode' : '';
+  localStorage.setItem('theme', theme); // Save the theme preference
+}
+
 //end of universally used code
 function clearEvents(){
   let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];

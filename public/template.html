@@ -10,11 +10,6 @@
   </head>
   <!-- Dark mode JS -->
   <script>
-    function setTheme(theme) {
-        document.body.className = theme === 'dark' ? 'dark-mode' : '';
-        localStorage.setItem('theme', theme); // Save the theme preference
-    }
-
     // Load the theme from local storage when the page loads
     window.onload = function() {
         checkUpcomingEvents();
