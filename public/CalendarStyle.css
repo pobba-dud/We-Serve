@@ -55,6 +55,7 @@ body.dark-mode #deleteEventModal{
   color: white; /* Light text color */
   background-color: #3f3e3e;
 }
+
   button {
     width: 75px;
     cursor: pointer;
@@ -136,7 +137,7 @@ body.dark-mode #deleteEventModal{
 
   .padding {
     cursor: default !important;
-    background-color: #FFFCFF !important;
+    background-color: transparent !important;
     box-shadow: none !important;
   }
   #newEventModal, #deleteEventModal {
