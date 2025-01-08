@@ -1,0 +1,41 @@
+/*WeekDays*/
+#WeekDays {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px; /* Default padding */
+    text-align: center;
+  }
+  
+  @media (max-width: 414px) and (max-height: 678px) {
+    #WeekDays {
+      padding: 0; /* Remove padding for screens that are 414px x 678px or smaller */
+    }
+  }
+
+  @media (max-width: 360px) and (max-height: 678px) {
+    #WeekDays {
+      padding: 0; /* Remove padding for screens that are 414px x 678px or smaller */
+    }
+  }
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #283A43;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #1F2A32;
+  }
+  
+  #BackButton, #NextButton {
+    display: inline-block;
+  }
+  
+
+footer {
+    padding-bottom: 30%;
+}
