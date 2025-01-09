@@ -111,12 +111,6 @@ app.get('/test', (req, res) => {
 app.get('/donation', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Donation.html'));
 });
-app.get('/users', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'users.html'));
-});
-app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'register.html'));
-});
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
@@ -236,7 +230,7 @@ app.post('/loginJS', async (req, res) => {
     }
 
     // Generate a JWT token
-    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '168h' });
 
     // Send token as a cookie
     res.cookie('auth_token', token, { httpOnly: true }).send('Login successful.');
