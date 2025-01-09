@@ -200,8 +200,8 @@ app.get('/test-db', async (req, res) => {
 
 
 
-app.post('/registerJS', async (req, res) => {
-    const { name, email, password, isAdmin } = req.body;
+  app.post('/registerJS', async (req, res) => {
+    const { name, email, password } = req.body;
   
     try {
       // Check if the email already exists
@@ -213,11 +213,11 @@ app.post('/registerJS', async (req, res) => {
   
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
-      const isMatch = await bcrypt.compare(inputPassword, storedHashedPassword);
+  
       // Insert the user into the database
       await pool.query(
-        'INSERT INTO users (name, email, password, is_admin) VALUES ($1, $2, $3, $4)',
-        [name, email, hashedPassword, isAdmin || false] // Default to false if isAdmin is not provided
+        'INSERT INTO users (name, email, password) VALUES ($1, $2, $3)',
+        [name, email, hashedPassword]
       );
   
       res.status(201).send('User registered successfully.');
@@ -226,6 +226,7 @@ app.post('/registerJS', async (req, res) => {
       res.status(500).send('Error registering user.');
     }
   });
+  
   
 
 const jwt = require('jsonwebtoken');
