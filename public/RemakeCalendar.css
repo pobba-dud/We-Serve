@@ -2,7 +2,7 @@
 #WeekDays {
     display: flex;
     justify-content: space-around;
-    padding: 20px; /* Default padding */
+    padding: 5%; /* Default padding */
     text-align: center;
   }
   
@@ -18,6 +18,7 @@
     }
   }
 
+/*Button*/
 button {
     padding: 10px 20px;
     margin: 5px;
@@ -36,6 +37,14 @@ button {
   }
   
 
+/* Footer */
 footer {
     padding-bottom: 30%;
 }
+
+#monthDisplay {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 10px;
+    color: rgb(19, 29, 29);
+  }
