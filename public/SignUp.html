@@ -1,133 +1,78 @@
 <!DOCTYPE html>
-<pre>
-</pre>
-
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
-  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-  <link href="SignUpStyle.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="SignUpStyle.css">
   <script src="script.js"></script>
 </head>
-<!-- Dark mode JS -->
-<script>
-  // Load the theme from local storage when the page loads
-  window.onload = function () {
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-    setTheme(savedTheme);
-    document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-  };
-</script>
 
 <body>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      document.getElementById("togglePassword").addEventListener("click", function () {
-        const passwordField = document.getElementById("password");
-        const toggleButton = this;
-
-        if (passwordField.type === "password") {
-          passwordField.type = "text";
-          toggleButton.textContent = "🟩";
-        } else {
-          passwordField.type = "password";
-          toggleButton.textContent = "🟥";
-        }
-      });
-    });
-  </script>
-  <div style="align-items: center;align-items: center;">
-    <h1>Create an Account</h1>
-  </div>
+  <h1>Create an Account</h1>
   <div class="container">
-    <form id="signupForm" method="POST">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-      </div>
+    <form id="signupForm" method="POST" action="/registerJS" autocomplete="on">
       <div class="form-group">
         <label for="fname">First name:</label>
-        <input type="text" id="fname" name="fname">
+        <input type="text" id="fname" name="firstname" autocomplete="given-name" required>
       </div>
       <div class="form-group">
         <label for="lname">Last name:</label>
-        <input type="text" id="lname" name="lname">
+        <input type="text" id="lname" name="lastname" autocomplete="family-name" required>
       </div>
       <div class="form-group">
-        <lable or="gender">Gender:</lable>
-        <select name="gender" id="gender">
-          <option value="default"><b>(Default)</b></option>
-          <option value="male"><b>Male</b></option>
-          <option value="female"><b>Female</b></option>
-          <option value="other"><b>Other</b></option>
-          <option value="perferNotToSay"><b>Perfer Not to say</option>
+        <label for="gender">Gender:</label>
+        <select name="gender" id="gender" autocomplete="sex" required>
+          <option value="default">(Default)</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+          <option value="preferNotToSay">Prefer Not to Say</option>
         </select>
       </div>
       <div class="form-group">
         <label for="birthday">Birthday:</label>
-        <input type="date" id="birthday" name="birthday">
+        <input type="date" id="birthday" name="birthday" autocomplete="bday" required>
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" autocomplete="email" required>
       </div>
       <div class="form-group">
-        <label for="phone">Enter a phone number:</label>
-        <input type="tel" id="phone" name="phone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+        <label for="phone">Phone number (optional):</label>
+        <input type="tel" id="phone" name="phonenumber" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" autocomplete="tel">
       </div>
-
-
-      <div class="form-group" style="position: relative; width: fit-content;">
-        <input type="password" id="password" class="form-control" placeholder="Enter your password"
-          style="padding-right: 40px;">
-        <button type="button" id="togglePassword" style="
-                      position: absolute; 
-                      right: 10px; 
-                      top: 50%; 
-                      transform: translateY(-50%);
-                      background: none; 
-                      border: none; 
-                      cursor: pointer; 
-                      font-size: 16px;
-                  ">
-          🟥
-        </button>
-      </div>
-
       <div class="form-group">
-        <input type="password" value="" id="confirmPassword" required placeholder="Confirm your password">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" autocomplete="new-password" required>
       </div>
-
-
-      <script>
-        document.getElementById('signupForm').addEventListener('submit', function (event) {
-          const password = document.getElementById('password').value;
-          const confirmPassword = document.getElementById('confirmPassword').value;
-
-          if (password !== confirmPassword) {
-            event.preventDefault(); // Prevent form submission
-            alert("Passwords do not match!"); // Show an alert
-          } else {
-            // Here, you can handle form submission, like sending data via AJAX
-            alert("Form submitted successfully!"); // For testing purposes
-          }
-        });
-
-      </script>
-      <!-- show password button -->
-
-
-
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" autocomplete="new-password" required>
+      </div>
+      <div class="form-group">
+        <label for="isorg">Are you registering as an organization?</label>
+        <select name="isorg" id="isorg" autocomplete="off" required>
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
       <button type="submit">Sign Up</button>
-      <div style="margin: 5%;"></div>
-      <p>Already have an account? <a href="account">Log in</a></p>
     </form>
-
   </div>
 
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function (event) {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        event.preventDefault(); // Prevent form submission
+        alert("Passwords do not match!");
+      }
+    });
+  </script>
 </body>
 
 </html>

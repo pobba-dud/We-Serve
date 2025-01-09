@@ -58,7 +58,13 @@ const authenticateAdmin = async (req, res, next) => {
     res.status(403).send('Invalid token or access denied.');
   }
 };
-
+function checkAdmin(req, res, next) {
+  if (req.user && req.user.isadmin === 1) {
+    next();
+  } else {
+    res.status(403).send('Access denied. Admins only.');
+  }
+}
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -150,7 +156,7 @@ app.post('/send-feedback', (req, res) => {
         return res.status(500).json({ error: 'Error sending email: ' + error.message }); // Send detailed error message
     }
     console.log('Email sent: ' + info.response);
-    res.status(200).send("Success")
+    res.redirect('/');
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 });
@@ -176,56 +182,49 @@ app.get('/test-db', async (req, res) => {
     });
   });
   
-  app.get('/users', authenticateAdmin, async (req, res) => {
-    try {
-      const result = await pool.query('SELECT id, name, email FROM users');
-      res.json(result.rows);
-    } catch (err) {
-      console.error('Error fetching users:', err);
-      res.status(500).send('Error fetching users.');
-    }
+  
+  
+  app.get('/users', authenticateAdmin, checkAdmin, async (req, res) => {
+    const users = await pool.query('SELECT * FROM users');
+    res.json(users.rows);
   });
   
-  app.get('/3cx97UyqIrwW4CHPQZYU7igifpq', authenticateAdmin, async (req, res) => {
-    try {
-      const result = await pool.query('SELECT * FROM users');
-      res.json(result.rows);
-    } catch (err) {
-      console.error('Error fetching user data:', err);
-      res.status(500).send('Error fetching user data.');
-    }
-  });
+  
+  
   
   
 
 
 
   app.post('/registerJS', async (req, res) => {
-    const { name, email, password } = req.body;
+    const { firstname, lastname, gender, birthday, email, phone, password, isadmin = false, isorg = false } = req.body;
+
+  
+    // Validate input data (basic checks, feel free to extend it)
+    if (!email || !password || !firstname || !lastname) {
+      return res.status(400).json({ message: 'Please provide all required fields.' });
+    }
   
     try {
-      // Check if the email already exists
-      const userExists = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-  
-      if (userExists.rowCount > 0) {
-        return res.status(400).send('Email already exists.');
-      }
-  
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
   
-      // Insert the user into the database
-      await pool.query(
-        'INSERT INTO users (name, email, password) VALUES ($1, $2, $3)',
-        [name, email, hashedPassword]
+      // Insert user into the database
+      const result = await pool.query(
+        'INSERT INTO users (firstname, lastname, gender, birthday, email, phonenumber, password, isadmin, isorg) ' +
+        'VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', 
+        [firstname, lastname, gender, birthday, email, phone, hashedPassword, isadmin, isorg]
       );
   
-      res.status(201).send('User registered successfully.');
+      res.redirect('/login');
     } catch (err) {
       console.error('Registration error:', err);
-      res.status(500).send('Error registering user.');
+      res.status(500).json({ message: 'Error registering user.' });
     }
   });
+  
+    
+  
   
   
 
