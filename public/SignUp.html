@@ -103,11 +103,24 @@
               </button>
           </div>
 
+
+          <script>
+            // Function to check if passwords match
+            document.getElementById('signupForm').addEventListener('submit', function(event) {
+              const password = document.getElementById('password').value;
+              const confirmPassword = document.getElementById('confirmPassword').value;
+      
+              if (password !== confirmPassword) {
+                event.preventDefault(); // Prevent form submission
+                alert("Passwords do not match!"); // Show an alert
+              }
+            });
+          </script>
             <!-- show password button -->
 
 
             <div class="form-group">
-                <input type="confirm-password" value="" id="myInput" required placeholder="Confirm your password">
+                <input type="password" value="" id="confirmPassword" required placeholder="Confirm your password">
               </div>
 
 
