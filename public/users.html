@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User List</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h1>Users</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody id="userTable">
+      <!-- Data will be populated here -->
+    </tbody>
+  </table>
+
+  <script>
+    // Fetch data from the /users endpoint
+    fetch('/users')
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.getElementById('userTable');
+        data.forEach(user => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>${new Date(user.created_at).toLocaleString()}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => console.error('Error fetching user data:', error));
+  </script>
+</body>
+</html>

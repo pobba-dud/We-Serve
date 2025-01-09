@@ -134,6 +134,15 @@ app.get('/test-db', async (req, res) => {
     });
   });
   
+  app.get('/users', async (req, res) => {//DELETE BEFORE REAL TIME USE
+  try {
+    const result = await pool.query('SELECT * FROM users');
+    res.json(result.rows); // Send the data as JSON to the client
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 
