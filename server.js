@@ -7,6 +7,8 @@ const app = express();
 require("dotenv").config();
 const { Pool } = require('pg');
 const cookieParser = require('cookie-parser');
+const bcrypt = require('bcryptjs');
+
 
 // Use cookie-parser middleware
 app.use(cookieParser());
@@ -198,8 +200,6 @@ app.get('/test-db', async (req, res) => {
 
 
 
-const bcrypt = require('bcrypt');
-
 app.post('/registerJS', async (req, res) => {
     const { name, email, password, isAdmin } = req.body;
   
@@ -213,7 +213,7 @@ app.post('/registerJS', async (req, res) => {
   
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
-  
+      const isMatch = await bcrypt.compare(inputPassword, storedHashedPassword);
       // Insert the user into the database
       await pool.query(
         'INSERT INTO users (name, email, password, is_admin) VALUES ($1, $2, $3, $4)',
