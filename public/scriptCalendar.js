@@ -285,3 +285,8 @@ if (startDate && endDate) {
 } else {
     console.error('Start and End date are required!');
 }
+
+function formatDate(date) {
+  const d = new Date(date);
+  return d.toISOString().split('T')[0]; // Extract 'YYYY-MM-DD'
+}
