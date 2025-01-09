@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
+// Function to map events to days
 function mapEventsToDays() { // start of mapEventsToDays() function
   const events = JSON.parse(localStorage.getItem("events")) || [];
   const currentDate = new Date();
@@ -67,11 +67,12 @@ function mapEventsToDays() { // start of mapEventsToDays() function
 
   events.forEach((event) => {
     const eventDate = new Date(event.date);
+    const eventDateUTC = new Date(Date.UTC(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate()));
 
     // Check if the event falls within the current week
-    if (eventDate >= startOfWeek && eventDate <= endOfWeek) {
+    if (eventDateUTC >= startOfWeek && eventDateUTC <= endOfWeek) {
       const dayOffset = eventDate.getDay(); // Get the day of the week (0-6)
-      const tableRow = document.querySelector(`tr:nth-child(${dayOffset + 1})`);
+      const tableRow = document.querySelector(`tr:nth-child(${dayOffset + 2})`);
 
       // Update the table cell with the event information
       if (tableRow && tableRow.cells[1]) {
