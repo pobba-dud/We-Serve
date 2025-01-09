@@ -1,95 +1,89 @@
-
 <!DOCTYPE html>
 <pre>
 </pre>
 
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Sign Up</title>
-    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-    <link href="SignUpStyle.css" rel="stylesheet" type="text/css" />
-    <script src="script.js"></script>
-  </head>
-  <!-- Dark mode JS -->
-  <script>
-    // Load the theme from local storage when the page loads
-    window.onload = function() {
-        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-        setTheme(savedTheme);
-        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-    };
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Sign Up</title>
+  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+  <link href="SignUpStyle.css" rel="stylesheet" type="text/css" />
+  <script src="script.js"></script>
+</head>
+<!-- Dark mode JS -->
+<script>
+  // Load the theme from local storage when the page loads
+  window.onload = function () {
+    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    setTheme(savedTheme);
+    document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+  };
 </script>
-  <body>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-              document.getElementById("togglePassword").addEventListener("click", function () {
-                  const passwordField = document.getElementById("password");
-                  const toggleButton = this;
 
-                  if (passwordField.type === "password") {
-                      passwordField.type = "text";
-                      toggleButton.textContent = "🟩";
-                  } else {
-                      passwordField.type = "password";
-                      toggleButton.textContent = "🟥";
-                  }
-              });
-          });
-      </script>
-      <div style="align-items: center;align-items: center;"><h1>Create an Account</h1></div>
-    <div class="container">
-      
-        <form method="POST">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="fname">First name:</label>
-                <input type="text" id="fname" name="fname">
-            </div>
-            <div class="form-group">
-                <label for="lname">Last name:</label>
-                <input type="text" id="lname" name="lname">
-            </div>
-            <div class="form-group">
-              <lable or ="gender">Gender:</lable>
-              <select name="gender" id="gender">
-                <option value="default"><b>(Default)</b></option>
-                <option value="male"><b>Male</b></option>
-                <option value="female"><b>Female</b></option>
-                <option value="other"><b>Other</b></option>
-                <option value="perferNotToSay"><b>Perfer Not to say</b></option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="birthday">Birthday:</label>
-              <input type="date" id="birthday" name="birthday">
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Enter a phone number:</label>
-              <input type="tel" id="phone" name="phone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
-            </div>
+<body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("togglePassword").addEventListener("click", function () {
+        const passwordField = document.getElementById("password");
+        const toggleButton = this;
 
-            
-            <div class="form-group" style="position: relative; width: fit-content;">
-              <input 
-                  type="password" 
-                  id="password" 
-                  class="form-control" 
-                  placeholder="Enter your password" 
-                  style="padding-right: 40px;"
-              >
-              <button 
-                  type="button" 
-                  id="togglePassword" 
-                  style="
+        if (passwordField.type === "password") {
+          passwordField.type = "text";
+          toggleButton.textContent = "🟩";
+        } else {
+          passwordField.type = "password";
+          toggleButton.textContent = "🟥";
+        }
+      });
+    });
+  </script>
+  <div style="align-items: center;align-items: center;">
+    <h1>Create an Account</h1>
+  </div>
+  <div class="container">
+    <form id="signupForm" method="POST">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname">
+      </div>
+      <div class="form-group">
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="lname">
+      </div>
+      <div class="form-group">
+        <lable or="gender">Gender:</lable>
+        <select name="gender" id="gender">
+          <option value="default"><b>(Default)</b></option>
+          <option value="male"><b>Male</b></option>
+          <option value="female"><b>Female</b></option>
+          <option value="other"><b>Other</b></option>
+          <option value="perferNotToSay"><b>Perfer Not to say</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="birthday">
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Enter a phone number:</label>
+        <input type="tel" id="phone" name="phone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+      </div>
+
+
+      <div class="form-group" style="position: relative; width: fit-content;">
+        <input type="password" id="password" class="form-control" placeholder="Enter your password"
+          style="padding-right: 40px;">
+        <button type="button" id="togglePassword" style="
                       position: absolute; 
                       right: 10px; 
                       top: 50%; 
@@ -99,37 +93,41 @@
                       cursor: pointer; 
                       font-size: 16px;
                   ">
-                🟥
-              </button>
-          </div>
+          🟥
+        </button>
+      </div>
+
+      <div class="form-group">
+        <input type="password" value="" id="confirmPassword" required placeholder="Confirm your password">
+      </div>
 
 
-          <script>
-            // Function to check if passwords match
-            document.getElementById('signupForm').addEventListener('submit', function(event) {
-              const password = document.getElementById('password').value;
-              const confirmPassword = document.getElementById('confirmPassword').value;
-      
-              if (password !== confirmPassword) {
-                event.preventDefault(); // Prevent form submission
-                alert("Passwords do not match!"); // Show an alert
-              }
-            });
-          </script>
-            <!-- show password button -->
+      <script>
+        document.getElementById('signupForm').addEventListener('submit', function (event) {
+          const password = document.getElementById('password').value;
+          const confirmPassword = document.getElementById('confirmPassword').value;
+
+          if (password !== confirmPassword) {
+            event.preventDefault(); // Prevent form submission
+            alert("Passwords do not match!"); // Show an alert
+          } else {
+            // Here, you can handle form submission, like sending data via AJAX
+            alert("Form submitted successfully!"); // For testing purposes
+          }
+        });
+
+      </script>
+      <!-- show password button -->
 
 
-            <div class="form-group">
-                <input type="password" value="" id="confirmPassword" required placeholder="Confirm your password">
-              </div>
 
+      <button type="submit">Sign Up</button>
+      <div style="margin: 5%;"></div>
+      <p>Already have an account? <a href="account">Log in</a></p>
+    </form>
 
-            <button type="submit">Sign Up</button>      
-            <div style="margin: 5%;"></div>
-            <p>Already have an account? <a href="account">Log in</a></p>
-        </form>
+  </div>
 
-    </div>
-    
 </body>
+
 </html>
