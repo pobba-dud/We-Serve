@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Profile</title>
+  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+  <script src="script.js"></script>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
+
+html {
+  height: 100%;
+  width: 100%;
+
+  /* testing fonts  \/ */
+  font-family: "Red Hat Text", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* start of css for navbar */
+#NavUl {
+  list-style-type: none;
+  margin: 0%;
+  padding: 0%;
+  overflow: hidden;
+  background-color: #283A43;
+  font-size: 20px;
+}
+li {
+  float: left;
+  display: flex;
+  align-content: center;
+  color: #9bd1e5;
+}
+li a:link, li a:visited{
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 18px;
+  padding-left: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #9bd1e5;
+  border-width: 1px;
+  border-color: none;
+  border-radius: 5px;
+  display: inline-block;
+}
+li a:hover{
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 18px;
+  padding-left: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #9bd1e5;
+  background-color: rgb(57, 94, 112);
+  border-width: 1px;
+  border-color: none;
+  border-radius: 5px;
+  display: inline-block;
+}
+  #NavUl img{
+  float: left;
+   display: flex;
+    width: 57px;
+    height:auto;
+   margin: 0%;
+   padding: 0%;
+   margin-right: 5px;
+ }
+
+/* end of navbar css */
+
+body {
+    background-color: #e8f5ff;
+    font-family: Arial;
+    overflow: hidden;
+}
+
+/* dark mode */
+body.dark-mode {
+  background-color: #121212; /* Dark background */
+  color: #f7f7f7; /* Light text color */
+}
+
+body.dark-mode h2 {
+    color: white;
+}
+
+
+body.dark-mode .sidenav {
+    background-color: #3f3e3e;
+    color: white;
+}
+
+body.dark-mode .active {
+    background-color: #6e6e6e;
+    color: white;
+}
+
+body.dark-mode .active:hover {
+    background-color: #868686;
+    color: white;
+}
+
+body.dark-mode .url a:hover {
+    background-color: #868686;
+    color: white;
+}
+
+body.dark-mode .card {
+background-color: #3f3e3e;  
+} 
+
+body.dark-mode table {
+  background-color: #3f3e3e; /* Dark table background */
+  color: #f7f7f7; /* Light text color */
+  border: #070707;
+}
+
+body.dark-mode .innerContainer {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode .highlight {
+  background-color: #535353;
+}
+
+body.dark-mode .schedule-btn {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode .schedule-btn:hover {
+  background-color: #535353;
+}
+
+
+/* NavbarTop */
+.navbar-top {
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0px 4px 8px 0px grey;
+    height: 70px;
+}
+
+.title {
+    font-family: 'Dancing Script', cursive;
+    padding-top: 15px;
+    position: absolute;
+    left: 45%;
+}
+
+.navbar-top ul {
+    float: right;
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 18px 50px 0 40px;
+}
+
+.navbar-top ul li {
+    float: left;
+}
+
+.navbar-top ul li a {
+    color: #333;
+    padding: 14px 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.icon-count {
+    background-color: #ff0000;
+    color: #fff;
+    float: right;
+    font-size: 11px;
+    left: -25px;
+    padding: 2px;
+    position: relative;
+}
+
+/* End */
+
+/* Sidenav */
+.sidenav {
+    background-color: #fff;
+    color: #333;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
+    height: 86%;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    position: absolute;
+    top: 10%;
+    width: 25%;
+}
+
+.profile {
+    margin-bottom: 20px;
+    margin-top: -12px;
+    text-align: center;
+}
+
+.profile img {
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px 1px grey;
+
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 20px;
+}
+
+.job {
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+.url, hr {
+    text-align: center;
+}
+
+.url hr {
+    margin-left: 20%;
+    width: 60%;
+}
+
+.url a {
+    color: #818181;
+    display: block;
+    font-size: 20px;
+    margin: 10px 0;
+    padding: 6px 8px;
+    text-decoration: none;
+}
+
+.url a:hover, .url .active {
+    background-color: #e8f5ff;
+    border-radius: 28px;
+    color: #000;
+    margin-left: 14%; /* This margin is added on hover */
+    width: 65%; /* This width is also applied */
+}
+
+/* End */
+
+/* Main */
+.main {
+    margin-top: 2%;
+    margin-left: 29%;
+    font-size: 28px;
+    width: 65%;
+}
+
+.main h2 {
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.main .card {
+    background-color: #9bd1e5;
+    border-radius: 18px;
+    box-shadow: 1px 1px 8px 0 grey;
+    height: auto;
+    margin-bottom: 20px;
+    padding: 20px 0 20px 50px;
+}
+
+.main .card table {
+    border: none;
+    font-size: 16px;
+    height: 270px;
+    width: 80%;
+}
+
+.edit {
+    position: absolute;
+    color: #e7e7e8;
+    right: 14%;
+}
+@media only screen and (max-width: 700px) {
+#AllignLogin{display: flex;flex-direction: column;}
+.sidenav{position:relative;width: auto; border-radius: 0%;}
+html { font-size: smaller; }
+.nav ul { align-items: center; }
+.main{margin: auto; width: auto;}
+.main h2{margin-left: 10%}
+html{overflow:scroll;}
+}
+
+/* End */
+  </style>
+</head>
+  <script>
+
+  </script>
+
+<body style="margin: 0%;">
+
+    <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
+        This is a notification message!
+        <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
+    </div>
+    
+    <script>
+      // Function to show custom notification
+      function showNotification(message) {
+          const notification = document.getElementById("customNotification");
+          console.log(notification);
+          notification.textContent = message; // Set the message
+          notification.style.display = "block"; // Show the notification
+          console.log(notification.textContent);
+          // Hide the notification after 5 seconds
+          setTimeout(() => {
+            console.log("timer Function started");
+              notification.style.opacity = '0'; // Fade out
+              setTimeout(() => {
+                  notification.style.display = "none"; // Hide after fade out
+                  notification.style.opacity = '1'; // Reset opacity for next use
+              }, 500); // Wait for the fade out duration
+          }, 500000); // Display for 5 seconds
+      }
+    
+      // Function to check for events within 36 hours and show notifications
+      function closeNotification() {
+        const notification = document.getElementById("customNotification");
+        notification.style.display = "none"; // Hide the notification
+    }
+      // Call checkUpcomingEvents function at the start or at intervals
+      window.onload = function() {
+          checkUpcomingEvents(); // Check for upcoming events when the page loads
+      };
+    </script>
+    
+<!-- navbar -->
+<nav>
+    <ul id="NavUl">
+        <a href="index"><img src="Images/logo.png"></a>
+      <li><a href="dashboard"><b>Homepage</b></a></li>
+      <li><a href="discover"><b>Discover</b></a></li>
+      <li><a href="hours"><b>Hour log</b></a></li>
+      <li><a href="calendar"><b>Calendar</b></a></li>
+      <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+    </ul>
+  </nav>
+  <div style="margin-bottom: 50px;"></div>
+    <!--End of navbar -->
+
+
+<div id="AllignLogin">
+
+    <!-- Sidenav -->
+    <div class="sidenav">
+      <div class="profile">
+          <img src= 'Images/Default_pfp.png' style="width:70%;height:auto;margin-top: 100px;">
+
+          <div class="name">
+              Jon Doe
+          </div>
+          <div class="job">
+              Student
+          </div>
+      </div>
+
+      <div class="sidenav-url">
+          <div class="url">
+              <a href="#profile" class="active">Edit</a>
+              <hr style="align-items: center;">
+          </div>
+          <div class="url">
+              <a href="Settings.html" class="active">Settings</a>
+              <hr style = 'align-items: center;'>
+          </div>
+      </div>
+  </div>
+  <!-- End -->
+<!-- Main -->
+<div class="main">
+  <h2>IDENTITY</h2>
+  <div class="card">
+      <div class="card-body">
+          <i class="fa fa-pen fa-xs edit"></i>
+          <table>
+              <tbody>
+                  <tr>
+                      <td>Name</td>
+                      <td>:</td>
+                      <td>Jon Doe</td>
+                  </tr>
+                  <tr>
+                      <td>Email</td>
+                      <td>:</td>
+                      <td>JonDoe@gmail.com</td>
+                  </tr>
+                  <tr>
+                    <td>Password</td>
+                    <td>:</td>
+                    <td>**********</td>
+                </tr>
+                  <tr>
+                      <td>Address</td>
+                      <td>:</td>
+                      <td>473753 Roadname Dr, Westfield, Indiana, 46074</td>
+                  </tr>
+                  <tr>
+                      <td>Hobbies</td>
+                      <td>:</td>
+                      <td>Voluneering</td>
+                  </tr>
+                  <tr>
+                      <td>Job</td>
+                      <td>:</td>
+                      <td>Student</td>
+                  </tr>
+                  <tr>
+                      <td>Skills</td>
+                      <td>:</td>
+                      <td>Assiting the Community</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+<!-- End -->
+<script>
+    function setTheme(theme) {
+        document.body.className = theme === 'dark' ? 'dark-mode' : '';
+        localStorage.setItem('theme', theme); // Save the theme preference
+    }
+
+    // Load the theme from local storage when the page loads
+    window.onload = function() {
+        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+        setTheme(savedTheme);
+        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+    };
+
+    // Add event listener for form submission
+    document.getElementById('settings-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        // Here you can add any code to save settings if needed
+        window.location.href = 'login.html'; // Redirect to the login page
+    });
+</script>
+
+
+</body>
+    </html>
