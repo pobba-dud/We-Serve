@@ -36,28 +36,20 @@ app.use(bodyParser.json());
 
 // Define the authenticate middleware
 
-const authenticateAdmin = async (req, res, next) => {
-  try {
-    // Check if user is authenticated
-    const token = req.cookies.auth_token;
-    if (!token) return res.status(401).send('Access denied. No token provided.');
-
-    // Verify the token
-    const verified = jwt.verify(token, SECRET_KEY);
-    req.user = verified;
-
-    // Check if the user is an admin in the database
-    const result = await pool.query('SELECT is_admin FROM users WHERE id = $1', [req.user.id]);
-    if (result.rowCount === 0 || !result.rows[0].is_admin) {
-      return res.status(403).send('Access denied. Admin privileges required.');
-    }
-
-    next(); // User is authenticated and an admin
-  } catch (err) {
-    console.error('Authentication error:', err);
-    res.status(403).send('Invalid token or access denied.');
+// Middleware to check if the user is authenticated and an admin
+function authenticate(req, res, next) {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login'); // Redirect to login if not authenticated
   }
-};
+  
+  // Check if user is an admin
+  if (req.user && req.user.isadmin === true) {
+    return next(); // Allow access to the next middleware
+  }
+
+  return res.status(403).json({ message: 'Forbidden: Admin access required.' }); // Deny access if not an admin
+}
+
 function checkAdmin(req, res, next) {
   if (req.user && req.user.isadmin === 1) {
     next();
@@ -183,21 +175,12 @@ app.get('/test-db', async (req, res) => {
   });
   
   
-  
-  app.get('/users', authenticateAdmin, checkAdmin, async (req, res) => {
-    const users = await pool.query('SELECT * FROM users');
-    res.json(users.rows);
-  });
-  
-  
-  
-  
-  
 
 
-
+  
+  
   app.post('/registerJS', async (req, res) => {
-    const { firstname, lastname, gender, birthday, email, phone, password, isadmin = false, isorg = false } = req.body;
+    const { firstname, lastname, gender, birthday, email, phone, password, isadmin = false, isorg } = req.body;
 
   
     // Validate input data (basic checks, feel free to extend it)
