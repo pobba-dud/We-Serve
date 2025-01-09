@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
   <link rel="stylesheet" href="SignUpStyle.css">
-  <script src="script.js"></script>
 </head>
 
 <body>
@@ -40,8 +39,8 @@
         <input type="email" id="email" name="email" autocomplete="email" required>
       </div>
       <div class="form-group">
-        <label for="phone">Phone number (optional):</label>
-        <input type="tel" id="phone" name="phonenumber" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" autocomplete="tel">
+        <label for="phonenumber">Phone number (optional):</label>
+        <input type="tel" id="phonenumber" name="phonenumber" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" autocomplete="tel">
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
@@ -63,15 +62,44 @@
   </div>
 
   <script>
-    document.getElementById('signupForm').addEventListener('submit', function (event) {
+    document.getElementById('signupForm').addEventListener('submit', async function (event) {
+      event.preventDefault(); // Prevent form submission
+
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
 
       if (password !== confirmPassword) {
-        event.preventDefault(); // Prevent form submission
         alert("Passwords do not match!");
+        return; // Stop form submission
       }
-    });
+
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('/registerJS', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+      // Success: Redirect to login page
+      window.location.href = '/login';
+    } else {
+      // Error: Show alert
+      alert(result.message || 'Error registering user.');
+    }
+  } catch (error) {
+    // If any error occurs in the fetch process
+    alert("Error registering user.");
+  }
+});
+
   </script>
 </body>
 

@@ -174,13 +174,24 @@ app.get('/test-db', async (req, res) => {
   
   
   app.post('/registerJS', async (req, res) => {
-    const { firstname, lastname, gender, birthday, email, phone, password, isadmin = false, isorg } = req.body;
+    const { firstname, lastname, gender, birthday, email, phonenumber, password, isadmin = false, isorg } = req.body;
 
   
     // Validate input data (basic checks, feel free to extend it)
     if (!email || !password || !firstname || !lastname) {
       return res.status(400).json({ message: 'Please provide all required fields.' });
     }
+    const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+        if (emailCheck.rows.length > 0) {
+            return res.status(400).json({ message: 'Email is already in use' });
+        }
+
+        const phoneCheck = await pool.query('SELECT * FROM users WHERE phonenumber = $1', [phonenumber]);
+        if (phoneCheck.rows.length > 0) {
+            return res.status(400).json({ message: 'Phone number is already in use' });
+        }
+        
+
   
     try {
       // Hash the password
@@ -190,7 +201,7 @@ app.get('/test-db', async (req, res) => {
       const result = await pool.query(
         'INSERT INTO users (firstname, lastname, gender, birthday, email, phonenumber, password, isadmin, isorg) ' +
         'VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', 
-        [firstname, lastname, gender, birthday, email, phone, hashedPassword, isadmin, isorg]
+        [firstname, lastname, gender, birthday, email, phonenumber, hashedPassword, isadmin, isorg]
       );
   
       res.redirect('/login');
