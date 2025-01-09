@@ -6,6 +6,10 @@ const db = require('./db'); // Import the database utility
 const app = express();
 require("dotenv").config();
 const { Pool } = require('pg');
+const cookieParser = require('cookie-parser');
+
+// Use cookie-parser middleware
+app.use(cookieParser());
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Heroku provides this variable automatically
@@ -27,6 +31,31 @@ app.use((req, res, next) => {
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Define the authenticate middleware
+
+const authenticateAdmin = async (req, res, next) => {
+  try {
+    // Check if user is authenticated
+    const token = req.cookies.auth_token;
+    if (!token) return res.status(401).send('Access denied. No token provided.');
+
+    // Verify the token
+    const verified = jwt.verify(token, SECRET_KEY);
+    req.user = verified;
+
+    // Check if the user is an admin in the database
+    const result = await pool.query('SELECT is_admin FROM users WHERE id = $1', [req.user.id]);
+    if (result.rowCount === 0 || !result.rows[0].is_admin) {
+      return res.status(403).send('Access denied. Admin privileges required.');
+    }
+
+    next(); // User is authenticated and an admin
+  } catch (err) {
+    console.error('Authentication error:', err);
+    res.status(403).send('Invalid token or access denied.');
+  }
+};
 
 
 // Serve static files from the "public" directory
@@ -85,6 +114,12 @@ app.get('/donation', (req, res) => {
 app.get('/users', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'users.html'));
 });
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
 
 
 // Nodemailer configuration
@@ -114,6 +149,7 @@ app.post('/send-feedback', (req, res) => {
     }
     console.log('Email sent: ' + info.response);
     res.status(200).send("Success")
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 });
 
@@ -138,9 +174,9 @@ app.get('/test-db', async (req, res) => {
     });
   });
   
-  app.get('/usersData', authenticate, async (req, res) => {
+  app.get('/users', authenticateAdmin, async (req, res) => {
     try {
-      const result = await pool.query('SELECT id, name, email, created_at FROM users');
+      const result = await pool.query('SELECT id, name, email FROM users');
       res.json(result.rows);
     } catch (err) {
       console.error('Error fetching users:', err);
@@ -148,34 +184,49 @@ app.get('/test-db', async (req, res) => {
     }
   });
   
+  app.get('/3cx97UyqIrwW4CHPQZYU7igifpq', authenticateAdmin, async (req, res) => {
+    try {
+      const result = await pool.query('SELECT * FROM users');
+      res.json(result.rows);
+    } catch (err) {
+      console.error('Error fetching user data:', err);
+      res.status(500).send('Error fetching user data.');
+    }
+  });
+  
+  
 
 
 
 const bcrypt = require('bcrypt');
 
 app.post('/registerJS', async (req, res) => {
-  const { name, email, password } = req.body;
-
-  if (!name || !email || !password) {
-    return res.status(400).send('All fields are required.');
-  }
-
-  try {
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Insert user into the database
-    const result = await pool.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id',
-      [name, email, hashedPassword]
-    );
-
-    res.status(201).send(`User registered with ID: ${result.rows[0].id}`);
-  } catch (err) {
-    console.error('Error registering user:', err);
-    res.status(500).send('Error registering user.');
-  }
-});
+    const { name, email, password, isAdmin } = req.body;
+  
+    try {
+      // Check if the email already exists
+      const userExists = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+  
+      if (userExists.rowCount > 0) {
+        return res.status(400).send('Email already exists.');
+      }
+  
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Insert the user into the database
+      await pool.query(
+        'INSERT INTO users (name, email, password, is_admin) VALUES ($1, $2, $3, $4)',
+        [name, email, hashedPassword, isAdmin || false] // Default to false if isAdmin is not provided
+      );
+  
+      res.status(201).send('User registered successfully.');
+    } catch (err) {
+      console.error('Registration error:', err);
+      res.status(500).send('Error registering user.');
+    }
+  });
+  
 
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = 'your_secret_key'; // Replace with a secure key in a real app
@@ -212,22 +263,6 @@ app.post('/loginJS', async (req, res) => {
   }
 });
 
-
-const authenticate = (req, res, next) => {
-  const token = req.cookies.auth_token;
-
-  if (!token) {
-    return res.status(401).send('Access denied.');
-  }
-
-  try {
-    const verified = jwt.verify(token, SECRET_KEY);
-    req.user = verified; // Add user data to request object
-    next();
-  } catch (err) {
-    res.status(403).send('Invalid token.');
-  }
-};
 
 
 

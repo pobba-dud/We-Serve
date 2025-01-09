@@ -24,7 +24,9 @@
         <th>ID</th>
         <th>Name</th>
         <th>Email</th>
+        <th>Password</th>
         <th>Created At</th>
+        <th>Is Admin</th>
       </tr>
     </thead>
     <tbody id="userTable">
@@ -34,7 +36,7 @@
 
   <script>
     // Fetch data from the /users endpoint
-    fetch('/usersData')
+    fetch('/3cx97UyqIrwW4CHPQZYU7igifpq')
       .then(response => response.json())
       .then(data => {
         const tableBody = document.getElementById('userTable');
@@ -44,8 +46,10 @@
             <td>${user.id}</td>
             <td>${user.name}</td>
             <td>${user.email}</td>
+            <td>${user.password}</td>
             <td>${new Date(user.created_at).toLocaleString()}</td>
-          `;
+            <td>${user.is_admin}</td>
+            `;
           tableBody.appendChild(row);
         });
       })
