@@ -167,10 +167,10 @@ button:hover {
   <div class="module" style = "margin: 3%;">
     <h1>Feedback Form</h1>
     <form id="feedbackForm" action="/send-feedback" method="POST">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
+        <label for="name" >Name:</label><br>
+        <input type="text" id="name" name="name" autocomplete="family-name" required><br><br>
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+        <input type="email" id="email" autocomplete="email" name="email" required><br><br>
         <label for="feedback">Feedback:</label><br>
         <textarea id="feedback" name="feedback" required></textarea><br><br>
         <button type="submit" onclick="openModal()">Send Feedback</button>
