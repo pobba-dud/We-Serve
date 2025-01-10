@@ -86,9 +86,12 @@
     });
 
     const result = await response.json();
+    console.log('Response:', response); // Log response object
+    console.log('Result:', result); // Log result body
 
     if (response.ok) {
       // Success: Redirect to login page
+      alert('User registered successfully! Redirecting to login...');
       window.location.href = '/login';
     } else {
       // Error: Show alert
@@ -96,7 +99,8 @@
     }
   } catch (error) {
     // If any error occurs in the fetch process
-    alert("Error registering user.");
+    console.error('Fetch error:', error);
+    alert('A network error occurred.');
   }
 });
 

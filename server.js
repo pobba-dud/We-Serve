@@ -204,10 +204,17 @@ app.get('/test-db', async (req, res) => {
         [firstname, lastname, gender, birthday, email, phonenumber, hashedPassword, isadmin, isorg]
       );
   
-      res.redirect('/login');
-    } catch (err) {
-      console.error('Registration error:', err);
-      res.status(500).json({ message: 'Error registering user.' });
+      console.log('Registration successful:', result.rows[0]); // Log success
+    res.status(201).json({
+      message: 'User registered successfully',
+      user: result.rows[0]
+
+    }); }
+   catch (err) {
+    console.error('Error during registration:', error); // Log the error
+    res.status(500).json({
+      message: 'Error registering user.'
+    });
     }
   });
   
