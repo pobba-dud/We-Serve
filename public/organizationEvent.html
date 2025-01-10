@@ -20,6 +20,7 @@
             document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
         };
     </script>
+    <script src="scriptCalendar.js"></script>
     <style>
           body.dark-mode {
   background-color: #121212; /* Dark background */
@@ -124,7 +125,7 @@ body.dark-mode .container {
       <li><a href="discover"><b>Discover</b></a></li>
       <li><a href="hours"><b>Hour log</b></a></li>
       <li><a href="calendar"><b>Calendar</b></a></li>
-      <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+      <li style="float:right; display:flex; align-content: center;"><a href="login"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
     </ul>
   </nav>
     <div style="margin-bottom: 50px;"></div>
@@ -148,7 +149,7 @@ body.dark-mode .container {
             <input type="text" id="eventTimeRange" placeholder="e.g., 10:00 AM - 12:00 PM" required>
         </div>
         <div class="input-field">
-            <label for="eventName">Estemated Length of Event:</label>
+            <label for="eventName">Estimated Length of Event:</label>
             <input type="text" id="eventLength" placeholder="2:00:00" required>
         </div>
         <div class="input-field">
@@ -203,7 +204,9 @@ body.dark-mode .container {
   alert(`Event Created: ${eventName} on ${eventDate} from ${eventTimeRange}`);
 
   // Optionally, redirect to the Discover page
-  window.location.href = 'DiscoverPage.html';
+  window.location.href = 'DiscoverPage.html'; 
+
+  
 }
     </script>
 </body>
