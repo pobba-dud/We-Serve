@@ -63,31 +63,31 @@
 
   <script>
     document.getElementById('signupForm').addEventListener('submit', async function (event) {
-      event.preventDefault(); // Prevent form submission
+  event.preventDefault(); // Prevent form submission
 
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
 
-      if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return; // Stop form submission
-      }
+  if (password !== confirmPassword) {
+    alert("Passwords do not match!");
+    return; // Stop form submission
+  }
 
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData.entries());
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
 
-      try {
-        const response = await fetch('/registerJS', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        });
+  try {
+    const response = await fetch('/registerJS', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
 
-        const result = await response.json();
+    const result = await response.json();
 
-        if (response.ok) {
+    if (response.ok) {
       // Success: Redirect to login page
       window.location.href = '/login';
     } else {
@@ -99,6 +99,7 @@
     alert("Error registering user.");
   }
 });
+
 
   </script>
 </body>
