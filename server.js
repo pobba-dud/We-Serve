@@ -226,38 +226,39 @@ app.get('/test-db', async (req, res) => {
 
 
 
-app.post('/loginJS', async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).send('Email and password are required.');
-  }
-
-  try {
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-
-    if (result.rowCount === 0) {
-      return res.status(401).send('Invalid credentials.');
+  app.post('/loginJS', async (req, res) => {
+    const { email, password } = req.body;
+  
+    if (!email || !password) {
+      return res.status(400).send('Email and password are required.');
     }
-
-    const user = result.rows[0];
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return res.status(401).send('Invalid credentials.');
+  
+    try {
+      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+  
+      if (result.rowCount === 0) {
+        return res.status(401).send('Invalid credentials.');
+      }
+  
+      const user = result.rows[0];
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+  
+      if (!isPasswordValid) {
+        return res.status(401).send('Invalid credentials.');
+      }
+  
+      // Generate a JWT token
+      const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '168h' });
+  
+      // Send token as a cookie and respond with success
+      res.cookie('auth_token', token, { httpOnly: true });
+      res.status(200).send('Login successful.');
+    } catch (err) {
+      console.error('Error logging in:', err);
+      res.status(500).send('Error logging in.');
     }
-
-    // Generate a JWT token
-    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '168h' });
-
-    // Send token as a cookie and redirect to /dashboard
-    res.cookie('auth_token', token, { httpOnly: true });
-  } catch (err) {
-    console.error('Error logging in:', err);
-    res.status(500).send('Error logging in.');
-  }
-});
-
+  });
+  
 
 
 
