@@ -1,98 +1,129 @@
-
 <!DOCTYPE html>
-<pre>
-</pre>
+<html lang="en">
 
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Sign Up</title>
-    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-    <link href="SignUpStyle.css" rel="stylesheet" type="text/css" />
-    <script src="script.js"></script>
-  </head>
-  <!-- Dark mode JS -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="SignUpStyle.css">
+</head>
+
+<body>
+  <h1>Create an Account</h1>
+  <div class="container">
+    <form id="signupForm" method="POST" action="/registerJS" autocomplete="on">
+      <div class="form-group">
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="firstname" autocomplete="given-name" required>
+      </div>
+      <div class="form-group">
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="lastname" autocomplete="family-name" required>
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select name="gender" id="gender" autocomplete="sex" required>
+          <option value="default">(Default)</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+          <option value="preferNotToSay">Prefer Not to Say</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="birthday" autocomplete="bday" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" autocomplete="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phonenumber">Phone number (optional):</label>
+        <input type="tel" id="phonenumber" name="phonenumber" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" autocomplete="tel">
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" autocomplete="new-password" required>
+        <button type="button" id="togglePassword">Show</button>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" autocomplete="new-password" required>
+        <button type="button" id="toggleConfirmPassword">Show</button>
+      </div>
+      <div class="form-group">
+        <label for="isorg">Are you registering as an organization?</label>
+        <select name="isorg" id="isorg" autocomplete="off" required>
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+  <div class= "container" style="display: block-inline;">
+    <h3>Already have an account?</h3>
+    <br>
+    <button style="display: inline;"><a href="login" style="text-decoration: none;color: black;">Click here</a></button>
+  </div>
   <script>
-    // Load the theme from local storage when the page loads
-    window.onload = function() {
-        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-        setTheme(savedTheme);
-        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-    };
-</script>
-  <body>
-    <script>
-        // Show Password
-        function showPass() {
-      var x = document.getElementById("myInput");
-      if (x.type === "password") {
-        x.type = "text";
-      } else {
-        x.type = "password";
-      }
+    // Password visibility toggle
+    function togglePasswordVisibility(inputId, buttonId) {
+      const input = document.getElementById(inputId);
+      const button = document.getElementById(buttonId);
+
+      button.addEventListener('click', function () {
+        if (input.type === 'password') {
+          input.type = 'text';
+          button.textContent = 'Hide';
+        } else {
+          input.type = 'password';
+          button.textContent = 'Show';
+        }
+      });
     }
-      </script>
-      <div style="align-items: center;align-items: center;"><h1>Create an Account</h1></div>
-    <div class="container">
-      
-        <form action="#" method="POST">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="fname">First name:</label>
-                <input type="text" id="fname" name="fname"><br><br>
-            </div>
-            <div class="form-group">
-                <label for="lname">Last name:</label>
-                <input type="text" id="lname" name="lname"><br><br>
-            </div>
-            <div class="form-group">
-              <lable or ="gender">Gender:</lable>
-              <select name="gender" id="gender">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-                <option value="perferNotToSay">Perfer Not to say</option>
-              </select>
-            </div>
-            <div class="form-group">
 
-              <label for="birthday">Birthday:</label>
-              <input type="date" id="birthday" name="birthday">
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Enter a phone number:</label>
-              <input type="tel" id="phone" name="phone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" value="" id="myInput" required>
-            </div>
+    togglePasswordVisibility('password', 'togglePassword');
+    togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword');
 
-            <!-- show password button -->
-            <div class="form-group">
-                <input class= "CHECKBOX" type="checkbox" onclick="showPass()">Show Password
-            </div>
+    // Form submission logic
+    document.getElementById('signupForm').addEventListener('submit', async function (event) {
+      event.preventDefault(); // Prevent form submission
 
-            <div class="form-group">
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="confirm-password" value="" id="myInput" required>
-            </div>
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
 
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return; // Stop form submission
+      }
 
-            <button type="submit">Sign Up</button>      
-            <div style="margin: 5%;"></div>
-            <p>Already have an account? <a href="login">Log in</a></p>
-        </form>
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
 
-    </div>
-    
+      try {
+        const response = await fetch('/registerJS', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert('User registered successfully! Redirecting to login...');
+          window.location.href = '/login';
+        } else {
+          alert(result.message || 'Error registering user.');
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+        alert('A network error occurred.');
+      }
+    });
+  </script>
 </body>
+
 </html>

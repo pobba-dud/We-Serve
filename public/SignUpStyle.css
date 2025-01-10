@@ -133,6 +133,3 @@ input[type="reset"]:hover {
   flex: 1; /* Makes the input/select take the remaining space */
 }
 
-.CHECKBOX {
-  margin-left: 5%;
-}
