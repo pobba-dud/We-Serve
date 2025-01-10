@@ -8,7 +8,8 @@ require("dotenv").config();
 const { Pool } = require('pg');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
-
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = 'PuclYnXXSGKKCsxPOsrFYO4dx6yx'; // Replace with a secure key in a real app
 
 // Use cookie-parser middleware
 app.use(cookieParser());
@@ -223,8 +224,7 @@ app.get('/test-db', async (req, res) => {
   
   
 
-const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'your_secret_key'; // Replace with a secure key in a real app
+
 
 app.post('/loginJS', async (req, res) => {
   const { email, password } = req.body;
@@ -250,13 +250,14 @@ app.post('/loginJS', async (req, res) => {
     // Generate a JWT token
     const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '168h' });
 
-    // Send token as a cookie
-    res.cookie('auth_token', token, { httpOnly: true }).send('Login successful.');
+    // Send token as a cookie and redirect to /dashboard
+    res.cookie('auth_token', token, { httpOnly: true });
   } catch (err) {
     console.error('Error logging in:', err);
     res.status(500).send('Error logging in.');
   }
 });
+
 
 
 
