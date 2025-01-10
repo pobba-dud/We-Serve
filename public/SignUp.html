@@ -45,10 +45,12 @@
       <div class="form-group">
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" autocomplete="new-password" required>
+        <button type="button" id="togglePassword">Show</button>
       </div>
       <div class="form-group">
         <label for="confirmPassword">Confirm Password:</label>
         <input type="password" id="confirmPassword" autocomplete="new-password" required>
+        <button type="button" id="toggleConfirmPassword">Show</button>
       </div>
       <div class="form-group">
         <label for="isorg">Are you registering as an organization?</label>
@@ -62,49 +64,61 @@
   </div>
 
   <script>
-    document.getElementById('signupForm').addEventListener('submit', async function (event) {
-  event.preventDefault(); // Prevent form submission
+    // Password visibility toggle
+    function togglePasswordVisibility(inputId, buttonId) {
+      const input = document.getElementById(inputId);
+      const button = document.getElementById(buttonId);
 
-  const password = document.getElementById('password').value;
-  const confirmPassword = document.getElementById('confirmPassword').value;
-
-  if (password !== confirmPassword) {
-    alert("Passwords do not match!");
-    return; // Stop form submission
-  }
-
-  const formData = new FormData(this);
-  const data = Object.fromEntries(formData.entries());
-
-  try {
-    const response = await fetch('/registerJS', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-
-    const result = await response.json();
-    console.log('Response:', response); // Log response object
-    console.log('Result:', result); // Log result body
-
-    if (response.ok) {
-      // Success: Redirect to login page
-      alert('User registered successfully! Redirecting to login...');
-      window.location.href = '/login';
-    } else {
-      // Error: Show alert
-      alert(result.message || 'Error registering user.');
+      button.addEventListener('click', function () {
+        if (input.type === 'password') {
+          input.type = 'text';
+          button.textContent = 'Hide';
+        } else {
+          input.type = 'password';
+          button.textContent = 'Show';
+        }
+      });
     }
-  } catch (error) {
-    // If any error occurs in the fetch process
-    console.error('Fetch error:', error);
-    alert('A network error occurred.');
-  }
-});
 
+    togglePasswordVisibility('password', 'togglePassword');
+    togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword');
 
+    // Form submission logic
+    document.getElementById('signupForm').addEventListener('submit', async function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return; // Stop form submission
+      }
+
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('/registerJS', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert('User registered successfully! Redirecting to login...');
+          window.location.href = '/login';
+        } else {
+          alert(result.message || 'Error registering user.');
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+        alert('A network error occurred.');
+      }
+    });
   </script>
 </body>
 
