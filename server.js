@@ -9,6 +9,7 @@ const { Pool } = require('pg');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { isEmpty } = require('lodash');
 const SECRET_KEY = 'PuclYnXXSGKKCsxPOsrFYO4dx6yx'; // Replace with a secure key in a real app
 
 // Use cookie-parser middleware
@@ -37,19 +38,24 @@ app.use(bodyParser.json());
 
 // Define the authenticate middleware
 
-// Middleware to check if the user is authenticated and an admin
-function authenticate(req, res, next) {
-  if (!req.isAuthenticated()) {
-    return res.redirect('/login'); // Redirect to login if not authenticated
-  }
-  
-  // Check if user is an admin
-  if (req.user && req.user.isadmin === true) {
-    return next(); // Allow access to the next middleware
+// Middleware to check if the user is authenticated 
+const authenticate = (req, res, next) => {
+  const token = req.cookies.auth_token; // Ensure you have the `cookie-parser` middleware
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  return res.status(403).json({ message: 'Forbidden: Admin access required.' }); // Deny access if not an admin
-}
+  try {
+    const user = jwt.verify(token, SECRET_KEY);
+    req.user = user; // Attach user data to the request
+    next();
+  } catch (err) {
+    return res.status(403).json({ message: 'Invalid token' });
+  }
+};
+
+module.exports = authenticate;
+
 
 function checkAdmin(req, res, next) {
   if (req.user && req.user.isadmin === 1) {
@@ -188,12 +194,12 @@ app.get('/test-db', async (req, res) => {
         }
 
         const phoneCheck = await pool.query('SELECT * FROM users WHERE phonenumber = $1', [phonenumber]);
+        if (phonenumber!=null){
         if (phoneCheck.rows.length > 0) {
             return res.status(400).json({ message: 'Phone number is already in use' });
         }
-        
+      }
 
-  
     try {
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -260,6 +266,22 @@ app.get('/test-db', async (req, res) => {
   });
   
 
+
+
+  
+  app.get('/profile', authenticate, async (req, res) => {
+    try {
+      const user = await pool.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
+      if (user.rowCount === 0) {
+        return res.status(404).send('User not found');
+      }
+      res.json(user.rows[0]); // Send user data
+    } catch (err) {
+      console.error('Error fetching user data:', err);
+      res.status(500).send('Server error');
+    }
+  });
+  
 
 
 
