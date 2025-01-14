@@ -53,6 +53,24 @@ const authenticate = (req, res, next) => {
     return res.status(403).json({ message: 'Invalid token' });
   }
 };
+const checkAuthentication = (req, res, next) => {
+  const token = req.cookies.auth_token; // Get token from cookie
+
+  if (!token) {
+    return res.redirect('/login'); // Redirect to login if no token
+  }
+
+  try {
+    const decoded = jwt.verify(token, SECRET_KEY);
+    req.user = decoded; // Attach user data to the request
+    next();
+  } catch (err) {
+    return res.redirect('/login'); // Redirect to login if token is invalid or expired
+  }
+};
+
+
+
 
 module.exports = authenticate;
 
@@ -68,32 +86,34 @@ function checkAdmin(req, res, next) {
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 // Redirects
 app.get('/index', (req, res) => {
     console.log('Redirecting /index.html to /');
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard',checkAuthentication, (req, res) => {
     console.log('Redirecting /Dashboard.html to /');
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
-app.get('/calendar', (req, res) => {
+app.get('/calendar',checkAuthentication, (req, res) => {
     console.log('Redirecting /Calendar.html to /');
     res.sendFile(path.join(__dirname, 'public', 'Calendar.html'));
 });
 
-app.get('/hours', (req, res) => {
+app.get('/hours',checkAuthentication, (req, res) => {
     console.log('Redirecting /HourLog.html to /');
     res.sendFile(path.join(__dirname, 'public', 'hourLog.html'));
 });
-app.get('/discover', (req, res) => {
+app.get('/discover',checkAuthentication, (req, res) => {
     console.log('Redirecting /DiscoverPage.html to /');
     res.sendFile(path.join(__dirname, 'public', 'DiscoverPage.html'));
 });
 
-app.get('/proof', (req, res) => {
+app.get('/proof',checkAuthentication, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Proof.html'));
 });
 
@@ -101,7 +121,7 @@ app.get('/feedback', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Feedback.html'));
 });
 
-app.get('/account', (req, res) => {
+app.get('/account',checkAuthentication, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'account.html'));
 });
 
@@ -109,10 +129,10 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'SignUp.html'));
 });
 
-app.get('/organizationEvent', (req, res) => {
+app.get('/organizationEvent',checkAuthentication, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'organizationEvent.html'));
 });
-app.get('/test', (req, res) => {
+app.get('/test',checkAuthentication, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'test.html'));
 });
 app.get('/donation', (req, res) => {
@@ -120,6 +140,8 @@ app.get('/donation', (req, res) => {
 });
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});app.get('/settings',checkAuthentication, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'settings.html'));
 });
 
 
@@ -224,13 +246,6 @@ app.get('/test-db', async (req, res) => {
     });
     }
   });
-  
-    
-  
-  
-  
-
-
 
   app.post('/loginJS', async (req, res) => {
     const { email, password } = req.body;
@@ -257,17 +272,14 @@ app.get('/test-db', async (req, res) => {
       const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '168h' });
   
       // Send token as a cookie and respond with success
-      res.cookie('auth_token', token, { httpOnly: true });
+      res.cookie('auth_token', token, { httpOnly: true,sameSite: 'Strict' });
+      console.log("cookie made")
       res.status(200).send('Login successful.');
     } catch (err) {
       console.error('Error logging in:', err);
       res.status(500).send('Error logging in.');
     }
   });
-  
-
-
-
   
   app.post('/profileJS', authenticate, async (req, res) => {
     try {
@@ -281,8 +293,12 @@ app.get('/test-db', async (req, res) => {
       res.status(500).send('Server error');
     }
   });
-  
 
+  app.post('/logout', (req, res) => {
+    res.clearCookie('auth_token', { httpOnly: true,sameSite: 'Strict'});
+    res.redirect("/login")
+  });
+  
 
 
 

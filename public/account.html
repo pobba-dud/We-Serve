@@ -407,9 +407,23 @@ const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().
               <hr style="align-items: center;">
           </div>
           <div class="url">
-              <a href="Settings.html" class="active">Settings</a>
+              <a href="Settings" class="active">Settings</a>
               <hr style = 'align-items: center;'>
           </div>
+          <div class="url">
+          <form action="/logout" method="POST">
+            <button 
+            style="background-color: #e8f5ff;
+            border-radius: 28px;
+            color: #000;
+            font-size: 20px; 
+            margin: 10px 0px;   
+            padding: 6px 8px;
+            width: 70%"
+             type="submit">
+             Logout</button>
+          </form>
+        </div>
       </div>
   </div>
   <!-- End -->
