@@ -356,7 +356,10 @@ html{overflow:scroll;}
       document.getElementById('email').textContent = data.email;
       document.getElementById('phonenumber').textContent = data.phonenumber || 'Not provided';
       document.getElementById('gender').textContent = data.gender || 'Not specified';
-      document.getElementById('birthday').textContent = data.birthday || 'Not provided';
+      const dateString = '2008-03-28T04:00:00.000Z';
+const date = new Date(data.birthday);
+const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+      document.getElementById('birthday').textContent = formattedDate || 'Not provided';
       // Add any other fields from 'data' that you want to display
     })
     .catch(error => {
