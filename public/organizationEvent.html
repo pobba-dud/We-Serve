@@ -179,7 +179,7 @@ body.dark-mode .container {
 
   // Create a new Date object in UTC time zone
   const eventDateParts = eventDate.split('-');
-  const eventDateUTC = new Date(Date.UTC(eventDateParts[0], eventDateParts[1] - 1, eventDateParts[2]));
+  const eventDateUTC = new Date(Date.UTC(eventDateParts[0], eventDateParts[1], eventDateParts[2]));
 
   // Create an event object
   const newEvent = {

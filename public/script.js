@@ -56,7 +56,7 @@ function mapEventsToDays() { // start of mapEventsToDays() function
   startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
 
   const endOfWeek = new Date(currentDate);
-  endOfWeek.setDate(currentDate.getDate() + (6 - currentDate.getDay()));
+  endOfWeek.setDate(currentDate.getDate() + (7 - currentDate.getDay()));
 
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -72,7 +72,7 @@ function mapEventsToDays() { // start of mapEventsToDays() function
     // Check if the event falls within the current week
     if (eventDateUTC >= startOfWeek && eventDateUTC <= endOfWeek) {
       const dayOffset = eventDate.getDay(); // Get the day of the week (0-6)
-      const tableRow = document.querySelector(`tr:nth-child(${dayOffset + 2})`);
+      const tableRow = document.querySelector(`tr:nth-child(${dayOffset + 1})`);
 
       // Update the table cell with the event information
       if (tableRow && tableRow.cells[1]) {
