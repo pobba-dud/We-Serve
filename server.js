@@ -269,7 +269,7 @@ app.get('/test-db', async (req, res) => {
 
 
   
-  app.get('/profile', authenticate, async (req, res) => {
+  app.post('/profileJS', authenticate, async (req, res) => {
     try {
       const user = await pool.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
       if (user.rowCount === 0) {

@@ -336,8 +336,8 @@ html{overflow:scroll;}
     }
   // Function to fetch and display user data on the account page
   function fetchUserData() {
-    fetch('/profile', {
-      method: 'GET',
+    fetch('/profileJS', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -398,9 +398,6 @@ const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().
 
           <div clas = name id="name2">
               Jon Doe
-          </div>
-          <div class="job">
-              Student
           </div>
       </div>
 
