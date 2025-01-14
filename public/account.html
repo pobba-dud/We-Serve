@@ -334,10 +334,41 @@ html{overflow:scroll;}
         const notification = document.getElementById("customNotification");
         notification.style.display = "none"; // Hide the notification
     }
-      // Call checkUpcomingEvents function at the start or at intervals
-      window.onload = function() {
-          checkUpcomingEvents(); // Check for upcoming events when the page loads
-      };
+  // Function to fetch and display user data on the account page
+  function fetchUserData() {
+    fetch('/profile', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json(); // Parse the JSON response
+      } else {
+        throw new Error('User not authenticated or profile data not found');
+      }
+    })
+    .then(data => {
+      // Assuming 'data' is the object containing user data returned from the /profile endpoint
+      document.getElementById('name').textContent = `${data.firstname} ${data.lastname}`;
+      document.getElementById('name2').textContent = `${data.firstname} ${data.lastname}`;
+      document.getElementById('email').textContent = data.email;
+      document.getElementById('phonenumber').textContent = data.phonenumber || 'Not provided';
+      document.getElementById('gender').textContent = data.gender || 'Not specified';
+      document.getElementById('birthday').textContent = data.birthday || 'Not provided';
+      // Add any other fields from 'data' that you want to display
+    })
+    .catch(error => {
+      console.error('Error fetching user data:', error);
+      // You can show a fallback message or handle the error as needed
+    });
+  }
+
+  // Call the function to fetch and display user data when the page loads
+  
+
+      // Call checkUpcomingEvents function at the start or at interval
     </script>
     
 <!-- navbar -->
@@ -362,7 +393,7 @@ html{overflow:scroll;}
       <div class="profile">
           <img src= 'Images/Default_pfp.png' style="width:70%;height:auto;margin-top: 100px;">
 
-          <div class="name">
+          <div clas = name id="name2">
               Jon Doe
           </div>
           <div class="job">
@@ -393,32 +424,27 @@ html{overflow:scroll;}
                   <tr>
                       <td>Name</td>
                       <td>:</td>
-                      <td>Jon Doe</td>
+                      <td id="name">Jon Doe</td>
                   </tr>
                   <tr>
                       <td>Email</td>
                       <td>:</td>
-                      <td>JonDoe@gmail.com</td>
+                      <td id = "email">JonDoe@gmail.com</td>
                   </tr>
                   <tr>
-                    <td>Password</td>
+                    <td>Phone Number</td>
                     <td>:</td>
-                    <td>**********</td>
+                    <td id="phonenumber">Student</td>
                 </tr>
                   <tr>
-                      <td>Address</td>
+                      <td>Gender</td>
                       <td>:</td>
-                      <td>473753 Roadname Dr, Westfield, Indiana, 46074</td>
+                      <td id ="gender">(Default)</td>
                   </tr>
                   <tr>
-                      <td>Hobbies</td>
+                      <td>Birthday</td>
                       <td>:</td>
-                      <td>Voluneering</td>
-                  </tr>
-                  <tr>
-                      <td>Job</td>
-                      <td>:</td>
-                      <td>Student</td>
+                      <td id = birthday>01/01/2000</td>
                   </tr>
                   <tr>
                       <td>Skills</td>
@@ -439,6 +465,8 @@ html{overflow:scroll;}
 
     // Load the theme from local storage when the page loads
     window.onload = function() {
+        fetchUserData();
+        checkUpcomingEvents();
         const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
         setTheme(savedTheme);
         document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
