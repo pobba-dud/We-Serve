@@ -149,12 +149,8 @@ body.dark-mode .container {
             <input type="text" id="eventTimeRange" placeholder="e.g., 10:00 AM - 12:00 PM" required>
         </div>
         <div class="input-field">
-            <label for="eventName">Estimated Length of Event:</label>
-            <input type="text" id="eventLength" placeholder="2:00:00" required>
-        </div>
-        <div class="input-field">
             <label for="eventName">Event Adress:</label>
-            <input type="text" id="eventAdress" placeholder="(added later)" required>
+            <input type="text" id="eventAddress" placeholder="(added later)" required>
         </div>
         <div class="input-field">
             <label for="eventName">Description of Event:</label>
@@ -173,7 +169,6 @@ body.dark-mode .container {
   const eventName = document.getElementById('eventName').value;
   const eventDate = document.getElementById('eventDate').value;
   const eventTimeRange = document.getElementById('eventTimeRange').value;
-  const eventLength = document.getElementById('eventLength').value;
   const eventAddress = document.getElementById('eventAdress').value;
   const eventDescription = document.getElementById('eventDescription').value;
 
@@ -186,7 +181,6 @@ body.dark-mode .container {
     title: eventName,
     date: eventDateUTC.toISOString().split('T')[0],
     time: eventTimeRange,
-    length: eventLength,
     location: eventAddress,
     description: eventDescription
   };
