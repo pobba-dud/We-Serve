@@ -203,27 +203,40 @@ app.get('/test-db', async (req, res) => {
 
 
   
-  
   app.post('/registerJS', async (req, res) => {
     const { firstname, lastname, gender, birthday, email, phonenumber, password, isadmin = false, isorg } = req.body;
-
   
     // Validate input data (basic checks, feel free to extend it)
     if (!email.toLowerCase() || !password || !firstname || !lastname) {
       return res.status(400).json({ message: 'Please provide all required fields.' });
     }
+  
+    // Check if email already exists
     const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
-        if (emailCheck.rows.length > 0) {
-            return res.status(400).json({ message: 'Email is already in use' });
-        }
-
-        const phoneCheck = await pool.query('SELECT * FROM users WHERE phonenumber = $1', [phonenumber]);
-        if (phonenumber!=null){
-        if (phoneCheck.rows.length > 0) {
-            return res.status(400).json({ message: 'Phone number is already in use' });
-        }
+    if (emailCheck.rows.length > 0) {
+      return res.status(400).json({ message: 'Email is already in use' });
+    }
+  
+    // Check if phone number already exists
+    if (phonenumber != null) {
+      const phoneCheck = await pool.query('SELECT * FROM users WHERE phonenumber = $1', [phonenumber]);
+      if (phoneCheck.rows.length > 0) {
+        return res.status(400).json({ message: 'Phone number is already in use' });
       }
-
+    }
+  
+    // Validate that the birthday is not in the future
+    const today = new Date();
+    const userBirthday = new Date(birthday);
+  
+    if (isNaN(userBirthday)) {
+      return res.status(400).json({ message: 'Invalid birthday format. Please use YYYY-MM-DD.' });
+    }
+  
+    if (userBirthday > today) {
+      return res.status(400).json({ message: 'Birthday cannot be a future date.' });
+    }
+  
     try {
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -236,18 +249,18 @@ app.get('/test-db', async (req, res) => {
       );
   
       console.log('Registration successful:', result.rows[0]); // Log success
-    res.status(201).json({
-      message: 'User registered successfully',
-      user: result.rows[0]
-
-    }); }
-   catch (err) {
-    console.error('Error during registration:', error); // Log the error
-    res.status(500).json({
-      message: 'Error registering user.'
-    });
+      res.status(201).json({
+        message: 'User registered successfully',
+        user: result.rows[0]
+      });
+    } catch (err) {
+      console.error('Error during registration:', err); // Log the error
+      res.status(500).json({
+        message: 'Error registering user.'
+      });
     }
   });
+  
 
   app.post('/loginJS', async (req, res) => {
     const { email, password } = req.body;
