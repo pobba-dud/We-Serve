@@ -141,7 +141,8 @@ app.get('/donation', (req, res) => {
 });
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});app.get('/settings',checkAuthentication, (req, res) => {
+});
+app.get('/settings',checkAuthentication, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'settings.html'));
 });
 
