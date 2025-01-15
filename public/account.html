@@ -7,18 +7,15 @@
   <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
   <script src="script.js"></script>
   <style>
-@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
 
 html {
   height: 100%;
   width: 100%;
 
-  /* testing fonts  \/ */
-  font-family: "Red Hat Text", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
 }
-
+nav a {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
+}
 /* start of css for navbar */
 #NavUl {
   list-style-type: none;
@@ -376,16 +373,16 @@ const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().
     
 <!-- navbar -->
 <nav>
-    <ul id="NavUl">
-        <a href="index"><img src="Images/logo.png"></a>
-      <li><a href="dashboard"><b>Homepage</b></a></li>
-      <li><a href="discover"><b>Discover</b></a></li>
-      <li><a href="hours"><b>Hour log</b></a></li>
-      <li><a href="calendar"><b>Calendar</b></a></li>
-      <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
-    </ul>
-  </nav>
-  <div style="margin-bottom: 50px;"></div>
+  <ul id="NavUl" style="padding-bottom: 0px;">
+    <a href="index"><img src="Images/logo.png"></a>
+    <li><a href="dashboard" style="padding-bottom: 20px; padding-top: 19px;"><b>Homepage</b></a></li>
+    <li><a href="discover" style="padding-bottom: 20px; padding-top: 19px;"><b>Discover</b></a></li>
+    <li><a href="hours" style="padding-bottom: 20px; padding-top: 19px;"><b>Hour log</b></a></li>
+    <li><a href="calendar" style="padding-bottom: 19px; padding-top: 19px;"><b>Calendar</b></a></li>
+    <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+  </ul>
+</nav>
+
     <!--End of navbar -->
 
 

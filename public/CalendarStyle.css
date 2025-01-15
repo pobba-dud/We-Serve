@@ -1,12 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
+
 html {
     height: 100%;
     width: 100%;
-  
-    /* testing fonts  \/ */
-    font-family: "Red Hat Text", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
   
   }
   body {
@@ -16,7 +11,9 @@ html {
     justify-content: center;
     background-color: white;
   }
-
+nav a {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif 
+}
   /* dark mode */
 body.dark-mode {
   background-color: #121212; /* Dark background */
