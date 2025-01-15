@@ -150,7 +150,7 @@ body.dark-mode .container {
         </div>
         <div class="input-field">
             <label for="eventName">Event Adress:</label>
-            <input type="text" id="eventAddress" placeholder="(added later)" required>
+            <input type="text" id="eventAddress" placeholder="Can be an address or place name" required>
         </div>
         <div class="input-field">
             <label for="eventName">Description of Event:</label>
@@ -161,47 +161,56 @@ body.dark-mode .container {
     
     <div style="height: 50px;"></div>
 
-    <script>
+        <script>
+    async function submitEvent() {
+        const eventName = document.getElementById('eventName').value;
+        const eventDate = document.getElementById('eventDate').value;
+        const eventTimeRange = document.getElementById('eventTimeRange').value;
+        const eventAddress = document.getElementById('eventAddress').value;
+        const eventDescription = document.getElementById('eventDescription').value;
 
-        // New functionality
+        // Validate inputs (basic example)
+        if (!eventName || !eventDate || !eventTimeRange || !eventAddress || !eventDescription) {
+            alert("All fields are required.");
+            return;
+        }
 
-        function submitEvent() {
-  const eventName = document.getElementById('eventName').value;
-  const eventDate = document.getElementById('eventDate').value;
-  const eventTimeRange = document.getElementById('eventTimeRange').value;
-  const eventAddress = document.getElementById('eventAdress').value;
-  const eventDescription = document.getElementById('eventDescription').value;
+        // Create an event object to send to the server
+        const newEvent = {
+            name: eventName,
+            event_date: eventDate,
+            time_range: eventTimeRange,
+            address: eventAddress,
+            description: eventDescription,
+            org_name: "Your Org Name", // Replace with actual org name dynamically if needed
+        };
 
-  // Create a new Date object in UTC time zone
-  const eventDateParts = eventDate.split('-');
-  const eventDateUTC = new Date(Date.UTC(eventDateParts[0], eventDateParts[1], eventDateParts[2]));
+        try {
+            // Send event data to the server via an API call
+            const response = await fetch('/api/events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newEvent),
+            });
 
-  // Create an event object
-  const newEvent = {
-    title: eventName,
-    date: eventDateUTC.toISOString().split('T')[0],
-    time: eventTimeRange,
-    location: eventAddress,
-    description: eventDescription
-  };
+            // Check if the response is successful
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Event Created: ${eventName} on ${eventDate} at ${eventAddress}`);
+                window.location.href = 'discover'; // Redirect to discover page
+            } else {
+                const errorData = await response.json();
+                alert(`Failed to create event: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error("Error submitting event:", error);
+            alert("An error occurred while creating the event. Please try again.");
+        }
+    }
+</script>
 
-  // Get existing events from local storage
-  let events = JSON.parse(localStorage.getItem('events')) || [];
 
-  // Add the new event to the events array
-  events.push(newEvent);
-
-  // Save the updated events array back to local storage
-  localStorage.setItem('events', JSON.stringify(events));
-
-  // Notify the user
-  alert(`Event Created: ${eventName} on ${eventDate} from ${eventTimeRange}`);
-
-  // Optionally, redirect to the Discover page
-  window.location.href = 'DiscoverPage.html'; 
-
-  
-}
-    </script>
 </body>
 </html>

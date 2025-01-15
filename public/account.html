@@ -352,15 +352,22 @@ html{overflow:scroll;}
     .then(data => {
       // Assuming 'data' is the object containing user data returned from the /profile endpoint
       document.getElementById('name').textContent = `${data.firstname} ${data.lastname}`;
-      document.getElementById('name2').textContent = `${data.firstname} ${data.lastname}`;
-      document.getElementById('email').textContent = data.email;
-      document.getElementById('phonenumber').textContent = data.phonenumber || 'Not provided';
-      document.getElementById('gender').textContent = data.gender || 'Not specified';
-      const dateString = '2008-03-28T04:00:00.000Z';
+document.getElementById('name2').textContent = `${data.firstname} ${data.lastname}`;
+document.getElementById('email').textContent = data.email;
+document.getElementById('phonenumber').textContent = data.phonenumber || 'Not provided';
+document.getElementById('gender').textContent = data.gender || 'Not specified';
+
+// Parse the birthday date from the server response (assuming it's stored in UTC or a known timezone)
 const date = new Date(data.birthday);
-const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-      document.getElementById('birthday').textContent = formattedDate || 'Not provided';
-      // Add any other fields from 'data' that you want to display
+
+// Adjust the date to the user's local timezone
+const localDate = new Date(date.toLocaleString());
+
+// Format the date as YYYY-MM-DD, ensuring zero-padded month and day
+const formattedDate = `${localDate.getFullYear()}-${(localDate.getMonth() + 1).toString().padStart(2, '0')}-${localDate.getDate().toString().padStart(2, '0')}`;
+
+document.getElementById('birthday').textContent = formattedDate || 'Not provided';
+// Add any other fields from 'data' that you want to display
     })
     .catch(error => {
       console.error('Error fetching user data:', error);

@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -298,7 +299,61 @@ app.get('/test-db', async (req, res) => {
     res.clearCookie('auth_token', { httpOnly: true,sameSite: 'Strict'});
     res.redirect("/login")
   });
+
+  app.post('/api/events', async (req, res) => {
+    try {
+        const { name, description, event_date, time_range, address, org_name } = req.body;
+
+        if (!time_range || !time_range.includes(' - ')) {
+            return res.status(400).json({ error: 'Invalid or missing time range format' });
+        }
+
+        const [start_time, end_time] = time_range.split(' - ');
+
+        if (!start_time || !end_time) {
+            return res.status(400).json({ error: 'Start time and end time are required' });
+        }
+
+        const result = await pool.query(
+            `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
+             VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+            [name, description, event_date, start_time, end_time, address, org_name]
+        );
+
+        res.status(201).json({ message: 'Event added successfully', eventId: result.insertId });
+    } catch (err) {
+        console.error('Error saving event:', err);
+        res.status(500).json({ error: 'Failed to save event' });
+    }
+});
+
+async function getEvents() {
+  try {
+      const response = await fetch('http://localhost:3000/api/events'); // Adjust URL if needed
+      if (response.ok) {
+          const events = await response.json();
+          return events;
+      } else {
+          console.error('Failed to fetch events', response.statusText);
+          return [];
+      }
+  } catch (err) {
+      console.error('Error fetching events:', err);
+      return [];
+  }
+}
+async function displayEvents() {
+  const events = await getEvents();
+  console.log(events); // This will log the events fetched from the database
+
+  // Your code to display events on the page or manipulate them
+}
+
+
   
+
+module.exports = router;
+
 
 
 
