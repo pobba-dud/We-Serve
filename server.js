@@ -207,10 +207,10 @@ app.get('/test-db', async (req, res) => {
 
   
     // Validate input data (basic checks, feel free to extend it)
-    if (!email || !password || !firstname || !lastname) {
+    if (!email.toLowerCase() || !password || !firstname || !lastname) {
       return res.status(400).json({ message: 'Please provide all required fields.' });
     }
-    const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
         if (emailCheck.rows.length > 0) {
             return res.status(400).json({ message: 'Email is already in use' });
         }
@@ -230,7 +230,7 @@ app.get('/test-db', async (req, res) => {
       const result = await pool.query(
         'INSERT INTO users (firstname, lastname, gender, birthday, email, phonenumber, password, isadmin, isorg) ' +
         'VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', 
-        [firstname, lastname, gender, birthday, email, phonenumber, hashedPassword, isadmin, isorg]
+        [firstname, lastname, gender, birthday, email.toLowerCase(), phonenumber, hashedPassword, isadmin, isorg]
       );
   
       console.log('Registration successful:', result.rows[0]); // Log success
@@ -250,12 +250,12 @@ app.get('/test-db', async (req, res) => {
   app.post('/loginJS', async (req, res) => {
     const { email, password } = req.body;
   
-    if (!email || !password) {
+    if (!email.toLowerCase() || !password) {
       return res.status(400).send('Email and password are required.');
     }
   
     try {
-      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
   
       if (result.rowCount === 0) {
         return res.status(401).send('Invalid credentials.');
@@ -269,7 +269,7 @@ app.get('/test-db', async (req, res) => {
       }
   
       // Generate a JWT token
-      const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '168h' });
+      const token = jwt.sign({ id: user.id, email: user.email.toLowerCase() }, SECRET_KEY, { expiresIn: '168h' });
   
       // Send token as a cookie and respond with success
       res.cookie('auth_token', token, { httpOnly: true,sameSite: 'Strict' });
