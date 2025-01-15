@@ -408,13 +408,12 @@ document.getElementById('phonenumber').textContent = data.phonenumber || 'Not pr
 document.getElementById('gender').textContent = data.gender || 'Not specified';
 
 // Parse the birthday date from the server response (assuming it's stored in UTC or a known timezone)
-const date = new Date(data.birthday);
-
-// Adjust the date to the user's local timezone
-const localDate = new Date(date.toLocaleString());
+const year = date.getUTCFullYear();
+const month = date.getUTCMonth(); // Month is zero-based (0 = January)
+const day = date.getUTCDate();
 
 // Format the date as YYYY-MM-DD, ensuring zero-padded month and day
-const formattedDate = `${localDate.getFullYear()}-${(localDate.getMonth() + 1).toString().padStart(2, '0')}-${localDate.getDate().toString().padStart(2, '0')}`;
+const formattedDate = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
 document.getElementById('birthday').textContent = formattedDate || 'Not provided';
 // Add any other fields from 'data' that you want to display
