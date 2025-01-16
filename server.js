@@ -114,13 +114,49 @@ async function checkIsOrg(req, res, next) {
 
 
 
-function checkAdmin(req, res, next) {
-  if (req.user && req.user.isadmin === 1) {
-    next();
-  } else {
-    res.status(403).send('Access denied. Admins only.');
-  }
+async function checkAdmin(req, res, next) {
+  const token = req.cookies.auth_token; // Get the token from the cookie
+
+  if (!token) {
+    return res.redirect('/'); // Handle token errors
+    }
+
+  try {
+    // Verify and decode the token
+    const decoded = jwt.verify(token, SECRET_KEY); // Replace 'SECRET_KEY' with your actual key
+    
+    // Fetch user data from the database using the decoded email
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [decoded.email]);
+    
+    if (result.rowCount === 0) {
+      return res.redirect('/'); // Handle token errors
+      }
+
+    const user = result.rows[0];
+
+    // Check if the user is part of an organization
+    if (!user.isadmin) {
+      return res.redirect('/'); // Handle token errors
+    }
+
+    // Attach user info to the request
+    req.user = user;
+
+    next(); // Proceed to the next middleware/route handler
+  } catch (error) {
+    console.error('Error verifying token or fetching user from DB:', error);
+    return res.redirect('/'); // Handle token errors
+    }
 }
+
+
+
+app.use((req, res, next) => {
+  if (req.url.match(/\.html$/)) {
+    return res.redirect('/');
+    }
+  next(); // Allow non-.html requests to proceed
+});
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -183,8 +219,21 @@ app.get('/login', (req, res) => {
 app.get('/settings',checkAuthentication, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'Settings.html'));
 });
-
-
+app.get('/devHub',checkAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'devHub.html'));
+});
+app.get('/Calendartest',checkAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'Calendartest.html'));
+});
+app.get('/template',checkAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'template.html'));
+});
+app.get('/test',checkAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'test.html'));
+});
+app.get('/RemakeCalendar',checkAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'RemakeCalendar.html'));
+});
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Use your email service (e.g., Gmail)
