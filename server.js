@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { isEmpty } = require('lodash');
-const SECRET_KEY = 'PuclYnXXSGKKCsxPOsrFYO4dx6yx'; // Replace with a secure key in a real app
+const SECRET_KEY = process.env.SECRET_KEY || 'fallback_secret';
 
 // Use cookie-parser middleware
 app.use(cookieParser());
@@ -41,19 +41,21 @@ app.use(bodyParser.json());
 
 // Middleware to check if the user is authenticated 
 const authenticate = (req, res, next) => {
-  const token = req.cookies.auth_token; // Ensure you have the `cookie-parser` middleware
+  const token = req.cookies.auth_token; // Use consistent naming
   if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    return res.redirect('/login'); // Redirect if no token
   }
 
   try {
-    const user = jwt.verify(token, SECRET_KEY);
-    req.user = user; // Attach user data to the request
+    const user = jwt.verify(token, SECRET_KEY); // Validate token
+    req.user = user; // Attach user to request
     next();
   } catch (err) {
-    return res.status(403).json({ message: 'Invalid token' });
+    console.error('Invalid token:', err);
+    return res.redirect('/login'); // Handle token errors
   }
 };
+
 const checkAuthentication = (req, res, next) => {
   const token = req.cookies.auth_token; // Get token from cookie
 
@@ -71,9 +73,45 @@ const checkAuthentication = (req, res, next) => {
 };
 
 
+// Middleware to check if the user is part of an organization
+async function checkIsOrg(req, res, next) {
+  const token = req.cookies.auth_token; // Get the token from the cookie
+
+  if (!token) {
+    return res.redirect('/'); // Handle token errors
+    }
+
+  try {
+    // Verify and decode the token
+    const decoded = jwt.verify(token, SECRET_KEY); // Replace 'SECRET_KEY' with your actual key
+    
+    // Fetch user data from the database using the decoded email
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [decoded.email]);
+    
+    if (result.rowCount === 0) {
+      return res.redirect('/'); // Handle token errors
+      }
+
+    const user = result.rows[0];
+
+    // Check if the user is part of an organization
+    if (!user.isorg) {
+      return res.redirect('/'); // Handle token errors
+    }
+
+    // Attach user info to the request
+    req.user = user;
+
+    next(); // Proceed to the next middleware/route handler
+  } catch (error) {
+    console.error('Error verifying token or fetching user from DB:', error);
+    return res.redirect('/'); // Handle token errors
+    }
+}
 
 
-module.exports = authenticate;
+
+
 
 
 function checkAdmin(req, res, next) {
@@ -130,8 +168,8 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'SignUp.html'));
 });
 
-app.get('/organizationEvent',checkAuthentication, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'organizationEvent.html'));
+app.get('/organizationEvent', checkIsOrg, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'organizationEvent.html'));
 });
 app.get('/test',checkAuthentication, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'test.html'));
@@ -315,31 +353,27 @@ app.get('/test-db', async (req, res) => {
   });
 
   app.post('/api/events', async (req, res) => {
+    const { name, description, event_date, time_range, address, org_name } = req.body;
+  
     try {
-        const { name, description, event_date, time_range, address, org_name } = req.body;
-
-        if (!time_range || !time_range.includes(' - ')) {
-            return res.status(400).json({ error: 'Invalid or missing time range format' });
-        }
-
-        const [start_time, end_time] = time_range.split(' - ');
-
-        if (!start_time || !end_time) {
-            return res.status(400).json({ error: 'Start time and end time are required' });
-        }
-
-        const result = await pool.query(
-            `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
-             VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-            [name, description, event_date, start_time, end_time, address, org_name]
-        );
-
-        res.status(201).json({ message: 'Event added successfully', eventId: result.insertId });
+      if (!time_range.includes(' - ')) {
+        return res.status(400).json({ error: 'Invalid time range' });
+      }
+  
+      const [start_time, end_time] = time_range.split(' - ');
+      const result = await pool.query(
+        `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+        [name, description, event_date, start_time, end_time, address, org_name]
+      );
+  
+      res.status(201).json({ message: 'Event added successfully', eventId: result.rows[0].id });
     } catch (err) {
-        console.error('Error saving event:', err);
-        res.status(500).json({ error: 'Failed to save event' });
+      console.error('Error saving event:', err);
+      res.status(500).json({ error: 'Failed to save event' });
     }
-});
+  });
+  
 
 async function getEvents() {
   try {
