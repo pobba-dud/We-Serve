@@ -95,9 +95,9 @@ async function checkIsOrg(req, res, next) {
     const user = result.rows[0];
 
     // Check if the user is part of an organization
-    if (!user.isorg) {
+    if (!user.isorg||!user.isadmin) {
       return res.redirect('/'); // Handle token errors
-    }
+    } 
 
     // Attach user info to the request
     req.user = user;
