@@ -298,9 +298,6 @@ app.get('/test-db', async (req, res) => {
       return res.status(400).json({ message: 'Organization name is required when registering as an organization.' });
     }
   
-    // Log received data for debugging
-    console.log("Received Data:", req.body);
-  
     // Check if email already exists
     const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
     if (emailCheck.rows.length > 0) {
@@ -440,6 +437,57 @@ app.get('/test-db', async (req, res) => {
     }
   });
 
+  app.post('/updateProfile', authenticate, async (req, res) => {
+    try {
+      const userId = req.user.id; // Get user ID from the authenticated user
+      const { name,last, email, gender, phonenumber } = req.body; // Extract incoming fields
+
+    
+      // Retrieve the existing user data
+      const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
+  
+      const existingData = result.rows[0];
+  
+      // Merge provided data with existing data
+      const updatedData = {
+        firstname: name || existingData.firstname,
+        lastname: last || existingData.lastnamem,
+        email: email || existingData.email,
+        gender: gender || existingData.gender,
+        phonenumber: phonenumber || existingData.phonenumber,
+      };
+  
+      // Update the database with the merged data
+      const updateQuery = `
+        UPDATE users
+        SET firstname = $1, lastname = $2, email = $3, gender = $4, phonenumber = $5
+      WHERE id = $6
+        RETURNING *;
+      `;
+      const updateResult = await pool.query(updateQuery, [
+        updatedData.firstname,
+        updatedData.lastname,
+        updatedData.email,
+        updatedData.gender,
+        updatedData.phonenumber,
+        userId,
+      ]);
+  
+      // Respond with the updated user data
+      res.status(200).json({
+        success: true,
+        message: 'Profile updated successfully.',
+        user: updateResult.rows[0],
+      });
+    } catch (error) {
+      console.error('Error updating profile:', error.message);
+      res.status(500).json({ success: false, message: 'Internal server error.' });
+    }
+  });
+  
 
 
   // Fallback route
