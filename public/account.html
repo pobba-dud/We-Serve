@@ -530,8 +530,9 @@ if (isNaN(date)) {
     <h2>Edit Account Information</h2>
     <form id="updateForm">
       <label for="name">Name:</label>
-      <input type="text" id="editName" name="name" placeholder="Enter your name">
-    
+      <input type="text" id="editName" name="firstname" placeholder="Enter your name">
+      <label for="name">Last Name:</label>
+      <input type="text" id="editLast" name="lastname" placeholder="Enter your last name">
       <label for="email">Email:</label>
       <input type="email" id="editEmail" name="email" placeholder="Enter your email">
     
@@ -606,6 +607,7 @@ if (isNaN(date)) {
   editBtn.addEventListener("click", () => {
     // Populate modal with current user data
     document.getElementById("editName").value = document.getElementById("name").textContent;
+    document.getElementById("editLast").value = document.getElementById("last").textContent;
     document.getElementById("editEmail").value = document.getElementById("email").textContent;
     document.getElementById("editGender").value = document.getElementById("gender").textContent.toLowerCase();
     
@@ -631,6 +633,7 @@ if (isNaN(date)) {
 
   // Capture the updated values
   const updatedName = document.getElementById("editName").value || null;
+  const updatedLast= document.getElementById("editLast").value || null;
   const updatedEmail = document.getElementById("editEmail").value || null;
   const updatedGender = document.getElementById("editGender").value || null;
   const updatedPhoneNumber = document.getElementById("editPhoneNumber").value || null;
@@ -643,6 +646,7 @@ if (isNaN(date)) {
       },
       body: JSON.stringify({
         name: updatedName,
+        last: updatedLast,
         email: updatedEmail,
         gender: updatedGender,
         phonenumber: updatedPhoneNumber,

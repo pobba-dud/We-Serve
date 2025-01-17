@@ -449,7 +449,7 @@ async function displayEvents() {
 app.post('/updateProfile', authenticate, async (req, res) => {
   try {
     const userId = req.user.id; // Get user ID from the authenticated user
-    const { name, email, gender, phonenumber } = req.body; // Extract incoming fields
+    const { name,last, email, gender, phonenumber } = req.body; // Extract incoming fields
 
     // Retrieve the existing user data
     const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
@@ -462,6 +462,7 @@ app.post('/updateProfile', authenticate, async (req, res) => {
     // Merge provided data with existing data
     const updatedData = {
       firstname: name || existingData.firstname,
+      lastname: last || existingData.lastname,
       email: email || existingData.email,
       gender: gender || existingData.gender,
       phonenumber: phonenumber || existingData.phonenumber,
@@ -470,12 +471,13 @@ app.post('/updateProfile', authenticate, async (req, res) => {
     // Update the database with the merged data
     const updateQuery = `
       UPDATE users
-      SET firstname = $1, email = $2, gender = $3, phonenumber = $4
-      WHERE id = $5
+      SET firstname = $1, lastname = $2, email = $3, gender = $4, phonenumber = $5
+      WHERE id = $6
       RETURNING *;
     `;
     const updateResult = await pool.query(updateQuery, [
       updatedData.firstname,
+      updatedData.lastname,
       updatedData.email,
       updatedData.gender,
       updatedData.phonenumber,
