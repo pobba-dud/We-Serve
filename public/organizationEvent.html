@@ -167,15 +167,37 @@ body.dark-mode .container {
 
         <script>
     async function submitEvent() {
-        const eventName = document.getElementById('eventName').value;
-        const eventDate = document.getElementById('eventDate').value;
-        const eventTimeRange = document.getElementById('eventTimeRange').value;
-        const eventAddress = document.getElementById('eventAddress').value;
-        const eventDescription = document.getElementById('eventDescription').value;
+    const eventName = document.getElementById('eventName').value;
+    const eventDate = document.getElementById('eventDate').value;
+    const eventTimeRange = document.getElementById('eventTimeRange').value;
+    const eventAddress = document.getElementById('eventAddress').value;
+    const eventDescription = document.getElementById('eventDescription').value;
 
-        // Validate inputs (basic example)
-        if (!eventName || !eventDate || !eventTimeRange || !eventAddress || !eventDescription) {
-            alert("All fields are required.");
+    // Validate inputs (basic example)
+    if (!eventName || !eventDate || !eventTimeRange || !eventAddress || !eventDescription) {
+        alert("All fields are required.");
+        return;
+    }
+
+    try {
+        // Fetch the current user's data from the server
+        const userResponse = await fetch('/profileJS', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!userResponse.ok) {
+            alert("Failed to fetch user data. Please log in again.");
+            return;
+        }
+
+        const userData = await userResponse.json();
+
+        // Ensure org_name is available for organization accounts
+        if (!userData.isorg) {
+            alert("Only organization accounts can create events.");
             return;
         }
 
@@ -186,33 +208,32 @@ body.dark-mode .container {
             time_range: eventTimeRange,
             address: eventAddress,
             description: eventDescription,
-            org_name: "Your Org Name", // Replace with actual org name dynamically if needed
+            org_name: userData.org_name, // Dynamically use the org_name from the user's data
         };
+console.log(newEvent);
+        // Send event data to the server via an API call
+        const response = await fetch('/api/events', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newEvent),
+        });
 
-        try {
-            // Send event data to the server via an API call
-            const response = await fetch('/api/events', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newEvent),
-            });
-
-            // Check if the response is successful
-            if (response.ok) {
-                const result = await response.json();
-                alert(`Event Created: ${eventName} on ${eventDate} at ${eventAddress}`);
-                window.location.href = 'discover'; // Redirect to discover page
-            } else {
-                const errorData = await response.json();
-                alert(`Failed to create event: ${errorData.message}`);
-            }
-        } catch (error) {
-            console.error("Error submitting event:", error);
-            alert("An error occurred while creating the event. Please try again.");
+        // Check if the response is successful
+        if (response.ok) {
+            const result = await response.json();
+            alert(`Event Created: ${eventName} on ${eventDate} at ${eventAddress}`);
+            window.location.href = 'discover'; // Redirect to discover page
+        } else {
+            const errorData = await response.json();
+            alert(`Failed to create event: ${errorData.message}`);
         }
+    } catch (error) {
+        console.error("Error submitting event:", error);
+        alert("An error occurred while creating the event. Please try again.");
     }
+}
 </script>
 
 

@@ -416,26 +416,36 @@ app.get('/test-db', async (req, res) => {
   });
 
   app.post('/api/events', async (req, res) => {
-    const { name, description, event_date, time_range, address, org_name } = req.body;
-  
     try {
-      if (!time_range.includes(' - ')) {
-        return res.status(400).json({ error: 'Invalid time range' });
-      }
-  
-      const [start_time, end_time] = time_range.split(' - ');
-      const result = await pool.query(
-        `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
-         VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
-        [name, description, event_date, start_time, end_time, address, org_name]
-      );
-  
-      res.status(201).json({ message: 'Event added successfully', eventId: result.rows[0].id });
+        const { name, event_date, time_range, address, description, org_name } = req.body;
+
+        // Validate input fields
+        if (!name || !event_date || !time_range || !address || !description || !org_name) {
+            return res.status(400).json({ message: 'All fields are required.' });
+        }
+
+        // Validate time range
+        const [start_time, end_time] = time_range.split('-');
+        if (!start_time || !end_time) {
+            return res.status(400).json({ message: 'Invalid time range format. Use "HH:MM-HH:MM".' });
+        }
+
+        // Insert event into the database
+        const result = await pool.query(
+            `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
+             VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+            [name, description, event_date, start_time.trim(), end_time.trim(), address, org_name]
+        );
+
+        res.status(201).json({ message: 'Event created successfully', event: result.rows[0] });
     } catch (err) {
-      console.error('Error saving event:', err);
-      res.status(500).json({ error: 'Failed to save event' });
+        console.error('Error creating event:', err);
+
+        // Return a meaningful error message to the client
+        res.status(500).json({ message: 'Failed to create event. Please try again later.' });
     }
-  });
+});
+
 
   app.post('/updateProfile', authenticate, async (req, res) => {
     try {
