@@ -335,6 +335,8 @@ button {
     position: absolute;
     color: #e7e7e8;
     right: 14%;
+
+    
 }
 @media only screen and (max-width: 700px) {
 #AllignLogin{display: flex;flex-direction: column;}
@@ -345,13 +347,42 @@ html { font-size: smaller; }
 .main h2{margin-left: 10%}
 html{overflow:scroll;}
 }
+/* Modal styling */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0; 
+  top: 0; 
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+}
+
+.close-btn {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: red;
+}
 
 /* End */
   </style>
-</head>
-  <script>
-
-  </script>
+</head>   
+  
 
 <body style="margin: 0%;">
 
@@ -463,7 +494,7 @@ if (isNaN(date)) {
 
       <div class="sidenav-url">
         <div class="url">
-          <a href="#profile" class="hoverable-link">Edit</a>
+          <a href="#" class="hoverable-link" id="openModal">Edit</a>
           <hr style="align-items: center;">
         </div>
         <div class="url">
@@ -492,6 +523,35 @@ if (isNaN(date)) {
       </div>
   </div>
   <!-- End -->
+   <!-- Modal Structure -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>Edit Account Information</h2>
+    <form id="updateForm">
+      <label for="name">Name:</label>
+      <input type="text" id="editName" name="name" placeholder="Enter your name">
+    
+      <label for="email">Email:</label>
+      <input type="email" id="editEmail" name="email" placeholder="Enter your email">
+    
+      <label for="gender">Gender:</label>
+      <select id="editGender" name="gender">
+        <option value="">Select your gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+        <option value="prefer_not_to_say">Prefer not to say</option>
+      </select>
+    
+      <label for="phonenumber">Phone Number:</label>
+      <input type="tel" id="editPhoneNumber" name="phonenumber" placeholder="Enter your phone number">
+    
+      <button type="submit">Save Changes</button>
+    </form>    
+  </div>
+</div>
+
 <!-- Main -->
 <div class="main">
   <h2>IDENTITY</h2>
@@ -537,6 +597,97 @@ if (isNaN(date)) {
 </div>
 <!-- End -->
 <script>
+  // Modal controls
+  const editModal = document.getElementById("editModal");
+  const closeModalBtn = document.querySelector(".close-btn");
+  const editBtn = document.querySelector(".edit");
+  
+  // Open modal on edit button click
+  editBtn.addEventListener("click", () => {
+    // Populate modal with current user data
+    document.getElementById("editName").value = document.getElementById("name").textContent;
+    document.getElementById("editEmail").value = document.getElementById("email").textContent;
+    document.getElementById("editGender").value = document.getElementById("gender").textContent.toLowerCase();
+    
+  
+    editModal.style.display = "block";
+  });
+  
+  // Close modal
+  closeModalBtn.addEventListener("click", () => {
+    editModal.style.display = "none";
+  });
+  
+  // Close modal when clicking outside the modal
+  window.addEventListener("click", (e) => {
+    if (e.target === editModal) {
+      editModal.style.display = "none";
+    }
+  });
+  
+  // Handle form submission
+  document.getElementById("updateForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // Capture the updated values
+  const updatedName = document.getElementById("editName").value || null;
+  const updatedEmail = document.getElementById("editEmail").value || null;
+  const updatedGender = document.getElementById("editGender").value || null;
+  const updatedPhoneNumber = document.getElementById("editPhoneNumber").value || null;
+
+  try {
+    const response = await fetch("/updateProfile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: updatedName,
+        email: updatedEmail,
+        gender: updatedGender,
+        phonenumber: updatedPhoneNumber,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      alert(data.message);
+      location.reload(); // Reload the page to reflect updates
+    } else {
+      const errorData = await response.json();
+      alert(`Error updating profile: ${errorData.message}`);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An unexpected error occurred.");
+  }
+});
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+  const openModalButton = document.getElementById("openModal");
+  const modal = document.getElementById("editModal");
+  const closeButton = modal.querySelector(".close-btn");
+
+  // Open the modal
+  openModalButton.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    modal.style.display = "block";
+  });
+
+  // Close the modal
+  closeButton.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  // Close the modal when clicking outside the modal content
+  window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+});
+
     function setTheme(theme) {
         document.body.className = theme === 'dark' ? 'dark-mode' : '';
         localStorage.setItem('theme', theme); // Save the theme preference

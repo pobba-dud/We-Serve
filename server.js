@@ -446,9 +446,53 @@ async function displayEvents() {
   // Your code to display events on the page or manipulate them
 }
 
+app.post('/updateProfile', authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id; // Get user ID from the authenticated user
+    const { name, email, gender, phonenumber } = req.body; // Extract incoming fields
 
-  
+    // Retrieve the existing user data
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
 
+    const existingData = result.rows[0];
+
+    // Merge provided data with existing data
+    const updatedData = {
+      firstname: name || existingData.firstname,
+      email: email || existingData.email,
+      gender: gender || existingData.gender,
+      phonenumber: phonenumber || existingData.phonenumber,
+    };
+
+    // Update the database with the merged data
+    const updateQuery = `
+      UPDATE users
+      SET firstname = $1, email = $2, gender = $3, phonenumber = $4
+      WHERE id = $5
+      RETURNING *;
+    `;
+    const updateResult = await pool.query(updateQuery, [
+      updatedData.firstname,
+      updatedData.email,
+      updatedData.gender,
+      updatedData.phonenumber,
+      userId,
+    ]);
+
+    // Respond with the updated user data
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully.',
+      user: updateResult.rows[0],
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error.message);
+    res.status(500).json({ success: false, message: 'Internal server error.' });
+  }
+});
 module.exports = router;
 
 
