@@ -291,24 +291,27 @@ app.get('/test-db', async (req, res) => {
 
   
   app.post('/registerJS', async (req, res) => {
-    const { firstname, lastname, gender, birthday, email, phonenumber, password, isadmin = false, isorg } = req.body;
+    const { firstname, lastname, gender, birthday, email, phonenumber, password, isadmin = false, isorg, orgName } = req.body;
   
-    // Validate input data (basic checks, feel free to extend it)
-    if (!email.toLowerCase() || !password || !firstname || !lastname) {
-      return res.status(400).json({ message: 'Please provide all required fields.' });
+    // Ensure orgName is required only for organizations
+    if (isorg === 'true' && (!orgName || orgName.trim() === '')) {
+      return res.status(400).json({ message: 'Organization name is required when registering as an organization.' });
     }
+  
+    // Log received data for debugging
+    console.log("Received Data:", req.body);
   
     // Check if email already exists
     const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
     if (emailCheck.rows.length > 0) {
-      return res.status(400).json({ message: 'Email is already in use' });
+      return res.status(400).json({ message: 'Email is already in use.' });
     }
   
     // Check if phone number already exists
-    if (phonenumber != null) {
+    if (phonenumber) {
       const phoneCheck = await pool.query('SELECT * FROM users WHERE phonenumber = $1', [phonenumber]);
       if (phoneCheck.rows.length > 0) {
-        return res.status(400).json({ message: 'Phone number is already in use' });
+        return res.status(400).json({ message: 'Phone number is already in use.' });
       }
     }
   
@@ -330,24 +333,38 @@ app.get('/test-db', async (req, res) => {
   
       // Insert user into the database
       const result = await pool.query(
-        'INSERT INTO users (firstname, lastname, gender, birthday, email, phonenumber, password, isadmin, isorg) ' +
-        'VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *', 
-        [firstname, lastname, gender, birthday, email.toLowerCase(), phonenumber, hashedPassword, isadmin, isorg]
+        `INSERT INTO users (firstname, lastname, gender, birthday, email, phonenumber, password, isadmin, isorg, org_name) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) 
+         RETURNING *`,
+        [
+          firstname,
+          lastname,
+          gender,
+          birthday,
+          email.toLowerCase(),
+          phonenumber,
+          hashedPassword,
+          isadmin,
+          isorg === 'true',
+          isorg === 'true' ? orgName : null // Use orgName here
+        ]
       );
   
       console.log('Registration successful:', result.rows[0]); // Log success
       res.status(201).json({
         message: 'User registered successfully',
-        user: result.rows[0]
+        user: result.rows[0],
       });
     } catch (err) {
       console.error('Error during registration:', err); // Log the error
       res.status(500).json({
-        message: 'Error registering user.'
+        message: 'Error registering user.',
       });
     }
   });
   
+  
+
 
   app.post('/loginJS', async (req, res) => {
     const { email, password } = req.body;
@@ -422,81 +439,6 @@ app.get('/test-db', async (req, res) => {
       res.status(500).json({ error: 'Failed to save event' });
     }
   });
-  
-
-async function getEvents() {
-  try {
-      const response = await fetch('http://localhost:3000/api/events'); // Adjust URL if needed
-      if (response.ok) {
-          const events = await response.json();
-          return events;
-      } else {
-          console.error('Failed to fetch events', response.statusText);
-          return [];
-      }
-  } catch (err) {
-      console.error('Error fetching events:', err);
-      return [];
-  }
-}
-async function displayEvents() {
-  const events = await getEvents();
-  console.log(events); // This will log the events fetched from the database
-
-  // Your code to display events on the page or manipulate them
-}
-
-app.post('/updateProfile', authenticate, async (req, res) => {
-  try {
-    const userId = req.user.id; // Get user ID from the authenticated user
-    const { name,last, email, gender, phonenumber } = req.body; // Extract incoming fields
-
-    // Retrieve the existing user data
-    const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'User not found.' });
-    }
-
-    const existingData = result.rows[0];
-
-    // Merge provided data with existing data
-    const updatedData = {
-      firstname: name || existingData.firstname,
-      lastname: last || existingData.lastname,
-      email: email || existingData.email,
-      gender: gender || existingData.gender,
-      phonenumber: phonenumber || existingData.phonenumber,
-    };
-
-    // Update the database with the merged data
-    const updateQuery = `
-      UPDATE users
-      SET firstname = $1, lastname = $2, email = $3, gender = $4, phonenumber = $5
-      WHERE id = $6
-      RETURNING *;
-    `;
-    const updateResult = await pool.query(updateQuery, [
-      updatedData.firstname,
-      updatedData.lastname,
-      updatedData.email,
-      updatedData.gender,
-      updatedData.phonenumber,
-      userId,
-    ]);
-
-    // Respond with the updated user data
-    res.status(200).json({
-      success: true,
-      message: 'Profile updated successfully.',
-      user: updateResult.rows[0],
-    });
-  } catch (error) {
-    console.error('Error updating profile:', error.message);
-    res.status(500).json({ success: false, message: 'Internal server error.' });
-  }
-});
-module.exports = router;
-
 
 
 

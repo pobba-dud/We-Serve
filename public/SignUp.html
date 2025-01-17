@@ -59,6 +59,10 @@
           <option value="true">Yes</option>
         </select>
       </div>
+      <div class="form-group" id="orgNameGroup" style="display: none;">
+        <label for="orgName">Organization Name:</label>
+        <input type="text" id="orgName" name="orgName" placeholder="Enter your organization's name">
+      </div>
       <button type="submit">Sign Up</button>
     </form>
   </div>
@@ -86,43 +90,57 @@
 
     togglePasswordVisibility('password', 'togglePassword');
     togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword');
+    
+    document.getElementById('isorg').addEventListener('change', function () {
+      const orgNameGroup = document.getElementById('orgNameGroup');
+      if (this.value === 'true') {
+        orgNameGroup.style.display = 'block'; // Show the organization name field
+      } else {
+        orgNameGroup.style.display = 'none'; // Hide the organization name field
+      }
+    });
 
     // Form submission logic
     document.getElementById('signupForm').addEventListener('submit', async function (event) {
-      event.preventDefault(); // Prevent form submission
+  event.preventDefault(); // Prevent form submission
 
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const isOrg = document.getElementById('isorg').value === 'true';
 
-      if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return; // Stop form submission
-      }
+  if (password !== confirmPassword) {
+    alert("Passwords do not match!");
+    return; // Stop form submission
+  }
 
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData.entries());
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
 
-      try {
-        const response = await fetch('/registerJS', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        });
+  // Include org_name only if the user is registering as an organization
+console.log("Submitted Data:", data); // Check if orgName is included
 
-        const result = await response.json();
-        if (response.ok) {
-          alert('User registered successfully! Redirecting to login...');
-          window.location.href = '/login';
-        } else {
-          alert(result.message || 'Error registering user.');
-        }
-      } catch (error) {
-        console.error('Fetch error:', error);
-        alert('A network error occurred.');
-      }
+
+  try {
+    const response = await fetch('/registerJS', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert('User registered successfully! Redirecting to login...');
+      window.location.href = '/login';
+    } else {
+      alert(result.message || 'Error registering user.');
+    }
+  } catch (error) {
+    console.error('Fetch error:', error);
+    alert('A network error occurred.');
+  }
+});
   </script>
 </body>
 
