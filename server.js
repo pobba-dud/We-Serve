@@ -446,7 +446,6 @@ app.get('/test-db', async (req, res) => {
     }
 });
 
-
   app.post('/updateProfile', authenticate, async (req, res) => {
     try {
       const userId = req.user.id; // Get user ID from the authenticated user
