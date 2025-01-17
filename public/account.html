@@ -367,6 +367,105 @@ html{overflow:scroll;}
   border-radius: 10px;
   width: 50%;
 }
+.modal-content.dark-mode {
+  background-color: #414141;
+}
+.modal-content h2 {
+  margin-left: 20%;
+}
+
+ /* Style for the input box */
+ input[type="text"] {
+      width: 300px; /* Adjust the width as needed */
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Change the border color and shadow on focus */
+    input[type="text"]:focus {
+      border-color: #007BFF;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Add spacing between the input and the next line */
+    input[type="text"] + br {
+      margin-bottom: 10px;
+    }
+
+    input[type="email"] {
+      width: 300px; /* Adjust the width as needed */
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Change the border color and shadow on focus */
+    input[type="email"]:focus {
+      border-color: #007BFF;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Add spacing between the input and the next line */
+    input[type="email"] + br {
+      margin-bottom: 10px;
+    }
+
+    input[type="tel"] {
+      width: 300px; /* Adjust the width as needed */
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Change the border color and shadow on focus */
+    input[type="tel"]:focus {
+      border-color: #007BFF;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Add spacing between the input and the next line */
+    input[type="tel"] + br {
+      margin-bottom: 10px;
+    }
+
+    select {
+      width: 300px; /* Adjust the width as needed */
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Change the border color and shadow on focus */
+    select:focus {
+      border-color: #007BFF;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Add spacing between the input and the next line */
+    select + br {
+      margin-bottom: 10px;
+    }
+
+    button[type="submit"] {
+      background-color: rgb(57, 94, 112);
+      color: white;
+      box-shadow: #000;
+    }
+
+
 
 .close-btn {
   float: right;
@@ -378,6 +477,7 @@ html{overflow:scroll;}
 .close-btn:hover {
   color: red;
 }
+
 
 /* End */
   </style>
@@ -529,25 +629,28 @@ if (isNaN(date)) {
     <span class="close-btn">&times;</span>
     <h2>Edit Account Information You Wish To Change</h2>
     <form id="updateForm">
-      <label for="name">Name:</label>
-      <input type="text" id="editName" name="firstname" placeholder="Enter your name">
+      <label for="name" style="padding-right: 1%;">Name:</label>
+      <input type="text" id="editName" name="firstname" placeholder="Enter your name"><br>
+      <div style="padding: 1%;"></div>
       <label for="name">Last Name:</label>
-      <input type="text" id="editLast" name="lastname" placeholder="Enter your last name">
+      <input type="text" id="editLast" name="lastname" placeholder="Enter your last name"><br>
+      <div style="padding: 1%;"></div>
       <label for="email">Email:</label>
-      <input type="email" id="editEmail" name="email" placeholder="Enter your email">
-    
+      <input type="email" id="editEmail" name="email" placeholder="Enter your email"><br>
+      <div style="padding: 1%;"></div>
       <label for="gender">Gender:</label>
       <select id="editGender" name="gender">
-        <option value="">Select your gender</option>
+        <option value="">Select your gender</option><br>
         <option value="male">Male</option>
         <option value="female">Female</option>
         <option value="other">Other</option>
         <option value="prefer_not_to_say">Prefer not to say</option>
       </select>
-    
+      <br>
+      <div style="padding: 1%;"></div>
       <label for="phonenumber">Phone Number:</label>
-      <input type="tel" id="editPhoneNumber" name="phonenumber" placeholder="Enter your phone number">
-    
+      <input type="tel" id="editPhoneNumber" name="phonenumber" placeholder="Enter your phone number"><br>
+      <div style="padding: 1%;"></div>
       <button type="submit">Save Changes</button>
     </form>    
   </div>
