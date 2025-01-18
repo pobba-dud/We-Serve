@@ -377,7 +377,7 @@ app.get('/test-db', async (req, res) => {
   
   app.post('/loginJS', async (req, res) => {
     const { email, password } = req.body;
-  email = email.toLowerCase();
+  
     if (!email.toLowerCase() || !password) {
       return res.status(400).send('Email and password are required.');
     }
