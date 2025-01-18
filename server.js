@@ -334,9 +334,8 @@ app.get('/test-db', async (req, res) => {
   
   // Verification endpoint
   app.get('/verify-email', async (req, res) => {
-    const token = req.query.token; // Get the token from query string
+    const token = req.query.token;  // Get the token from query string
   
-    // Check if the token is provided in the query string
     if (!token) {
       console.log('No token provided');
       return res.status(400).send('Token not provided');  // Return a 400 error if no token is found
@@ -347,7 +346,6 @@ app.get('/test-db', async (req, res) => {
     try {
       const result = await pool.query('SELECT * FROM users WHERE verification_token = $1', [token]);
   
-      // If no user is found with the provided token
       if (result.rowCount === 0) {
         return res.status(400).send('Invalid or expired token');
       }
@@ -371,6 +369,7 @@ app.get('/test-db', async (req, res) => {
       res.status(500).send('Internal server error');
     }
   });
+  
   
   
   
@@ -404,7 +403,7 @@ app.get('/test-db', async (req, res) => {
         // Check if the user already has a verification token
         if (user.verification_token && new Date(user.verification_token_expires) > new Date()) {
           // Resend the email with the existing token
-          const verificationLink = `https://we-serve.net/verify-email?token=${user.verification_token}`;
+          const verificationLink = `https://www.we-serve.net/verify-email?token=${user.verification_token}`;
           
           // Send the verification email
           await sendVerificationEmail(user.email.toLowerCase(), verificationLink);
