@@ -333,7 +333,8 @@ app.get('/test-db', async (req, res) => {
   });
   
   // Verification endpoint
-  app.get('/verify-email', async (req, res) => {
+  app.get('/verify-email', (req, res) => {
+    console.log('Received verification request:', req.query.token);  
     const { token } = req.query;
     console.log('Received token:', token);
 console.log('Current server time:', new Date().toISOString());
