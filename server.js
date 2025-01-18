@@ -377,7 +377,7 @@ app.get('/test-db', async (req, res) => {
   
   app.post('/loginJS', async (req, res) => {
     const { email, password } = req.body;
-  
+  email = email.toLowerCase();
     if (!email.toLowerCase() || !password) {
       return res.status(400).send('Email and password are required.');
     }
@@ -408,7 +408,7 @@ app.get('/test-db', async (req, res) => {
           // Send the verification email
           await sendVerificationEmail(user.email.toLowerCase(), verificationLink);
   
-          return res.status(400).send('Account not verified. A verification link has been sent to your email.');
+          return res.status(400).send('Account not verified. A verification link has been sent to your email. If you dont see it check your spam');
         } else {
           // If no valid token exists, generate a new token and set expiration
           const crypto = require('crypto');
@@ -430,7 +430,7 @@ app.get('/test-db', async (req, res) => {
       }
   
       // If user is verified, continue with login
-      const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '168h' });
+      const token = jwt.sign({ id: user.id, email: user.email.toLowerCase() }, SECRET_KEY, { expiresIn: '168h' });
       res.cookie('auth_token', token, { httpOnly: true, sameSite: 'Strict' });
       res.status(200).send('Login successful.');
   

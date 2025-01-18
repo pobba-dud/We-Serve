@@ -10,7 +10,7 @@
 <body>
   <h1>Login</h1>
 
-    <div class="container">
+    <div class="container" >
       <form id="loginForm">
 
         <div class="form-group">
@@ -29,11 +29,11 @@
 
         <div class="form-group">
           <button type="submit">Login</button>
-          <p id="message"></p>
+          
         </div>
 
       </form>
-
+      
   <div class= "container" style="display: block-inline;">
     <div class="form-group">
       <h3>Dont have an account?</h3>
@@ -41,9 +41,12 @@
       <button style="display: inline;"><a href="SignUp" style="text-decoration: none;color: black;">Click here</a></button>
     </div>
   </div>
-     
+  <br>
+  
   </div>
-
+  <div style="text-align: center; padding: 1%; margin: 3%;">
+  <p style="display: inline;" id="message"></p>
+</div>
   <script>
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
