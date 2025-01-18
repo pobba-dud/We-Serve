@@ -316,7 +316,7 @@ app.get('/test-db', async (req, res) => {
       );
   
       // Send a verification email
-      const verificationLink = `https://we-serve.net/verify-email?token=${verificationToken}`;
+      const verificationLink = `https://www.we-serve.net/verify-email?token=${verificationToken}`;
       await transporter.sendMail({
         from: '"We-Serve" <your-email@we-serve.net>',
         to: email,
