@@ -334,15 +334,20 @@ app.get('/test-db', async (req, res) => {
   
   // Verification endpoint
   app.get('/verify-email', async (req, res) => {
-    const token = req.query.token;  // Get the token from query string
+    const token = req.query.token; // Get the token from query string
   
+    // Check if the token is provided in the query string
     if (!token) {
-      return res.status(400).send('Token not provided');
+      console.log('No token provided');
+      return res.status(400).send('Token not provided');  // Return a 400 error if no token is found
     }
+  
+    console.log('Received token:', token); // For debugging purposes
   
     try {
       const result = await pool.query('SELECT * FROM users WHERE verification_token = $1', [token]);
   
+      // If no user is found with the provided token
       if (result.rowCount === 0) {
         return res.status(400).send('Invalid or expired token');
       }
@@ -355,16 +360,18 @@ app.get('/test-db', async (req, res) => {
         return res.status(400).send('Token has expired');
       }
   
-      // Update user to set 'verified' to true
+      // Update the user's verified status
       await pool.query('UPDATE users SET verified = true WHERE email = $1', [user.email]);
   
-      // Redirect to login page or any other page indicating success
+      // Send a success response
       res.send('Account successfully verified. You can now log in.');
+  
     } catch (err) {
       console.error('Error verifying email:', err);
       res.status(500).send('Internal server error');
     }
   });
+  
   
   
   
