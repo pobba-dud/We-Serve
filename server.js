@@ -334,34 +334,38 @@ app.get('/test-db', async (req, res) => {
   
   // Verification endpoint
   app.get('/verify-email', async (req, res) => {
-      console.log('Received verification request:', req.query.token);
-    
-    const { token } = req.query;
-    console.log('Received token:', token);
-console.log('Current server time:', new Date().toISOString());
-
+    const token = req.query.token;  // Get the token from query string
+  
+    if (!token) {
+      return res.status(400).send('Token not provided');
+    }
   
     try {
-      const result = await pool.query(
-        `SELECT * FROM users WHERE verification_token = $1 AND verification_token_expires > NOW()`,
-        [token]
-      );
+      const result = await pool.query('SELECT * FROM users WHERE verification_token = $1', [token]);
   
-      if (result.rows.length === 0) {
-        return res.status(400).send('Invalid or expired token.');
+      if (result.rowCount === 0) {
+        return res.status(400).send('Invalid or expired token');
       }
   
-      const userId = result.rows[0].id;
+      const user = result.rows[0];
   
-      // Mark the user as verified
-      await pool.query(`UPDATE users SET verified = true, verification_token = NULL, verification_token_expires = NULL WHERE id = $1`, [userId]);
+      // Check if the token has expired
+      const currentTime = new Date();
+      if (new Date(user.verification_token_expires) < currentTime) {
+        return res.status(400).send('Token has expired');
+      }
   
-      res.send('Email successfully verified! You can now log in.');
-    } catch (error) {
-      console.error('Error verifying email:', error);
-      res.status(500).send('Failed to verify email.');
+      // Update user to set 'verified' to true
+      await pool.query('UPDATE users SET verified = true WHERE email = $1', [user.email]);
+  
+      // Redirect to login page or any other page indicating success
+      res.send('Account successfully verified. You can now log in.');
+    } catch (err) {
+      console.error('Error verifying email:', err);
+      res.status(500).send('Internal server error');
     }
   });
+  
   
   
   
