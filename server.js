@@ -87,7 +87,7 @@ async function checkIsOrg(req, res, next) {
     const decoded = jwt.verify(token, SECRET_KEY); // Replace 'SECRET_KEY' with your actual key
     
     // Fetch user data from the database using the decoded email
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [decoded.email]);
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [decoded.email.toLowerCase()]);
     
     if (result.rowCount === 0) {
       return res.redirect('/'); // Handle token errors
@@ -127,7 +127,7 @@ async function checkAdmin(req, res, next) {
     const decoded = jwt.verify(token, SECRET_KEY); // Replace 'SECRET_KEY' with your actual key
     
     // Fetch user data from the database using the decoded email
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [decoded.email]);
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [decoded.email.toLowerCase()]);
     
     if (result.rowCount === 0) {
       return res.redirect('/'); // Handle token errors
@@ -359,7 +359,7 @@ app.get('/test-db', async (req, res) => {
       }
   
       // Update the user's verified status
-      await pool.query('UPDATE users SET verified = true WHERE email = $1', [user.email]);
+      await pool.query('UPDATE users SET verified = true WHERE email = $1', [user.email.toLowerCase()]);
   
       // Send a success response
       res.send('Account successfully verified. You can now log in.');
@@ -548,7 +548,7 @@ app.get('/test-db', async (req, res) => {
   
     try {
       // Check if the user exists and is not verified
-      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
       const user = result.rows[0];
   
       if (!user) {
