@@ -371,34 +371,64 @@ console.log('Current server time:', new Date().toISOString());
     }
   
     try {
-      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
+      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
       
       if (result.rowCount === 0) {
         return res.status(401).send('Invalid credentials.');
       }
   
       const user = result.rows[0];
-      
-      // Check if the account is verified
-      if (!user.verified) {
-        return res.status(401).send('Email not verified. Please verify your email to log in.');
-      }
-  
       const isPasswordValid = await bcrypt.compare(password, user.password);
   
       if (!isPasswordValid) {
         return res.status(401).send('Invalid credentials.');
       }
   
-      const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '168h' });
+      // If the user is not verified, resend the verification email
+      if (!user.verified) {
+        console.log('User is not verified:', email);
   
+        // Check if the user already has a verification token
+        if (user.verification_token && new Date(user.verification_token_expires) > new Date()) {
+          // Resend the email with the existing token
+          const verificationLink = `https://we-serve.net/verify-email?token=${user.verification_token}`;
+          
+          // Send the verification email
+          await sendVerificationEmail(user.email, verificationLink);
+  
+          return res.status(400).send('Account not verified. A verification link has been sent to your email.');
+        } else {
+          // If no valid token exists, generate a new token and set expiration
+          const crypto = require('crypto');
+          const newToken = crypto.randomBytes(32).toString('hex');
+          const expirationDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours expiration
+  
+          // Update the database with the new token and expiration time
+          await pool.query(
+            'UPDATE users SET verification_token = $1, verification_token_expires = $2 WHERE email = $3',
+            [newToken, expirationDate, user.email]
+          );
+  
+          // Send the new verification email with the updated token
+          const verificationLink = `https://we-serve.net/verify-email?token=${newToken}`;
+          await sendVerificationEmail(user.email, verificationLink);
+  
+          return res.status(400).send('Account not verified. A new verification link has been sent to your email.');
+        }
+      }
+  
+      // If user is verified, continue with login
+      const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '168h' });
       res.cookie('auth_token', token, { httpOnly: true, sameSite: 'Strict' });
       res.status(200).send('Login successful.');
-    } catch (error) {
-      console.error('Error logging in:', error);
+  
+    } catch (err) {
+      console.error('Error logging in:', err);
       res.status(500).send('Error logging in.');
     }
   });
+  
+  
   
   
   app.post('/profileJS', authenticate, async (req, res) => {
@@ -502,39 +532,73 @@ console.log('Current server time:', new Date().toISOString());
   });
 
   app.post('/resend-verification', async (req, res) => {
-    const { email } = req.body;
+    const { email } = req.body; // Get email from request body
   
     try {
-      const result = await pool.query('SELECT id, firstname FROM users WHERE email = $1 AND verified = false', [email]);
+      // Check if the user exists and is not verified
+      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+      const user = result.rows[0];
   
-      if (result.rowCount === 0) {
-        return res.status(400).json({ message: 'Email not found or already verified.' });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
       }
   
-      const user = result.rows[0];
-      const verificationToken = crypto.randomBytes(32).toString('hex');
-      const verificationTokenExpires = new Date(Date.now() + 3600 * 1000);
+      // If the user is already verified, return a message
+      if (user.verified) {
+        return res.status(400).json({ message: 'Your email is already verified.' });
+      }
   
+      // If the user has an active verification token, resend the verification email
+      if (user.verification_token && new Date(user.verification_token_expires) > new Date()) {
+        const verificationLink = `https://we-serve.net/verify-email?token=${user.verification_token}`;
+        
+        // Send the verification email with the existing token
+        await sendVerificationEmail(email, verificationLink);
+  
+        return res.status(200).json({ message: 'Verification email resent.' });
+      }
+  
+      // If no active token exists, generate a new one
+      const crypto = require('crypto');
+      const newToken = crypto.randomBytes(32).toString('hex');
+      const expirationDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours expiration
+  
+      // Update the database with the new token and expiration time
       await pool.query(
-        `UPDATE users SET verification_token = $1, verification_token_expires = $2 WHERE id = $3`,
-        [verificationToken, verificationTokenExpires, user.id]
+        'UPDATE users SET verification_token = $1, verification_token_expires = $2 WHERE email = $3',
+        [newToken, expirationDate, email]
       );
   
-      const verificationLink = `https://we-serve.net/verify-email?token=${verificationToken}`;
-      await transporter.sendMail({
-        from: '"We-Serve" <your-email@we-serve.net>',
-        to: email,
-        subject: 'Resend Email Verification - We-Serve',
-        text: `Hello ${user.firstname}, please verify your email by clicking the link below: ${verificationLink}`,
-        html: `<p>Hello ${user.firstname},</p><p>Please verify your email by clicking the link below:</p><a href="${verificationLink}">${verificationLink}</a>`,
-      });
+      const verificationLink = `https://we-serve.net/verify-email?token=${newToken}`;
+      
+      // Send the verification email with the new token
+      await sendVerificationEmail(email, verificationLink);
   
-      res.status(200).json({ message: 'Verification link resent successfully. Please check your email.' });
+      return res.status(200).json({ message: 'Verification email sent.' });
     } catch (error) {
-      console.error('Error resending verification email:', error);
-      res.status(500).json({ message: 'Failed to resend verification email.' });
+      console.error('Error sending verification email:', error);
+      return res.status(500).json({ message: 'An error occurred. Please try again later.' });
     }
   });
+  async function sendVerificationEmail(email, verificationLink) {
+      const mailOptions = {
+      from: 'your-email@gmail.com',
+      to: email,
+      subject: 'Email Verification for We Serve',
+      text: `Please verify your email by clicking on the following link: ${verificationLink}`,
+      html: `<p>Please verify your email by clicking on the following link:</p>
+             <p><a href="${verificationLink}">${verificationLink}</a></p>`,
+    };
+  
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log('Verification email sent successfully.');
+    } catch (error) {
+      console.error('Error sending email:', error);
+      throw new Error('Error sending email.');
+    }
+  }
+    
   
   
 
