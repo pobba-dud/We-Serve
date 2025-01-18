@@ -383,7 +383,7 @@ app.get('/test-db', async (req, res) => {
     }
   
     try {
-      const result = await pool.query('SELECT * FROM users WHERE email = $1', [emailemail]);
+      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
       
       if (result.rowCount === 0) {
         return res.status(401).send('Invalid credentials.');
