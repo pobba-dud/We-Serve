@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { isEmpty } = require('lodash');
+const crypto = require('crypto');
 const SECRET_KEY = process.env.SECRET_KEY || 'fallback_secret';
 
 // Use cookie-parser middleware
@@ -291,111 +292,114 @@ app.get('/test-db', async (req, res) => {
 
   
   app.post('/registerJS', async (req, res) => {
-    const { firstname, lastname, gender, birthday, email, phonenumber, password, isadmin = false, isorg, orgName } = req.body;
-  
-    // Ensure orgName is required only for organizations
-    if (isorg === 'true' && (!orgName || orgName.trim() === '')) {
-      return res.status(400).json({ message: 'Organization name is required when registering as an organization.' });
-    }
-  
-    // Check if email already exists
-    const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
-    if (emailCheck.rows.length > 0) {
-      return res.status(400).json({ message: 'Email is already in use.' });
-    }
-  
-    // Check if phone number already exists
-    if (phonenumber) {
-      const phoneCheck = await pool.query('SELECT * FROM users WHERE phonenumber = $1', [phonenumber]);
-      if (phoneCheck.rows.length > 0) {
-        return res.status(400).json({ message: 'Phone number is already in use.' });
-      }
-    }
-  
-    // Validate that the birthday is not in the future
-    const today = new Date();
-    const userBirthday = new Date(birthday);
-  
-    if (isNaN(userBirthday)) {
-      return res.status(400).json({ message: 'Invalid birthday format. Please use YYYY-MM-DD.' });
-    }
-  
-    if (userBirthday > today) {
-      return res.status(400).json({ message: 'Birthday cannot be a future date.' });
-    }
+    const { firstname, lastname, gender, birthday, email, phonenumber, password, isorg, org_name } = req.body;
   
     try {
-      // Hash the password
+      // Check if the email already exists
+      const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
+      if (emailCheck.rows.length > 0) {
+        return res.status(400).json({ message: 'Email is already in use' });
+      }
+  
+      // Generate a hashed password
       const hashedPassword = await bcrypt.hash(password, 10);
   
-      // Insert user into the database
+      // Generate a unique verification token
+      const verificationToken = crypto.randomBytes(32).toString('hex');
+      const verificationTokenExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 1-hour expiration
+  
+      // Insert user data into the database
       const result = await pool.query(
-        `INSERT INTO users (firstname, lastname, gender, birthday, email, phonenumber, password, isadmin, isorg, org_name) 
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) 
-         RETURNING *`,
-        [
-          firstname,
-          lastname,
-          gender,
-          birthday,
-          email.toLowerCase(),
-          phonenumber,
-          hashedPassword,
-          isadmin,
-          isorg === 'true',
-          isorg === 'true' ? orgName : null // Use orgName here
-        ]
+        `INSERT INTO users (firstname, lastname, gender, birthday, email, phonenumber, password, isorg, org_name, verified, verification_token, verification_token_expires) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
+        [firstname, lastname, gender, birthday, email.toLowerCase(), phonenumber, hashedPassword, isorg, org_name, false, verificationToken, verificationTokenExpires]
       );
   
-      console.log('Registration successful:', result.rows[0]); // Log success
-      res.status(201).json({
-        message: 'User registered successfully',
-        user: result.rows[0],
+      // Send a verification email
+      const verificationLink = `https://we-serve.net/verify-email?token=${verificationToken}`;
+      await transporter.sendMail({
+        from: '"We-Serve" <your-email@we-serve.net>',
+        to: email,
+        subject: 'Email Verification - We-Serve',
+        text: `Hello ${firstname}, please verify your email by clicking the link below: ${verificationLink}`,
+        html: `<p>Hello ${firstname},</p><p>Please verify your email by clicking the link below:</p><a href="${verificationLink}">${verificationLink}</a>`,
       });
-    } catch (err) {
-      console.error('Error during registration:', err); // Log the error
-      res.status(500).json({
-        message: 'Error registering user.',
-      });
+  
+      res.status(201).json({ message: 'User registered successfully. Please check your email for verification.' });
+    } catch (error) {
+      console.error('Error during registration:', error);
+      res.status(500).json({ message: 'Error registering user.' });
+    }
+  });
+  
+  // Verification endpoint
+  app.get('/verify-email', async (req, res) => {
+    const { token } = req.query;
+    console.log('Received token:', token);
+console.log('Current server time:', new Date().toISOString());
+
+  
+    try {
+      const result = await pool.query(
+        `SELECT * FROM users WHERE verification_token = $1 AND verification_token_expires > NOW()`,
+        [token]
+      );
+  
+      if (result.rows.length === 0) {
+        return res.status(400).send('Invalid or expired token.');
+      }
+  
+      const userId = result.rows[0].id;
+  
+      // Mark the user as verified
+      await pool.query(`UPDATE users SET verified = true, verification_token = NULL, verification_token_expires = NULL WHERE id = $1`, [userId]);
+  
+      res.send('Email successfully verified! You can now log in.');
+    } catch (error) {
+      console.error('Error verifying email:', error);
+      res.status(500).send('Failed to verify email.');
     }
   });
   
   
-
-
+  
   app.post('/loginJS', async (req, res) => {
     const { email, password } = req.body;
   
-    if (!email.toLowerCase() || !password) {
+    if (!email || !password) {
       return res.status(400).send('Email and password are required.');
     }
   
     try {
       const result = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
-  
+      
       if (result.rowCount === 0) {
         return res.status(401).send('Invalid credentials.');
       }
   
       const user = result.rows[0];
+      
+      // Check if the account is verified
+      if (!user.verified) {
+        return res.status(401).send('Email not verified. Please verify your email to log in.');
+      }
+  
       const isPasswordValid = await bcrypt.compare(password, user.password);
   
       if (!isPasswordValid) {
         return res.status(401).send('Invalid credentials.');
       }
   
-      // Generate a JWT token
-      const token = jwt.sign({ id: user.id, email: user.email.toLowerCase() }, SECRET_KEY, { expiresIn: '168h' });
+      const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '168h' });
   
-      // Send token as a cookie and respond with success
-      res.cookie('auth_token', token, { httpOnly: true,sameSite: 'Strict' });
-      console.log("cookie made")
+      res.cookie('auth_token', token, { httpOnly: true, sameSite: 'Strict' });
       res.status(200).send('Login successful.');
-    } catch (err) {
-      console.error('Error logging in:', err);
+    } catch (error) {
+      console.error('Error logging in:', error);
       res.status(500).send('Error logging in.');
     }
   });
+  
   
   app.post('/profileJS', authenticate, async (req, res) => {
     try {
@@ -496,6 +500,42 @@ app.get('/test-db', async (req, res) => {
       res.status(500).json({ success: false, message: 'Internal server error.' });
     }
   });
+
+  app.post('/resend-verification', async (req, res) => {
+    const { email } = req.body;
+  
+    try {
+      const result = await pool.query('SELECT id, firstname FROM users WHERE email = $1 AND verified = false', [email]);
+  
+      if (result.rowCount === 0) {
+        return res.status(400).json({ message: 'Email not found or already verified.' });
+      }
+  
+      const user = result.rows[0];
+      const verificationToken = crypto.randomBytes(32).toString('hex');
+      const verificationTokenExpires = new Date(Date.now() + 3600 * 1000);
+  
+      await pool.query(
+        `UPDATE users SET verification_token = $1, verification_token_expires = $2 WHERE id = $3`,
+        [verificationToken, verificationTokenExpires, user.id]
+      );
+  
+      const verificationLink = `https://we-serve.net/verify-email?token=${verificationToken}`;
+      await transporter.sendMail({
+        from: '"We-Serve" <your-email@we-serve.net>',
+        to: email,
+        subject: 'Resend Email Verification - We-Serve',
+        text: `Hello ${user.firstname}, please verify your email by clicking the link below: ${verificationLink}`,
+        html: `<p>Hello ${user.firstname},</p><p>Please verify your email by clicking the link below:</p><a href="${verificationLink}">${verificationLink}</a>`,
+      });
+  
+      res.status(200).json({ message: 'Verification link resent successfully. Please check your email.' });
+    } catch (error) {
+      console.error('Error resending verification email:', error);
+      res.status(500).json({ message: 'Failed to resend verification email.' });
+    }
+  });
+  
   
 
 
