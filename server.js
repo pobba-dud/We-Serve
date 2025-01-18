@@ -366,7 +366,7 @@ console.log('Current server time:', new Date().toISOString());
   app.post('/loginJS', async (req, res) => {
     const { email, password } = req.body;
   
-    if (!email || !password) {
+    if (!email.toLowerCase() || !password) {
       return res.status(400).send('Email and password are required.');
     }
   
@@ -394,7 +394,7 @@ console.log('Current server time:', new Date().toISOString());
           const verificationLink = `https://we-serve.net/verify-email?token=${user.verification_token}`;
           
           // Send the verification email
-          await sendVerificationEmail(user.email, verificationLink);
+          await sendVerificationEmail(user.email.toLowerCase(), verificationLink);
   
           return res.status(400).send('Account not verified. A verification link has been sent to your email.');
         } else {
