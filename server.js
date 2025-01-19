@@ -300,7 +300,16 @@ app.get('/test-db', async (req, res) => {
       if (emailCheck.rows.length > 0) {
         return res.status(400).json({ message: 'Email is already in use' });
       }
-  
+      const phoneCheck = await pool.query('SELECT * FROM users WHERE phonenumber = $1', [phonenumber]);
+      if(phonenumber!=""){
+      if (phoneCheck.rows.length > 0) {
+        return res.status(400).json({ message: 'Phone Number is already in use' });
+      }
+    }
+      if (password.length < 8) {
+        return res.status(400).json({ message: 'Password must be at least 8 characters long.' });
+      }
+    
       // Generate a hashed password
       const hashedPassword = await bcrypt.hash(password, 10);
   
