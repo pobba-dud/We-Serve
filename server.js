@@ -260,7 +260,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Route to handle form submission
-app.post('/send-feedback', (req, res) => {
+app.post('/send-feedback',limiter, (req, res) => {
   const { name, email, feedback } = req.body;
 
   const mailOptions = {
@@ -282,7 +282,7 @@ app.post('/send-feedback', (req, res) => {
 });
 
   
-  app.post('/registerJS', async (req, res) => {
+  app.post('/registerJS', limiter, async (req, res) => {
     const { firstname, lastname, gender, birthday, email, phonenumber, password, isorg, org_name } = req.body;
   
     try {
@@ -401,7 +401,7 @@ app.post('/send-feedback', (req, res) => {
   
   
   
-  app.post('/loginJS', async (req, res) => {
+  app.post('/loginJS',limiter, async (req, res) => {
     const { email, password } = req.body;
   
     if (!email.toLowerCase() || !password) {
@@ -469,7 +469,7 @@ app.post('/send-feedback', (req, res) => {
   
   
   
-  app.post('/profileJS', authenticate, async (req, res) => {
+  app.post('/profileJS',limiter, authenticate, async (req, res) => {
     try {
       const user = await pool.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
       if (user.rowCount === 0) {
@@ -482,12 +482,12 @@ app.post('/send-feedback', (req, res) => {
     }
   });
 
-  app.post('/logout', (req, res) => {
+  app.post('/logout',limiter, (req, res) => {
     res.clearCookie('auth_token', { httpOnly: true,sameSite: 'Strict'});
     res.redirect("/login")
   });
 
-  app.post('/api/events', async (req, res) => {
+  app.post('/api/events',limiter, async (req, res) => {
     try {
         const { name, event_date, time_range, address, description, org_name } = req.body;
 
@@ -518,7 +518,7 @@ app.post('/send-feedback', (req, res) => {
     }
 });
 
-  app.post('/updateProfile', authenticate, async (req, res) => {
+  app.post('/updateProfile',limiter, authenticate, async (req, res) => {
     try {
       const userId = req.user.id; // Get user ID from the authenticated user
       const { name,last, email, gender, phonenumber } = req.body; // Extract incoming fields
@@ -568,7 +568,7 @@ app.post('/send-feedback', (req, res) => {
       res.status(500).json({ success: false, message: 'Internal server error.' });
     }
   });
-  app.post('/change-password', authenticate, async (req, res) => {
+  app.post('/change-password',limiter, authenticate, async (req, res) => {
     const { currentPassword, newPassword } = req.body;
 
     if (!currentPassword || !newPassword) {
@@ -605,7 +605,7 @@ app.post('/send-feedback', (req, res) => {
 });
 
 
-  app.post('/resend-verification', async (req, res) => {
+  app.post('/resend-verification',limiter, async (req, res) => {
     const { email } = req.body; // Get email from request body
   
     try {
