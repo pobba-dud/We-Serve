@@ -12,7 +12,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { isEmpty } = require('lodash');
 const crypto = require('crypto');
-const SECRET_KEY = process.env.SECRET_KEY || 'fallback_secret';
+const SECRET_KEY = process.env.SECRET_KEY;
+
+if (!SECRET_KEY) {
+  throw new Error("Environment variable SECRET_KEY must be set.");
+}
 
 // Use cookie-parser middleware
 app.use(cookieParser());
