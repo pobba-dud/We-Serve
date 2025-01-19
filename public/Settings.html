@@ -72,32 +72,83 @@
         }
     </style>
 </head>
-<body>
-    <div class="settings-container">
-        <h1>Settings</h1>
-        <form id="settings-form">
-            <div class="setting-item">
-                <label for="theme">Theme:</label>
-                <select id="theme" name="theme" onchange="setTheme(this.value)">
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                </select>
-            </div>
-            <div class="setting-item">
-                <label for="notifications">Email Notifications: <input type="checkbox" id="notifications" name="notifications" checked></label> 
-            </div>
-            <div class="setting-item">
-                <label for="password">Current Password:</label>
-                <input type="password" id="password" name="password">
-            </div>
-            <div class="setting-item">
-                <label for="new-password">New Password:</label>
-                <input type="password" id="new-password" name="new-password">
-            </div>
-            <button type="submit">Save Settings</button>
-        </form>
-    </div>
-    <script>
+<div class="settings-container">
+    <h1>Preferences</h1>
+    <form id="settings-form">
+        <div class="setting-item">
+            <label for="theme">Theme:</label>
+            <select id="theme" name="theme" onchange="setTheme(this.value)">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+        </div>
+        <div class="setting-item">
+            <label for="notifications">Email Notifications: <input type="checkbox" id="notifications" name="notifications" checked></label> 
+        </div>
+        <h1>Change Password</h1>
+        <label><b>Update Password</b></label>
+        <div class="setting-item">
+            <label for="password">Current Password:</label>
+            <input type="password" id="current-password" name="current-password">
+        </div>
+        <div class="setting-item">
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" name="new-password" minlength="8">
+        </div>
+        <div class="setting-item">
+            <label for="confirm-new-password">Confirm New Password:</label>
+            <input type="password" id="confirm-new-password" name="confirm-new-password" minlength="8">
+        </div>
+        <button type="submit">Save Settings</button>
+    </form>
+</div>
+
+<script>
+document.getElementById('settings-form').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const currentPassword = document.getElementById('current-password').value.trim();
+    const newPassword = document.getElementById('new-password').value.trim();
+    const confirmNewPassword = document.getElementById('confirm-new-password').value.trim();
+    const theme = document.getElementById('theme').value;
+
+    // Handle password change if the current password is provided
+    if (currentPassword) {
+        if (!newPassword || newPassword !== confirmNewPassword) {
+            alert("New passwords do not match or are empty.");
+            return; // Stop if password validation fails
+        }
+
+        try {
+            const passwordResponse = await fetch('/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ currentPassword, newPassword }),
+            });
+
+            const passwordResult = await passwordResponse.json();
+            if (passwordResponse.ok) {
+                alert(passwordResult.message); // Success message
+            } else {
+                alert(passwordResult.message || 'Error changing password.');
+                return; // Stop further execution if password change fails
+            }
+        } catch (error) {
+            console.error('Error changing password:', error);
+            alert('An error occurred while changing the password. Please try again.');
+            return; // Stop further execution
+        }
+    }
+
+    // Save theme and other settings
+    localStorage.setItem('theme', theme);
+    alert('Settings saved successfully.');
+    window.location.href = 'account';
+});
+
+
             // Load the theme from local storage when the page loads
         window.onload = function() {
             const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
@@ -105,12 +156,7 @@
             document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
         };
     
-        // Add event listener for form submission
-        document.getElementById('settings-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-            // Here you can add any code to save settings if needed
-            window.location.href = 'account'; // Redirect to the login page
-        });
+
     </script>
 </body>
 </html>

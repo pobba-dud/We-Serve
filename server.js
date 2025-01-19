@@ -551,6 +551,42 @@ app.get('/test-db', async (req, res) => {
       res.status(500).json({ success: false, message: 'Internal server error.' });
     }
   });
+  app.post('/change-password', authenticate, async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+        return res.status(400).json({ message: 'Current password and new password are required.' });
+    }
+
+    try {
+        const userId = req.user.id; // Assumes `authenticate` middleware attaches user ID
+        const userResult = await pool.query('SELECT password FROM users WHERE id = $1', [userId]);
+
+        if (userResult.rowCount === 0) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        const hashedPassword = userResult.rows[0].password;
+
+        // Verify the current password
+        const isPasswordValid = await bcrypt.compare(currentPassword, hashedPassword);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: 'Current password is incorrect.' });
+        }
+
+        // Hash the new password
+        const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Update the password in the database
+        await pool.query('UPDATE users SET password = $1 WHERE id = $2', [newHashedPassword, userId]);
+
+        res.status(200).json({ message: 'Password updated successfully.' });
+    } catch (err) {
+        console.error('Error updating password:', err);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
 
   app.post('/resend-verification', async (req, res) => {
     const { email } = req.body; // Get email from request body
