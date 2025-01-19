@@ -13,6 +13,7 @@ const jwt = require('jsonwebtoken');
 const { isEmpty } = require('lodash');
 const crypto = require('crypto');
 const SECRET_KEY = process.env.SECRET_KEY;
+const sanitizeHtml = require('sanitize-html');
 
 if (!SECRET_KEY) {
   throw new Error("Environment variable SECRET_KEY must be set.");
@@ -346,15 +347,22 @@ app.get('/test-db', async (req, res) => {
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
         [firstname, lastname, gender, birthday, email.toLowerCase(), phonenumber, hashedPassword, isorg, org_name, false, verificationToken, verificationTokenExpires]
       );
-  
+      
       // Send a verification email
+      
       const verificationLink = `https://www.we-serve.net/verify-email?token=${verificationToken}`;
+      const sanitizedFirstname = sanitizeHtml(firstname, { allowedTags: [], allowedAttributes: {} });
+      const sanitizedVerificationLink = encodeURI(verificationLink);
       await transporter.sendMail({
         from: '"We-Serve" <your-email@we-serve.net>',
         to: email,
         subject: 'Email Verification - We-Serve',
-        text: `Hello ${firstname}, please verify your email by clicking the link below: ${verificationLink}`,
-        html: `<p>Hello ${firstname},</p><p>Please verify your email by clicking the link below:</p><a href="${verificationLink}">${verificationLink}</a>`,
+        text: `Hello ${sanitizedFirstname}, please verify your email by clicking the link below: ${sanitizedVerificationLink}`,
+        html: `
+          <p>Hello ${sanitizedFirstname},</p>
+          <p>Please verify your email by clicking the link below:</p>
+          <a href="${sanitizedVerificationLink}">${sanitizedVerificationLink}</a>
+        `,
       });
   
       res.status(201).json({ message: 'User registered successfully. Please check your email for verification.' });
