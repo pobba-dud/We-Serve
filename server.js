@@ -15,6 +15,8 @@ const crypto = require('crypto');
 const SECRET_KEY = process.env.SECRET_KEY;
 const sanitizeHtml = require('sanitize-html');
 const csrf = require('csurf'); 
+const rateLimit = require('express-rate-limit');
+
 
 if (!SECRET_KEY) {
   throw new Error("Environment variable SECRET_KEY must be set.");
@@ -22,6 +24,13 @@ if (!SECRET_KEY) {
 const csrfProtection = csrf({ cookie: true }); 
 // Use cookie-parser middleware
 app.use(cookieParser());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `windowMs`
+  message: 'Too many requests from this IP, please try again later.',
+  headers: true, // Send rate limit info in the response headers
+});
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Heroku provides this variable automatically
@@ -171,74 +180,74 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Redirects
-app.get('/index', (req, res) => {
+app.get('/index',limiter, (req, res) => {
     console.log('Redirecting /index.html to /');
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/dashboard',checkAuthentication, (req, res) => {
+app.get('/dashboard',limiter, checkAuthentication, (req, res) => {
     console.log('Redirecting /Dashboard.html to /');
     res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
-app.get('/calendar',checkAuthentication, (req, res) => {
+app.get('/calendar',limiter, checkAuthentication, (req, res) => {
     console.log('Redirecting /Calendar.html to /');
     res.sendFile(path.join(__dirname, 'public', 'Calendar.html'));
 });
 
-app.get('/hours',checkAuthentication, (req, res) => {
+app.get('/hours',limiter, checkAuthentication, (req, res) => {
     console.log('Redirecting /HourLog.html to /');
     res.sendFile(path.join(__dirname, 'public', 'hourLog.html'));
 });
-app.get('/discover',checkAuthentication, (req, res) => {
+app.get('/discover',limiter, checkAuthentication, (req, res) => {
     console.log('Redirecting /DiscoverPage.html to /');
     res.sendFile(path.join(__dirname, 'public', 'DiscoverPage.html'));
 });
 
-app.get('/proof',checkAuthentication, (req, res) => {
+app.get('/proof',limiter, checkAuthentication, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Proof.html'));
 });
 
-app.get('/feedback', (req, res) => {
+app.get('/feedback',limiter,  (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Feedback.html'));
 });
 
-app.get('/account',checkAuthentication, (req, res) => {
+app.get('/account',limiter, checkAuthentication, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'account.html'));
 });
 
-app.get('/signup', (req, res) => {
+app.get('/signup',limiter,  (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'SignUp.html'));
 });
 
-app.get('/organizationEvent', checkIsOrg, (req, res) => {
+app.get('/organizationEvent',limiter,  checkIsOrg, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'organizationEvent.html'));
 });
-app.get('/test',checkAuthentication, (req, res) => {
+app.get('/test',limiter, checkAuthentication, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'test.html'));
 });
-app.get('/donation', (req, res) => {
+app.get('/donation',limiter,  (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Donation.html'));
 });
-app.get('/login', (req, res) => {
+app.get('/login',limiter,  (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
-app.get('/settings',checkAuthentication, (req, res) => {
+app.get('/settings',limiter, checkAuthentication, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'Settings.html'));
 });
-app.get('/devHub',checkAdmin, (req, res) => {
+app.get('/devHub',limiter, checkAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'devHub.html'));
 });
-app.get('/Calendartest',checkAdmin, (req, res) => {
+app.get('/Calendartest',limiter, checkAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'Calendartest.html'));
 });
-app.get('/template',checkAdmin, (req, res) => {
+app.get('/template',limiter, checkAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'template.html'));
 });
-app.get('/test',checkAdmin, (req, res) => {
+app.get('/test',limiter, checkAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'test.html'));
 });
-app.get('/RemakeCalendar',checkAdmin, (req, res) => {
+app.get('/RemakeCalendar',limiter, checkAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'RemakeCalendar.html'));
 });
 // Nodemailer configuration
@@ -271,30 +280,6 @@ app.post('/send-feedback', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 });
-
-
-app.get('/test-db', async (req, res) => {
-    try {
-      const result = await pool.query('SELECT NOW()');
-      res.json({
-        message: 'Database connection successful!',
-        serverTime: result.rows[0].now,
-      });
-    } catch (err) {
-      console.error('Database connection error:', err);
-      res.status(500).json({ error: 'Failed to connect to the database.' });
-    }
-  });
-  
-  app.get('/test-env', (req, res) => {
-    res.json({
-      message: 'Environment variables loaded!',
-      databaseUrl: process.env.DATABASE_URL ? 'Loaded' : 'Not loaded',
-    });
-  });
-  
-  
-
 
   
   app.post('/registerJS', async (req, res) => {
@@ -374,7 +359,7 @@ app.get('/test-db', async (req, res) => {
   });
   
   // Verification endpoint
-  app.get('/verify-email', async (req, res) => {
+  app.get('/verify-email',limiter,  async (req, res) => {
     const token = req.query.token;  // Get the token from query string
   
     if (!token) {
@@ -693,7 +678,7 @@ app.get('/test-db', async (req, res) => {
 
 
   // Fallback route
-app.get('*', (req, res) => {
+app.get('*',limiter, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html')); // Redirects to homepage for undefined routes
 });
 // Make the app listen on the port provided by Heroku
