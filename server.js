@@ -14,11 +14,12 @@ const { isEmpty } = require('lodash');
 const crypto = require('crypto');
 const SECRET_KEY = process.env.SECRET_KEY;
 const sanitizeHtml = require('sanitize-html');
+const csrf = require('csurf'); 
 
 if (!SECRET_KEY) {
   throw new Error("Environment variable SECRET_KEY must be set.");
 }
-
+const csrfProtection = csrf({ cookie: true }); 
 // Use cookie-parser middleware
 app.use(cookieParser());
 
@@ -40,8 +41,8 @@ app.use((req, res, next) => {
 });
 
 // Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Define the authenticate middleware
 
