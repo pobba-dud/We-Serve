@@ -309,6 +309,25 @@ app.get('/test-db', async (req, res) => {
       if (password.length < 8) {
         return res.status(400).json({ message: 'Password must be at least 8 characters long.' });
       }
+
+      const today = new Date();
+    const userBirthday = new Date(birthday);
+
+      if (isNaN(userBirthday)) {
+        return res.status(400).json({ message: 'Invalid birthday format. Please use YYYY-MM-DD.' });
+      }
+  
+      const ageInMilliseconds = today - userBirthday;
+      const ageInYears = ageInMilliseconds / (365.25 * 24 * 60 * 60 * 1000);
+  
+      if (ageInYears < 13) {
+        return res.status(400).json({ message: 'You must be at least 13 years old to register.' });
+      }
+  
+      if (ageInYears > 100) {
+        return res.status(400).json({ message: 'You must be younger than 100 years old to register.' });
+      }
+  
     
       // Generate a hashed password
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -518,7 +537,7 @@ app.get('/test-db', async (req, res) => {
       // Merge provided data with existing data
       const updatedData = {
         firstname: name || existingData.firstname,
-        lastname: last || existingData.lastnamem,
+        lastname: last || existingData.lastname,
         email: email || existingData.email,
         gender: gender || existingData.gender,
         phonenumber: phonenumber || existingData.phonenumber,
