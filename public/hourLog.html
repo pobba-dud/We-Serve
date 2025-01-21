@@ -107,6 +107,26 @@ body.dark-mode .leaderboard h4 {
       color: rgb(57, 94, 112);
   }
 
+  @media (max-width: 1200px) {
+  .leaderboard {
+    width: 45%; /* Adjusts width for medium-sized screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .leaderboard {
+    width: 90%; /* Adjusts width for smaller tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .leaderboard-container {
+    width: 100%; /* Full width for small mobile screens */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+  }
+}
+
   footer {
       margin-top: 20px;
       padding: 20px;
