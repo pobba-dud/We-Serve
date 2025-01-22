@@ -50,4 +50,6 @@ to test with node.js:
 
 Creating events in calendar causes dultipcate events in discover one being undefinted 
 
-Download from this link so you don't have to do the command lines everytime --> https://nodejs.org/en/download
+Download from this link so you 
+don't have to do the command lines everytime
+for node js --> https://nodejs.org/en/download
