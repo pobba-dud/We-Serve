@@ -6,7 +6,31 @@
   <title>Login</title>
   <link rel="stylesheet" href="SignUpStyle.css">
 </head>
+<style>
+  .modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.close-btn {
+  float: right;
+  cursor: pointer;
+}
+</style>
 <body>
   <h1>Login</h1>
 
@@ -25,25 +49,48 @@
           <input type="password" id="password" name="password" autocomplete="current-password" required>
         </div>
 
-        <br>
 
         <div class="form-group">
           <button type="submit">Login</button>
-          
         </div>
-
       </form>
-      
+    </div>
   <div class= "container" style="display: block-inline;">
     <div class="form-group">
       <h3>Dont have an account?</h3>
-    <br>
       <button style="display: inline;"><a href="SignUp" style="text-decoration: none;color: black;">Click here</a></button>
+      <h3>Forgot your password?</h3>
+      <button onclick="openForgotPasswordModal()">Click Here</button>
     </div>
   </div>
-  <br>
   
+  
+  <!-- Forgot Password Modal -->
+<div id="forgotPasswordModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeForgotPasswordModal()">&times;</span>
+    <h2>Forgot Your Password?</h2>
+    <form id="forgotPasswordForm">
+      <label for="forgotEmail">Enter your email address:</label>
+      <input type="email" id="forgotEmail" name="email" placeholder="Enter your email" required>
+      <button type="submit">Send Reset Link</button>
+    </form>
   </div>
+</div>
+<!-- Reset Password Modal -->
+<div id="resetPasswordModal" class="modal">
+  <div class="modal-content">
+    <h2>Reset Your Password</h2>
+    <form id="resetPasswordForm">
+      <input type="hidden" id="resetToken" name="token">
+      <label for="newPassword">New Password:</label>
+      <input type="password" id="newPassword" name="newPassword" required>
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
+      <button type="submit">Reset Password</button>
+    </form>
+  </div>
+</div>
   <div style="text-align: center; padding: 1%; margin: 3%;">
   <p style="display: inline;" id="message"></p>
 </div>
@@ -67,6 +114,68 @@
         window.location.href = '/dashboard'; // Redirect after login
       }
     });
+    function openForgotPasswordModal() {
+  document.getElementById("forgotPasswordModal").style.display = "block";
+}
+
+function closeForgotPasswordModal() {
+  document.getElementById("forgotPasswordModal").style.display = "none";
+}
+
+document.getElementById("forgotPasswordForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("forgotEmail").value;
+
+  try {
+    const response = await fetch('/forgot-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert("Password reset link has been sent to your email.");
+      closeForgotPasswordModal();
+    } else {
+      alert(result.message || "Error sending reset link.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Failed to send reset link. Please try again.");
+  }
+});
+document.getElementById("resetPasswordForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const token = document.getElementById("resetToken").value;
+  const newPassword = document.getElementById("newPassword").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (newPassword !== confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
+
+  try {
+    const response = await fetch('/reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, newPassword }),
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert("Password reset successfully!");
+      window.location.href = '/login';
+    } else {
+      alert(result.message || "Error resetting password.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Failed to reset password. Please try again.");
+  }
+});
+
   </script>
 </body>
 </html>

@@ -264,7 +264,7 @@ app.post('/send-feedback',limiter, (req, res) => {
   const { name, email, feedback } = req.body;
 
   const mailOptions = {
-      from: email,
+      from: '"We-Serve" <your-email@we-serve.net>',
       to: 'ajbd47@gmail.com', // Your email where you want to receive feedback
       subject: `(WeServe) Feedback from ${name}`,
       text: 'You have recieved feedback from '+ name + " and their feedback is: \n" + '"'+feedback+'"',
@@ -656,9 +656,9 @@ app.post('/send-feedback',limiter, (req, res) => {
   });
   async function sendVerificationEmail(email, verificationLink) {
       const mailOptions = {
-      from: 'your-email@gmail.com',
+      from: '"We-Serve" <your-email@we-serve.net>',
       to: email,
-      subject: 'Email Verification for We Serve',
+      subject: 'Email Verification - We-Serve',
       text: `Please verify your email by clicking on the following link: ${verificationLink}`,
       html: `<p>Please verify your email by clicking on the following link:</p>
              <p><a href="${verificationLink}">${verificationLink}</a></p>`,
@@ -673,8 +673,77 @@ app.post('/send-feedback',limiter, (req, res) => {
     }
   }
     
+  app.post('/forgot-password', async (req, res) => {
+    const { email } = req.body;
   
+    try {
+      const user = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
+      if (user.rows.length === 0) {
+        return res.status(404).json({ message: "User with this email does not exist." });
+      }
   
+      const resetToken = crypto.randomBytes(32).toString('hex');
+      const tokenExpires = new Date(Date.now() + 3600 * 1000).toISOString();
+  
+      await pool.query(
+        'UPDATE users SET reset_token = $1, reset_token_expires = $2 WHERE email = $3',
+        [resetToken, tokenExpires, email]
+      );
+  
+      const resetLink = `https://www.we-serve.net/reset-password?token=${resetToken}`;
+      await transporter.sendMail({
+        from: '"We-Serve" <your-email@we-serve.net>',
+        to: email,
+        subject: "Password Reset Request",
+        text: `Hello, please reset your password using the link below: ${resetLink}`,
+        html: `<p>Hello,</p><p>Reset your password by clicking <a href="${resetLink}">here</a>.</p>`,
+      });
+  
+      res.status(200).json({ message: "Password reset link sent successfully." });
+    } catch (error) {
+      console.error("Error handling forgot password:", error);
+      res.status(500).json({ message: "Error processing request." });
+    }
+  });
+  
+  app.post('/reset-passwordJS', async (req, res) => {
+    const { token, newPassword } = req.body;
+
+    try {
+      const user = await pool.query(
+        'SELECT * FROM users WHERE reset_token = $1 AND reset_token_expires > NOW()',
+        [token]
+      );
+  
+      if (user.rows.length === 0) {
+        return res.status(400).json({ message: "Invalid or expired token." });
+      }
+  
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await pool.query(
+        'UPDATE users SET password = $1, reset_token = NULL, reset_token_expires = NULL WHERE id = $2',
+        [hashedPassword, user.rows[0].id]
+      );
+  
+      res.status(200).json({ message: "Password reset successfully." });
+    } catch (error) {
+      console.error("Error resetting password:", error);
+      res.status(500).json({ message: "Error processing request." });
+    }
+  });
+  
+  app.get('/reset-password', (req, res) => {
+  const { token } = req.query;
+
+  // Check if the token is present in the URL
+  if (!token) {
+    return res.status(400).send('Invalid or missing reset token.');
+  }
+
+  // Serve the reset password HTML page
+  res.sendFile(path.join(__dirname, 'public', 'reset-password.html'));
+});
+
 
 
   // Fallback route
