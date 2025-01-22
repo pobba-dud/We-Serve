@@ -49,3 +49,5 @@ to test with node.js:
      -and bam buttons and links work again
 
 Creating events in calendar causes dultipcate events in discover one being undefinted 
+
+Download from this link so you don't have to do the command lines everytime --> https://nodejs.org/en/download
