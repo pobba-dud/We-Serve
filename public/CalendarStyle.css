@@ -14,6 +14,9 @@ html {
 nav a {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif 
 }
+p {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
   /* dark mode */
 body.dark-mode {
   background-color: #121212; /* Dark background */
@@ -83,8 +86,9 @@ body.dark-mode #deleteEventModal{
     display: flex;
     color: #247BA0;
   }
-  #weekdays div {
+  #weekdays div { 
     width: 100px;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
     padding: 10px;
   }
   #calendar {
@@ -102,6 +106,7 @@ body.dark-mode #deleteEventModal{
     background-color:#e8f4fa;
   }
   .day {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
     width: 100px;
     height: 100px;
     padding-left: 1%;

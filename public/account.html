@@ -32,6 +32,7 @@ li {
   color: #9bd1e5;
 }
 li a:link, li a:visited{
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   padding-top: 18px;
   padding-bottom: 18px;
   padding-right: 18px;
@@ -74,6 +75,10 @@ body {
     background-color: #e8f5ff;
     font-family: Arial;
     overflow: hidden;
+}
+body.dark-mode .div.modal-content {
+    background-color: #313131;
+    color: white;
 }
 
 /* dark mode */
@@ -229,15 +234,13 @@ body.dark-mode .schedule-btn:hover {
 }
 
 .url a {
-  background-color: #e8f5ff;
-    border-radius: 28px;
-    color: #000;
+    color: #818181;
+    display: block;
     font-size: 20px;
-    margin: 10px 0px;
+    margin: 10px 0;
     padding: 6px 8px;
-    width: 70%;
+    text-decoration: none;
 }
-
 
 /* Basic link styling */
 .hoverable-link {
@@ -249,6 +252,7 @@ body.dark-mode .schedule-btn:hover {
   border-radius: 5px;
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 button {
   color: #818181;
     display: block;
@@ -263,8 +267,9 @@ button {
   color: #0056b3; /* Darker text color for contrast */
   transform: scale(1.05); /* Slightly enlarges the link */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
-/* Optional focus state for accessibility */
 }
+
+/* Optional focus state for accessibility */
 .hoverable-link:focus {
   outline: none;
   box-shadow: 0 0 4px 2px rgba(0, 123, 255, 0.5); /* Adds a glowing effect */
@@ -367,13 +372,13 @@ html{overflow:scroll;}
   border-radius: 10px;
   width: 50%;
 }
-.modal-content.dark-mode {
-  background-color: #414141;
-}
+
 .modal-content h2 {
   margin-left: 20%;
 }
-
+.modal-content p {
+  margin-left: 40%;
+}
  /* Style for the input box */
  input[type="text"] {
       width: 75%; /* Adjust the width as needed */
