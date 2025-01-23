@@ -53,3 +53,13 @@ Creating events in calendar causes dultipcate events in discover one being undef
 Download from this link so you 
 don't have to do the command lines everytime
 for node js --> https://nodejs.org/en/download
+
+|
+|
+V
+
+Steps after downloading Nodejs!
+1. type "node -v" in the terminal.
+2. type "node server.js" for your port to turn on.
+3. It should have "Server is running on port 3000" pop up
+     in the terminal telling you it's running.
