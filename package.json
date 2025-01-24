@@ -17,6 +17,7 @@
     "lodash": "^4.17.21",
     "nodemailer": "^6.9.15",
     "pg": "^8.13.1",
-    "sanitize-html": "^2.14.0"
+    "sanitize-html": "^2.14.0",
+    "dompurify": "^3.2.3"
   }
 }
