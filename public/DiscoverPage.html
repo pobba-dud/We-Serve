@@ -18,8 +18,7 @@
       <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
   </div>
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
-  <script>
+ <script>
     function loadEvents() {
         const events = JSON.parse(localStorage.getItem('events')) || [];
         const eventListContainer = document.querySelector('.discover-events-list');
@@ -32,10 +31,10 @@
             const eventDiv = document.createElement('div');
             eventDiv.classList.add('event');
             eventDiv.innerHTML = `
-                <div class="event-title">${DOMPurify.sanitize(event.title)}</div>
-                <div class="event-date">${DOMPurify.sanitize(event.date)}</div>
-                <div class="event-location">${DOMPurify.sanitize(event.location)}</div>
-                <div class="event-description">${DOMPurify.sanitize(event.description)}</div>
+                <div class="event-title">${event.title}</div>
+                <div class="event-date">${event.date}</div>
+                <div class="event-location">${event.location}</div>
+                <div class="event-description">${(event.description)}</div>
             `;
             eventListContainer.appendChild(eventDiv);
         });
