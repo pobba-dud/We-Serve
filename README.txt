@@ -65,3 +65,4 @@ Steps after downloading Nodejs!
      in the terminal telling you it's running.
 
      maybe merging isnt that bad
+     test
