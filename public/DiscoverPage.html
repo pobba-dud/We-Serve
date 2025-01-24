@@ -64,8 +64,9 @@
             const moduleDiv = document.createElement('div');
             moduleDiv.classList.add('module');
             moduleDiv.style.float = 'left';
+            const sanitizedImage = DOMPurify.sanitize(event.image || 'Images/Insert-Image-Here.png');
             moduleDiv.innerHTML = `
-                <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${sanitizedTitle}">
+                <img src="${sanitizedImage}" alt="${sanitizedTitle}">
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal${index}" data-bs-backdrop="static">Get Involved</button>
                 <h3 style="margin-left: 20%;"><u>${sanitizedTitle}</u></h3>
                 <h3 style="margin-left: 20%;"><b>${sanitizedOrganizer}</b></h3>
@@ -94,14 +95,14 @@
                                     <!-- Event Image -->
                                     <div class="col-md-4">
                                         <div class="event-image">
-                                            <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${sanitizedTitle}" style="width: 100%;">
+                                            <img src="${sanitizedImage}" alt="${sanitizedTitle}" style="width: 100%;">
                                         </div>
                                         <div class="event-info">
                                             <h5>${sanitizedOrganizer}</h5><br>
                                             <span>${sanitizedTitle}</span><br>
-                                            <span>${event.location}</span><br>
-                                            <span>${event.date}</span><br>
-                                            <span>${event.time}</span>
+                                            <span>${DOMPurify.sanitize(event.location)}</span><br>
+                                            <span>${DOMPurify.sanitize(event.date)}</span><br>
+                                            <span>${DOMPurify.sanitize(event.time)}</span>
                                         </div>
                                     </div>
                                     <!-- Event Description -->
