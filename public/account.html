@@ -76,6 +76,11 @@ body {
     font-family: Arial;
     overflow: hidden;
 }
+body.dark-mode .modal-content {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+}
 body.dark-mode .div.modal-content {
     background-color: #313131;
     color: white;
@@ -471,7 +476,8 @@ html{overflow:scroll;}
     }
 
 
-.close-btn {
+    .close-btn {
+  color: black;
   float: right;
   font-size: 24px;
   font-weight: bold;
@@ -482,7 +488,9 @@ html{overflow:scroll;}
   color: red;
 }
 
-
+body.dark-mode .close-btn {
+  color: white;
+}
 
 /* End */
   </style>
