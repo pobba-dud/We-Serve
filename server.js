@@ -24,6 +24,7 @@ if (!SECRET_KEY) {
 const csrfProtection = csrf({ cookie: true }); 
 // Use cookie-parser middleware
 app.use(cookieParser());
+app.use(csrfProtection);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
