@@ -18,7 +18,7 @@
       <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
   </div>
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
+  <script> import DOMPurify from 'dompurify';</script>
   <script>
     function loadEvents() {
         const events = JSON.parse(localStorage.getItem('events')) || [];
