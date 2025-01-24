@@ -18,7 +18,7 @@
       <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
   </div>
   
-  <script> import DOMPurify from 'dompurify';</script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.4/dist/purify.min.js"></script>
   <script>
     function loadEvents() {
         const events = JSON.parse(localStorage.getItem('events')) || [];
@@ -55,15 +55,20 @@
         moduleContainer.innerHTML = '';
 
         events.forEach((event, index) => {
+            // Sanitize event data
+            const sanitizedTitle = DOMPurify.sanitize(event.title);
+            const sanitizedOrganizer = DOMPurify.sanitize(event.organizer || 'Unknown Organizer');
+            const sanitizedDescription = DOMPurify.sanitize(event.description);
+
             // Create a module for the event
             const moduleDiv = document.createElement('div');
             moduleDiv.classList.add('module');
             moduleDiv.style.float = 'left';
             moduleDiv.innerHTML = `
-                <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${event.title}">
+                <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${sanitizedTitle}">
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal${index}" data-bs-backdrop="static">Get Involved</button>
-                <h3 style="margin-left: 20%;"><u>${event.title}</u></h3>
-                <h3 style="margin-left: 20%;"><b>${event.organizer || 'Unknown Organizer'}</b></h3>
+                <h3 style="margin-left: 20%;"><u>${sanitizedTitle}</u></h3>
+                <h3 style="margin-left: 20%;"><b>${sanitizedOrganizer}</b></h3>
             `;
 
             // Append module to container
@@ -80,7 +85,7 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="eventModalLabel${index}">${event.title}</h5>
+                            <h5 class="modal-title" id="eventModalLabel${index}">${sanitizedTitle}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -89,11 +94,11 @@
                                     <!-- Event Image -->
                                     <div class="col-md-4">
                                         <div class="event-image">
-                                            <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${event.title}" style="width: 100%;">
+                                            <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${sanitizedTitle}" style="width: 100%;">
                                         </div>
                                         <div class="event-info">
-                                            <h5>${event.organizer || 'Unknown Organizer'}</h5><br>
-                                            <span>${event.title}</span><br>
+                                            <h5>${sanitizedOrganizer}</h5><br>
+                                            <span>${sanitizedTitle}</span><br>
                                             <span>${event.location}</span><br>
                                             <span>${event.date}</span><br>
                                             <span>${event.time}</span>
@@ -101,12 +106,12 @@
                                     </div>
                                     <!-- Event Description -->
                                     <div class="col-md-8">
-                                        <h5>${event.title}</h5>
+                                        <h5>${sanitizedTitle}</h5>
                                         <p class="event-details">
-                                            ${event.description}
+                                            ${sanitizedDescription}
                                         </p>
                                         <a href="Calendar.html">
-                                            <button class="btn btn-primary" onclick="remoteCreateEvent('${event.date}', '${event.title}', '${event.time}')">Get Involved</button>
+                                            <button class="btn btn-primary" onclick="remoteCreateEvent('${event.date}', '${sanitizedTitle}', '${event.time}')">Get Involved</button>
                                         </a>
                                     </div>
                                 </div>
