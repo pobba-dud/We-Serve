@@ -673,7 +673,7 @@ app.post('/send-feedback',limiter, (req, res) => {
     }
   }
     
-  app.post('/forgot-password', async (req, res) => {
+  app.post('/forgot-password',limiter, async (req, res) => {
     const { email } = req.body;
   
     try {
@@ -706,7 +706,7 @@ app.post('/send-feedback',limiter, (req, res) => {
     }
   });
   
-  app.post('/reset-passwordJS', async (req, res) => {
+  app.post('/reset-passwordJS',limiter, async (req, res) => {
     const { token, newPassword } = req.body;
 
     try {
@@ -732,7 +732,7 @@ app.post('/send-feedback',limiter, (req, res) => {
     }
   });
   
-  app.get('/reset-password', (req, res) => {
+  app.get('/reset-password',limiter, (req, res) => {
   const { token } = req.query;
 
   // Check if the token is present in the URL
