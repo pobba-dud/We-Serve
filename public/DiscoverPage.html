@@ -65,12 +65,32 @@
             moduleDiv.classList.add('module');
             moduleDiv.style.float = 'left';
             const sanitizedImage = DOMPurify.sanitize(event.image || 'Images/Insert-Image-Here.png');
-            moduleDiv.innerHTML = `
-                <img src="${sanitizedImage}" alt="${sanitizedTitle}">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal${index}" data-bs-backdrop="static">Get Involved</button>
-                <h3 style="margin-left: 20%;"><u>${sanitizedTitle}</u></h3>
-                <h3 style="margin-left: 20%;"><b>${sanitizedOrganizer}</b></h3>
-            `;
+            const img = document.createElement('img');
+            img.src = sanitizedImage;
+            img.alt = sanitizedTitle;
+            moduleDiv.appendChild(img);
+
+            const button = document.createElement('button');
+            button.className = 'btn btn-primary';
+            button.setAttribute('data-bs-toggle', 'modal');
+            button.setAttribute('data-bs-target', `#eventModal${index}`);
+            button.setAttribute('data-bs-backdrop', 'static');
+            button.textContent = 'Get Involved';
+            moduleDiv.appendChild(button);
+
+            const titleH3 = document.createElement('h3');
+            titleH3.style.marginLeft = '20%';
+            const titleU = document.createElement('u');
+            titleU.textContent = sanitizedTitle;
+            titleH3.appendChild(titleU);
+            moduleDiv.appendChild(titleH3);
+
+            const organizerH3 = document.createElement('h3');
+            organizerH3.style.marginLeft = '20%';
+            const organizerB = document.createElement('b');
+            organizerB.textContent = sanitizedOrganizer;
+            organizerH3.appendChild(organizerB);
+            moduleDiv.appendChild(organizerH3);
 
             // Append module to container
             moduleContainer.appendChild(moduleDiv);
@@ -82,45 +102,116 @@
             modalDiv.tabIndex = -1;
             modalDiv.setAttribute('aria-labelledby', `eventModalLabel${index}`);
             modalDiv.setAttribute('aria-hidden', 'true');
-            modalDiv.innerHTML = `
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="eventModalLabel${index}">${sanitizedTitle}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="row">
-                                    <!-- Event Image -->
-                                    <div class="col-md-4">
-                                        <div class="event-image">
-                                            <img src="${sanitizedImage}" alt="${sanitizedTitle}" style="width: 100%;">
-                                        </div>
-                                        <div class="event-info">
-                                            <h5>${sanitizedOrganizer}</h5><br>
-                                            <span>${sanitizedTitle}</span><br>
-                                            <span>${DOMPurify.sanitize(event.location)}</span><br>
-                                            <span>${DOMPurify.sanitize(event.date)}</span><br>
-                                            <span>${DOMPurify.sanitize(event.time)}</span>
-                                        </div>
-                                    </div>
-                                    <!-- Event Description -->
-                                    <div class="col-md-8">
-                                        <h5>${sanitizedTitle}</h5>
-                                        <p class="event-details">
-                                            ${sanitizedDescription}
-                                        </p>
-                                        <a href="Calendar.html">
-                                            <button class="btn btn-primary" onclick="remoteCreateEvent('${event.date}', '${sanitizedTitle}', '${event.time}')">Get Involved</button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            const modalDialog = document.createElement('div');
+            modalDialog.className = 'modal-dialog modal-lg';
+
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+
+            const modalHeader = document.createElement('div');
+            modalHeader.className = 'modal-header';
+
+            const modalTitle = document.createElement('h5');
+            modalTitle.className = 'modal-title';
+            modalTitle.id = `eventModalLabel${index}`;
+            modalTitle.textContent = sanitizedTitle;
+            modalHeader.appendChild(modalTitle);
+
+            const closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'btn-close';
+            closeButton.setAttribute('data-bs-dismiss', 'modal');
+            closeButton.setAttribute('aria-label', 'Close');
+            modalHeader.appendChild(closeButton);
+
+            modalContent.appendChild(modalHeader);
+
+            const modalBody = document.createElement('div');
+            modalBody.className = 'modal-body';
+
+            const container = document.createElement('div');
+            container.className = 'container';
+
+            const row = document.createElement('div');
+            row.className = 'row';
+
+            const colMd4 = document.createElement('div');
+            colMd4.className = 'col-md-4';
+
+            const eventImageDiv = document.createElement('div');
+            eventImageDiv.className = 'event-image';
+
+            const eventImage = document.createElement('img');
+            eventImage.src = sanitizedImage;
+            eventImage.alt = sanitizedTitle;
+            eventImage.style.width = '100%';
+            eventImageDiv.appendChild(eventImage);
+
+            colMd4.appendChild(eventImageDiv);
+
+            const eventInfoDiv = document.createElement('div');
+            eventInfoDiv.className = 'event-info';
+
+            const organizerH5 = document.createElement('h5');
+            organizerH5.textContent = sanitizedOrganizer;
+            eventInfoDiv.appendChild(organizerH5);
+
+            const titleSpan = document.createElement('span');
+            titleSpan.textContent = sanitizedTitle;
+            eventInfoDiv.appendChild(titleSpan);
+
+            const locationSpan = document.createElement('span');
+            locationSpan.textContent = DOMPurify.sanitize(event.location);
+            eventInfoDiv.appendChild(locationSpan);
+
+            const dateSpan = document.createElement('span');
+            dateSpan.textContent = DOMPurify.sanitize(event.date);
+            eventInfoDiv.appendChild(dateSpan);
+
+            const timeSpan = document.createElement('span');
+            timeSpan.textContent = DOMPurify.sanitize(event.time);
+            eventInfoDiv.appendChild(timeSpan);
+
+            colMd4.appendChild(eventInfoDiv);
+
+            row.appendChild(colMd4);
+
+            const colMd8 = document.createElement('div');
+            colMd8.className = 'col-md-8';
+
+            const titleH5 = document.createElement('h5');
+            titleH5.textContent = sanitizedTitle;
+            colMd8.appendChild(titleH5);
+
+            const eventDetailsP = document.createElement('p');
+            eventDetailsP.className = 'event-details';
+            eventDetailsP.textContent = sanitizedDescription;
+            colMd8.appendChild(eventDetailsP);
+
+            const calendarLink = document.createElement('a');
+            calendarLink.href = 'Calendar.html';
+
+            const getInvolvedButton = document.createElement('button');
+            getInvolvedButton.className = 'btn btn-primary';
+            getInvolvedButton.textContent = 'Get Involved';
+            getInvolvedButton.onclick = function() {
+                remoteCreateEvent(event.date, sanitizedTitle, event.time);
+            };
+            calendarLink.appendChild(getInvolvedButton);
+
+            colMd8.appendChild(calendarLink);
+
+            row.appendChild(colMd8);
+
+            container.appendChild(row);
+
+            modalBody.appendChild(container);
+
+            modalContent.appendChild(modalBody);
+
+            modalDialog.appendChild(modalContent);
+
+            modalDiv.appendChild(modalDialog);
 
             // Append modal to body
             document.body.appendChild(modalDiv);
