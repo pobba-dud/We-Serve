@@ -149,13 +149,23 @@ document.getElementById('settings-form').addEventListener('submit', async functi
 });
 
 
-            // Load the theme from local storage when the page loads
-        window.onload = function() {
-            const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-            setTheme(savedTheme);
-            document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-        };
-    
+    // Function to toggle between light and dark themes
+    function setTheme(theme) {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+        localStorage.setItem('theme', theme); // Save the theme preference
+    }
+
+    // Load the theme from local storage when the page loads
+    window.onload = function () {
+        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+        setTheme(savedTheme);
+        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+    };
+
 
     </script>
 </body>
