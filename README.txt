@@ -63,3 +63,5 @@ Steps after downloading Nodejs!
 2. type "node server.js" for your port to turn on.
 3. It should have "Server is running on port 3000" pop up
      in the terminal telling you it's running.
+
+     maybe merging isnt that bad
