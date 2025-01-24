@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 //code for dashboard.html
 // Function to dynamically update the numbers next to the day names
 function updateDayNumbers() { // start of updateDayNumbers() function
@@ -76,7 +77,9 @@ function mapEventsToDays() { // start of mapEventsToDays() function
 
       // Update the table cell with the event information
       if (tableRow && tableRow.cells[1]) {
-        tableRow.cells[1].innerHTML = `<u>${event.title}</u><br>${event.time}`;
+        const sanitizedTitle = DOMPurify.sanitize(event.title);
+        const sanitizedTime = DOMPurify.sanitize(event.time);
+        tableRow.cells[1].innerHTML = `<u>${sanitizedTitle}</u><br>${sanitizedTime}`;
       }
     }
   });
@@ -86,8 +89,6 @@ function mapEventsToDays() { // start of mapEventsToDays() function
 document.addEventListener("DOMContentLoaded", () => {
   mapEventsToDays();
 });
-
-document.addEventListener("DOMContentLoaded", mapEventsToDays);
 
 mapEventsToDays();
 
