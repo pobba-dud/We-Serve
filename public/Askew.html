@@ -10,12 +10,13 @@
       padding-top: 5%;
       font-family: 'Comic Sans MS', sans-serif;
       margin: 20px;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+      background: linear-gradient(135deg, #DC143C, #ad1634, #691727, #3f111a);
       background-size: 400% 400%;
       animation: gradientBG 8s ease infinite;
       transition: transform 0.3s ease;
       color: #2c2c54;
       text-align: center;
+      cursor: url('images/duck.png'), auto;
     }
 
     /* Animation for Background Gradient */
@@ -33,7 +34,7 @@
     /* Funky Text Styling */
     h1 {
       font-size: 3rem;
-      text-shadow: 3px 3px #ff6b6b, -3px -3px #1dd1a1;
+      text-shadow: 3px 3px #f5a3a3, -3px -3px #fafd21;
       animation: wiggle 2s infinite;
     }
 
@@ -92,6 +93,24 @@
       background: #81ecec;
       box-shadow: 0 0 10px #00cec9, 0 0 20px #74b9ff;
     }
+
+    .duck {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: url('duck.png') no-repeat center center;
+      background-size: contain;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
   </style>
 </head>
 <body>
@@ -121,6 +140,32 @@
         body.classList.remove("askew");
       }
     });
+
+      // Function to create a falling duck
+      function createDuck() {
+      const duck = document.createElement('div');
+      duck.classList.add('duck');
+
+      // Set random horizontal position
+      const startX = Math.random() * window.innerWidth;
+      duck.style.left = `${startX}px`;
+
+      // Set random fall duration
+      const fallDuration = Math.random() * 5 + 3; // Between 3 and 8 seconds
+      duck.style.animationDuration = `${fallDuration}s`;
+
+      // Add the duck to the body
+      document.body.appendChild(duck);
+
+      // Remove the duck after it falls out of view
+      duck.addEventListener('animationend', () => {
+        duck.remove();
+      });
+    }
+
+    // Create ducks continuously
+    setInterval(createDuck, 500); // One duck every 500ms
+
   </script>
 </body>
 </html>
