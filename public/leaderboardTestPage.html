@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard Button with Modal</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f6f9;
+            padding-right: 20px;
+        }
+
+        .leaderboard-btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4a90e2;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .leaderboard-btn:hover {
+            background-color: #3a78c2;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        .close-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            border: none;
+            background-color: #d9534f;
+            color: white;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="leaderboard-btn" onclick="openModal()">Leaderboard</button>
+
+    <!-- Modal -->
+    <div id="leaderboardModal" class="modal">
+        <div class="modal-content">
+            <h2>Leaderboard</h2>
+            <p>Top players will be displayed here.</p>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById("leaderboardModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("leaderboardModal").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
