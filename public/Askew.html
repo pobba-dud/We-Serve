@@ -17,6 +17,14 @@
       color: #2c2c54;
       text-align: center;
       cursor: url('images/duck.png'), auto;
+      overflow: hidden;
+    }
+
+    .falling-image {
+      position: absolute;
+      width: 50px; /* Adjust size as needed */
+      height: 50px;
+      animation: fall linear infinite;
     }
 
     /* Animation for Background Gradient */
@@ -24,6 +32,15 @@
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fall {
+      from {
+        transform: translateY(-100px);
+      }
+      to {
+        transform: translateY(100vh);
+      }
     }
 
     /* Askew Effect */
@@ -94,23 +111,7 @@
       box-shadow: 0 0 10px #00cec9, 0 0 20px #74b9ff;
     }
 
-    .duck {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background: url('duck.png') no-repeat center center;
-      background-size: contain;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-100px) rotate(0deg);
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-      }
-    }
+    
   </style>
 </head>
 <body>
@@ -141,31 +142,37 @@
       }
     });
 
-      // Function to create a falling duck
-      function createDuck() {
-      const duck = document.createElement('div');
-      duck.classList.add('duck');
 
-      // Set random horizontal position
+     // Function to create a falling image
+    function createFallingImage() {
+      const image = document.createElement("img");
+      image.src = "public/rubberduck.png"; // Replace with your image URL
+      image.className = "falling-image";
+
+      // Random horizontal position
       const startX = Math.random() * window.innerWidth;
-      duck.style.left = `${startX}px`;
+      image.style.left = startX + "px";
 
-      // Set random fall duration
-      const fallDuration = Math.random() * 5 + 3; // Between 3 and 8 seconds
-      duck.style.animationDuration = `${fallDuration}s`;
+      // Random animation duration
+      const duration = Math.random() * 3 + 2; // Between 2 and 5 seconds
+      image.style.animationDuration = duration + "s";
 
-      // Add the duck to the body
-      document.body.appendChild(duck);
+      // Append image to the body
+      document.body.appendChild(image);
 
-      // Remove the duck after it falls out of view
-      duck.addEventListener('animationend', () => {
-        duck.remove();
-      });
+      // Remove the image after animation ends
+      setTimeout(() => {
+        image.remove();
+      }, duration * 1000);
     }
 
-    // Create ducks continuously
-    setInterval(createDuck, 500); // One duck every 500ms
+    // Function to generate falling images continuously
+    function startFallingImages() {
+      setInterval(createFallingImage, 500); // Create an image every 500ms
+    }
 
+    // Start the animation
+    startFallingImages();
   </script>
 </body>
 </html>

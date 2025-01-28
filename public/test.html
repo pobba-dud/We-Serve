@@ -1,48 +1,66 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>WeServe</title>
-    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="script.js"></script>
-  </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Falling Images</title>
   <style>
-    nav a {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
-}
-footer {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
-}
+    body {
+      margin: 0;
+      overflow: hidden;
+      height: 100vh;
+      background-color: #f0f8ff;
+    }
+
+    .falling-image {
+      position: absolute;
+      width: 50px; /* Adjust size as needed */
+      height: 50px;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      from {
+        transform: translateY(-100px);
+      }
+      to {
+        transform: translateY(100vh);
+      }
+    }
   </style>
-  
-  </body>
-  <nav>
-    <ul id="NavUl">
-      <a href="index"><img src="Images/logo.png"></a>
-      <li><a href="dashboard"><b>Homepage</b></a></li>
-      <li><a href="discover"><b>Discover</b></a></li>
-      <li><a href="hours"><b>Hour log</b></a></li>
-      <li><a href="calendar"><b>Calendar</b></a></li>
-      <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
-    </ul>
-  </nav>
+</head>
+<body>
+  <script>
+    // Function to create a falling image
+    function createFallingImage() {
+      const image = document.createElement("img");
+      image.src = "duck.png"; // Replace with your image URL
+      image.className = "falling-image";
 
+      // Random horizontal position
+      const startX = Math.random() * window.innerWidth;
+      image.style.left = startX + "px";
 
+      // Random animation duration
+      const duration = Math.random() * 3 + 2; // Between 2 and 5 seconds
+      image.style.animationDuration = duration + "s";
 
-  <footer>
-    <p>&copy; WeServe</p>
-    <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
-      <ul>
-        <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Example Link 1</a></li>
-        <li><a href="devHub">Dev</a></li>
-        <li><a href="feedback">Feedback Form</a></li>
-        <li><a href="#">Example Link 2</a></li>
-      </ul>
-  </div>
-  </footer>
+      // Append image to the body
+      document.body.appendChild(image);
+
+      // Remove the image after animation ends
+      setTimeout(() => {
+        image.remove();
+      }, duration * 1000);
+    }
+
+    // Function to generate falling images continuously
+    function startFallingImages() {
+      setInterval(createFallingImage, 500); // Create an image every 500ms
+    }
+
+    // Start the animation
+    startFallingImages();
+  </script>
 </body>
 </html>
