@@ -209,25 +209,37 @@
   <p style="display: inline;" id="message"></p>
 </div>
   <script>
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+    document.getElementById('loginForm').addEventListener('submit', async function (event) {
+  event.preventDefault(); // Prevent default form submission
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+  const submitButton = document.querySelector('button[type="submit"]');
+  submitButton.disabled = true; // Disable the button to prevent multiple requests
 
-      const response = await fetch('/loginJS', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
 
-      const message = await response.text();
-      document.getElementById('message').textContent = message;
-
-      if (response.ok) {
-        window.location.href = '/dashboard'; // Redirect after login
-      }
+  try {
+    const response = await fetch('/loginJS', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
     });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert('Login successful!');
+      window.location.href = '/dashboard';
+    } else {
+      alert(result.message || 'Login failed.');
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+    alert('An error occurred.');
+  } finally {
+    submitButton.disabled = false; // Re-enable the button after the request is done
+  }
+});
     function openForgotPasswordModal() {
   document.getElementById("forgotPasswordModal").style.display = "block";
 }

@@ -102,7 +102,7 @@ async function checkIsOrg(req, res, next) {
     const decoded = jwt.verify(token, SECRET_KEY); // Replace 'SECRET_KEY' with your actual key
     
     // Fetch user data from the database using the decoded email
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [decoded.email.toLowerCase()]);
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [decoded.id]);
     
     if (result.rowCount === 0) {
       return res.redirect('/'); // Handle token errors
@@ -125,34 +125,29 @@ async function checkIsOrg(req, res, next) {
     }
 }
 
-
-
-
-
-
 async function checkAdmin(req, res, next) {
   const token = req.cookies.auth_token; // Get the token from the cookie
 
   if (!token) {
     return res.redirect('/'); // Handle token errors
-    }
+  }
 
   try {
     // Verify and decode the token
     const decoded = jwt.verify(token, SECRET_KEY); // Replace 'SECRET_KEY' with your actual key
-    
-    // Fetch user data from the database using the decoded email
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [decoded.email.toLowerCase()]);
-    
+
+    // Fetch user data from the database using the decoded user ID
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [decoded.id]);
+
     if (result.rowCount === 0) {
       return res.redirect('/'); // Handle token errors
-      }
+    }
 
     const user = result.rows[0];
 
-    // Check if the user is part of an organization
+    // Check if the user is an admin
     if (!user.isadmin) {
-      return res.redirect('/'); // Handle token errors
+      return res.redirect('/'); // Handle non-admin users
     }
 
     // Attach user info to the request
@@ -162,8 +157,9 @@ async function checkAdmin(req, res, next) {
   } catch (error) {
     console.error('Error verifying token or fetching user from DB:', error);
     return res.redirect('/'); // Handle token errors
-    }
+  }
 }
+
 
 
 
@@ -260,26 +256,87 @@ const transporter = nodemailer.createTransport({
 });
 
 // Route to handle form submission
-app.post('/send-feedback',limiter, (req, res) => {
-  const { name, email, feedback } = req.body;
+const emailRateLimits = {}; // Key: email, Value: timestamp of the last request
+app.post('/send-feedback', (req, res) => {
+  const { email, name, feedback } = req.body;
 
+  // Ensure all required fields are provided
+  if (!email || !name || !feedback) {
+    return res.status(400).json({ error: 'All fields are required.' });
+  }
+
+  // Get the current timestamp
+  const currentTime = Date.now();
+
+  // Check if the email exists in the rate-limiting object
+  if (emailRateLimits[email] && currentTime - emailRateLimits[email] < 10 * 1000) {
+    return res.status(429).json({ error: 'You can only send feedback once every 10 seconds.' });
+  }
+
+  // Update the timestamp for this email
+  emailRateLimits[email] = currentTime;
+
+  // Proceed to send the feedback email
   const mailOptions = {
-      from: '"We-Serve" <your-email@we-serve.net>',
-      to: 'ajbd47@gmail.com', // Your email where you want to receive feedback
-      subject: `(WeServe) Feedback from ${name}`,
-      text: 'You have recieved feedback from '+ name + " and their feedback is: \n" + '"'+feedback+'"',
+    from: '"We-Serve" <your-email@we-serve.net>',
+    to: 'ajbd47@gmail.com', // Your email where you want to receive feedback
+    subject: `(WeServe) Feedback from ${name}`,
+    text: `You have received feedback from ${name}, and their feedback is:\n"${feedback}"`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-        console.error('Error sending email:', error); // Log the error
-        return res.status(500).json({ error: 'Error sending email: ' + error.message }); // Send detailed error message
+      console.error('Error sending email:', error);
+      return res.status(500).json({ error: 'Error sending email. Please try again later.' });
     }
-    console.log('Email sent: ' + info.response);
-    res.redirect('/');
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.status(200).json({ message: 'Sent successfully.' });
+  });
 });
-});
+
+const forgotPasswordRateLimits = {}; // To track requests for forgot-password
+const resendVerificationRateLimits = {}; // To track requests for resend-verification
+
+// Rate limit duration in milliseconds (10 seconds)
+const RATE_LIMIT_DURATION = 10 * 1000;
+function isRateLimited(email, rateLimits) {
+  const currentTime = Date.now();
+
+  if (rateLimits[email] && currentTime - rateLimits[email] < RATE_LIMIT_DURATION) {
+    console.log(`Rate limit hit for ${email}. Time left: ${RATE_LIMIT_DURATION - (currentTime - rateLimits[email])}ms`);
+    return true;
+  }
+
+  // Update the timestamp for this email
+  rateLimits[email] = currentTime;
+  console.log(`Rate limit set for ${email} at ${new Date(currentTime).toISOString()}`);
+  return false;
+}
+
+setInterval(() => {
+  const currentTime = Date.now();
+
+  // Cleanup forgot-password rate limits
+  for (const email in forgotPasswordRateLimits) {
+    if (currentTime - forgotPasswordRateLimits[email] > 10 * 1000) {
+      delete forgotPasswordRateLimits[email];
+    }
+  }
+
+  // Cleanup resend-verification rate limits
+  for (const email in resendVerificationRateLimits) {
+    if (currentTime - resendVerificationRateLimits[email] > 10 * 1000) {
+      delete resendVerificationRateLimits[email];
+    }
+  }
+
+  // Cleanup email-related rate limits
+  for (const email in emailRateLimits) {
+    if (currentTime - emailRateLimits[email] > 10 * 1000) {
+      delete emailRateLimits[email];
+    }
+  }
+
+}, 60 * 1000);  // Cleanup every minute
 
   
   app.post('/registerJS', limiter, async (req, res) => {
@@ -399,73 +456,88 @@ app.post('/send-feedback',limiter, (req, res) => {
   
   
   
-  
-  
-  app.post('/loginJS',limiter, async (req, res) => {
-    const { email, password } = req.body;
-  
-    if (!email.toLowerCase() || !password) {
-      return res.status(400).send('Email and password are required.');
+  const loginAttempts = {};
+
+app.post('/loginJS', limiter, async (req, res) => {
+  const { email, password } = req.body;
+
+  // Check if the user has made a request in the last 5 seconds
+  const now = Date.now();
+  if (loginAttempts[email] && now - loginAttempts[email] < 8000) {
+    return res.status(429).json({ message: 'Too many login attempts. Please wait a moment.' });
+  }
+
+  // Record the time of this attempt
+  loginAttempts[email] = now;
+
+  // Check if email and password are provided
+  if (!email.toLowerCase() || !password) {
+    return res.status(400).json({ message: 'Email and password are required.' });
+  }
+
+  try {
+    // Query the database for the user
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
+
+    // If user doesn't exist, return a 401 response with a message
+    if (result.rowCount === 0) {
+      return res.status(401).json({ message: 'Invalid credentials.' });
     }
-  
-    try {
-      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
-      
-      if (result.rowCount === 0) {
-        return res.status(401).send('Invalid credentials.');
-      }
-  
-      const user = result.rows[0];
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-  
-      if (!isPasswordValid) {
-        return res.status(401).send('Invalid credentials.');
-      }
-  
-      // If the user is not verified, resend the verification email
-      if (!user.verified) {
-        console.log('User is not verified:', email);
-  
-        // Check if the user already has a verification token
-        if (user.verification_token && new Date(user.verification_token_expires) > new Date()) {
-          // Resend the email with the existing token
-          const verificationLink = `https://www.we-serve.net/verify-email?token=${user.verification_token}`;
-          
-          // Send the verification email
-          await sendVerificationEmail(user.email.toLowerCase(), verificationLink);
-  
-          return res.status(400).send('Account not verified. A verification link has been sent to your email. If you dont see it check your spam');
-        } else {
-          // If no valid token exists, generate a new token and set expiration
-          const crypto = require('crypto');
-          const newToken = crypto.randomBytes(32).toString('hex');
-          const expirationDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours expiration
-  
-          // Update the database with the new token and expiration time
-          await pool.query(
-            'UPDATE users SET verification_token = $1, verification_token_expires = $2 WHERE email = $3',
-            [newToken, expirationDate, user.email]
-          );
-  
-          // Send the new verification email with the updated token
-          const verificationLink = `https://we-serve.net/verify-email?token=${newToken}`;
-          await sendVerificationEmail(user.email, verificationLink);
-  
-          return res.status(400).send('Account not verified. A new verification link has been sent to your email.');
-        }
-      }
-  
-      // If user is verified, continue with login
-      const token = jwt.sign({ id: user.id, email: user.email.toLowerCase() }, SECRET_KEY, { expiresIn: '168h' });
-      res.cookie('auth_token', token, { httpOnly: true, sameSite: 'Strict' });
-      res.status(200).send('Login successful.');
-  
-    } catch (err) {
-      console.error('Error logging in:', err);
-      res.status(500).send('Error logging in.');
+
+    const user = result.rows[0];
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    // If password is incorrect, return a 401 response with a message
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid credentials.' });
     }
-  });
-  
+
+    // If the user is not verified, resend the verification email
+    if (!user.verified) {
+      console.log('User is not verified:', email);
+
+      // Check if the user already has a verification token
+      if (user.verification_token && new Date(user.verification_token_expires) > new Date()) {
+        // Resend the email with the existing token
+        const verificationLink = `https://www.we-serve.net/verify-email?token=${user.verification_token}`;
+
+        // Send the verification email
+        await sendVerificationEmail(user.email.toLowerCase(), verificationLink);
+
+        return res.status(400).json({ message: 'Account not verified. A verification link has been sent to your email. If you don\'t see it, check your spam folder.' });
+      } else {
+        // If no valid token exists, generate a new token and set expiration
+        const crypto = require('crypto');
+        const newToken = crypto.randomBytes(32).toString('hex');
+        const expirationDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours expiration
+
+        // Update the database with the new token and expiration time
+        await pool.query(
+          'UPDATE users SET verification_token = $1, verification_token_expires = $2 WHERE email = $3',
+          [newToken, expirationDate, user.email]
+        );
+
+        // Send the new verification email with the updated token
+        const verificationLink = `https://we-serve.net/verify-email?token=${newToken}`;
+        await sendVerificationEmail(user.email, verificationLink);
+
+        return res.status(400).json({ message: 'Account not verified. A new verification link has been sent to your email.' });
+      }
+    }
+
+    // If the user is verified, generate a JWT token for login
+    const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, { expiresIn: '7d' });
+    res.cookie('auth_token', token, { httpOnly: true });
+
+    // Send a successful login response
+    return res.status(200).json({ message: 'Login successful.' });
+
+  } catch (error) {
+    console.error('Error during login:', error);
+    return res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
   
   
   
@@ -605,55 +677,56 @@ app.post('/send-feedback',limiter, (req, res) => {
 });
 
 
-  app.post('/resend-verification',limiter, async (req, res) => {
-    const { email } = req.body; // Get email from request body
-  
-    try {
-      // Check if the user exists and is not verified
-      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
+app.post('/resend-verification', (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required.' });
+  }
+
+  if (isRateLimited(email, resendVerificationRateLimits)) {
+    return res.status(429).json({ error: 'Too many requests. Please wait 10 seconds before trying again.' });
+  }
+
+  pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()])
+    .then((result) => {
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'User with this email does not exist.' });
+      }
+
       const user = result.rows[0];
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
-      }
-  
-      // If the user is already verified, return a message
+
       if (user.verified) {
-        return res.status(400).json({ message: 'Your email is already verified.' });
+        return res.status(400).json({ message: 'User is already verified.' });
       }
-  
-      // If the user has an active verification token, resend the verification email
-      if (user.verification_token && new Date(user.verification_token_expires) > new Date()) {
-        const verificationLink = `https://we-serve.net/verify-email?token=${user.verification_token}`;
-        
-        // Send the verification email with the existing token
-        await sendVerificationEmail(email, verificationLink);
-  
-        return res.status(200).json({ message: 'Verification email resent.' });
-      }
-  
-      // If no active token exists, generate a new one
-      const crypto = require('crypto');
-      const newToken = crypto.randomBytes(32).toString('hex');
-      const expirationDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours expiration
-  
-      // Update the database with the new token and expiration time
-      await pool.query(
+
+      const verificationToken = crypto.randomBytes(32).toString('hex');
+      const tokenExpires = new Date(Date.now() + 3600 * 1000).toISOString();
+
+      return pool.query(
         'UPDATE users SET verification_token = $1, verification_token_expires = $2 WHERE email = $3',
-        [newToken, expirationDate, email]
-      );
-  
-      const verificationLink = `https://we-serve.net/verify-email?token=${newToken}`;
-      
-      // Send the verification email with the new token
-      await sendVerificationEmail(email, verificationLink);
-  
-      return res.status(200).json({ message: 'Verification email sent.' });
-    } catch (error) {
-      console.error('Error sending verification email:', error);
-      return res.status(500).json({ message: 'An error occurred. Please try again later.' });
-    }
-  });
+        [verificationToken, tokenExpires, email.toLowerCase()]
+      ).then(() => {
+        const verificationLink = `https://www.we-serve.net/verify-email?token=${verificationToken}`;
+        return transporter.sendMail({
+          from: '"We-Serve" <your-email@we-serve.net>',
+          to: email,
+          subject: 'Email Verification - We-Serve',
+          text: `Hello, please verify your email using the link below: ${verificationLink}`,
+          html: `<p>Hello,</p><p>Please verify your email by clicking <a href="${verificationLink}">here</a>.</p>`,
+        });
+      });
+    })
+    .then(() => {
+      console.log(`Verification email sent successfully to ${email}`);
+      res.status(200).json({ message: 'Verification email sent successfully.' });
+    })
+    .catch((error) => {
+      console.error('Error handling resend verification:', error);
+      res.status(500).json({ message: 'Error processing request.' });
+    });
+});
+
   async function sendVerificationEmail(email, verificationLink) {
       const mailOptions = {
       from: '"We-Serve" <your-email@we-serve.net>',
@@ -673,38 +746,44 @@ app.post('/send-feedback',limiter, (req, res) => {
     }
   }
     
-  app.post('/forgot-password',limiter, async (req, res) => {
-    const { email } = req.body;
-  
-    try {
-      const user = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
-      if (user.rows.length === 0) {
-        return res.status(404).json({ message: "User with this email does not exist." });
-      }
-  
-      const resetToken = crypto.randomBytes(32).toString('hex');
-      const tokenExpires = new Date(Date.now() + 3600 * 1000).toISOString();
-  
-      await pool.query(
-        'UPDATE users SET reset_token = $1, reset_token_expires = $2 WHERE email = $3',
-        [resetToken, tokenExpires, email]
-      );
-  
+  app.post('/forgot-password', (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required.' });
+  }
+
+  if (isRateLimited(email, forgotPasswordRateLimits)) {
+    return res.status(429).json({ error: 'Too many requests. Please wait before trying again.' });
+  }
+
+  // Proceed with forgot password logic
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  const tokenExpires = new Date(Date.now() + 3600 * 1000).toISOString();
+
+  pool.query(
+    'UPDATE users SET reset_token = $1, reset_token_expires = $2 WHERE email = $3',
+    [resetToken, tokenExpires, email.toLowerCase()]
+  )
+    .then(() => {
       const resetLink = `https://www.we-serve.net/reset-password?token=${resetToken}`;
-      await transporter.sendMail({
+      return transporter.sendMail({
         from: '"We-Serve" <your-email@we-serve.net>',
         to: email,
-        subject: "Password Reset Request",
+        subject: 'Password Reset Request',
         text: `Hello, please reset your password using the link below: ${resetLink}`,
         html: `<p>Hello,</p><p>Reset your password by clicking <a href="${resetLink}">here</a>.</p>`,
       });
-  
-      res.status(200).json({ message: "Password reset link sent successfully." });
-    } catch (error) {
-      console.error("Error handling forgot password:", error);
-      res.status(500).json({ message: "Error processing request." });
-    }
-  });
+    })
+    .then(() => {
+      res.status(200).json({ message: 'Password reset link sent successfully.' });
+    })
+    .catch((error) => {
+      console.error('Error handling forgot password:', error);
+      res.status(500).json({ message: 'Error processing request.' });
+    });
+});
+
   
   app.post('/reset-passwordJS',limiter, async (req, res) => {
     const { token, newPassword } = req.body;
