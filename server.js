@@ -246,6 +246,9 @@ app.get('/test',limiter, checkAdmin, (req, res) => {
 app.get('/RemakeCalendar',limiter, checkAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'RemakeCalendar.html'));
 });
+app.get('/askew',limiter,(req,res)=>{
+  res.sendFile(path.join(__dirname, 'public', 'Askew.html'));
+});
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Use your email service (e.g., Gmail)
