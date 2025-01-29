@@ -52,7 +52,7 @@ body.dark-mode .schedule-btn:hover {
 }
 
   .hourContainer {
-      margin-bottom: 20px;
+      margin-bottom: 5%;
   }
 
   .leaderboard-container {
@@ -85,19 +85,24 @@ body.dark-mode .leaderboard li {
   color: white;
 }
 
-body.dark-mode .leaderboard h4 {
+body.dark-mode .leaderboard h1 {
   color: white;
 }
 
-  .leaderboard h4 {
+  .leaderboard h1 {
       display: flex;
       flex-direction: row;
-      margin: 0 0 10px 0;
-      color: rgb(57, 94, 112);
+      margin: auto;
+  width: 50%;
+
+  padding: 10px;
+      color: rgb(26, 43, 51);
   }
 
   .leaderboard ol {
-      padding-left: 20px;
+    margin: auto;
+  width: 50%;
+  padding: 10px;
       display: flex;
       flex-direction: column;
   }
@@ -128,7 +133,7 @@ body.dark-mode .leaderboard h4 {
   li {
     font-size: larger;
   }
-  h4 {
+  h1 {
     font-size: larger;
   }
 
@@ -170,6 +175,30 @@ li a:link, li a:visited {
 li a:hover {
     background-color: rgb(57, 94, 112); /* Ensure this matches */
 }
+
+.buttonContainer{
+    width: 95%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.leaderboard-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #283A43;
+    border: none;
+    border-radius: 8px;      
+    cursor: pointer;      
+    transition: background 0.3s ease;
+        }
+
+        .leaderboard-btn:hover {
+    background-color: rgb(57, 94, 112);
+        }
+
 </style>
 
 </style>
@@ -210,6 +239,11 @@ li a:hover {
 </header>
 <!-- end of navbar -->
 
+<!-- Leaderboard button -->
+
+<div class="buttonContainer">
+<button class="leaderboard-btn" onclick="openModal()">Leaderboard</button>
+</div>
 <!-- Hour Log Content -->
 <div class="hourContainer">
   <div class="weekStreak">
@@ -233,11 +267,10 @@ li a:hover {
    <p id="loggedNum">0</p>
   </div>
 </div>
-
-<!-- Leaderboard Templates -->
+<div id="leaderboardModal" class="modal">
 <div class="leaderboard-container">
   <div class="leaderboard">
-    <h4>Total Hours</h4>
+    <h1>Total Hours</h1>
     <ol>
       <li>User A - 10 hours</li>
       <li>User B - 8 hours</li>
@@ -245,8 +278,9 @@ li a:hover {
     </ol>                                              
   </div>
 
+
   <div class="leaderboard">
-    <h4>Weekly Streak</h4>
+    <h1>Weekly Streak</h1>
     <ol>
       <li>User D - 69 weeks</li>
       <li>User E - 1 week</li>
@@ -255,7 +289,7 @@ li a:hover {
   </div>
 
   <div class="leaderboard">
-    <h4>Broke friend Leaderboard</h4>
+    <h1>Broke friend Leaderboard</h1>
     <ol>
       <li>User G - 16 dollars</li>
       <li>User H - 12 pesos</li>
@@ -263,6 +297,17 @@ li a:hover {
     </ol>
   </div>
 </div>
+</div>
+
+<script>
+   function openModal() {
+            document.getElementById("leaderboardModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("leaderboardModal").style.display = "none";
+        }
+</script>
 
 <footer>
   <p>&copy; WeServe</p>
