@@ -131,6 +131,38 @@
   <div class="star" style="top: 60%; left: 90%; animation-duration: 8s;"></div>
 
   <script>
+      // Array of duck fall sounds
+  const fallSounds = [
+      new Audio('sounds/duck_fall1.wav'),
+      new Audio('sounds/duck_fall2.wav'),
+      new Audio('sounds/duck_fall3.wav'),
+      new Audio('sounds/duck_fall4.wav'),
+      new Audio('sounds/duck_fall5.wav'),
+      new Audio('sounds/duck_fall6.wav'),
+      new Audio('sounds/duck_fall7.wav'),
+      new Audio('sounds/duck_fall8.wav')
+  ];
+
+  // Function to play a random fall sound
+  function playRandomFallSound() {
+      const randomIndex = Math.floor(Math.random() * fallSounds.length); // Pick a random sound
+      const sound = fallSounds[randomIndex];
+      
+      sound.currentTime = 0; // Reset in case of overlap
+      sound.play();
+  }
+
+  // Simulating a duck falling (call this when a duck hits the ground)
+  function duckFalls() {
+      console.log("Duck fell!");
+      playRandomFallSound();
+  }
+
+  // Example: Simulate ducks falling at random times
+  setTimeout(duckFalls, 2000);
+  setTimeout(duckFalls, 4000);
+  setTimeout(duckFalls, 6000);
+
     const searchBox = document.getElementById("searchBox");
     const body = document.body;
 
