@@ -119,6 +119,9 @@
     
   </style>
 </head>
+<audio id="quackSound" src="Sounds/duck_fall4.wav"></audio>
+<audio id="deleteSound" src="Sounds/duck_fall1.wav"></audio>
+
 <body>
   <h1>The Magic WORD</h1>
   <input type="text" id="searchBox" placeholder="Type here...">
@@ -189,6 +192,27 @@
 
     // Start the animation
     startFallingImages();
+
+  const quackSound = document.getElementById("quackSound");
+  const deleteSound = document.getElementById("deleteSound");
+
+  // Ensure sounds are allowed to play after user interaction
+  document.body.addEventListener("click", () => {
+    quackSound.play().catch(() => {}); 
+    deleteSound.play().catch(() => {}); 
+    quackSound.pause(); 
+    deleteSound.pause();
+  }, { once: true });
+
+  searchBox.addEventListener("keydown", (event) => {
+    if (event.key === "Backspace" || event.key === "Delete") {
+      deleteSound.currentTime = 0; // Restart sound
+      deleteSound.play();
+    } else {
+      quackSound.currentTime = 0;
+      quackSound.play();
+    }
+  });
   </script>
 </body>
 </html>
