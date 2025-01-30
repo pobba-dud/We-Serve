@@ -403,13 +403,15 @@ setInterval(() => {
         from: '"We-Serve" <your-email@we-serve.net>',
         to: email,
         subject: 'Email Verification - We-Serve',
-        text: `Hello ${sanitizedFirstname}, please verify your email by clicking the link below: ${sanitizedVerificationLink}`,
+        text: `Hello ${sanitizedFirstname},\n\nThank you for registering with We-Serve. Please verify your email by clicking the link below:\n${sanitizedVerificationLink}\n\nIf you did not create an account, please ignore this email.\n\nBest regards,\nWe-Serve Team`,
         html: `
-          <p>Hello ${sanitizedFirstname},</p>
-          <p>Please verify your email by clicking the link below:</p>
-          <a href="${sanitizedVerificationLink}">${sanitizedVerificationLink}</a>
+            <p>Hello ${sanitizedFirstname},</p>
+            <p>Thank you for registering with We-Serve. Please verify your email by clicking the link below:</p>
+            <p><a href="${sanitizedVerificationLink}" style="color: #007BFF; text-decoration: none;">Verify Email</a></p>
+            <p>If you did not create an account, please ignore this email.</p>
+            <p>Best regards,<br>We-Serve Team</p>
         `,
-      });
+    });
   
       res.status(201).json({ message: 'User registered successfully. Please check your email for verification.' });
     } catch (error) {
@@ -715,9 +717,15 @@ app.post('/resend-verification', (req, res) => {
           from: '"We-Serve" <your-email@we-serve.net>',
           to: email,
           subject: 'Email Verification - We-Serve',
-          text: `Hello, please verify your email using the link below: ${verificationLink}`,
-          html: `<p>Hello,</p><p>Please verify your email by clicking <a href="${verificationLink}">here</a>.</p>`,
-        });
+          text: `Hello,\n\nThank you for registering with We-Serve. Please verify your email by clicking the link below:\n${verificationLink}\n\nIf you did not create an account, please ignore this email.\n\nBest regards,\nWe-Serve Team`,
+          html: `
+              <p>Hello,</p>
+              <p>Thank you for registering with We-Serve. Please verify your email by clicking the link below:</p>
+              <p><a href="${verificationLink}" style="color: #007BFF; text-decoration: none;">Verify Email</a></p>
+              <p>If you did not create an account, please ignore this email.</p>
+              <p>Best regards,<br>We-Serve Team</p>
+          `,
+      });
       });
     })
     .then(() => {
@@ -731,14 +739,19 @@ app.post('/resend-verification', (req, res) => {
 });
 
   async function sendVerificationEmail(email, verificationLink) {
-      const mailOptions = {
+    const mailOptions = {
       from: '"We-Serve" <your-email@we-serve.net>',
       to: email,
       subject: 'Email Verification - We-Serve',
-      text: `Please verify your email by clicking on the following link: ${verificationLink}`,
-      html: `<p>Please verify your email by clicking on the following link:</p>
-             <p><a href="${verificationLink}">${verificationLink}</a></p>`,
-    };
+      text: `Hello,\n\nThank you for registering with We-Serve. Please verify your email by clicking the link below:\n${verificationLink}\n\nIf you did not create an account, please ignore this email.\n\nBest regards,\nWe-Serve Team`,
+      html: `
+          <p>Hello,</p>
+          <p>Thank you for registering with We-Serve. Please verify your email by clicking the link below:</p>
+          <p><a href="${verificationLink}" style="color: #007BFF; text-decoration: none;">Verify Email</a></p>
+          <p>If you did not create an account, please ignore this email.</p>
+          <p>Best regards,<br>We-Serve Team</p>
+      `,
+  };
   
     try {
       await transporter.sendMail(mailOptions);
@@ -773,10 +786,16 @@ app.post('/resend-verification', (req, res) => {
       return transporter.sendMail({
         from: '"We-Serve" <your-email@we-serve.net>',
         to: email,
-        subject: 'Password Reset Request',
-        text: `Hello, please reset your password using the link below: ${resetLink}`,
-        html: `<p>Hello,</p><p>Reset your password by clicking <a href="${resetLink}">here</a>.</p>`,
-      });
+        subject: 'Password Reset Request - We-Serve',
+        text: `Hello,\n\nYou have requested to reset your password. Please use the link below to proceed:\n${resetLink}\n\nIf you did not request this, please ignore this email.\n\nBest regards,\nWe-Serve Team`,
+        html: `
+            <p>Hello,</p>
+            <p>You have requested to reset your password. Please click the link below to proceed:</p>
+            <p><a href="${resetLink}" style="color: #007BFF; text-decoration: none;">Reset Password</a></p>
+            <p>If you did not request this, please ignore this email.</p>
+            <p>Best regards,<br>We-Serve Team</p>
+        `,
+    });
     })
     .then(() => {
       res.status(200).json({ message: 'Password reset link sent successfully.' });

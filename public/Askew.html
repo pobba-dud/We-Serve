@@ -119,6 +119,9 @@
     
   </style>
 </head>
+<audio id="quackSound" src="Sounds/duck_fall4.wav"></audio>
+<audio id="deleteSound" src="Sounds/duck_fall1.wav"></audio>
+
 <body>
   <h1>The Magic WORD</h1>
   <input type="text" id="searchBox" placeholder="Type here...">
@@ -190,37 +193,100 @@
       }
     });
 
+ // Array of duck quack sounds
+ const duckSounds = [
+    "duck_fall1.wav",
+    "duck_fall2.wav",
+    "duck_fall3.wav",
+    "duck_fall4.wav",
+    "duck_fall5.wav",
+    "duck_fall6.wav",
+    "duck_fall7.wav",
+    "duck_fall8.wav",
+    "duck_fall9.wav",
+    "duck_fall10.wav"
+  ];
 
-     // Function to create a falling image
-    function createFallingImage() {
-      const image = document.createElement("img");
-      image.src = "https://pngimg.com/d/rubber_duck_PNG32.png"; // Replace with your image URL
-      image.className = "falling-image";
+  // Function to play a random duck quack
+  // Preload all duck sounds
+const duckAudioElements = duckSounds.map(sound => {
+  const audio = new Audio(`Sounds/${sound}`);
+  audio.preload = "auto"; // Preload sound for smoother playback
+  return audio;
+});
 
-      // Random horizontal position
-      const startX = Math.random() * window.innerWidth;
-      image.style.left = startX + "px";
+// Ensure audio can play after user interaction
+document.body.addEventListener("click", () => {
+  duckAudioElements.forEach(audio => audio.play().catch(() => {}));
+  duckAudioElements.forEach(audio => audio.pause()); // Stop immediately to allow later playback
+}, { once: true });
 
-      // Random animation duration
-      const duration = Math.random() * 3 + 2; // Between 2 and 5 seconds
-      image.style.animationDuration = duration + "s";
+// Function to play a random duck quack
+function playRandomDuckSound() {
+  const randomIndex = Math.floor(Math.random() * duckAudioElements.length);
+  const audio = duckAudioElements[randomIndex];
 
-      // Append image to the body
-      document.body.appendChild(image);
+  audio.currentTime = 0; // Restart sound
+  audio.playbackRate = Math.random() * 0.5 + 0.75; // Random pitch between 0.75x and 1.25x
+  audio.play();
+}
 
-      // Remove the image after animation ends
-      setTimeout(() => {
-        image.remove();
-      }, duration * 1000);
+
+
+  // Function to create a falling duck image
+  function createFallingImage() {
+    const image = document.createElement("img");
+    image.src = "https://pngimg.com/d/rubber_duck_PNG32.png"; // Replace with your image URL
+    image.className = "falling-image";
+
+    // Random horizontal position
+    const startX = Math.random() * window.innerWidth;
+    image.style.left = startX + "px";
+
+    // Random animation duration
+    const duration = Math.random() * 3 + 2; // Between 2 and 5 seconds
+    image.style.animationDuration = duration + "s";
+
+    // Append image to the body
+    document.body.appendChild(image);
+
+    // Play a quack sound when a duck falls
+    playRandomDuckSound();
+
+    // Remove the image after animation ends
+    setTimeout(() => {
+      image.remove();
+    }, duration * 1000);
+  }
+
+  // Function to generate falling images continuously
+  function startFallingImages() {
+    setInterval(createFallingImage, 500); // Create an image every 500ms
+  }
+
+  // Start the animation
+  startFallingImages();
+
+  const quackSound = document.getElementById("quackSound");
+  const deleteSound = document.getElementById("deleteSound");
+
+  // Ensure sounds are allowed to play after user interaction
+  document.body.addEventListener("click", () => {
+    quackSound.play().catch(() => {}); 
+    deleteSound.play().catch(() => {}); 
+    quackSound.pause(); 
+    deleteSound.pause();
+  }, { once: true });
+
+  searchBox.addEventListener("keydown", (event) => {
+    if (event.key === "Backspace" || event.key === "Delete") {
+      deleteSound.currentTime = 0; // Restart sound
+      deleteSound.play();
+    } else {
+      quackSound.currentTime = 0;
+      quackSound.play();
     }
-
-    // Function to generate falling images continuously
-    function startFallingImages() {
-      setInterval(createFallingImage, 500); // Create an image every 500ms
-    }
-
-    // Start the animation
-    startFallingImages();
+  });
   </script>
 </body>
 </html>
