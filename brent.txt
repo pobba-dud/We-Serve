@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Hide the menu by default on larger screens */
+.menu, .container {
+  display: none;
+}
+
+/* Show the menu icon only on mobile */
+@media (max-width: 768px) {
+  .container {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+  }
+
+  .change .bar1 {
+    transform: translate(0, 11px) rotate(-45deg);
+  }
+
+  .change .bar2 {
+    opacity: 0;
+  }
+
+  .change .bar3 {
+    transform: translate(0, -11px) rotate(45deg);
+  }
+
+  .menu {
+    display: block;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin-top: 10px;
+    width: 150px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    visibility: hidden;
+  }
+
+  .menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+  }
+
+  .menu a:hover {
+    background-color: #ddd;
+  }
+
+  .menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+</style>
+</head>
+<body>
+
+<p>Click on the Menu Icon to transform it to "X" and show the menu:</p>
+
+<div class="container" onclick="toggleMenu(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+<div class="menu" id="dropdownMenu">
+  <a href="#">Home</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Contact</a>
+</div>
+
+<script>
+function toggleMenu(x) {
+  x.classList.toggle("change");
+  var menu = document.getElementById("dropdownMenu");
+  menu.classList.toggle("show");
+}
+</script>
+
+</body>
+</html>
