@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Start of CSS for Navbar */
+#NavUl {
+  font-family: ;
+  list-style-type: none;
+  margin: 0%;
+  padding: 0%;
+  overflow: hidden;
+  background-color: #283A43;
+  font-size: 20px;
+}
+
+li {
+  float: left;
+  display: flex;
+  align-content: center;
+  color: #9bd1e5;
+}
+
+li a:link, li a:visited {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 18px;
+  padding-left: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #9bd1e5;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+li a:hover {
+  color: #9bd1e5;
+  background-color: rgb(57, 94, 112);
+  border-radius: 5px;
+  display: inline-block;
+}
+
+#NavUl img {
+  float: left;
+  display: flex;
+  width: 57px;
+  height: auto;
+  margin-right: 5px;
+}
+/* End of Navbar CSS */
+
+/* Hide the menu by default on larger screens */
+.menu, .menuContainer {
+  display: none;
+}
+
+/* Show the navigation bar on larger screens */
+nav {
+  display: block;
+}
+
+/* Mobile styles: Hide the nav and show the menu icon */
+@media (max-width: 768px) {
+  nav {
+    display: none; /* Hide the main navigation */
+  }
+
+  .menuContainer {
+    display: inline-block; /* Show the mobile menu icon */
+    cursor: pointer;
+  }
+
+  .bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+  }
+
+  .change .bar1 {
+    transform: translate(0, 11px) rotate(-45deg);
+  }
+
+  .change .bar2 {
+    opacity: 0;
+  }
+
+  .change .bar3 {
+    transform: translate(0, -11px) rotate(45deg);
+  }
+
+  .menu {
+    display: block;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin-top: 10px;
+    width: 150px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    visibility: hidden;
+  }
+
+  .menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+  }
+
+  .menu a:hover {
+    background-color: #ddd;
+  }
+
+  .menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- Main Navigation -->
+<nav>
+  <ul id="NavUl">
+    <a href="index"><img src="Images/logo.png"></a>
+    <li><a href="dashboard"><b>Homepage</b></a></li>
+    <li><a href="discover"><b>Discover</b></a></li>
+    <li><a href="hours"><b>Hour log</b></a></li>
+    <li><a href="calendar"><b>Calendar</b></a></li>
+    <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+  </ul>
+</nav>
+
+<p>Click on the Menu Icon to transform it to "X" and show the menu:</p>
+
+<!-- Menu Icon -->
+<div class="menuContainer" onclick="toggleMenu(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+<div class="menu" id="dropdownMenu">
+  <a href="index" ><img src="Images/logo.png" style="padding-top:5%;width:50%; height:50%;"></a>
+  <a href="#">Home</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Contact</a>
+</div>
+
+
+<script>
+// Mobile menu start:
+
+function toggleMenu(x) {
+  x.classList.toggle("change");
+  var menu = document.getElementById("dropdownMenu");
+  menu.classList.toggle("show");
+}
+
+// Close the menu when clicking outside of it
+document.addEventListener("click", function (event) {
+  var menu = document.getElementById("dropdownMenu");
+  var menuButton = document.querySelector(".menuContainer");
+
+  // Check if the click is outside the menu and menu button
+  if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+    menu.classList.remove("show");
+    menuButton.classList.remove("change");
+  }
+});
+
+// Mobile menu end!
+</script>
+
+</body>
+</html>

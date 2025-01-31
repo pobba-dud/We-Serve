@@ -9,6 +9,33 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Dark mode JS -->
      <script>
+      // Mobile menu start:
+
+function toggleMenu(x) {
+  x.classList.toggle("change");
+  var menu = document.getElementById("dropdownMenu");
+  var nav = document.querySelector("nav"); // Select the main navigation
+
+  menu.classList.toggle("show");
+  nav.style.display = nav.style.display === "none" ? "block" : "none";
+}
+
+// Close the menu when clicking outside of it
+document.addEventListener("click", function (event) {
+  var menu = document.getElementById("dropdownMenu");
+  var menuButton = document.querySelector(".container");
+  var nav = document.querySelector("nav");
+
+  // Check if the click is outside the menu and menu button
+  if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+    menu.classList.remove("show");
+    menuButton.classList.remove("change");
+    nav.style.display = "block"; // Ensure nav reappears when menu is closed
+  }
+});
+
+// Mobile menu end!
+
       function setTheme(theme) {
           document.body.className = theme === 'dark' ? 'dark-mode' : '';
           localStorage.setItem('theme', theme); // Save the theme preference
@@ -46,6 +73,20 @@
     <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
   </ul>
 </nav>
+
+<div class="menuContainer" onclick="toggleMenu(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+<div class="menu" id="dropdownMenu">
+  <a href="#">Home</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Contact</a>
+</div>
+
   <div style="margin-bottom: 50px;"></div>
 </header>
 <!-- end of navbar -->
