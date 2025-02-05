@@ -15,7 +15,8 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const sanitizeHtml = require('sanitize-html');
 const csrf = require('csurf'); 
 const rateLimit = require('express-rate-limit');
-
+const Email = process.env.EMAIL;
+const Password = process.env.PASSWORD;
 
 if (!SECRET_KEY) {
   throw new Error("Environment variable SECRET_KEY must be set.");
@@ -248,12 +249,19 @@ app.get('/RemakeCalendar',limiter, checkAdmin, (req, res) => {
 app.get('/askew',limiter,(req,res)=>{
   res.sendFile(path.join(__dirname, 'public', 'Askew.html'));
 });
+app.get('/brent',limiter,(req,res)=>{
+  res.sendFile(path.join(__dirname, 'public', 'brent.html'));
+  });
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Server Error');
+});
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Use your email service (e.g., Gmail)
   auth: {
-      user: 'b89451436@gmail.com', // Your email
-      pass: 'xlya jnqx mnqv tenv' // Your email password or app password
+      user: 'Email', // Your email
+      pass: 'Password' // Your email password or app password
   }
 });
 
