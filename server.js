@@ -260,8 +260,8 @@ app.use((err, req, res, next) => {
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Use your email service (e.g., Gmail)
   auth: {
-      user: 'Email', // Your email
-      pass: 'Password' // Your email password or app password
+      user: Email, // Your email
+      pass: Password // Your email password or app password
   }
 });
 
