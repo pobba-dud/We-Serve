@@ -3,7 +3,6 @@ const router = express.Router();
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const path = require('path');
-const db = require('./db'); // Import the database utility
 const app = express();
 require("dotenv").config();
 const { Pool } = require('pg');
@@ -342,7 +341,7 @@ setInterval(() => {
 }, 60 * 1000);  // Cleanup every minute
 
   
-  app.post('/registerJS', limiter, async (req, res) => {
+app.post('/registerJS', limiter, csrfProtection, async (req, res) => {
     const { firstname, lastname, gender, birthday, email, phonenumber, password, isorg, org_name } = req.body;
   
     try {
@@ -532,7 +531,10 @@ app.post('/loginJS', limiter, async (req, res) => {
 
     // If the user is verified, generate a JWT token for login
     const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, { expiresIn: '7d' });
-    res.cookie('auth_token', token, { httpOnly: true });
+    res.cookie('auth_token', token, { httpOnly: true, 
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Lax'
+    });
 
     // Send a successful login response
     return res.status(200).json({ message: 'Login successful.' });
