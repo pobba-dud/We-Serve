@@ -682,7 +682,7 @@ app.post('/loginJS', limiter, async (req, res) => {
 });
 
 
-app.post('/resend-verification', (req, res) => {
+app.post('/resend-verification',limiter, (req, res) => {
   const { email } = req.body;
 
   if (!email) {
@@ -762,7 +762,7 @@ app.post('/resend-verification', (req, res) => {
     }
   }
     
-  app.post('/forgot-password', (req, res) => {
+  app.post('/forgot-password',limiter, (req, res) => {
   const { email } = req.body;
 
   if (!email) {
