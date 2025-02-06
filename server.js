@@ -235,6 +235,7 @@ app.get('/settings',limiter, checkAuthentication, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'Settings.html'));
 });
 app.get('/devHub',limiter, checkAdmin, (req, res) => {
+  console.log(`Admin page accessed by user ID: ${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   res.sendFile(path.join(__dirname, 'public', 'devHub.html'));
 });
 app.get('/Calendartest',limiter, checkAdmin, (req, res) => {
@@ -352,7 +353,7 @@ setInterval(() => {
 }, 60 * 1000);  // Cleanup every minute
 
   
-app.post('/registerJS', limiter, csrfProtection, async (req, res) => {
+app.post('/registerJS', limiter, async (req, res) => {
     const { firstname, lastname, gender, birthday, email, phonenumber, password, isorg, org_name } = req.body;
   
     try {
@@ -864,24 +865,28 @@ app.post('/resend-verification',limiter, (req, res) => {
 
 // Fetch all users
 app.get('/api/admin/users', checkAdmin, async (req, res) => {
+  console.log(`Users loaded by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   const result = await pool.query('SELECT * FROM users');
   res.json(result.rows);
 });
 
 // Fetch all events
 app.get('/api/admin/events', checkAdmin, async (req, res) => {
+  console.log(`Events loaded by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   const result = await pool.query('SELECT * FROM events');
   res.json(result.rows);
 });
 
 // Delete a user
 app.delete('/api/admin/users/:id', checkAdmin, async (req, res) => {
+  console.log(`User ${req.params.id} deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   await pool.query('DELETE FROM users WHERE id = $1', [req.params.id]);
   res.status(200).json({ message: 'User deleted successfully.' });
 });
 
 // Delete an event
 app.delete('/api/admin/events/:id', checkAdmin, async (req, res) => {
+  console.log(`Event ${req.params.id} deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   await pool.query('DELETE FROM events WHERE id = $1', [req.params.id]);
   res.status(200).json({ message: 'Event deleted successfully.' });
 });
