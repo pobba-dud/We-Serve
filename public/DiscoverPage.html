@@ -19,6 +19,12 @@
   </div>
   
  <script>
+   async function fetchEvents() {
+  const response = await fetch('/api/events/display');
+  const events = await response.json();
+  localStorage.setItem('events', JSON.stringify(events)); // Cache events in localStorage
+  loadEvents2(); // Render events
+}
     function loadEvents() {
         const events = JSON.parse(localStorage.getItem('events')) || [];
         const eventListContainer = document.querySelector('.discover-events-list');
@@ -46,92 +52,88 @@
             eventListContainer.style.display = 'none'; // Hide if no events
         }
     }
-    function loadEvents2() {
-        const events = JSON.parse(localStorage.getItem('events')) || [];
-        const moduleContainer = document.querySelector('.module-container');
+   
 
-        // Clear existing modules
-        moduleContainer.innerHTML = '';
+async function joinEvent(eventId) {
+  const response = await fetch('/api/events/join', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ eventId }),
+  });
+  if (response.ok) {
+    alert('Successfully joined the event!');
+  } else {
+    alert('Failed to join the event.');
+  }
+}
 
-        events.forEach((event, index) => {
-            // Create a module for the event
-            const moduleDiv = document.createElement('div');
-            moduleDiv.classList.add('module');
-            moduleDiv.style.float = 'left';
-            moduleDiv.innerHTML = `
-                <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${event.title}">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal${index}" data-bs-backdrop="static">Get Involved</button>
-                <h3 style="margin-left: 20%;"><u>${event.title}</u></h3>
-                <h3 style="margin-left: 20%;"><b>${event.organizer || 'Unknown Organizer'}</b></h3>
-            `;
+// Update the modal creation to include a "Join Event" button
+function loadEvents2() {
+  const events = JSON.parse(localStorage.getItem('events')) || [];
+  const moduleContainer = document.querySelector('.module-container');
+  moduleContainer.innerHTML = '';
 
-            // Append module to container
-            moduleContainer.appendChild(moduleDiv);
+  events.forEach((event, index) => {
+    const moduleDiv = document.createElement('div');
+    moduleDiv.classList.add('module');
+    moduleDiv.innerHTML = `
+      <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${event.title}">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal${index}" data-bs-backdrop="static">Get Involved</button>
+      <h3 style="margin-left: 20%;"><u>${event.title}</u></h3>
+      <h3 style="margin-left: 20%;"><b>${event.org_name || 'Unknown Organizer'}</b></h3>
+    `;
+    moduleContainer.appendChild(moduleDiv);
 
-            // Create a modal for the event
-            const modalDiv = document.createElement('div');
-            modalDiv.classList.add('modal');
-            modalDiv.id = `eventModal${index}`;
-            modalDiv.tabIndex = -1;
-            modalDiv.setAttribute('aria-labelledby', `eventModalLabel${index}`);
-            modalDiv.setAttribute('aria-hidden', 'true');
-            modalDiv.innerHTML = `
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="eventModalLabel${index}">${event.title}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="row">
-                                    <!-- Event Image -->
-                                    <div class="col-md-4">
-                                        <div class="event-image">
-                                            <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${event.title}" style="width: 100%;">
-                                        </div>
-                                        <div class="event-info">
-                                            <h5>${event.organizer || 'Unknown Organizer'}</h5><br>
-                                            <span>${event.title}</span><br>
-                                            <span>${event.location}</span><br>
-                                            <span>${event.date}</span><br>
-                                            <span>${event.time}</span>
-                                        </div>
-                                    </div>
-                                    <!-- Event Description -->
-                                    <div class="col-md-8">
-                                        <h5>${event.title}</h5>
-                                        <p class="event-details">
-                                            ${event.description}
-                                        </p>
-                                        <a href="Calendar.html">
-                                            <button class="btn btn-primary" onclick="remoteCreateEvent('${event.date}', '${event.title}', '${event.time}')">Get Involved</button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    const modalDiv = document.createElement('div');
+    modalDiv.classList.add('modal');
+    modalDiv.id = `eventModal${index}`;
+    modalDiv.innerHTML = `
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">${event.title}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="event-image">
+                    <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${event.title}" style="width: 100%;">
+                  </div>
+                  <div class="event-info">
+                    <h5>${event.org_name || 'Unknown Organizer'}</h5><br>
+                    <span>${event.title}</span><br>
+                    <span>${event.address}</span><br>
+                    <span>${event.event_date}</span><br>
+                    <span>${event.start_time} - ${event.end_time}</span>
+                  </div>
                 </div>
-            `;
+                <div class="col-md-8">
+                  <h5>${event.title}</h5>
+                  <p class="event-details">${event.description}</p>
+                  <button class="btn btn-primary" onclick="joinEvent(${event.id})">Join Event</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modalDiv);
+  });
+}
 
-            // Append modal to body
-            document.body.appendChild(modalDiv);
-        });
-    }
-    
-
-    // Load the theme from local storage when the page load
-    // Call loadEvents when the page loads
-    window.onload = function() {
-        loadEvents();
-        loadEvents2();
-        checkUpcomingEvents(); // If you have this function to check for upcoming events
-        searchDiscoverEvents();
-        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-        setTheme(savedTheme);
-        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-    };
+// Fetch events when the page loads
+window.onload = function() {
+  loadEvents();
+  searchDiscoverEvents();//if commented will show list when first loaded
+  fetchEvents();
+  checkUpcomingEvents();
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  setTheme(savedTheme);
+  document.getElementById('theme').value = savedTheme;
+};
 </script>
     <!-- navbar -->
      <header>

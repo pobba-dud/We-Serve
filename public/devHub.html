@@ -7,6 +7,7 @@
   <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="script.js"></script>
 </head>
 <body>
   <header>
@@ -21,6 +22,8 @@
       </ul>
     </nav>
   </header>
+
+  <!-- Buttons to unlinked pages -->
   <div style="text-align: center; display: block;">
     <button><a href="organizationEvent">org event</a></button> 
     <button><a href="Calendartest"> cal test</a></button>
@@ -31,6 +34,8 @@
     <button><a href="dashboard">dashboard</a></button>
     <button><a href="RemakeCalendar">New Cal</a></button>
   </div>
+
+
   <div class="container mt-5">
     <h1>Admin Dashboard</h1>
     <div class="row">
@@ -71,8 +76,76 @@
       </div>
     </div>
   </div>
+<div class="container mt-5">
+    <h1>Dev Hub</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Quick Actions</h2>
+        <button class="btn btn-primary" onclick="clearLocalStorage()">Clear Local Storage</button>
+        <button class="btn btn-danger" onclick="clearEvents()">Clear Events</button>
+        <button class="btn btn-warning" onclick="fetchEvents()">Reload Events</button>
+      </div>
+      <div class="col-md-6">
+        <h2>Database Actions</h2>
+        <button class="btn btn-success" onclick="createTestEvent()">Create Test Event</button>
+        <button class="btn btn-info" onclick="fetchUsers()">Fetch Users</button>
+        <button class="btn btn-dark" onclick="fetchEvents()">Fetch Events</button>
+      </div>
+    </div>
+  </div>
 
   <script>
+    async function clearLocalStorage() {
+      localStorage.clear();
+      alert('Local storage cleared!');
+    }
+    async function clearEvents() {
+    // First confirmation dialog
+    const firstConfirm = confirm("⚠ WARNING: You are about to delete ALL events. This action CANNOT be undone. Do you wish to continue?");
+    
+    if (!firstConfirm) return; // Stop execution if they cancel
+
+    // Second confirmation for extra caution
+    const secondConfirm = confirm("⚠ FINAL WARNING: Are you absolutely sure you want to delete all events? This cannot be reversed!");
+
+    if (!secondConfirm) return; // Stop execution if they cancel
+
+    try {
+        // Proceed with deletion
+        const response = await fetch('/api/admin/clear-events', { method: 'DELETE' });
+
+        if (response.ok) {
+            alert('✅ All events have been successfully deleted.');
+        } else {
+            alert('❌ Failed to clear events. Please try again.');
+        }
+    } catch (error) {
+        console.error("Error clearing events:", error);
+        alert("❌ An error occurred while clearing events.");
+    }
+}
+    async function createTestEvent() {
+      const response = await fetch('/api/admin/create-test-event', { method: 'POST' });
+      if (response.ok) {
+        alert('Test event created!');
+      } else {
+        alert('Failed to create test event.');
+      }
+    }
+
+    async function fetchUsers() {
+      const response = await fetch('/api/admin/users');
+      const users = await response.json();
+      console.log('Users:', users);
+      alert('Users fetched! Check console for details.');
+    }
+
+    async function fetchEvents() {
+      const response = await fetch('/api/events');
+      const events = await response.json();
+      console.log('Events:', events);
+      alert('Events fetched! Check console for details.');
+    }
     async function loadUsers() {
       const response = await fetch('/api/admin/users');
       const users = await response.json();
@@ -122,7 +195,6 @@
       console.log("Admin Page Loaded!")
       loadUsers();
       loadEvents();
-      checkUpcomingEvents();
           const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
           setTheme(savedTheme);
           document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
