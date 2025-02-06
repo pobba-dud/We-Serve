@@ -3,7 +3,6 @@ const router = express.Router();
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const path = require('path');
-const db = require('./db'); // Import the database utility
 const app = express();
 require("dotenv").config();
 const { Pool } = require('pg');
@@ -16,7 +15,9 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const sanitizeHtml = require('sanitize-html');
 const csrf = require('csurf'); 
 const rateLimit = require('express-rate-limit');
-
+const Email = process.env.EMAIL;
+const Password = process.env.PASSWORD;
+const cron = require('node-cron');
 
 if (!SECRET_KEY) {
   throw new Error("Environment variable SECRET_KEY must be set.");
@@ -31,7 +32,9 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.',
   headers: true, // Send rate limit info in the response headers
 });
-
+cron.schedule('0 0 * * *', async () => {
+  await pool.query('DELETE FROM events WHERE event_date < NOW() - INTERVAL \'30 days\''); // Delete events older than 30 days
+});
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Heroku provides this variable automatically
   ssl: {
@@ -232,6 +235,7 @@ app.get('/settings',limiter, checkAuthentication, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'Settings.html'));
 });
 app.get('/devHub',limiter, checkAdmin, (req, res) => {
+  console.log(`Admin page accessed by user ID: ${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   res.sendFile(path.join(__dirname, 'public', 'devHub.html'));
 });
 app.get('/Calendartest',limiter, checkAdmin, (req, res) => {
@@ -249,12 +253,19 @@ app.get('/RemakeCalendar',limiter, checkAdmin, (req, res) => {
 app.get('/askew',limiter,(req,res)=>{
   res.sendFile(path.join(__dirname, 'public', 'Askew.html'));
 });
+app.get('/brent',limiter,(req,res)=>{
+  res.sendFile(path.join(__dirname, 'public', 'brent.html'));
+  });
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Server Error');
+});
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Use your email service (e.g., Gmail)
   auth: {
-      user: 'b89451436@gmail.com', // Your email
-      pass: 'xlya jnqx mnqv tenv' // Your email password or app password
+      user: Email, // Your email
+      pass: Password // Your email password or app password
   }
 });
 
@@ -342,7 +353,7 @@ setInterval(() => {
 }, 60 * 1000);  // Cleanup every minute
 
   
-  app.post('/registerJS', limiter, async (req, res) => {
+app.post('/registerJS', limiter, async (req, res) => {
     const { firstname, lastname, gender, birthday, email, phonenumber, password, isorg, org_name } = req.body;
   
     try {
@@ -532,7 +543,10 @@ app.post('/loginJS', limiter, async (req, res) => {
 
     // If the user is verified, generate a JWT token for login
     const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, { expiresIn: '7d' });
-    res.cookie('auth_token', token, { httpOnly: true });
+    res.cookie('auth_token', token, { httpOnly: true, 
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Lax'
+    });
 
     // Send a successful login response
     return res.status(200).json({ message: 'Login successful.' });
@@ -563,37 +577,6 @@ app.post('/loginJS', limiter, async (req, res) => {
     res.clearCookie('auth_token', { httpOnly: true,sameSite: 'Strict'});
     res.redirect("/login")
   });
-
-  app.post('/api/events',limiter, async (req, res) => {
-    try {
-        const { name, event_date, time_range, address, description, org_name } = req.body;
-
-        // Validate input fields
-        if (!name || !event_date || !time_range || !address || !description || !org_name) {
-            return res.status(400).json({ message: 'All fields are required.' });
-        }
-
-        // Validate time range
-        const [start_time, end_time] = time_range.split('-');
-        if (!start_time || !end_time) {
-            return res.status(400).json({ message: 'Invalid time range format. Use "HH:MM-HH:MM".' });
-        }
-
-        // Insert event into the database
-        const result = await pool.query(
-            `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
-             VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-            [name, description, event_date, start_time.trim(), end_time.trim(), address, org_name]
-        );
-
-        res.status(201).json({ message: 'Event created successfully', event: result.rows[0] });
-    } catch (err) {
-        console.error('Error creating event:', err);
-
-        // Return a meaningful error message to the client
-        res.status(500).json({ message: 'Failed to create event. Please try again later.' });
-    }
-});
 
   app.post('/updateProfile',limiter, authenticate, async (req, res) => {
     try {
@@ -682,7 +665,7 @@ app.post('/loginJS', limiter, async (req, res) => {
 });
 
 
-app.post('/resend-verification', (req, res) => {
+app.post('/resend-verification',limiter, (req, res) => {
   const { email } = req.body;
 
   if (!email) {
@@ -762,7 +745,7 @@ app.post('/resend-verification', (req, res) => {
     }
   }
     
-  app.post('/forgot-password', (req, res) => {
+  app.post('/forgot-password',limiter, (req, res) => {
   const { email } = req.body;
 
   if (!email) {
@@ -847,6 +830,137 @@ app.post('/resend-verification', (req, res) => {
 
 
 
+//api for events
+app.post('/api/events', async (req, res) => {
+  try {
+      const { name, description, event_date, time_range, address, org_name } = req.body;
+
+      if (!time_range || !time_range.includes(' - ')) {
+          return res.status(400).json({ error: 'Invalid or missing time range format' });
+      }
+
+      const [start_time, end_time] = time_range.split(' - ');
+
+      if (!start_time || !end_time) {
+          return res.status(400).json({ error: 'Start time and end time are required' });
+      }
+
+      // Check if event already exists before inserting
+      const existingEvent = await pool.query(
+          `SELECT * FROM events WHERE name = $1 AND event_date = $2 AND start_time = $3 AND address = $4`,
+          [name, event_date, start_time, address]
+      );
+
+      if (existingEvent.rows.length > 0) {
+          return res.status(400).json({ error: 'An event with the same name, date, time, and address already exists!' });
+      }
+
+      // If no duplicate, insert the new event
+      await pool.query(
+          `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
+           VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+          [name, description, event_date, start_time, end_time, address, org_name]
+      );
+
+      res.status(201).json({ message: 'Event added successfully' });
+
+  } catch (err) {
+      console.error('Error saving event:', err);
+      res.status(500).json({ error: 'Failed to save event' });
+  }
+});
+
+
+// Fetch all events
+app.get('/api/events/display', async (req, res) => {
+  const result = await pool.query('SELECT * FROM events');
+  res.json(result.rows);
+});
+
+// Join an event
+app.post('/api/events/join', authenticate, async (req, res) => {
+  const { eventId } = req.body;
+  const userId = req.user.id;
+
+  try {
+    await pool.query('INSERT INTO user_events (user_id, event_id) VALUES ($1, $2)', [userId, eventId]);
+    res.status(200).json({ message: 'Successfully joined the event!' });
+  } catch (err) {
+    console.error('Error joining event:', err);
+    res.status(500).json({ message: 'Failed to join the event.' });
+  }
+});
+
+
+//dev api
+// Fetch all users
+app.get('/api/admin/users', checkAdmin, async (req, res) => {
+  console.log(`Users loaded by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
+  const result = await pool.query('SELECT * FROM users');
+  res.json(result.rows);
+});
+
+// Fetch all events
+app.get('/api/admin/events', checkAdmin, async (req, res) => {
+  console.log(`Events loaded by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
+  const result = await pool.query('SELECT * FROM events');
+  res.json(result.rows);
+});
+
+// Delete a user
+app.delete('/api/admin/users/:id', checkAdmin, async (req, res) => {
+  console.log(`User ${req.params.id} deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
+  await pool.query('DELETE FROM users WHERE id = $1', [req.params.id]);
+  res.status(200).json({ message: 'User deleted successfully.' });
+});
+
+// Delete an event
+app.delete('/api/admin/events/:id', checkAdmin, async (req, res) => {
+  console.log(`Event ${req.params.id} deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
+  await pool.query('DELETE FROM events WHERE id = $1', [req.params.id]);
+  res.status(200).json({ message: 'Event deleted successfully.' });
+});
+// Clear all events (for testing)
+app.delete('/api/admin/clear-events', checkAdmin, async (req, res) => {
+  console.log(`all events deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
+  await pool.query('DELETE FROM events');
+  res.status(200).json({ message: 'All events cleared.' });
+});
+
+// Create a test event (for testing)
+app.post('/api/admin/create-test-event', checkAdmin, async (req, res) => {
+  console.log(`test event created by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
+  try {
+    const currentDate = new Date();
+    const startTime = currentDate.toISOString().split('T')[0] + ' ' + currentDate.toTimeString().split(' ')[0]; // Current time as HH:MM:SS
+    const endTime = new Date(currentDate.getTime() + 2 * 60 * 60 * 1000); // Add 2 hours
+    const endTimeFormatted = endTime.toISOString().split('T')[1].split('.')[0]; // Format to HH:MM:SS
+    
+    const testEvent = {
+      name: 'Test Event',
+      event_date: currentDate.toISOString().split('T')[0], // Current date
+      start_time: startTime, // Set start time to current time
+      end_time: endTimeFormatted, // Set end time to 2 hours later
+      address: '123 Test St',
+      description: 'This is a test event.',
+      org_name: 'Test Org',
+    };
+    
+    console.log(testEvent);
+    
+  await pool.query(
+    'INSERT INTO events (name, event_date, start_time, end_time, address, description, org_name) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+    [testEvent.name, testEvent.event_date, testEvent.start_time, testEvent.end_time, testEvent.address, testEvent.description, testEvent.org_name]
+  );
+  res.status(201).json({ message: 'Test event created.' });
+}catch (err) {
+  if (err.code === '23505') {  // PostgreSQL duplicate key error code
+      return res.status(400).json({ error: 'An event with the same name, date, time, and address already exists!' });
+  }
+  console.error('Error saving event:', err);
+  res.status(500).json({ error: 'Failed to save event' });
+}
+});
   // Fallback route
 app.get('*',limiter, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html')); // Redirects to homepage for undefined routes

@@ -9,15 +9,17 @@
     "body-parser": "^1.20.3",
     "cookie-parser": "^1.4.7",
     "csurf": "^1.10.0",
+    "dompurify": "^3.2.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
     "jsonwebtoken": "^9.0.2",
     "karma": "^6.4.4",
     "lodash": "^4.17.21",
+    "node-cron": "^3.0.3",
     "nodemailer": "^6.9.15",
+    "nodemon": "^3.1.9",
     "pg": "^8.13.1",
-    "sanitize-html": "^2.14.0",
-    "dompurify": "^3.2.3"
+    "sanitize-html": "^2.14.0"
   }
 }
