@@ -831,36 +831,46 @@ app.post('/resend-verification',limiter, (req, res) => {
 
 
 //api for events
-app.post('/api/events',limiter, async (req, res) => {
+app.post('/api/events', async (req, res) => {
   try {
-      const { name, event_date, time_range, address, description, org_name } = req.body;
+      const { name, description, event_date, time_range, address, org_name } = req.body;
 
-      // Validate input fields
-      if (!name || !event_date || !time_range || !address || !description || !org_name) {
-          return res.status(400).json({ message: 'All fields are required.' });
+      if (!time_range || !time_range.includes(' - ')) {
+          return res.status(400).json({ error: 'Invalid or missing time range format' });
       }
 
-      // Validate time range
-      const [start_time, end_time] = time_range.split('-');
+      const [start_time, end_time] = time_range.split(' - ');
+
       if (!start_time || !end_time) {
-          return res.status(400).json({ message: 'Invalid time range format. Use "HH:MM-HH:MM".' });
+          return res.status(400).json({ error: 'Start time and end time are required' });
       }
 
-      // Insert event into the database
-      const result = await pool.query(
-          `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
-           VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-          [name, description, event_date, start_time.trim(), end_time.trim(), address, org_name]
+      // Check if event already exists before inserting
+      const existingEvent = await pool.query(
+          `SELECT * FROM events WHERE name = $1 AND event_date = $2 AND start_time = $3 AND address = $4`,
+          [name, event_date, start_time, address]
       );
 
-      res.status(201).json({ message: 'Event created successfully', event: result.rows[0] });
-  } catch (err) {
-      console.error('Error creating event:', err);
+      if (existingEvent.rows.length > 0) {
+          return res.status(400).json({ error: 'An event with the same name, date, time, and address already exists!' });
+      }
 
-      // Return a meaningful error message to the client
-      res.status(500).json({ message: 'Failed to create event. Please try again later.' });
+      // If no duplicate, insert the new event
+      await pool.query(
+          `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
+           VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+          [name, description, event_date, start_time, end_time, address, org_name]
+      );
+
+      res.status(201).json({ message: 'Event added successfully' });
+
+  } catch (err) {
+      console.error('Error saving event:', err);
+      res.status(500).json({ error: 'Failed to save event' });
   }
 });
+
+
 // Fetch all events
 app.get('/api/events/display', async (req, res) => {
   const result = await pool.query('SELECT * FROM events');
@@ -912,26 +922,44 @@ app.delete('/api/admin/events/:id', checkAdmin, async (req, res) => {
 });
 // Clear all events (for testing)
 app.delete('/api/admin/clear-events', checkAdmin, async (req, res) => {
+  console.log(`all events deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   await pool.query('DELETE FROM events');
   res.status(200).json({ message: 'All events cleared.' });
 });
 
 // Create a test event (for testing)
 app.post('/api/admin/create-test-event', checkAdmin, async (req, res) => {
-  const testEvent = {
-    name: 'Test Event',
-    event_date: new Date().toISOString().split('T')[0],
-    start_time: '10:00',
-    end_time: '12:00',
-    address: '123 Test St',
-    description: 'This is a test event.',
-    org_name: 'Test Org',
-  };
+  console.log(`test event created by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
+  try {
+    const currentDate = new Date();
+    const startTime = currentDate.toISOString().split('T')[0] + ' ' + currentDate.toTimeString().split(' ')[0]; // Current time as HH:MM:SS
+    const endTime = new Date(currentDate.getTime() + 2 * 60 * 60 * 1000); // Add 2 hours
+    const endTimeFormatted = endTime.toISOString().split('T')[1].split('.')[0]; // Format to HH:MM:SS
+    
+    const testEvent = {
+      name: 'Test Event',
+      event_date: currentDate.toISOString().split('T')[0], // Current date
+      start_time: startTime, // Set start time to current time
+      end_time: endTimeFormatted, // Set end time to 2 hours later
+      address: '123 Test St',
+      description: 'This is a test event.',
+      org_name: 'Test Org',
+    };
+    
+    console.log(testEvent);
+    
   await pool.query(
     'INSERT INTO events (name, event_date, start_time, end_time, address, description, org_name) VALUES ($1, $2, $3, $4, $5, $6, $7)',
     [testEvent.name, testEvent.event_date, testEvent.start_time, testEvent.end_time, testEvent.address, testEvent.description, testEvent.org_name]
   );
   res.status(201).json({ message: 'Test event created.' });
+}catch (err) {
+  if (err.code === '23505') {  // PostgreSQL duplicate key error code
+      return res.status(400).json({ error: 'An event with the same name, date, time, and address already exists!' });
+  }
+  console.error('Error saving event:', err);
+  res.status(500).json({ error: 'Failed to save event' });
+}
 });
   // Fallback route
 app.get('*',limiter, (req, res) => {
