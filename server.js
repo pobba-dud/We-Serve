@@ -17,6 +17,7 @@ const csrf = require('csurf');
 const rateLimit = require('express-rate-limit');
 const Email = process.env.EMAIL;
 const Password = process.env.PASSWORD;
+const cron = require('node-cron');
 
 if (!SECRET_KEY) {
   throw new Error("Environment variable SECRET_KEY must be set.");
@@ -31,7 +32,9 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.',
   headers: true, // Send rate limit info in the response headers
 });
-
+cron.schedule('0 0 * * *', async () => {
+  await pool.query('DELETE FROM events WHERE event_date < NOW() - INTERVAL \'30 days\''); // Delete events older than 30 days
+});
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Heroku provides this variable automatically
   ssl: {
@@ -857,6 +860,31 @@ app.post('/resend-verification',limiter, (req, res) => {
 
 
 
+
+
+// Fetch all users
+app.get('/api/admin/users', checkAdmin, async (req, res) => {
+  const result = await pool.query('SELECT * FROM users');
+  res.json(result.rows);
+});
+
+// Fetch all events
+app.get('/api/admin/events', checkAdmin, async (req, res) => {
+  const result = await pool.query('SELECT * FROM events');
+  res.json(result.rows);
+});
+
+// Delete a user
+app.delete('/api/admin/users/:id', checkAdmin, async (req, res) => {
+  await pool.query('DELETE FROM users WHERE id = $1', [req.params.id]);
+  res.status(200).json({ message: 'User deleted successfully.' });
+});
+
+// Delete an event
+app.delete('/api/admin/events/:id', checkAdmin, async (req, res) => {
+  await pool.query('DELETE FROM events WHERE id = $1', [req.params.id]);
+  res.status(200).json({ message: 'Event deleted successfully.' });
+});
   // Fallback route
 app.get('*',limiter, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html')); // Redirects to homepage for undefined routes

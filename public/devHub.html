@@ -1,50 +1,132 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Template</title>
-    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="script.js"></script>
-  </head>
-  <!-- Dark mode JS -->
-  <script>
-    // Load the theme from local storage when the page loads
-    window.onload = function() {
-        checkUpcomingEvents();
-        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-        setTheme(savedTheme);
-        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-    };
-</script>
-  <body>
-  <div style="max-width: 40%;
-  margin-top: 10%;
-  margin-left: auto;
-  margin-right: auto;
- background-color: rgb(37, 78, 78);
- text-align: center;">
- <div>
-  <button><a href="organizationEvent">org event</a></button>
-  <br>
-  <button><a href="Calendartest"> cal test</a></button>
-  <br>
-  <button><a href="SignUp">signup</a></button>
-  <br>
-  <button><a href="login">Login</a></button>
-  <br>
-  <button><a href="template">template</a></button>
-  <br>
-  <button><a href="test">test</a></button>
-  <br>
-  <button><a href="dashboard">dashboard</a></button>
-  <br>
-  <button><a href="RemakeCalendar">New Cal</a></button>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Admin Dashboard</title>
+  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul id="NavUl">
+        <a href="index"><img src="Images/logo.png"></a>
+        <li><a href="dashboard"><b>Homepage</b></a></li>
+        <li><a href="discover"><b>Discover</b></a></li>
+        <li><a href="hours"><b>Hour log</b></a></li>
+        <li><a href="calendar"><b>Calendar</b></a></li>
+        <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+      </ul>
+    </nav>
+  </header>
+  <div style="text-align: center; display: block;">
+    <button><a href="organizationEvent">org event</a></button> 
+    <button><a href="Calendartest"> cal test</a></button>
+    <button><a href="SignUp">signup</a></button>
+    <button><a href="login">Login</a></button>
+    <button><a href="template">template</a></button>
+    <button><a href="test">test</a></button>
+    <button><a href="dashboard">dashboard</a></button>
+    <button><a href="RemakeCalendar">New Cal</a></button>
   </div>
-</div>
+  <div class="container mt-5">
+    <h1>Admin Dashboard</h1>
+    <div class="row">
+      <!-- User Management -->
+      <div class="col-md-6">
+        <h2>User Management</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTable">
+            <!-- Users will be dynamically added here -->
+          </tbody>
+        </table>
+      </div>
 
+      <!-- Event Management -->
+      <div class="col-md-6">
+        <h2>Event Management</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="eventTable">
+            <!-- Events will be dynamically added here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-  
+  <script>
+    async function loadUsers() {
+      const response = await fetch('/api/admin/users');
+      const users = await response.json();
+      const userTable = document.getElementById('userTable');
+      userTable.innerHTML = users.map(user => `
+        <tr>
+          <td>${user.id}</td>
+          <td>${user.firstname} ${user.lastname}</td>
+          <td>${user.email}</td>
+          <td>
+            <button class="btn btn-danger" onclick="deleteUser(${user.id})">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function loadEvents() {
+      const response = await fetch('/api/admin/events');
+      const events = await response.json();
+      const eventTable = document.getElementById('eventTable');
+      eventTable.innerHTML = events.map(event => `
+        <tr>
+          <td>${event.id}</td>
+          <td>${event.name}</td>
+          <td>${event.event_date}</td>
+          <td>
+            <button class="btn btn-danger" onclick="deleteEvent(${event.id})">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function deleteUser(userId) {
+      await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
+      loadUsers();
+    }
+
+    async function deleteEvent(eventId) {
+      await fetch(`/api/admin/events/${eventId}`, { method: 'DELETE' });
+      loadEvents();
+    }
+    function setTheme(theme) {
+          document.body.className = theme === 'dark' ? 'dark-mode' : '';
+          localStorage.setItem('theme', theme); // Save the theme preference
+      }
+    window.onload = () => {
+      loadUsers();
+      loadEvents();
+      checkUpcomingEvents();
+          const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+          setTheme(savedTheme);
+          document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+      
+    };
+  </script>
 </body>
 </html>
