@@ -12,8 +12,7 @@ const jwt = require('jsonwebtoken');
 const { isEmpty } = require('lodash');
 const crypto = require('crypto');
 const SECRET_KEY = process.env.SECRET_KEY;
-const sanitizeHtml = require('sanitize-html');
-const csrf = require('csurf'); 
+const sanitizeHtml = require('sanitize-html'); 
 const rateLimit = require('express-rate-limit');
 const Email = process.env.EMAIL;
 const Password = process.env.PASSWORD;
@@ -22,7 +21,6 @@ const cron = require('node-cron');
 if (!SECRET_KEY) {
   throw new Error("Environment variable SECRET_KEY must be set.");
 }
-const csrfProtection = csrf({ cookie: true }); 
 // Use cookie-parser middleware
 app.use(cookieParser());
 
