@@ -47,3 +47,5 @@ Allow users to generate unique links for events that can be shared with others f
 
 Analytics Dashboard
 Create an analytics dashboard for users to view statistics about their events (e.g., number of events per month, most common event types)(likely to be in account page or in hours).
+
+woo
