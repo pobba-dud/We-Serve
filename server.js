@@ -879,7 +879,7 @@ app.get('/api/events/display',limiter, async (req, res) => {
 });
 
 // Join an event
-app.post('/api/events/join', authenticate,limiter, async (req, res) => {
+app.post('/api/events/join',limiter, authenticate, async (req, res) => {
   const { eventId } = req.body;
   const userId = req.user.id;
 
@@ -892,7 +892,7 @@ app.post('/api/events/join', authenticate,limiter, async (req, res) => {
   }
 });
 // Fetch events joined by the user
-app.get('/api/events/joined', authenticate,limiter, async (req, res) => {
+app.get('/api/events/joined',limiter, authenticate, async (req, res) => {
   const userId = req.user.id;
   const result = await pool.query(
     'SELECT events.* FROM events JOIN user_events ON events.id = user_events.event_id WHERE user_events.user_id = $1',
