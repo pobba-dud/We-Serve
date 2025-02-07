@@ -63,3 +63,9 @@ Steps after downloading Nodejs!
 2. type "node server.js" for your port to turn on.
 3. It should have "Server is running on port 3000" pop up
      in the terminal telling you it's running.
+
+type vscode.dev/ before any github to work at home
+                    so freakin' tuff!
+
+go onto any github and type . to be sent to github dev
+                    (github dev and vscode are different, if seek help ask me)
