@@ -901,13 +901,35 @@ app.get('/api/events/joined', authenticate, async (req, res) => {
   res.json(result.rows);
 });
 
-// Log volunteer hours
-app.post('/api/events/log-hours', authenticate, async (req, res) => {
-  const { eventId, hours } = req.body;
-  const userId = req.user.id;
+// Fetch events hosted by the organization
+app.get('/api/events/organization', checkIsOrg, async (req, res) => {
+  const orgName = req.user.org_name;
+  const result = await pool.query('SELECT * FROM events WHERE org_name = $1', [orgName]);
+  res.json(result.rows);
+});
+
+// Fetch participants for a specific event
+app.get('/api/events/:eventId/participants', checkIsOrg, async (req, res) => {
+  console.log("/api/events/:eventId/participants loaded")
+  const eventId = req.params.eventId;
+  const result = await pool.query(
+    'SELECT users.id, users.firstname, users.lastname, users.email FROM users JOIN user_events ON users.id = user_events.user_id WHERE user_events.event_id = $1',
+    [eventId]
+  );
+  res.json(result.rows);
+});
+
+// Log volunteer hours (organization-only)
+app.post('/api/events/log-hours', checkIsOrg, async (req, res) => {
+  const { eventId, userId, hours } = req.body;
 
   try {
+    // Update hours
     await pool.query('UPDATE users SET hourstotal = hourstotal + $1 WHERE id = $2', [hours, userId]);
+    
+    // Remove user from user_events
+    await pool.query('DELETE FROM user_events WHERE user_id = $1 AND event_id = $2', [userId, eventId]);
+    
     res.status(200).json({ message: 'Hours logged successfully.' });
   } catch (err) {
     console.error('Error logging hours:', err);

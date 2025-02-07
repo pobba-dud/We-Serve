@@ -76,6 +76,25 @@
       </div>
     </div>
   </div>
+  <div class="col-md-6">
+    <h2 id = "eventNameTitle">Event Participants ()</h2>
+    <select id="eventSelect" onchange="loadParticipants()">
+      <option value="">Select an event</option>
+      <!-- Events will be populated dynamically -->
+    </select>
+    <table class="table" id="participantTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Participants will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
 <div class="container mt-5">
     <h1>Dev Hub</h1>
     <div class="row">
@@ -88,8 +107,8 @@
       <div class="col-md-6">
         <h2>Database Actions</h2>
         <button class="btn btn-success" onclick="createTestEvent()">Create Test Event</button>
-        <button class="btn btn-info" onclick="fetchUsers()">Fetch Users</button>
-        <button class="btn btn-dark" onclick="fetchEvents()">Fetch Events</button>
+        <button class="btn btn-info" onclick="loadUsers()">Fetch Users</button>
+        <button class="btn btn-dark" onclick="loadEvents()">Fetch Events</button>
       </div>
     </div>
   </div>
@@ -132,20 +151,6 @@
         alert('Failed to create test event.');
       }
     }
-
-    async function fetchUsers() {
-      const response = await fetch('/api/admin/users');
-      const users = await response.json();
-      console.log('Users:', users);
-      alert('Users fetched! Check console for details.');
-    }
-
-    async function fetchEvents() {
-      const response = await fetch('/api/events');
-      const events = await response.json();
-      console.log('Events:', events);
-      alert('Events fetched! Check console for details.');
-    }
     async function loadUsers() {
       const response = await fetch('/api/admin/users');
       const users = await response.json();
@@ -177,7 +182,33 @@
         </tr>
       `).join('');
     }
+    async function loadEvents2() {
+    const response = await fetch('/api/admin/events');
+    const events = await response.json();
+    const eventSelect = document.getElementById('eventSelect');
+    eventSelect.innerHTML = events.map(event => `
+      <option value="${event.id}">${event.id} ${event.name} (${event.event_date.split('T')[0]})</option>
+    `).join('');
+    loadParticipants();
 
+  }
+
+    async function loadParticipants() {
+      const eventId = document.getElementById('eventSelect').value;
+    if (!eventId) return;
+    const response = await fetch(`/api/events/${eventId}/participants`);
+    const participants = await response.json();
+    const participantTable = document.getElementById('participantTable').getElementsByTagName('tbody')[0];
+    participantTable.innerHTML = participants.map(participant => `
+      <tr>
+        <td>${participant.id}</td>
+        <td>${participant.firstname} ${participant.lastname}</td>
+        <td>${participant.email}</td>
+      </tr>
+    `).join('');
+    document.getElementById("eventNameTitle").innerHTML = `Event Participants (${event.name}):`;
+    
+  }
     async function deleteUser(userId) {
       await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
       loadUsers();
@@ -195,6 +226,8 @@
       console.log("Admin Page Loaded!")
       loadUsers();
       loadEvents();
+      loadEvents2();
+      loadParticipants();
           const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
           setTheme(savedTheme);
           document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
