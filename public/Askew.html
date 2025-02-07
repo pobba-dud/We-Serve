@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,22 +24,32 @@
 
     .falling-image {
       position: absolute;
-      width: 50px; /* Adjust size as needed */
+      width: 50px;
+      /* Adjust size as needed */
       height: 50px;
       animation: fall linear infinite;
     }
 
     /* Animation for Background Gradient */
     @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     @keyframes fall {
       from {
         transform: translateY(-100px);
       }
+
       to {
         transform: translateY(100vh);
       }
@@ -48,6 +59,7 @@
     .askew {
       transform: rotate(5deg);
     }
+
     .askew2 {
       transform: rotate(-5deg);
     }
@@ -85,19 +97,40 @@
 
     /* Animations */
     @keyframes wiggle {
-      0%, 100% { transform: rotate(-5deg); }
-      50% { transform: rotate(5deg); }
+
+      0%,
+      100% {
+        transform: rotate(-5deg);
+      }
+
+      50% {
+        transform: rotate(5deg);
+      }
     }
 
     @keyframes fadeIn {
-      0% { opacity: 0.5; transform: scale(0.95); }
-      100% { opacity: 1; transform: scale(1.05); }
+      0% {
+        opacity: 0.5;
+        transform: scale(0.95);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
     }
 
     /* Floating Effect */
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
     /* Add Floating Stars */
@@ -115,8 +148,6 @@
       background: #81ecec;
       box-shadow: 0 0 10px #00cec9, 0 0 20px #74b9ff;
     }
-
-    
   </style>
 </head>
 <audio id="quackSound" src="Sounds/duck_fall4.wav"></audio>
@@ -135,8 +166,8 @@
   <div class="star" style="top: 60%; left: 90%; animation-duration: 8s;"></div>
 
   <script>
-      // Array of duck fall sounds
-  const fallSounds = [
+    // Array of duck fall sounds
+    const fallSounds = [
       new Audio('sounds/duck_fall1.wav'),
       new Audio('sounds/duck_fall2.wav'),
       new Audio('sounds/duck_fall3.wav'),
@@ -145,27 +176,27 @@
       new Audio('sounds/duck_fall6.wav'),
       new Audio('sounds/duck_fall7.wav'),
       new Audio('sounds/duck_fall8.wav')
-  ];
+    ];
 
-  // Function to play a random fall sound
-  function playRandomFallSound() {
+    // Function to play a random fall sound
+    function playRandomFallSound() {
       const randomIndex = Math.floor(Math.random() * fallSounds.length); // Pick a random sound
       const sound = fallSounds[randomIndex];
-      
+
       sound.currentTime = 0; // Reset in case of overlap
       sound.play();
-  }
+    }
 
-  // Simulating a duck falling (call this when a duck hits the ground)
-  function duckFalls() {
+    // Simulating a duck falling (call this when a duck hits the ground)
+    function duckFalls() {
       console.log("Duck fell!");
       playRandomFallSound();
-  }
+    }
 
-  // Example: Simulate ducks falling at random times
-  setTimeout(duckFalls, 2000);
-  setTimeout(duckFalls, 4000);
-  setTimeout(duckFalls, 6000);
+    // Example: Simulate ducks falling at random times
+    setTimeout(duckFalls, 2000);
+    setTimeout(duckFalls, 4000);
+    setTimeout(duckFalls, 6000);
 
     const searchBox = document.getElementById("searchBox");
     const body = document.body;
@@ -192,107 +223,108 @@
         body.classList.remove("askew2");
       }
     });
-const duckFallingducks = [
-  "Aidan_duck.png",
-  "Lucas_duck.png",
-  "Jon_duck.png",
-  "Brent_duck.png",
-  "Jordynn_duck.png"
-]
- // Array of duck quack sounds
- const duckSounds = [
-    "duck_fall1.wav",
-    "duck_fall2.wav",
-    "duck_fall3.wav",
-    "duck_fall4.wav",
-    "duck_fall5.wav",
-    "duck_fall6.wav",
-    "duck_fall7.wav",
-    "duck_fall8.wav",
-    "duck_fall9.wav",
-    "duck_fall10.wav"
-  ];
+    const duckFallingducks = [
+      "Aidan_duck.png",
+      "Lucas_duck.png",
+      "Jon_duck.png",
+      "Brent_duck.png",
+      "Jordynn_duck.png"
+    ]
+    // Array of duck quack sounds
+    const duckSounds = [
+      "duck_fall1.wav",
+      "duck_fall2.wav",
+      "duck_fall3.wav",
+      "duck_fall4.wav",
+      "duck_fall5.wav",
+      "duck_fall6.wav",
+      "duck_fall7.wav",
+      "duck_fall8.wav",
+      "duck_fall9.wav",
+      "duck_fall10.wav"
+    ];
 
-  // Function to play a random duck quack
-  // Preload all duck sounds
-const duckAudioElements = duckSounds.map(sound => {
-  const audio = new Audio(`Sounds/${sound}`);
-  audio.preload = "auto"; // Preload sound for smoother playback
-  return audio;
-});
+    // Function to play a random duck quack
+    // Preload all duck sounds
+    const duckAudioElements = duckSounds.map(sound => {
+      const audio = new Audio(`Sounds/${sound}`);
+      audio.preload = "auto"; // Preload sound for smoother playback
+      return audio;
+    });
 
-// Ensure audio can play after user interaction
-document.body.addEventListener("click", () => {
-  duckAudioElements.forEach(audio => audio.play().catch(() => {}));
-  duckAudioElements.forEach(audio => audio.pause()); // Stop immediately to allow later playback
-}, { once: true });
+    // Ensure audio can play after user interaction
+    document.body.addEventListener("click", () => {
+      duckAudioElements.forEach(audio => audio.play().catch(() => { }));
+      duckAudioElements.forEach(audio => audio.pause()); // Stop immediately to allow later playback
+    }, { once: true });
 
-// Function to play a random duck quack
-function playRandomDuckSound() {
-  const randomIndex = Math.floor(Math.random() * duckAudioElements.length);
-  const audio = duckAudioElements[randomIndex];
+    // Function to play a random duck quack
+    function playRandomDuckSound() {
+      const randomIndex = Math.floor(Math.random() * duckAudioElements.length);
+      const audio = duckAudioElements[randomIndex];
 
-  audio.currentTime = 0; // Restart sound
-  audio.playbackRate = Math.random() * 0.5 + 0.75; // Random pitch between 0.75x and 1.25x
-  audio.play();
-}
-
-
-
-  // Function to create a falling duck image
-  function createFallingImage() {
-    const image = document.createElement("img");
-    image.src = "https://pngimg.com/d/rubber_duck_PNG32.png"; // Replace with your image URL
-    image.className = "falling-image";
-
-    // Random horizontal position
-    const startX = Math.random() * window.innerWidth;
-    image.style.left = startX + "px";
-
-    // Random animation duration
-    const duration = Math.random() * 3 + 2; // Between 2 and 5 seconds
-    image.style.animationDuration = duration + "s";
-
-    // Append image to the body
-    document.body.appendChild(image);
-
-    // Play a quack sound when a duck falls
-    playRandomDuckSound();
-
-    // Remove the image after animation ends
-    setTimeout(() => {
-      image.remove();
-    }, duration * 1000);
-  }
-
-  // Function to generate falling images continuously
-  function startFallingImages() {
-    setInterval(createFallingImage, 500); // Create an image every 500ms
-  }
-
-  // Start the animation
-  startFallingImages();
-
-  const quackSound = document.getElementById("quackSound");
-  const deleteSound = document.getElementById("deleteSound");
-
-  // Ensure sounds are allowed to play after user interaction
-  document.body.addEventListener("click", () => {
-    quackSound.play().catch(() => {}); 
-    deleteSound.play().catch(() => {}); 
-    quackSound.pause(); 
-    deleteSound.pause();
-  }, { once: true });
-
-  searchBox.addEventListener("keydown", (event) => {
-    if (event.key === "Backspace" || event.key === "Delete") {
-      deleteSound.currentTime = 0; // Restart sound
-      deleteSound.play();
-    } else {
-      quackSound.currentTime = 0;
-      quackSound.play();
+      audio.currentTime = 0; // Restart sound
+      audio.playbackRate = Math.random() * 0.5 + 0.75; // Random pitch between 0.75x and 1.25x
+      audio.play();
     }
-  });
+
+
+
+    // Function to create a falling duck image
+    function createFallingImage() {
+      const image = document.createElement("img");
+      image.src = "https://pngimg.com/d/rubber_duck_PNG32.png"; // Replace with your image URL
+      image.className = "falling-image";
+
+      // Random horizontal position
+      const startX = Math.random() * window.innerWidth;
+      image.style.left = startX + "px";
+
+      // Random animation duration
+      const duration = Math.random() * 3 + 2; // Between 2 and 5 seconds
+      image.style.animationDuration = duration + "s";
+
+      // Append image to the body
+      document.body.appendChild(image);
+
+      // Play a quack sound when a duck falls
+      playRandomDuckSound();
+
+      // Remove the image after animation ends
+      setTimeout(() => {
+        image.remove();
+      }, duration * 1000);
+    }
+
+    // Function to generate falling images continuously
+    function startFallingImages() {
+      setInterval(createFallingImage, 500); // Create an image every 500ms
+    }
+
+    // Start the animation
+    startFallingImages();
+
+    const quackSound = document.getElementById("quackSound");
+    const deleteSound = document.getElementById("deleteSound");
+
+    // Ensure sounds are allowed to play after user interaction
+    document.body.addEventListener("click", () => {
+      quackSound.play().catch(() => { });
+      deleteSound.play().catch(() => { });
+      quackSound.pause();
+      deleteSound.pause();
+    }, { once: true });
+
+    searchBox.addEventListener("keydown", (event) => {
+      if (event.key === "Backspace" || event.key === "Delete") {
+        deleteSound.currentTime = 0; // Restart sound
+        deleteSound.play();
+      } else {
+        quackSound.currentTime = 0;
+        quackSound.play();
+      }
+    });
   </script>
 </body>
+
 </html>

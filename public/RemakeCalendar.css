@@ -21,46 +21,49 @@
 }
 
 
-  
-  @media (max-width: 414px) and (max-height: 678px) {
-    #WeekDays {
-      padding: 0; /* Remove padding for screens that are 414px x 678px or smaller */
-    }
-  }
 
-  @media (max-width: 360px) and (max-height: 678px) {
-    #WeekDays {
-      padding: 0; /* Remove padding for screens that are 414px x 678px or smaller */
-    }
+@media (max-width: 414px) and (max-height: 678px) {
+  #WeekDays {
+    padding: 0;
+    /* Remove padding for screens that are 414px x 678px or smaller */
   }
+}
+
+@media (max-width: 360px) and (max-height: 678px) {
+  #WeekDays {
+    padding: 0;
+    /* Remove padding for screens that are 414px x 678px or smaller */
+  }
+}
 
 /*Button*/
 button {
-    padding: 10px 20px;
-    margin: 5px;
-    background-color: #283A43;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #1F2A32;
-  }
-  
-  #BackButton, #NextButton {
-    display: inline-block;
-  }
-  
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #283A43;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1F2A32;
+}
+
+#BackButton,
+#NextButton {
+  display: inline-block;
+}
+
 
 /* Footer */
 footer {
-    padding-bottom: 30%;
+  padding-bottom: 30%;
 }
 
 #monthDisplay {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-top: 10px;
-    color: rgb(19, 29, 29);
-  }
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 10px;
+  color: rgb(19, 29, 29);
+}

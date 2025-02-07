@@ -21,12 +21,12 @@ function openModal(date) {
 
   // If an event exists, show the delete modal; otherwise, show the new event modal
   if (eventForDay) {
-      document.getElementById('eventText').innerText = eventForDay.title + "\n" + eventForDay.time + "\nLocation: " + eventForDay.location;
-      document.getElementById('editButton').style.display = 'inline'; // Show the edit button
-      deleteEventModal.style.display = 'block';
+    document.getElementById('eventText').innerText = eventForDay.title + "\n" + eventForDay.time + "\nLocation: " + eventForDay.location;
+    document.getElementById('editButton').style.display = 'inline'; // Show the edit button
+    deleteEventModal.style.display = 'block';
   } else {
-      newEventModal.style.display = 'block';
-      document.getElementById('editButton').style.display = 'none'; // Hide the edit button
+    newEventModal.style.display = 'block';
+    document.getElementById('editButton').style.display = 'none'; // Hide the edit button
   }
 
   backDrop.style.display = 'block'; // Show the backdrop
@@ -36,11 +36,11 @@ function openModal(date) {
 function editEvent() {
   const eventForDay = events.find(e => e.date === clicked);
   if (eventForDay) {
-      eventTitleInput.value = eventForDay.title; // Populate title
-      eventTimeInput.value = eventForDay.time; // Populate time
-      eventLocationInput.value = eventForDay.location; // Populate location
-      newEventModal.style.display = 'block'; // Show the new event modal
-      deleteEventModal.style.display = 'none'; // Hide delete modal
+    eventTitleInput.value = eventForDay.title; // Populate title
+    eventTimeInput.value = eventForDay.time; // Populate time
+    eventLocationInput.value = eventForDay.location; // Populate location
+    newEventModal.style.display = 'block'; // Show the new event modal
+    deleteEventModal.style.display = 'none'; // Hide delete modal
   }
 }
 
@@ -132,23 +132,23 @@ function saveEvent() {
   const type = document.getElementById('eventTypeInput').value; // Get the selected event type
 
   if (title && time) {
-      const newEvent = {
-          date: clicked, // Make sure 'clicked' is set to the correct date
-          title,
-          time,
-          location,
-          type
-      };
+    const newEvent = {
+      date: clicked, // Make sure 'clicked' is set to the correct date
+      title,
+      time,
+      location,
+      type
+    };
 
-      // Add the new event to the events array
-      events.push(newEvent);
+    // Add the new event to the events array
+    events.push(newEvent);
 
-      // Save events to localStorage
-      localStorage.setItem('events', JSON.stringify(events));
-      closeModal(); // Close the modal after saving
-      load(); // Reload the calendar to display the new event
+    // Save events to localStorage
+    localStorage.setItem('events', JSON.stringify(events));
+    closeModal(); // Close the modal after saving
+    load(); // Reload the calendar to display the new event
   } else {
-      alert('Please fill in all fields');
+    alert('Please fill in all fields');
   }
 }
 
@@ -156,15 +156,15 @@ function renderEvents() {
   const calendar = document.getElementById('calendar'); // Your calendar element
   calendar.innerHTML = ''; // Clear existing events
 
-      events.forEach(event => {
-        const eventDiv = document.createElement('div');
-        eventDiv.classList.add('event');
-        eventDiv.innerText = `${event.title} - ${event.time} - ${event.location}`;
+  events.forEach(event => {
+    const eventDiv = document.createElement('div');
+    eventDiv.classList.add('event');
+    eventDiv.innerText = `${event.title} - ${event.time} - ${event.location}`;
 
 
-        calendar.appendChild(eventDiv); // Add event to calendar
-    });
-    load()
+    calendar.appendChild(eventDiv); // Add event to calendar
+  });
+  load()
 }
 
 // Function to delete an event from localStorage
@@ -211,23 +211,23 @@ function remoteCreateEvent(date, title, time) {
       const type = document.getElementById('eventTypeInput').value;
       const startDate = document.getElementById('startDateInput').value;
       const endDate = document.getElementById('endDateInput').value;
-  
+
       // Store the event with start and end dates
       const newEvent = {
-          title,
-          time,
-          location,
-          type,
-          startDate,
-          endDate
+        title,
+        time,
+        location,
+        type,
+        startDate,
+        endDate
       };
-  
+
       const events = JSON.parse(localStorage.getItem('events')) || [];
       events.push(newEvent);
       localStorage.setItem('events', JSON.stringify(events));
-  
+
       load(); // Refresh the calendar
-  });
+    });
   } else {
     console.error("Invalid event details.");
   }
@@ -259,31 +259,31 @@ const startDate = document.getElementById('startDateInput').value;
 const endDate = document.getElementById('endDateInput').value;
 
 if (startDate && endDate) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+  const start = new Date(startDate);
+  const end = new Date(endDate);
 
-    // Check if the date objects are valid
-    if (isNaN(start) || isNaN(end)) {
-        console.error('Invalid date format!');
-    } else {
-        // Proceed with the event logic
-        const newEvent = {
-            title,
-            time,
-            location,
-            type,
-            startDate: start.toISOString().split('T')[0],  // Store in YYYY-MM-DD format
-            endDate: end.toISOString().split('T')[0],      // Store in YYYY-MM-DD format
-        };
+  // Check if the date objects are valid
+  if (isNaN(start) || isNaN(end)) {
+    console.error('Invalid date format!');
+  } else {
+    // Proceed with the event logic
+    const newEvent = {
+      title,
+      time,
+      location,
+      type,
+      startDate: start.toISOString().split('T')[0],  // Store in YYYY-MM-DD format
+      endDate: end.toISOString().split('T')[0],      // Store in YYYY-MM-DD format
+    };
 
-        const events = JSON.parse(localStorage.getItem('events')) || [];
-        events.push(newEvent);
-        localStorage.setItem('events', JSON.stringify(events));
+    const events = JSON.parse(localStorage.getItem('events')) || [];
+    events.push(newEvent);
+    localStorage.setItem('events', JSON.stringify(events));
 
-        load(); // Refresh the calendar
-    }
+    load(); // Refresh the calendar
+  }
 } else {
-    console.error('Start and End date are required!');
+  console.error('Start and End date are required!');
 }
 
 function formatDate(date) {

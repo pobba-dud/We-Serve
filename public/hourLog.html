@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
@@ -14,191 +15,214 @@
   }
 
   body {
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
   }
 
   body.dark-mode {
-  background-color: #121212; /* Dark background */
-  color: #f7f7f7; /* Light text color */
-}
+    background-color: #121212;
+    /* Dark background */
+    color: #f7f7f7;
+    /* Light text color */
+  }
 
-body.dark-mode .module {
-  background-color: rgb(36, 36, 36); /* Dark module background */
-  color: white; /* Light text color */
-}
+  body.dark-mode .module {
+    background-color: rgb(36, 36, 36);
+    /* Dark module background */
+    color: white;
+    /* Light text color */
+  }
 
-body.dark-mode table {
-  background-color: #3f3e3e; /* Dark table background */
-  color: #f7f7f7; /* Light text color */
-  border: #070707;
-}
+  body.dark-mode table {
+    background-color: #3f3e3e;
+    /* Dark table background */
+    color: #f7f7f7;
+    /* Light text color */
+    border: #070707;
+  }
 
-body.dark-mode .innerContainer {
-  background-color: #3f3e3e;
-}
+  body.dark-mode .innerContainer {
+    background-color: #3f3e3e;
+  }
 
-body.dark-mode .highlight {
-  background-color: #535353;
-}
+  body.dark-mode .highlight {
+    background-color: #535353;
+  }
 
-body.dark-mode .schedule-btn {
-  background-color: #3f3e3e;
-}
+  body.dark-mode .schedule-btn {
+    background-color: #3f3e3e;
+  }
 
-body.dark-mode .schedule-btn:hover {
-  background-color: #535353;
-}
+  body.dark-mode .schedule-btn:hover {
+    background-color: #535353;
+  }
 
   .hourContainer {
-      margin-bottom: 5%;
+    margin-bottom: 5%;
   }
 
   .leaderboard-container {
     display: flex;
-    justify-content: space-between; /* Space out the leaderboards */
-    margin-top: 5%; /* Add top margin for spacing */
+    justify-content: space-between;
+    /* Space out the leaderboards */
+    margin-top: 5%;
+    /* Add top margin for spacing */
     margin-left: auto;
     margin-right: auto;
-}
+  }
 
-.leaderboard {
-    background-color:#9bd1e5;
+  .leaderboard {
+    background-color: #9bd1e5;
     border-radius: 8px;
     border: 5px solid rgb(57, 94, 112);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 2%;
     width: 25%;
     opacity: 0.7;
-    margin-left: 4.5%; /* Add margin for spacing between leaderboards */
+    margin-left: 4.5%;
+    /* Add margin for spacing between leaderboards */
     margin-right: 4.5%;
-}
+  }
 
 
-body.dark-mode .leaderboard {
-  background-color:#575757;
-  border: 5px solid #2b2c2c;
-}
+  body.dark-mode .leaderboard {
+    background-color: #575757;
+    border: 5px solid #2b2c2c;
+  }
 
-body.dark-mode .leaderboard li {
-  color: white;
-}
+  body.dark-mode .leaderboard li {
+    color: white;
+  }
 
-body.dark-mode .leaderboard h1 {
-  color: white;
-}
+  body.dark-mode .leaderboard h1 {
+    color: white;
+  }
 
   .leaderboard h1 {
-      display: flex;
-      flex-direction: row;
-      margin: auto;
-  width: 50%;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    width: 50%;
 
-  padding: 10px;
-      color: rgb(26, 43, 51);
+    padding: 10px;
+    color: rgb(26, 43, 51);
   }
 
   .leaderboard ol {
     margin: auto;
-  width: 50%;
-  padding: 10px;
-      display: flex;
-      flex-direction: column;
+    width: 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
   }
 
   .leaderboard li {
-      margin: 5px 0;
-      color: rgb(57, 94, 112);
+    margin: 5px 0;
+    color: rgb(57, 94, 112);
   }
 
   @media (max-width: 1200px) {
-  .leaderboard {
-    width: 45%; /* Adjusts width for medium-sized screens */
-  }
-}
-
-@media (max-width: 768px) {
-  .leaderboard {
-    width: 90%; /* Adjusts width for smaller tablets */
-  }
-}
-
-@media (max-width: 480px) {
-  .leaderboard-container {
-    width: 100%; /* Full width for small mobile screens */
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center;
-  }
-  li {
-    font-size: larger;
-  }
-  h1 {
-    font-size: larger;
+    .leaderboard {
+      width: 45%;
+      /* Adjusts width for medium-sized screens */
+    }
   }
 
-}
+  @media (max-width: 768px) {
+    .leaderboard {
+      width: 90%;
+      /* Adjusts width for smaller tablets */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .leaderboard-container {
+      width: 100%;
+      /* Full width for small mobile screens */
+      flex-direction: column;
+      /* Stack elements vertically */
+      align-items: center;
+    }
+
+    li {
+      font-size: larger;
+    }
+
+    h1 {
+      font-size: larger;
+    }
+
+  }
 
   footer {
-      margin-top: 20px;
-      padding: 20px;
-      background-color: #283A43;
-      color: white;
-      text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #283A43;
+    color: white;
+    text-align: center;
   }
 
   #nav {
     padding-bottom: -1px;
   }
+
   #NavUl {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #283A43; /* Ensure this matches */
+    background-color: #283A43;
+    /* Ensure this matches */
     font-size: 20px;
-}
-li {
+  }
+
+  li {
     margin-bottom: -1%;
     float: left;
     display: flex;
     align-content: center;
-    color: #9bd1e5; /* Ensure this matches */
-}
-li a:link, li a:visited {
+    color: #9bd1e5;
+    /* Ensure this matches */
+  }
+
+  li a:link,
+  li a:visited {
     padding: 18px;
     text-align: center;
     text-decoration: none;
-    color: #9bd1e5; /* Ensure this matches */
+    color: #9bd1e5;
+    /* Ensure this matches */
     display: inline-block;
-}
-li a:hover {
-    background-color: rgb(57, 94, 112); /* Ensure this matches */
-}
+  }
 
-.buttonContainer{
+  li a:hover {
+    background-color: rgb(57, 94, 112);
+    /* Ensure this matches */
+  }
+
+  .buttonContainer {
     width: 95%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-}
+  }
 
-.leaderboard-btn {
+  .leaderboard-btn {
     padding: 12px 24px;
     font-size: 16px;
     font-weight: bold;
     color: #fff;
     background-color: #283A43;
     border: none;
-    border-radius: 8px;      
-    cursor: pointer;      
+    border-radius: 8px;
+    cursor: pointer;
     transition: background 0.3s ease;
-        }
+  }
 
-        .leaderboard-btn:hover {
+  .leaderboard-btn:hover {
     background-color: rgb(57, 94, 112);
-        }
-
+  }
 </style>
 
 </style>
@@ -206,121 +230,125 @@ li a:hover {
 
 
 <body>
-  <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
+  <div class="notification" id="customNotification"
+    style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
     This is a notification message!
-    <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
-</div>
+    <button onclick="closeNotification()"
+      style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
+  </div>
 
-<script>
-  // Call checkUpcomingEvents function at the start or at intervals
-  // Load the theme from local storage when the page loads
-  window.onload = function() {
+  <script>
+    // Call checkUpcomingEvents function at the start or at intervals
+    // Load the theme from local storage when the page loads
+    window.onload = function () {
       const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
       setTheme(savedTheme);
-      document.getElementById('theme').value = savedTheme; 
+      document.getElementById('theme').value = savedTheme;
       checkUpcomingEvents();// Set the select box to the saved theme
-  };
+    };
 
-</script>
+  </script>
 
-<!-- navbar -->
-<header>
-  <nav>
-    <ul id="NavUl" style="padding-bottom: 9px;">
-      <a href="index"><img src="Images/logo.png"></a>
-      <li><a href="dashboard" style="padding-bottom: 20px; padding-top: 19px;"><b>Homepage</b></a></li>
-      <li><a href="discover" style="padding-bottom: 20px; padding-top: 19px;"><b>Discover</b></a></li>
-      <li><a href="hours" style="padding-bottom: 20px; padding-top: 19px;"><b>Hour log</b></a></li>
-      <li><a href="calendar" style="padding-bottom: 19px; padding-top: 19px;"><b>Calendar</b></a></li>
-      <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
-    </ul>
-</nav>
-  <div style="margin-bottom: 50px;"></div>
-</header>
-<!-- end of navbar -->
+  <!-- navbar -->
+  <header>
+    <nav>
+      <ul id="NavUl" style="padding-bottom: 9px;">
+        <a href="index"><img src="Images/logo.png"></a>
+        <li><a href="dashboard" style="padding-bottom: 20px; padding-top: 19px;"><b>Homepage</b></a></li>
+        <li><a href="discover" style="padding-bottom: 20px; padding-top: 19px;"><b>Discover</b></a></li>
+        <li><a href="hours" style="padding-bottom: 20px; padding-top: 19px;"><b>Hour log</b></a></li>
+        <li><a href="calendar" style="padding-bottom: 19px; padding-top: 19px;"><b>Calendar</b></a></li>
+        <li style="float:right; display:flex; align-content: center;"><a href="account"> <img
+              src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+      </ul>
+    </nav>
+    <div style="margin-bottom: 50px;"></div>
+  </header>
+  <!-- end of navbar -->
 
-<!-- Leaderboard button -->
+  <!-- Leaderboard button -->
 
-<div class="buttonContainer">
-<button class="leaderboard-btn" onclick="openModal()">Leaderboard</button>
-</div>
-<!-- Hour Log Content -->
-<div class="hourContainer">
-  <div class="weekStreak">
-    <p>Weekly Streak</p>
-    <br>
-    <p id="loggedNum" style="color:orange;">0</p>
+  <div class="buttonContainer">
+    <button class="leaderboard-btn" onclick="openModal()">Leaderboard</button>
   </div>
-  <div class="monthHours">
-    <p>Hours Served This Month</p>
-    <br>
-   <p id="loggedNum">0</p>
+  <!-- Hour Log Content -->
+  <div class="hourContainer">
+    <div class="weekStreak">
+      <p>Weekly Streak</p>
+      <br>
+      <p id="loggedNum" style="color:orange;">0</p>
+    </div>
+    <div class="monthHours">
+      <p>Hours Served This Month</p>
+      <br>
+      <p id="loggedNum">0</p>
+    </div>
+    <div class="yearHours">
+      <p>Hours Served This Year</p>
+      <br>
+      <p id="loggedNum">0</p>
+    </div>
+    <div class="careerHours">
+      <p>Total Career Hours Served</p>
+      <br>
+      <p id="loggedNum">0</p>
+    </div>
   </div>
-  <div class="yearHours">
-   <p>Hours Served This Year</p>
-   <br>
-    <p id="loggedNum">0</p>
-  </div>
-  <div class="careerHours">
-   <p>Total Career Hours Served</p>
-   <br>
-   <p id="loggedNum">0</p>
-  </div>
-</div>
-<div id="leaderboardModal" class="modal">
-<div class="leaderboard-container">
-  <div class="leaderboard">
-    <h1>Total Hours</h1>
-    <ol>
-      <li>User A - 10 hours</li>
-      <li>User B - 8 hours</li>
-      <li>User C - 5 hours</li>
-    </ol>                                              
-  </div>
+  <div id="leaderboardModal" class="modal">
+    <div class="leaderboard-container">
+      <div class="leaderboard">
+        <h1>Total Hours</h1>
+        <ol>
+          <li>User A - 10 hours</li>
+          <li>User B - 8 hours</li>
+          <li>User C - 5 hours</li>
+        </ol>
+      </div>
 
 
-  <div class="leaderboard">
-    <h1>Weekly Streak</h1>
-    <ol>
-      <li>User D - 69 weeks</li>
-      <li>User E - 1 week</li>
-      <li>User F - 💀</li>
-    </ol>
+      <div class="leaderboard">
+        <h1>Weekly Streak</h1>
+        <ol>
+          <li>User D - 69 weeks</li>
+          <li>User E - 1 week</li>
+          <li>User F - 💀</li>
+        </ol>
+      </div>
+
+      <div class="leaderboard">
+        <h1>Broke friend Leaderboard</h1>
+        <ol>
+          <li>User G - 16 dollars</li>
+          <li>User H - 12 pesos</li>
+          <li>User I - 2 trillion zimbabwe dollars</li>
+        </ol>
+      </div>
+    </div>
   </div>
 
-  <div class="leaderboard">
-    <h1>Broke friend Leaderboard</h1>
-    <ol>
-      <li>User G - 16 dollars</li>
-      <li>User H - 12 pesos</li>
-      <li>User I - 2 trillion zimbabwe dollars</li>
-    </ol>
-  </div>
-</div>
-</div>
+  <script>
+    function openModal() {
+      document.getElementById("leaderboardModal").style.display = "flex";
+    }
 
-<script>
-   function openModal() {
-            document.getElementById("leaderboardModal").style.display = "flex";
-        }
+    function closeModal() {
+      document.getElementById("leaderboardModal").style.display = "none";
+    }
+  </script>
 
-        function closeModal() {
-            document.getElementById("leaderboardModal").style.display = "none";
-        }
-</script>
-
-<footer>
-  <p>&copy; WeServe</p>
-  <div style="width: 100%;background-color: #283A43; padding-bottom: 300px;height:200px;">
-    <ul>
-      <li><a href="#">Terms of Use</a></li>
-      <li><a href="#">Privacy Policy</a></li>
-      <li><a href="#">Example Link 1</a></li>
-      <li><a href="devHub">Dev</a></li>
-      <li><a href="Feedback">Feedback Form</a></li>
-      <li><a href="askew">ASKEW</a></li>
-    </ul>
-</div>
-</footer>
+  <footer>
+    <p>&copy; WeServe</p>
+    <div style="width: 100%;background-color: #283A43; padding-bottom: 300px;height:200px;">
+      <ul>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Example Link 1</a></li>
+        <li><a href="devHub">Dev</a></li>
+        <li><a href="Feedback">Feedback Form</a></li>
+        <li><a href="askew">ASKEW</a></li>
+      </ul>
+    </div>
+  </footer>
 </body>
+
 </html>

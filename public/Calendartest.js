@@ -40,19 +40,19 @@ function openEventModal(event) {
     eventModal.style.display = 'block';
 }
 
-closeModal.onclick = function() {
+closeModal.onclick = function () {
     eventModal.style.display = 'none';
 }
 
-addEventButton.onclick = function() {
+addEventButton.onclick = function () {
     eventModal.style.display = 'block';
 }
 
-saveEventButton.onclick = function() {
+saveEventButton.onclick = function () {
     const title = eventTitleInput.value;
     const date = eventDateInput.value;
     const dayDiv = Array.from(calendar.children).find(day => day.dataset.date === date);
-    
+
     if (dayDiv && title) {
         const eventDiv = document.createElement('div');
         eventDiv.classList.add('event');
@@ -63,58 +63,58 @@ saveEventButton.onclick = function() {
     }
 }
 
-document.getElementById('prev-month').onclick = function() {
+document.getElementById('prev-month').onclick = function () {
     currentDate.setMonth(currentDate.getMonth() - 1);
     renderCalendar();
 }
 
-document.getElementById('next-month').onclick = function() {
+document.getElementById('next-month').onclick = function () {
     currentDate.setMonth(currentDate.getMonth() + 1);
     renderCalendar();
 }
 function remoteCreateEvent(date, title, time) {
 
     if (date && title && time) {
-  
-      document.getElementById('saveButton').addEventListener('click', () => {
-        const title = document.getElementById('eventTitleInput').value;
-        const time = document.getElementById('eventTimeInput').value;
-        const location = document.getElementById('eventLocationInput').value;
-        const type = document.getElementById('eventTypeInput').value;
-        const startDate = document.getElementById('startDateInput').value;
-        const endDate = document.getElementById('endDateInput').value;
-    
-        // Store the event with start and end dates
-        const newEvent = {
-            title,
-            time,
-            location,
-            type,
-            startDate,
-            endDate
-        };
-    
-        const events = JSON.parse(localStorage.getItem('events')) || [];
-        events.push(newEvent);
-        localStorage.setItem('events', JSON.stringify(events));
-    
-        load(); // Refresh the calendar
-    });
+
+        document.getElementById('saveButton').addEventListener('click', () => {
+            const title = document.getElementById('eventTitleInput').value;
+            const time = document.getElementById('eventTimeInput').value;
+            const location = document.getElementById('eventLocationInput').value;
+            const type = document.getElementById('eventTypeInput').value;
+            const startDate = document.getElementById('startDateInput').value;
+            const endDate = document.getElementById('endDateInput').value;
+
+            // Store the event with start and end dates
+            const newEvent = {
+                title,
+                time,
+                location,
+                type,
+                startDate,
+                endDate
+            };
+
+            const events = JSON.parse(localStorage.getItem('events')) || [];
+            events.push(newEvent);
+            localStorage.setItem('events', JSON.stringify(events));
+
+            load(); // Refresh the calendar
+        });
     } else {
-      console.error("Invalid event details.");
+        console.error("Invalid event details.");
     }
-  }
-  
-  function remoteDeleteEvent(date, time) {
+}
+
+function remoteDeleteEvent(date, time) {
     if (!date || !time) {
-      console.error("Date and time must be provided for deletion.");
-      return;
+        console.error("Date and time must be provided for deletion.");
+        return;
     }
-  
+
     events = events.filter(e => !(e.date === date && e.time === time));
-  
+
     localStorage.setItem('events', JSON.stringify(events));
     load();
-  }
-  
+}
+
 renderCalendar();

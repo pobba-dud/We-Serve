@@ -1,67 +1,71 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Template</title>
-    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="script.js"></script>
-    <link href="RemakeCalendar.css" rel="stylesheet" type="text/css" />
-  </head>
-  <!-- Dark mode JS -->
-  <script>
-    // Load the theme from local storage when the page loads
-    window.onload = function() {
-        checkUpcomingEvents();
-        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-        setTheme(savedTheme);
-        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-    };
-</script>
-  </body>
-  <nav>
-    <ul id="NavUl">
-      <a href="index"><img src="Images/logo.png"></a>
-      <li><a href="dashboard"><b>Homepage</b></a></li>
-      <li><a href="discover"><b>Discover</b></a></li>
-      <li><a href="hours"><b>Hour log</b></a></li>
-      <li><a href="calendar"><b>Calendar</b></a></li>
-      <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
-    </ul>
-  </nav>
 
-  <h1> Calendar </h1>
-  <div id="calendar">
-    <div id="monthDisplay"></div>
-    <div>
-        <button id="BackButton">&lt; Prev</button>
-        <button id="NextButton">Next &gt;</button>
-    </div>
-    <div id="WeekDays">
-        <div>Sunday</div>
-        <div>Monday</div>
-        <div>Tuesday</div>
-        <div>Wednesday</div>
-        <div>Thursday</div>
-        <div>Friday</div>
-        <div>Saturday</div>
-    </div>
-    <div id="CalendarGrid"></div> <!-- This will hold the calendar days -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Template</title>
+  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="script.js"></script>
+  <link href="RemakeCalendar.css" rel="stylesheet" type="text/css" />
+</head>
+<!-- Dark mode JS -->
+<script>
+  // Load the theme from local storage when the page loads
+  window.onload = function () {
+    checkUpcomingEvents();
+    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+    setTheme(savedTheme);
+    document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+  };
+</script>
+</body>
+<nav>
+  <ul id="NavUl">
+    <a href="index"><img src="Images/logo.png"></a>
+    <li><a href="dashboard"><b>Homepage</b></a></li>
+    <li><a href="discover"><b>Discover</b></a></li>
+    <li><a href="hours"><b>Hour log</b></a></li>
+    <li><a href="calendar"><b>Calendar</b></a></li>
+    <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png"
+          alt="Profile" style="width:auto;height:23px;"> </a></li>
+  </ul>
+</nav>
+
+<h1> Calendar </h1>
+<div id="calendar">
+  <div id="monthDisplay"></div>
+  <div>
+    <button id="BackButton">&lt; Prev</button>
+    <button id="NextButton">Next &gt;</button>
+  </div>
+  <div id="WeekDays">
+    <div>Sunday</div>
+    <div>Monday</div>
+    <div>Tuesday</div>
+    <div>Wednesday</div>
+    <div>Thursday</div>
+    <div>Friday</div>
+    <div>Saturday</div>
+  </div>
+  <div id="CalendarGrid"></div> <!-- This will hold the calendar days -->
 </div>
 
-  <footer>
-    <p>&copy; WeServe</p>
-    <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
-      <ul>
-        <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Example Link 1</a></li>
-        <li><a href="devHub">Dev</a></li>
-        <li><a href="feedback">Feedback Form</a></li>
-        <li><a href="askew">ASKEW</a></li>
-      </ul>
+<footer>
+  <p>&copy; WeServe</p>
+  <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
+    <ul>
+      <li><a href="#">Terms of Use</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Example Link 1</a></li>
+      <li><a href="devHub">Dev</a></li>
+      <li><a href="feedback">Feedback Form</a></li>
+      <li><a href="askew">ASKEW</a></li>
+    </ul>
   </div>
-  </footer>
+</footer>
+
 <body>
+
 </html>

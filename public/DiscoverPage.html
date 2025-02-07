@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Discover Page</title>
-    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <link href="discover.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="script.js">remoteCreateEvent();</script>
-    <script src="scriptCalendar.js">remoteCreateEvent();</script>
-  </head>
 
-  <body>
-    <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
-      This is a notification message!
-      <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Discover Page</title>
+  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="discover.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="script.js">remoteCreateEvent();</script>
+  <script src="scriptCalendar.js">remoteCreateEvent();</script>
+</head>
+
+<body>
+  <div class="notification" id="customNotification"
+    style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
+    This is a notification message!
+    <button onclick="closeNotification()"
+      style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
   </div>
-  
- <script>
-   async function fetchEvents() {
-  const response = await fetch('/api/events/display');
-  const events = await response.json();
-  localStorage.setItem('events', JSON.stringify(events)); // Cache events in localStorage
-  loadEvents2(); // Render events
-}
-function loadEvents() {
-    const events = JSON.parse(localStorage.getItem('events')) || [];
-    const eventListContainer = document.querySelector('.discover-events-list');
-    
-    // Clear existing events
-    eventListContainer.innerHTML = '';
 
-    events.forEach((event, index) => { //DONT DELETE LINE 43 IDK WHY BUT IT BREAKS STUFF
+  <script>
+    async function fetchEvents() {
+      const response = await fetch('/api/events/display');
+      const events = await response.json();
+      localStorage.setItem('events', JSON.stringify(events)); // Cache events in localStorage
+      loadEvents2(); // Render events
+    }
+    function loadEvents() {
+      const events = JSON.parse(localStorage.getItem('events')) || [];
+      const eventListContainer = document.querySelector('.discover-events-list');
+
+      // Clear existing events
+      eventListContainer.innerHTML = '';
+
+      events.forEach((event, index) => { //DONT DELETE LINE 43 IDK WHY BUT IT BREAKS STUFF
         const eventDiv = document.createElement('div');
         eventDiv.classList.add('event');
         eventDiv.innerHTML = `
@@ -81,48 +84,48 @@ function loadEvents() {
             </div>
         `;
         document.body.appendChild(modalDiv);
-    });
+      });
 
-    // Show or hide event list container based on available events
-    eventListContainer.style.display = events.length > 0 ? 'block' : 'none';
-}
+      // Show or hide event list container based on available events
+      eventListContainer.style.display = events.length > 0 ? 'block' : 'none';
+    }
 
-   
 
-async function joinEvent(eventId) {
-  const response = await fetch('/api/events/join', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ eventId }),
-  });
-  if (response.ok) {
-    alert('Successfully joined the event!');
-  } else {
-    alert('Failed to join the event.');
-  }
-}
 
-// Update the modal creation to include a "Join Event" button
-function loadEvents2() {
-  const events = JSON.parse(localStorage.getItem('events')) || [];
-  const moduleContainer = document.querySelector('.module-container');
-  moduleContainer.innerHTML = '';
-  moduleContainer.style="display: flex; margin-bottom: 20%;flex-direction: row; flex-wrap: wrap; align-content: space-between;";
-  events.forEach((event, index) => {
-    const moduleDiv = document.createElement('div');
-    moduleDiv.classList.add('module');
-    moduleDiv.innerHTML = `
+    async function joinEvent(eventId) {
+      const response = await fetch('/api/events/join', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ eventId }),
+      });
+      if (response.ok) {
+        alert('Successfully joined the event!');
+      } else {
+        alert('Failed to join the event.');
+      }
+    }
+
+    // Update the modal creation to include a "Join Event" button
+    function loadEvents2() {
+      const events = JSON.parse(localStorage.getItem('events')) || [];
+      const moduleContainer = document.querySelector('.module-container');
+      moduleContainer.innerHTML = '';
+      moduleContainer.style = "display: flex; margin-bottom: 20%;flex-direction: row; flex-wrap: wrap; align-content: space-between;";
+      events.forEach((event, index) => {
+        const moduleDiv = document.createElement('div');
+        moduleDiv.classList.add('module');
+        moduleDiv.innerHTML = `
       <img src="${event.image || 'Images/Insert-Image-Here.png'}" alt="${event.name}">
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal${index}" data-bs-backdrop="static">Get More Info</button>
       <h3 style="margin-left: 20%;"><u>${event.name}</u></h3>
       <h3 style="margin-left: 20%;"><b>${event.org_name || 'Unknown Organizer'}</b></h3>
     `;
-    moduleContainer.appendChild(moduleDiv);
+        moduleContainer.appendChild(moduleDiv);
 
-    const modalDiv = document.createElement('div');
-    modalDiv.classList.add('modal');
-    modalDiv.id = `eventModal${index}`;
-    modalDiv.innerHTML = `
+        const modalDiv = document.createElement('div');
+        modalDiv.classList.add('modal');
+        modalDiv.id = `eventModal${index}`;
+        modalDiv.innerHTML = `
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -155,23 +158,23 @@ function loadEvents2() {
         </div>
       </div>
     `;
-    document.body.appendChild(modalDiv);
-  });
-}
+        document.body.appendChild(modalDiv);
+      });
+    }
 
-// Fetch events when the page loads
-window.onload = function() {
-  loadEvents();
-  searchDiscoverEvents();//if commented will show list when first loaded
-  fetchEvents();
-  checkUpcomingEvents();
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  setTheme(savedTheme);
-  document.getElementById('theme').value = savedTheme;
-};
-</script>
-    <!-- navbar -->
-     <header>
+    // Fetch events when the page loads
+    window.onload = function () {
+      loadEvents();
+      searchDiscoverEvents();//if commented will show list when first loaded
+      fetchEvents();
+      checkUpcomingEvents();
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      setTheme(savedTheme);
+      document.getElementById('theme').value = savedTheme;
+    };
+  </script>
+  <!-- navbar -->
+  <header>
     <nav>
       <ul id="NavUl">
         <a href="index"><img src="Images/logo.png"></a>
@@ -179,84 +182,87 @@ window.onload = function() {
         <li><a href="discover"><b>Discover</b></a></li>
         <li><a href="hours"><b>Hour log</b></a></li>
         <li><a href="calendar"><b>Calendar</b></a></li>
-        <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+        <li style="float:right; display:flex; align-content: center;"><a href="account"> <img
+              src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
       </ul>
     </nav>
 
-      <div style="margin-bottom: 50px;"></div>
-      </header>
-    <!--End of navbar -->
-    <div class="discover-search-container">
-      <input type="text" id="discoverSearchInput" placeholder="Search events by title, location, or date..." onkeyup="searchDiscoverEvents()">
+    <div style="margin-bottom: 50px;"></div>
+  </header>
+  <!--End of navbar -->
+  <div class="discover-search-container">
+    <input type="text" id="discoverSearchInput" placeholder="Search events by title, location, or date..."
+      onkeyup="searchDiscoverEvents()">
   </div>
   <div class="discover-events-list" style="display: none;"> <!-- Initially hidden -->
-      <!-- Add more event elements here -->
+    <!-- Add more event elements here -->
   </div>
-    <div class="discover-events-list" style="display: none;"> <!-- Initially hidden -->
-      <!-- Events will be dynamically added here -->
+  <div class="discover-events-list" style="display: none;"> <!-- Initially hidden -->
+    <!-- Events will be dynamically added here -->
   </div>
   <div class="module-container" style="margin-bottom: 20%;"></div>
-    <!--Start of java stript -->
-    <script>
-  // Get the modal
-  var modal1 = document.getElementById("eventModal1");
+  <!--Start of java stript -->
+  <script>
+    // Get the modal
+    var modal1 = document.getElementById("eventModal1");
 
-  // Get the button that opens the modal
-  var btn1 = document.getElementById("btn btn-primary");
+    // Get the button that opens the modal
+    var btn1 = document.getElementById("btn btn-primary");
 
-  // Get the <span> element that closes the modal
-  var span1 = document.getElementsByClassName("close")[0];
+    // Get the <span> element that closes the modal
+    var span1 = document.getElementsByClassName("close")[0];
 
-  // When the user clicks the button, open the modal
-  btn1.onclick = function() {
-    modal1.style.display = "block";
-  }
+    // When the user clicks the button, open the modal
+    btn1.onclick = function () {
+      modal1.style.display = "block";
+    }
 
-  // When the user clicks on <span> (x), close the modal
-  span1.onclick = function() {
-    modal1.style.display = "none";
-  }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal1) {
+    // When the user clicks on <span> (x), close the modal
+    span1.onclick = function () {
       modal1.style.display = "none";
     }
-    function closeModal() {
 
-const modalBackdrop = document.querySelector('.modal-backdrop');
-const modal = document.querySelector('#myModal'); // Ensure you select your modal
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal1) {
+        modal1.style.display = "none";
+      }
+      function closeModal() {
 
-if (modalBackdrop) {
-modalBackdrop.classList.remove('show');
-modalBackdrop.classList.add('fade');
+        const modalBackdrop = document.querySelector('.modal-backdrop');
+        const modal = document.querySelector('#myModal'); // Ensure you select your modal
 
-// Remove from the DOM after transition
-setTimeout(() => {
-modalBackdrop.remove();
-}, 300); // Match the transition duration
-}
+        if (modalBackdrop) {
+          modalBackdrop.classList.remove('show');
+          modalBackdrop.classList.add('fade');
 
-modal.style.display = 'none'; // Hide the modal
-}
+          // Remove from the DOM after transition
+          setTimeout(() => {
+            modalBackdrop.remove();
+          }, 300); // Match the transition duration
+        }
 
-  }
-</script>
-<footer>
-  <p>&copy; WeServe</p>
-  <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
-    <ul>
-      <li><a href="#">Terms of Use</a></li>
-      <li><a href="#">Privacy Policy</a></li>
-      <li><a href="#">Example Link 1</a></li>
-      <li><a href="devHub">Dev</a></li>
-      <li><a href="feedback">Feedback Form</a></li>
-      <li><a href="askew">ASKEW</a></li>
-    </ul>
-</div>
-</footer>
-<script src="script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- End of java script -->
-  </body>
+        modal.style.display = 'none'; // Hide the modal
+      }
+
+    }
+  </script>
+  <footer>
+    <p>&copy; WeServe</p>
+    <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
+      <ul>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Example Link 1</a></li>
+        <li><a href="devHub">Dev</a></li>
+        <li><a href="feedback">Feedback Form</a></li>
+        <li><a href="askew">ASKEW</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- End of java script -->
+</body>
+
 </html>

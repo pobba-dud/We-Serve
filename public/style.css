@@ -1,4 +1,3 @@
-
 /* testing importing fonts^^ */
 html {
   height: 100%;
@@ -8,24 +7,31 @@ html {
 
 
 
-body{
-  background-color: white ;
+body {
+  background-color: white;
   margin: 0%;
 }
+
 /* dark mode */
 body.dark-mode {
-  background-color: #121212; /* Dark background */
-  color: #f7f7f7; /* Light text color */
+  background-color: #121212;
+  /* Dark background */
+  color: #f7f7f7;
+  /* Light text color */
 }
 
 body.dark-mode .module {
-  background-color: rgb(36, 36, 36); /* Dark module background */
-  color: white; /* Light text color */
+  background-color: rgb(36, 36, 36);
+  /* Dark module background */
+  color: white;
+  /* Light text color */
 }
 
 body.dark-mode table {
-  background-color: #3f3e3e; /* Dark table background */
-  color: #f7f7f7; /* Light text color */
+  background-color: #3f3e3e;
+  /* Dark table background */
+  color: #f7f7f7;
+  /* Light text color */
   border: #070707;
 }
 
@@ -63,13 +69,16 @@ body.dark-mode .modal-lg {
   background-color: #283A43;
   font-size: 20px;
 }
+
 li {
   float: left;
   display: flex;
   align-content: center;
   color: #9bd1e5;
 }
-li a:link, li a:visited{
+
+li a:link,
+li a:visited {
   padding-top: 18px;
   padding-bottom: 18px;
   padding-right: 18px;
@@ -82,7 +91,8 @@ li a:link, li a:visited{
   border-radius: 5px;
   display: inline-block;
 }
-li a:hover{
+
+li a:hover {
   padding-top: 18px;
   padding-bottom: 18px;
   padding-right: 18px;
@@ -96,20 +106,23 @@ li a:hover{
   border-radius: 5px;
   display: inline-block;
 }
-#NavUl img{
+
+#NavUl img {
   float: left;
-   display: flex;
-    width: 57px;
-    height:auto;
-   margin: 0%;
-   padding: 0%;
-   margin-right: 5px;
- }
+  display: flex;
+  width: 57px;
+  height: auto;
+  margin: 0%;
+  padding: 0%;
+  margin-right: 5px;
+}
+
 /* end of navbar css */
 
 /* Hour Log Style */
-.hourContainer div{
-  border: 5px solid #082638; /* Color is different from others because it shows differently, PLEASE don't change it */
+.hourContainer div {
+  border: 5px solid #082638;
+  /* Color is different from others because it shows differently, PLEASE don't change it */
   background-color: #9bd1e5;
   color: #283A43;
   font-size: 160%;
@@ -129,10 +142,12 @@ li a:hover{
 }
 
 body.dark-mode .hourContainer div {
-  border: 5px solid #2b2c2c; /* Color is different from others because it shows differently, PLEASE don't change it */
+  border: 5px solid #2b2c2c;
+  /* Color is different from others because it shows differently, PLEASE don't change it */
   background-color: #575757;
   color: #ffffff;
 }
+
 .hourContainer {
   display: flex;
   flex-direction: row;
@@ -140,13 +155,13 @@ body.dark-mode .hourContainer div {
   height: inherit;
 }
 
-.hourContainer p:not(#loggedNum){
+.hourContainer p:not(#loggedNum) {
   border: 1px hidden;
   height: 15%;
 }
 
 
-#loggedNum{
+#loggedNum {
   font-size: 230%;
 }
 
@@ -154,7 +169,7 @@ body.dark-mode .hourContainer div {
 
 /* module like containers */
 
-.module{
+.module {
   display: block;
   margin-left: 2.5%;
   margin-right: 2.5%;
@@ -165,28 +180,30 @@ body.dark-mode .hourContainer div {
   width: 44%;
   height: auto;
   border-radius: 25px;
-  background-color:#9bd1e5;
+  background-color: #9bd1e5;
   color: #283A43;
-  padding-bottom:2.5px;
+  padding-bottom: 2.5px;
 }
 
-.innerContainer{
-  background-color:white;
-  margin:1%;
+.innerContainer {
+  background-color: white;
+  margin: 1%;
   padding: 1%;
   border-radius: 25px;
   display: block;
 }
-.moduleHeader{
+
+.moduleHeader {
   padding: 0px;
-  margin:10px;
+  margin: 10px;
   font-size: 175%;
   margin-bottom: 0px;
-  margin-top:10px;
+  margin-top: 10px;
   padding-bottom: 0px;
   padding-left: 5px;
 }
-.module img{
+
+.module img {
   width: 50%;
   margin-left: 25%;
   margin-top: 2%;
@@ -195,38 +212,43 @@ body.dark-mode .hourContainer div {
   display: flex;
   justify-content: center;
 }
-.displayImg{
+
+.displayImg {
   width: 40%;
   height: auto;
 }
-.module button{
-  margin-right:20%;
+
+.module button {
+  margin-right: 20%;
   margin-top: 3%;
   float: right;
   color: white;
   background-color: #283A43;
   border-radius: 25px;
-  border:none;
+  border: none;
   font-size: 150%;
   cursor: pointer;
   padding: 1.5%;
 }
-.innerContainer button{
-  margin-right:10%;
+
+.innerContainer button {
+  margin-right: 10%;
   margin-top: 0%;
-  margin-left:10%;
+  margin-left: 10%;
   float: right;
   color: white;
   background-color: #283A43;
   border-radius: 25px;
-  border:none;
+  border: none;
   font-size: 150%;
   cursor: pointer;
   padding: 1.5%;
 }
+
 #module-buttons:hover {
   background-color: #3d5764;
 }
+
 table {
   border: #283A43;
   border-radius: 10px;
@@ -236,10 +258,13 @@ table {
   margin: 2.5%;
   text-align: center;
 }
-table td, table th {
+
+table td,
+table th {
   border: 1px solid #283A43;
   border-collapse: collapse;
 }
+
 th {
   padding: 10px;
   border-radius: 10px;
@@ -250,183 +275,284 @@ th {
   font-weight: bold;
 }
 
-#table1{
-  float:right;
+#table1 {
+  float: right;
 }
-#NavUl img{
+
+#NavUl img {
   float: left;
-   display: flex;
-    width: 57px;
-    height:auto;
-   margin: 0%;
-   padding: 0%;
-   margin-right: 5px;
- }
+  display: flex;
+  width: 57px;
+  height: auto;
+  margin: 0%;
+  padding: 0%;
+  margin-right: 5px;
+}
 
 
 @media only screen and (max-width: 885px) {
-.hourContainer div{
-  flex-direction: column;
-align-content: center;
-justify-content: center;
-width:80%;
-margin-bottom: 5%;
+  .hourContainer div {
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    width: 80%;
+    margin-bottom: 5%;
+  }
+
+  .hourContainer {
+    flex-direction: column;
+  }
 }
-.hourContainer {flex-direction: column;}
-}
+
 @media only screen and (max-width: 599px) {
-  html { font-size: smaller; }
-  li { align-items: center; font-size: 60%; }
-  .module {float: left; width: 94%; }
-  .moduleHeader h2 {margin-top: 0%; }
-  table  { size: 30px;}
-  #table1{float: none;}
-  .module button {width: 85px; height: 40px; font-size: .9em;}
-  .module h3, .innerContainer h3 { font-size: 1.9em; }
-  .module #thisModule{padding-bottom: 8%;padding-top: 4%;}
-  #scaleableWords{padding-top: 3%;}
-  li a:link, li a:visited {
+  html {
+    font-size: smaller;
+  }
+
+  li {
+    align-items: center;
+    font-size: 60%;
+  }
+
+  .module {
+    float: left;
+    width: 94%;
+  }
+
+  .moduleHeader h2 {
+    margin-top: 0%;
+  }
+
+  table {
+    size: 30px;
+  }
+
+  #table1 {
+    float: none;
+  }
+
+  .module button {
+    width: 85px;
+    height: 40px;
+    font-size: .9em;
+  }
+
+  .module h3,
+  .innerContainer h3 {
+    font-size: 1.9em;
+  }
+
+  .module #thisModule {
+    padding-bottom: 8%;
+    padding-top: 4%;
+  }
+
+  #scaleableWords {
+    padding-top: 3%;
+  }
+
+  li a:link,
+  li a:visited {
     padding-left: 0;
+  }
+
+  #thisModule {
+    padding-bottom: 5%;
+    padding-top: 3%;
+  }
 }
-#thisModule{
-  padding-bottom: 5%;
-  padding-top: 3%;
-}
-}
+
 footer {
   margin-top: 15%;
   margin-bottom: 0%;
-  background-color: #283A43; /* A shade of blue */
-  color: #f7f7f7; /* A shade of white */
-  text-align: center; /* Center the text */
-  clear: both; /* To ensure the footer is below the content */
+  background-color: #283A43;
+  /* A shade of blue */
+  color: #f7f7f7;
+  /* A shade of white */
+  text-align: center;
+  /* Center the text */
+  clear: both;
+  /* To ensure the footer is below the content */
   padding-top: 2%;
   font-size: 150%;
 }
+
 footer ul {
   background-color: #283A43;
-  display: inline-block; /* Ensure the list is centered */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
+  display: inline-block;
+  /* Ensure the list is centered */
+  padding: 0;
+  /* Remove padding */
+  margin: 0;
+  /* Remove margin */
 }
+
 footer ul li {
-  display: inline; /* Display list items inline */
-  margin: 0 10px; /* Add some space between list items */
+  display: inline;
+  /* Display list items inline */
+  margin: 0 10px;
+  /* Add some space between list items */
 }
 
 
 /* Mobile styles */
 @media only screen and (max-width: 678px) {
-  html { font-size: smaller; }
-  .nav ul { align-items: center; }
-  .module {float: none; width: 94%; }
-  .moduleHeader h2 {margin-top: 0%; }
-  table  { size: 30px;}
-  .module button {width: 85px; height: 40px; font-size: .9em;}
-  .module h3, .innerContainer h3 { font-size: 1.9em; }
-  .module #thisModule{padding-bottom: 8%;}
-  #scaleableWords{padding-top: 3%;}
-  #table1{float: none;}
-  
+  html {
+    font-size: smaller;
+  }
+
+  .nav ul {
+    align-items: center;
+  }
+
+  .module {
+    float: none;
+    width: 94%;
+  }
+
+  .moduleHeader h2 {
+    margin-top: 0%;
+  }
+
+  table {
+    size: 30px;
+  }
+
+  .module button {
+    width: 85px;
+    height: 40px;
+    font-size: .9em;
+  }
+
+  .module h3,
+  .innerContainer h3 {
+    font-size: 1.9em;
+  }
+
+  .module #thisModule {
+    padding-bottom: 8%;
+  }
+
+  #scaleableWords {
+    padding-top: 3%;
+  }
+
+  #table1 {
+    float: none;
+  }
+
 }
-@media only screen and (max-width: 420px){
+
+@media only screen and (max-width: 420px) {
   #NavUl li a {
     padding-left: 0%;
   }
-  footer{
+
+  footer {
     font-size: large;
   }
 }
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-    border-radius: 25px;
-  }
-  
-  .modal-content, .modal-lg {
-    background-color: #fefefe;
-    margin: 4% auto;
-    padding: 20px;
-    width: 80%;
-  }
-  
-  .modalModule{
-    display: inline;
-  }
-  
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  .modal-body .event-image {
-    width: 100%;
-    height: 200px;
-    background-color: #e0e0e0;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    color: #6c757d;
-  }
-  
-  .event-info h5 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 15px;
-  }
-  
-  .event-details {
-    margin-bottom: 20px;
-  }
-  
-  .event-details p {
-    color: #6c757d;
-  }
-  
-  .event-details span {
-    display: block;
-    color: #6c757d;
-  }
-  
-  .schedule-btn {
-    background-color: #0d6efd;
-    color: white;
-    border-radius: 25px;
-    padding: 10px 20px;
-    border: none;
-    margin-top: 20px;
-  }
-  
-  .schedule-btn:hover {
-    background-color: #2a3a44;
-  }
 
-  .notification {
-    position: fixed;
-    bottom: 20px; /* Position from the bottom */
-    right: 20px; /* Position from the right */
-    background-color: #283A43; /* Dark blue background */
-    color: white; /* White text */
-    padding: 15px; /* Some padding */
-    border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
-    z-index: 1000; /* Ensure it appears above other content */
-    transition: opacity 0.5s; /* Smooth transition for fade out */
-  }
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 25px;
+}
+
+.modal-content,
+.modal-lg {
+  background-color: #fefefe;
+  margin: 4% auto;
+  padding: 20px;
+  width: 80%;
+}
+
+.modalModule {
+  display: inline;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-body .event-image {
+  width: 100%;
+  height: 200px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #6c757d;
+}
+
+.event-info h5 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.event-details {
+  margin-bottom: 20px;
+}
+
+.event-details p {
+  color: #6c757d;
+}
+
+.event-details span {
+  display: block;
+  color: #6c757d;
+}
+
+.schedule-btn {
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  border: none;
+  margin-top: 20px;
+}
+
+.schedule-btn:hover {
+  background-color: #2a3a44;
+}
+
+.notification {
+  position: fixed;
+  bottom: 20px;
+  /* Position from the bottom */
+  right: 20px;
+  /* Position from the right */
+  background-color: #283A43;
+  /* Dark blue background */
+  color: white;
+  /* White text */
+  padding: 15px;
+  /* Some padding */
+  border-radius: 5px;
+  /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  /* Shadow for depth */
+  z-index: 1000;
+  /* Ensure it appears above other content */
+  transition: opacity 0.5s;
+  /* Smooth transition for fade out */
+}

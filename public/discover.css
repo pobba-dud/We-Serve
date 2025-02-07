@@ -1,158 +1,181 @@
-
 .modal-backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 0;
-    background-color: #000;
-    opacity: 0.5;
-    transition: opacity 0.3s ease; /* Smooth transition */
-    }
-    .modal-backdrop.fade {
-    opacity: 0;
-    }
-    .modal-backdrop.show {
-    opacity: 0.5;
-    }
-    .modal-backdrop.in {
-      opacity: none;
-    }
-        #NavUl img{
-         float: left;
-          display: flex;
-           width: 57px;
-           height:auto;
-          margin: 0%;
-          padding: 0%;
-          margin-right: 5px;
-        }
-        .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.4);
-      border-radius: 25px;
-    }
-    
-    .modal-content, .modal-lg {
-      background-color: #fefefe;
-      margin: 4% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-    
-    .modalModule{
-      display: inline;
-    }
-    
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    
-    .modal-body .event-image {
-      width: 100%;
-      height: 200px;
-      background-color: #e0e0e0;
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-      color: #6c757d;
-    }
-    
-    .event-info h5 {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 15px;
-    }
-    
-    .event-details {
-      margin-bottom: 20px;
-    }
-    
-    .event-details p {
-      color: #6c757d;
-    }
-    
-    .event-details span {
-      display: block;
-      color: #6c757d;
-    }
-    
-    .schedule-btn {
-      background-color: #0d6efd;
-      color: white;
-      border-radius: 25px;
-      padding: 10px 20px;
-      border: none;
-      margin-top: 20px;
-    }
-    
-    .schedule-btn:hover {
-      background-color: #283A43;
-    }
-        footer {
-            margin-top: 7%;
-      background-color: #283A43; /* A shade of blue */
-      color: #f7f7f7; /* A shade of white */
-      padding: 1rem;
-      text-align: center;
-      clear: both; /* To ensure the footer is below the calendar */
-    }
-    .discover-search-container {
-        margin: 20px;
-    }
-    
-    #discoverSearchInput {
-        margin-left: 2.5%;
-        width: 95%;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    #locationSearchInput {
-        margin-left: 2.5%;
-        margin-bottom: .5%;
-        width: 95%;
-        padding: 10px; /* Add padding for better spacing */
-        font-size: 16px;
-        border: 1px solid #ccc; /* Light border for better visibility */
-        border-radius: 4px; /* Rounded corners */
-        background-color: #f9f9f9; /* Light background color */
-        transition: border-color 0.3s; /* Smooth transition for border color */
-    }
-    
-    #locationSearchInput:focus {
-        border-color: #283A43; /* Change border color on focus */
-        outline: none; /* Remove default outline */
-    }
-    
-    .discover-events-list {
-        margin-top: 20px; /* Adding some space between search and events */
-    }
-    
-    .event {
-        margin: 10px 0; /* Space between individual events */
-        padding: 10px;
-        border: 1px solid #ccc; /* Optional: to visually separate events */
-        border-radius: 4px; /* Optional: rounded corners */
-    }
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  background-color: #000;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+  /* Smooth transition */
+}
+
+.modal-backdrop.fade {
+  opacity: 0;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5;
+}
+
+.modal-backdrop.in {
+  opacity: none;
+}
+
+#NavUl img {
+  float: left;
+  display: flex;
+  width: 57px;
+  height: auto;
+  margin: 0%;
+  padding: 0%;
+  margin-right: 5px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 25px;
+}
+
+.modal-content,
+.modal-lg {
+  background-color: #fefefe;
+  margin: 4% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.modalModule {
+  display: inline;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-body .event-image {
+  width: 100%;
+  height: 200px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #6c757d;
+}
+
+.event-info h5 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.event-details {
+  margin-bottom: 20px;
+}
+
+.event-details p {
+  color: #6c757d;
+}
+
+.event-details span {
+  display: block;
+  color: #6c757d;
+}
+
+.schedule-btn {
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  border: none;
+  margin-top: 20px;
+}
+
+.schedule-btn:hover {
+  background-color: #283A43;
+}
+
+footer {
+  margin-top: 7%;
+  background-color: #283A43;
+  /* A shade of blue */
+  color: #f7f7f7;
+  /* A shade of white */
+  padding: 1rem;
+  text-align: center;
+  clear: both;
+  /* To ensure the footer is below the calendar */
+}
+
+.discover-search-container {
+  margin: 20px;
+}
+
+#discoverSearchInput {
+  margin-left: 2.5%;
+  width: 95%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#locationSearchInput {
+  margin-left: 2.5%;
+  margin-bottom: .5%;
+  width: 95%;
+  padding: 10px;
+  /* Add padding for better spacing */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  /* Light border for better visibility */
+  border-radius: 4px;
+  /* Rounded corners */
+  background-color: #f9f9f9;
+  /* Light background color */
+  transition: border-color 0.3s;
+  /* Smooth transition for border color */
+}
+
+#locationSearchInput:focus {
+  border-color: #283A43;
+  /* Change border color on focus */
+  outline: none;
+  /* Remove default outline */
+}
+
+.discover-events-list {
+  margin-top: 20px;
+  /* Adding some space between search and events */
+}
+
+.event {
+  margin: 10px 0;
+  /* Space between individual events */
+  padding: 10px;
+  border: 1px solid #ccc;
+  /* Optional: to visually separate events */
+  border-radius: 4px;
+  /* Optional: rounded corners */
+}

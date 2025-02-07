@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +13,16 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
-            transition: background-color 0.3s; /* Smooth transition for background color */
+            transition: background-color 0.3s;
+            /* Smooth transition for background color */
         }
 
         body.dark-mode {
-            background-color: #121212; /* Dark background */
+            background-color: #121212;
+            /* Dark background */
             transition: background-color 0.3s;
         }
+
         body.dark-mode .settings-container {
             background-color: #3f3e3e;
             color: white;
@@ -68,7 +72,8 @@
         }
 
         button:hover {
-            background-color: #0056b3; /* Darker button on hover */
+            background-color: #0056b3;
+            /* Darker button on hover */
         }
     </style>
 </head>
@@ -83,7 +88,8 @@
             </select>
         </div>
         <div class="setting-item">
-            <label for="notifications">Email Notifications: <input type="checkbox" id="notifications" name="notifications" checked></label> 
+            <label for="notifications">Email Notifications: <input type="checkbox" id="notifications"
+                    name="notifications" checked></label>
         </div>
         <h1>Change Password</h1>
         <label><b>Update Password</b></label>
@@ -104,49 +110,49 @@
 </div>
 
 <script>
-document.getElementById('settings-form').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent default form submission
+    document.getElementById('settings-form').addEventListener('submit', async function (event) {
+        event.preventDefault(); // Prevent default form submission
 
-    const currentPassword = document.getElementById('current-password').value.trim();
-    const newPassword = document.getElementById('new-password').value.trim();
-    const confirmNewPassword = document.getElementById('confirm-new-password').value.trim();
-    const theme = document.getElementById('theme').value;
+        const currentPassword = document.getElementById('current-password').value.trim();
+        const newPassword = document.getElementById('new-password').value.trim();
+        const confirmNewPassword = document.getElementById('confirm-new-password').value.trim();
+        const theme = document.getElementById('theme').value;
 
-    // Handle password change if the current password is provided
-    if (currentPassword) {
-        if (!newPassword || newPassword !== confirmNewPassword) {
-            alert("New passwords do not match or are empty.");
-            return; // Stop if password validation fails
-        }
-
-        try {
-            const passwordResponse = await fetch('/change-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ currentPassword, newPassword }),
-            });
-
-            const passwordResult = await passwordResponse.json();
-            if (passwordResponse.ok) {
-                alert(passwordResult.message); // Success message
-            } else {
-                alert(passwordResult.message || 'Error changing password.');
-                return; // Stop further execution if password change fails
+        // Handle password change if the current password is provided
+        if (currentPassword) {
+            if (!newPassword || newPassword !== confirmNewPassword) {
+                alert("New passwords do not match or are empty.");
+                return; // Stop if password validation fails
             }
-        } catch (error) {
-            console.error('Error changing password:', error);
-            alert('An error occurred while changing the password. Please try again.');
-            return; // Stop further execution
-        }
-    }
 
-    // Save theme and other settings
-    localStorage.setItem('theme', theme);
-    alert('Settings saved successfully.');
-    window.location.href = 'account';
-});
+            try {
+                const passwordResponse = await fetch('/change-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ currentPassword, newPassword }),
+                });
+
+                const passwordResult = await passwordResponse.json();
+                if (passwordResponse.ok) {
+                    alert(passwordResult.message); // Success message
+                } else {
+                    alert(passwordResult.message || 'Error changing password.');
+                    return; // Stop further execution if password change fails
+                }
+            } catch (error) {
+                console.error('Error changing password:', error);
+                alert('An error occurred while changing the password. Please try again.');
+                return; // Stop further execution
+            }
+        }
+
+        // Save theme and other settings
+        localStorage.setItem('theme', theme);
+        alert('Settings saved successfully.');
+        window.location.href = 'account';
+    });
 
 
     // Function to toggle between light and dark themes
@@ -167,6 +173,7 @@ document.getElementById('settings-form').addEventListener('submit', async functi
     };
 
 
-    </script>
+</script>
 </body>
+
 </html>

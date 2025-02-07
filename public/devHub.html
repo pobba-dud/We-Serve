@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
@@ -9,6 +10,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="script.js"></script>
 </head>
+
 <body>
   <header>
     <nav>
@@ -18,14 +20,15 @@
         <li><a href="discover"><b>Discover</b></a></li>
         <li><a href="hours"><b>Hour log</b></a></li>
         <li><a href="calendar"><b>Calendar</b></a></li>
-        <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+        <li style="float:right; display:flex; align-content: center;"><a href="account"> <img
+              src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
       </ul>
     </nav>
   </header>
 
   <!-- Buttons to unlinked pages -->
   <div style="text-align: center; display: block;">
-    <button><a href="organizationEvent">org event</a></button> 
+    <button><a href="organizationEvent">org event</a></button>
     <button><a href="Calendartest"> cal test</a></button>
     <button><a href="SignUp">signup</a></button>
     <button><a href="login">Login</a></button>
@@ -77,7 +80,7 @@
     </div>
   </div>
   <div class="col-md-6">
-    <h2 id = "eventNameTitle">Event Participants ()</h2>
+    <h2 id="eventNameTitle">Event Participants ()</h2>
     <select id="eventSelect" onchange="loadParticipants()">
       <option value="">Select an event</option>
       <!-- Events will be populated dynamically -->
@@ -95,7 +98,7 @@
       </tbody>
     </table>
   </div>
-<div class="container mt-5">
+  <div class="container mt-5">
     <h1>Dev Hub</h1>
     <div class="row">
       <div class="col-md-6">
@@ -119,30 +122,30 @@
       alert('Local storage cleared!');
     }
     async function clearEvents() {
-    // First confirmation dialog
-    const firstConfirm = confirm("⚠ WARNING: You are about to delete ALL events. This action CANNOT be undone. Do you wish to continue?");
-    
-    if (!firstConfirm) return; // Stop execution if they cancel
+      // First confirmation dialog
+      const firstConfirm = confirm("⚠ WARNING: You are about to delete ALL events. This action CANNOT be undone. Do you wish to continue?");
 
-    // Second confirmation for extra caution
-    const secondConfirm = confirm("⚠ FINAL WARNING: Are you absolutely sure you want to delete all events? This cannot be reversed!");
+      if (!firstConfirm) return; // Stop execution if they cancel
 
-    if (!secondConfirm) return; // Stop execution if they cancel
+      // Second confirmation for extra caution
+      const secondConfirm = confirm("⚠ FINAL WARNING: Are you absolutely sure you want to delete all events? This cannot be reversed!");
 
-    try {
+      if (!secondConfirm) return; // Stop execution if they cancel
+
+      try {
         // Proceed with deletion
         const response = await fetch('/api/admin/clear-events', { method: 'DELETE' });
 
         if (response.ok) {
-            alert('✅ All events have been successfully deleted.');
+          alert('✅ All events have been successfully deleted.');
         } else {
-            alert('❌ Failed to clear events. Please try again.');
+          alert('❌ Failed to clear events. Please try again.');
         }
-    } catch (error) {
+      } catch (error) {
         console.error("Error clearing events:", error);
         alert("❌ An error occurred while clearing events.");
+      }
     }
-}
     async function createTestEvent() {
       const response = await fetch('/api/admin/create-test-event', { method: 'POST' });
       if (response.ok) {
@@ -183,32 +186,32 @@
       `).join('');
     }
     async function loadEvents2() {
-    const response = await fetch('/api/admin/events');
-    const events = await response.json();
-    const eventSelect = document.getElementById('eventSelect');
-    eventSelect.innerHTML = events.map(event => `
+      const response = await fetch('/api/admin/events');
+      const events = await response.json();
+      const eventSelect = document.getElementById('eventSelect');
+      eventSelect.innerHTML = events.map(event => `
       <option value="${event.id}">${event.id} ${event.name} (${event.event_date.split('T')[0]})</option>
     `).join('');
-    loadParticipants();
+      loadParticipants();
 
-  }
+    }
 
     async function loadParticipants() {
       const eventId = document.getElementById('eventSelect').value;
-    if (!eventId) return;
-    const response = await fetch(`/api/events/${eventId}/participants`);
-    const participants = await response.json();
-    const participantTable = document.getElementById('participantTable').getElementsByTagName('tbody')[0];
-    participantTable.innerHTML = participants.map(participant => `
+      if (!eventId) return;
+      const response = await fetch(`/api/events/${eventId}/participants`);
+      const participants = await response.json();
+      const participantTable = document.getElementById('participantTable').getElementsByTagName('tbody')[0];
+      participantTable.innerHTML = participants.map(participant => `
       <tr>
         <td>${participant.id}</td>
         <td>${participant.firstname} ${participant.lastname}</td>
         <td>${participant.email}</td>
       </tr>
     `).join('');
-    document.getElementById("eventNameTitle").innerHTML = `Event Participants (${event.name}):`;
-    
-  }
+      document.getElementById("eventNameTitle").innerHTML = `Event Participants (${event.name}):`;
+
+    }
     async function deleteUser(userId) {
       await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
       loadUsers();
@@ -219,20 +222,21 @@
       loadEvents();
     }
     function setTheme(theme) {
-          document.body.className = theme === 'dark' ? 'dark-mode' : '';
-          localStorage.setItem('theme', theme); // Save the theme preference
-      }
+      document.body.className = theme === 'dark' ? 'dark-mode' : '';
+      localStorage.setItem('theme', theme); // Save the theme preference
+    }
     window.onload = () => {
       console.log("Admin Page Loaded!")
       loadUsers();
       loadEvents();
       loadEvents2();
       loadParticipants();
-          const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-          setTheme(savedTheme);
-          document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-      
+      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+      setTheme(savedTheme);
+      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+
     };
   </script>
 </body>
+
 </html>

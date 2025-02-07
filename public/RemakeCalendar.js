@@ -20,7 +20,7 @@ function generateCalendar(year, month) {
 
     // Create a new row for the days of the month
     let dayCounter = 1;
-    
+
     // Add empty days for the beginning of the month
     let row = document.createElement("div");
     row.className = "week";
@@ -53,7 +53,7 @@ function generateCalendar(year, month) {
 }
 
 // Handle the "Prev" and "Next" buttons
-document.getElementById("BackButton").addEventListener("click", function() {
+document.getElementById("BackButton").addEventListener("click", function () {
     if (currentMonth === 0) {
         currentMonth = 11; // December
         currentYear--; // Go to previous year
@@ -63,7 +63,7 @@ document.getElementById("BackButton").addEventListener("click", function() {
     generateCalendar(currentYear, currentMonth); // Re-render the calendar
 });
 
-document.getElementById("NextButton").addEventListener("click", function() {
+document.getElementById("NextButton").addEventListener("click", function () {
     if (currentMonth === 11) {
         currentMonth = 0; // January
         currentYear++; // Go to next year
@@ -74,6 +74,6 @@ document.getElementById("NextButton").addEventListener("click", function() {
 });
 
 // Initial call to populate the current month
-window.onload = function() {
+window.onload = function () {
     generateCalendar(currentYear, currentMonth); // Display current month on page load
 };

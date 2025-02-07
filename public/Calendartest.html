@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -163,7 +164,8 @@
     /* Responsive Design */
     @media (max-width: 768px) {
       #calendar {
-        grid-template-columns: repeat(4, 1fr); /* 4 columns on smaller screens */
+        grid-template-columns: repeat(4, 1fr);
+        /* 4 columns on smaller screens */
       }
 
       h1 {
@@ -187,7 +189,8 @@
 
     @media (max-width: 480px) {
       #calendar {
-        grid-template-columns: repeat(3, 1fr); /* 3 columns on very small screens */
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 columns on very small screens */
       }
 
       h1 {
@@ -210,6 +213,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <h1>Event Calendar</h1>
@@ -283,7 +287,7 @@
           const day = i - paddingDays + 1;
           dayBox.classList.add('day');
           dayBox.innerHTML = day;
-          
+
           const currentDate = `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
           const dayEvents = events.filter(event => event.date === currentDate);
           if (dayEvents.length > 0) {
@@ -359,52 +363,53 @@
     }
     function remoteCreateEvent(date, title, time) {
 
-if (date && title && time) {
+      if (date && title && time) {
 
-  document.getElementById('saveButton').addEventListener('click', () => {
-    const title = document.getElementById('eventTitleInput').value;
-    const time = document.getElementById('eventTimeInput').value;
-    const location = document.getElementById('eventLocationInput').value;
-    const type = document.getElementById('eventTypeInput').value;
-    const startDate = document.getElementById('startDateInput').value;
-    const endDate = document.getElementById('endDateInput').value;
+        document.getElementById('saveButton').addEventListener('click', () => {
+          const title = document.getElementById('eventTitleInput').value;
+          const time = document.getElementById('eventTimeInput').value;
+          const location = document.getElementById('eventLocationInput').value;
+          const type = document.getElementById('eventTypeInput').value;
+          const startDate = document.getElementById('startDateInput').value;
+          const endDate = document.getElementById('endDateInput').value;
 
-    // Store the event with start and end dates
-    const newEvent = {
-        title,
-        time,
-        location,
-        type,
-        startDate,
-        endDate
-    };
+          // Store the event with start and end dates
+          const newEvent = {
+            title,
+            time,
+            location,
+            type,
+            startDate,
+            endDate
+          };
 
-    const events = JSON.parse(localStorage.getItem('events')) || [];
-    events.push(newEvent);
-    localStorage.setItem('events', JSON.stringify(events));
+          const events = JSON.parse(localStorage.getItem('events')) || [];
+          events.push(newEvent);
+          localStorage.setItem('events', JSON.stringify(events));
 
-    load(); // Refresh the calendar
-});
-} else {
-  console.error("Invalid event details.");
-}
-}
+          load(); // Refresh the calendar
+        });
+      } else {
+        console.error("Invalid event details.");
+      }
+    }
 
-function remoteDeleteEvent(date, time) {
-if (!date || !time) {
-  console.error("Date and time must be provided for deletion.");
-  return;
-}
+    function remoteDeleteEvent(date, time) {
+      if (!date || !time) {
+        console.error("Date and time must be provided for deletion.");
+        return;
+      }
 
-events = events.filter(e => !(e.date === date && e.time === time));
+      events = events.filter(e => !(e.date === date && e.time === time));
 
-localStorage.setItem('events', JSON.stringify(events));
-load();
-}
+      localStorage.setItem('events', JSON.stringify(events));
+      load();
+    }
 
     // Initialize Calendar
     initButtons();
     load();
   </script>
 </body>
+
 </html>

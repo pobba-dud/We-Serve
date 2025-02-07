@@ -41,20 +41,11 @@
       </div>
       <div class="form-group">
         <label for="phonenumber">Phone number (Optional):</label>
-        <input 
-          type="tel" 
-          id="phonenumber" 
-          name="phonenumber" 
-          placeholder="Enter 10 digits" 
-          minlength="10" 
-          maxlength="10" 
-          pattern="[0-9]{10}" 
-          autocomplete="tel"
-          oninput="validatePhoneNumber(this)" 
-        >
+        <input type="tel" id="phonenumber" name="phonenumber" placeholder="Enter 10 digits" minlength="10"
+          maxlength="10" pattern="[0-9]{10}" autocomplete="tel" oninput="validatePhoneNumber(this)">
         <small id="phoneError" style="color: red; display: none;">Phone number must be 10 digits.</small>
       </div>
-      
+
       <div class="form-group">
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" required>
@@ -79,7 +70,7 @@
       <button type="submit">Sign Up</button>
     </form>
   </div>
-  <div class= "container" style="display: block-inline;">
+  <div class="container" style="display: block-inline;">
     <h3>Already have an account?</h3>
     <br>
     <button style="display: inline;"><a href="login" style="text-decoration: none;color: black;">Click here</a></button>
@@ -87,19 +78,19 @@
   <script>
     // Password visibility toggle
     function validatePhoneNumber(input) {
-  const phoneError = document.getElementById('phoneError');
+      const phoneError = document.getElementById('phoneError');
 
-  // Check if input is numeric and 10 digits long
-  if (!/^\d{0,10}$/.test(input.value)) {
-    input.value = input.value.replace(/\D/g, ''); // Remove any non-numeric characters
-  }
+      // Check if input is numeric and 10 digits long
+      if (!/^\d{0,10}$/.test(input.value)) {
+        input.value = input.value.replace(/\D/g, ''); // Remove any non-numeric characters
+      }
 
-  if (input.value.length < 10 && input.value.length > 0) {
-    phoneError.style.display = 'block';
-  } else {
-    phoneError.style.display = 'none';
-  }
-}
+      if (input.value.length < 10 && input.value.length > 0) {
+        phoneError.style.display = 'block';
+      } else {
+        phoneError.style.display = 'none';
+      }
+    }
 
     function togglePasswordVisibility(inputId, buttonId) {
       const input = document.getElementById(inputId);
@@ -118,7 +109,7 @@
 
     togglePasswordVisibility('password', 'togglePassword');
     togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword');
-    
+
     document.getElementById('isorg').addEventListener('change', function () {
       const orgNameGroup = document.getElementById('orgNameGroup');
       if (this.value === 'true') {
@@ -130,45 +121,45 @@
 
     // Form submission logic
     document.getElementById('signupForm').addEventListener('submit', async function (event) {
-  event.preventDefault(); // Prevent form submission
+      event.preventDefault(); // Prevent form submission
 
-  const password = document.getElementById('password').value;
-  const confirmPassword = document.getElementById('confirmPassword').value;
-  const isOrg = document.getElementById('isorg').value === 'true';
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const isOrg = document.getElementById('isorg').value === 'true';
 
-  if (password !== confirmPassword) {
-    alert("Passwords do not match!");
-    return; // Stop form submission
-  }
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return; // Stop form submission
+      }
 
-  const formData = new FormData(this);
-  const data = Object.fromEntries(formData.entries());
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
 
-  // Include org_name only if the user is registering as an organization
-console.log("Submitted Data:", data); // Check if orgName is included
+      // Include org_name only if the user is registering as an organization
+      console.log("Submitted Data:", data); // Check if orgName is included
 
 
-  try {
-    const response = await fetch('/registerJS', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      try {
+        const response = await fetch('/registerJS', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert('User registered successfully! Redirecting to login...');
+          window.location.href = '/login';
+        } else {
+          alert(result.message || 'Error registering user.');
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+        alert('A network error occurred.');
+      }
     });
-
-    const result = await response.json();
-    if (response.ok) {
-      alert('User registered successfully! Redirecting to login...');
-      window.location.href = '/login';
-    } else {
-      alert(result.message || 'Error registering user.');
-    }
-  } catch (error) {
-    console.error('Fetch error:', error);
-    alert('A network error occurred.');
-  }
-});
   </script>
 </body>
 

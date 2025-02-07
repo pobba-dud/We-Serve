@@ -115,7 +115,7 @@ function searchDiscoverEvents() { // start of searchDiscoverEvents() function
     const date = event.querySelector('.event-date').textContent.toLowerCase(); // Get the date of the event
     const location = event.querySelector('.event-location').textContent.toLowerCase(); // Get the location of the event
     // Check if the title or date includes the search input
-    if (title.includes(input) || date.includes(input)||location.includes(input)) {
+    if (title.includes(input) || date.includes(input) || location.includes(input)) {
       event.style.display = ""; // Show the event
     } else {
       event.style.display = "none"; // Hide the event
@@ -128,43 +128,43 @@ function searchDiscoverEvents() { // start of searchDiscoverEvents() function
 function showNotification(message) {
   console.log("2nd Function started");
   console.log(message);
-    const notification = document.getElementById("customNotification");
-    console.log(notification);
-    notification.textContent = message; // Set the message
-    notification.style.display = "block"; // Show the notification
-    console.log(notification.textContent);
-    // Hide the notification after 5 seconds
+  const notification = document.getElementById("customNotification");
+  console.log(notification);
+  notification.textContent = message; // Set the message
+  notification.style.display = "block"; // Show the notification
+  console.log(notification.textContent);
+  // Hide the notification after 5 seconds
+  setTimeout(() => {
+    console.log("timer Function started");
+    notification.style.opacity = '0'; // Fade out
     setTimeout(() => {
-      console.log("timer Function started");
-        notification.style.opacity = '0'; // Fade out
-        setTimeout(() => {
-            notification.style.display = "none"; // Hide after fade out
-            notification.style.opacity = '1'; // Reset opacity for next use
-        }, 500); // Wait for the fade out duration
-    }, 500000); // Display for 5 seconds
+      notification.style.display = "none"; // Hide after fade out
+      notification.style.opacity = '1'; // Reset opacity for next use
+    }, 500); // Wait for the fade out duration
+  }, 500000); // Display for 5 seconds
 }
 
 // Function to check for events within 36 hours and show notifications
 function checkUpcomingEvents() {
   console.log("Function started");
-    const currentTime = new Date();
-    const fourtyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
+  const currentTime = new Date();
+  const fourtyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
 
-    // Retrieve events from local storage
-    const storedEvents = JSON.parse(localStorage.getItem('events')) || []; // Replace 'events' with your actual key
+  // Retrieve events from local storage
+  const storedEvents = JSON.parse(localStorage.getItem('events')) || []; // Replace 'events' with your actual key
 
-    storedEvents.forEach(event => {
-      console.log("Events loaded");
-        const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
-        eventDate.setHours(24,0,0,0);
-        console.log(event);
-        if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
-          console.log("event is in timespan");  
-          console.log(event);
-          console.log(eventDate);
-          showNotification(`Upcoming Event: ${event.title} at ${event.location} on ${event.date} at ${event.time}`);
-        }
-    });
+  storedEvents.forEach(event => {
+    console.log("Events loaded");
+    const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
+    eventDate.setHours(24, 0, 0, 0);
+    console.log(event);
+    if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
+      console.log("event is in timespan");
+      console.log(event);
+      console.log(eventDate);
+      showNotification(`Upcoming Event: ${event.title} at ${event.location} on ${event.date} at ${event.time}`);
+    }
+  });
 }
 function closeNotification() {
   const notification = document.getElementById("customNotification");
@@ -177,10 +177,10 @@ function setTheme(theme) {
 }
 
 //end of universally used code
-function clearEvents(){
+function clearEvents() {
   let events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
   console.log(events);
-  events=[];
+  events = [];
   console.log(events); // []
   localStorage.setItem('events', JSON.stringify(events));
   console.log(events)
@@ -196,31 +196,31 @@ function clearOldEvents() {
 
   // Filter out old events
   events = events.filter(event => {
-      // Check if the event has a date property
-      if (!event.date) {
-          console.warn("Event does not have a date property:", event);
-          return false; // Exclude this event
-      }
+    // Check if the event has a date property
+    if (!event.date) {
+      console.warn("Event does not have a date property:", event);
+      return false; // Exclude this event
+    }
 
-      // Convert the event date to epoch time
-      let eventDateEpoch;
-      try {
-          eventDateEpoch = convertToEpoch(event.date);
-      } catch (error) {
-          console.error("Error converting event date:", error);
-          return false; // Exclude this event if there's an error
-      }
+    // Convert the event date to epoch time
+    let eventDateEpoch;
+    try {
+      eventDateEpoch = convertToEpoch(event.date);
+    } catch (error) {
+      console.error("Error converting event date:", error);
+      return false; // Exclude this event if there's an error
+    }
 
-      console.log(`Event: ${event.title}, Date: ${event.date}, Epoch: ${eventDateEpoch}`); // Debugging: Log event details
+    console.log(`Event: ${event.title}, Date: ${event.date}, Epoch: ${eventDateEpoch}`); // Debugging: Log event details
 
-      // Check if the event date has passed
-      if (eventDateEpoch < currentTime) {
-          console.log(`Removing past event: ${event.title} on ${event.date}`);
-          return false; // Exclude this event (it has passed)
-      }
+    // Check if the event date has passed
+    if (eventDateEpoch < currentTime) {
+      console.log(`Removing past event: ${event.title} on ${event.date}`);
+      return false; // Exclude this event (it has passed)
+    }
 
-      // Keep events that are greater than or equal to the current time
-      return true; // Keep this event
+    // Keep events that are greater than or equal to the current time
+    return true; // Keep this event
   });
 
   // Save the updated events back to local storage
@@ -233,25 +233,25 @@ function clearOldEvents() {
  */
 function convertToEpoch(dateString) {
   if (!dateString) {
-      throw new Error("Date string is undefined or empty.");
+    throw new Error("Date string is undefined or empty.");
   }
 
   let year, month, day;
 
   if (dateString.includes('-')) {
-      // Format: YYYY-MM-DD
-      [year, month, day] = dateString.split('-').map(Number);
+    // Format: YYYY-MM-DD
+    [year, month, day] = dateString.split('-').map(Number);
   } else if (dateString.includes('/')) {
-      // Format: MM/DD/YYYY
-      [month, day, year] = dateString.split('/').map(Number);
+    // Format: MM/DD/YYYY
+    [month, day, year] = dateString.split('/').map(Number);
   } else {
-      throw new Error("Invalid date format. Use 'YYYY-MM-DD' or 'MM/DD/YYYY'.");
+    throw new Error("Invalid date format. Use 'YYYY-MM-DD' or 'MM/DD/YYYY'.");
   }
 
   const date = new Date(year, month - 1, day);
 
   if (isNaN(date.getTime())) {
-      throw new Error("Invalid date.");
+    throw new Error("Invalid date.");
   }
 
   return date.getTime();

@@ -1,308 +1,378 @@
-
 html {
-    height: 100%;
-    width: 100%;
-  
-  }
-  body {
-    display: flex;
-    flex-direction: column;
-    margin: 0%;
-    justify-content: center;
-    background-color: white;
-  }
-nav a {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif 
+  height: 100%;
+  width: 100%;
+
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0%;
+  justify-content: center;
+  background-color: white;
+}
+
+nav a {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
+}
+
 p {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 }
-  /* dark mode */
+
+/* dark mode */
 body.dark-mode {
-  background-color: #121212; /* Dark background */
-  color: #f7f7f7; /* Light text color */
+  background-color: #121212;
+  /* Dark background */
+  color: #f7f7f7;
+  /* Light text color */
 }
 
 body.dark-mode div {
-  color: #f7f7f7; /* Light text color */
+  color: #f7f7f7;
+  /* Light text color */
 }
 
 body.dark-mode div.day {
-  color: #535353; /* Light text color */
-  background-color:#929292 ;
+  color: #535353;
+  /* Light text color */
+  background-color: #929292;
 }
+
 body.dark-mode div.day:hover {
-  color: #535353; /* Light text color */
-  background-color:#b3b3b3 ;
+  color: #535353;
+  /* Light text color */
+  background-color: #b3b3b3;
 }
 
 body.dark-mode div #currentDay.day {
-  color: #535353; /* Light text color */
+  color: #535353;
+  /* Light text color */
   background-color: #c5c5c5;
 }
 
 body.dark-mode .event {
-  color: white; /* Light text color */
+  color: white;
+  /* Light text color */
   background-color: #2f4858;
 }
 
-body.dark-mode #newEventModal{
-  color: white; /* Light text color */
+body.dark-mode #newEventModal {
+  color: white;
+  /* Light text color */
   background-color: #3f3e3e;
 }
 
-body.dark-mode #deleteEventModal{
-  color: white; /* Light text color */
+body.dark-mode #deleteEventModal {
+  color: white;
+  /* Light text color */
   background-color: #3f3e3e;
 }
 
-  button {
-    width: 75px;
-    cursor: pointer;
-    box-shadow: 0px 0px 2px gray;
-    border: none;
-    outline: none;
-    padding: 5px;
-    border-radius: 5px;
-    color: white;
-  }
-  
-  #header {
-    padding: 10px;
-    color: #2f4858;
-    font-size: 26px;
-    font-family: sans-serif;
-    display: flex;
-    justify-content: space-between;
-  }
-  #header button {
-    background-color:#92a1d1;
-  }
-  #container {
-    width: 770px;
-  }
-  #weekdays {
-    width: 100%;
-    display: flex;
-    color: #247BA0;
-  }
-  #weekdays div { 
-    width: 100px;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    padding: 10px;
-  }
-  #calendar {
-    width: 100%;
-    
-    display: flex;
-    flex-wrap: wrap;
-  }
+button {
+  width: 75px;
+  cursor: pointer;
+  box-shadow: 0px 0px 2px gray;
+  border: none;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+}
 
-  .day:hover {
-    background-color: #e8faed;
-  }
-  
-  .day + #currentDay {
-    background-color:#e8f4fa;
-  }
-  .day {
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    width: 100px;
-    height: 100px;
-    padding-left: 1%;
-    padding-top: 1%;
-    cursor: pointer;
-    box-sizing: border-box;
-    background-color: white;
-    margin: 5px;
-    box-shadow: 0px 0px 3px #CBD4C2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative; /* Make room for events to be stacked inside each day */
+#header {
+  padding: 10px;
+  color: #2f4858;
+  font-size: 26px;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: space-between;
+}
+
+#header button {
+  background-color: #92a1d1;
+}
+
+#container {
+  width: 770px;
+}
+
+#weekdays {
+  width: 100%;
+  display: flex;
+  color: #247BA0;
+}
+
+#weekdays div {
+  width: 100px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  padding: 10px;
+}
+
+#calendar {
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.day:hover {
+  background-color: #e8faed;
+}
+
+.day+#currentDay {
+  background-color: #e8f4fa;
+}
+
+.day {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  width: 100px;
+  height: 100px;
+  padding-left: 1%;
+  padding-top: 1%;
+  cursor: pointer;
+  box-sizing: border-box;
+  background-color: white;
+  margin: 5px;
+  box-shadow: 0px 0px 3px #CBD4C2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  /* Make room for events to be stacked inside each day */
 }
 
 .event {
-    font-size: 10px;
-    /* fix the offcenteredness Jordynn! */
-    padding: 3px;
-    background-color: #247ba0;
-    color: white;
-    border-radius: 5px;
-    max-height: 55px;
-    overflow: hidden;
-    position: absolute;
-    width: 90%;
-    bottom: 5px;  /* Place event at the bottom of the day cell */
+  font-size: 10px;
+  /* fix the offcenteredness Jordynn! */
+  padding: 3px;
+  background-color: #247ba0;
+  color: white;
+  border-radius: 5px;
+  max-height: 55px;
+  overflow: hidden;
+  position: absolute;
+  width: 90%;
+  bottom: 5px;
+  /* Place event at the bottom of the day cell */
 }
 
 
-  .padding {
-    cursor: default !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
+.padding {
+  cursor: default !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#newEventModal,
+#deleteEventModal {
+  display: none;
+  z-index: 20;
+  padding: 25px;
+  background-color: #e8f4fa;
+  box-shadow: 0px 0px 3px black;
+  border-radius: 5px;
+  width: 350px;
+  top: 100px;
+  left: calc(50% - 175px);
+  position: absolute;
+  font-family: sans-serif;
+}
+
+#eventTitleInput {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 25px;
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  box-shadow: 0px 0px 3px gray;
+}
+
+#eventTimeInput {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 25px;
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  box-shadow: 0px 0px 3px gray;
+}
+
+#eventLocationInput {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 25px;
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  box-shadow: 0px 0px 3px gray;
+}
+
+#eventTitleInput.error {
+  border: 2px solid red;
+}
+
+#eventTimeInput.error {
+  border: 2px solid red;
+}
+
+#eventLocationInput.error {
+  border: 2px solid red;
+}
+
+#cancelButton,
+#deleteButton {
+  background-color: #d36c6c;
+}
+
+#saveButton,
+#closeButton {
+  background-color: #92a1d1;
+}
+
+#eventText {
+  font-size: 14px;
+}
+
+#modalBackDrop {
+  display: none;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+  width: 100vw;
+  height: 1000%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+#NavUl {
+  list-style-type: none;
+  margin: 0%;
+  padding: 0%;
+  overflow: hidden;
+  background-color: #283A43;
+  font-size: 20px;
+}
+
+li {
+  float: left;
+  display: flex;
+  align-content: center;
+  color: #9bd1e5;
+}
+
+li a:link,
+li a:visited {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 18px;
+  padding-left: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #9bd1e5;
+  border-width: 1px;
+  border-color: none;
+  border-radius: 5px;
+  display: inline-block;
+
+}
+
+li a:hover {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 18px;
+  padding-left: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #9bd1e5;
+  background-color: rgb(57, 94, 112);
+  border-width: 1px;
+  border-color: none;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+#NavUl img {
+  float: left;
+  display: flex;
+  width: 57px;
+  height: auto;
+  margin: 0%;
+  padding: 0%;
+  margin-right: 5px;
+}
+
+footer {
+  margin-top: 15%;
+  margin-bottom: 0%;
+  background-color: #283A43;
+  /* A shade of blue */
+  color: #f7f7f7;
+  /* A shade of white */
+  text-align: center;
+  /* Center the text */
+  clear: both;
+  /* To ensure the footer is below the content */
+  padding-top: 2%;
+  font-size: 150%;
+}
+
+footer ul {
+  background-color: #283A43;
+  display: inline-block;
+  /* Ensure the list is centered */
+  padding: 0;
+  /* Remove padding */
+  margin: 0;
+  /* Remove margin */
+}
+
+footer ul li {
+  display: inline;
+  /* Display list items inline */
+  margin: 0 10px;
+  /* Add some space between list items */
+}
+
+
+@media only screen and (max-width: 885px) {
+  #calDiv {
+    width: 20%;
+    margin-right: auto;
   }
-  #newEventModal, #deleteEventModal {
-    display: none;
-    z-index: 20;
-    padding: 25px;
-    background-color: #e8f4fa;
-    box-shadow: 0px 0px 3px black;
-    border-radius: 5px;
-    width: 350px;
-    top: 100px;
-    left: calc(50% - 175px);
-    position: absolute;
-    font-family: sans-serif;
-  }
-  #eventTitleInput {
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 25px;
-    border-radius: 3px;
-    outline: none;
-    border: none;
-    box-shadow: 0px 0px 3px gray;
-  }
-  #eventTimeInput {
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 25px;
-    border-radius: 3px;
-    outline: none;
-    border: none;
-    box-shadow: 0px 0px 3px gray;
-  }
-  #eventLocationInput {
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 25px;
-    border-radius: 3px;
-    outline: none;
-    border: none;
-    box-shadow: 0px 0px 3px gray;
-  }
-  #eventTitleInput.error {
-    border: 2px solid red;
-  }
-  #eventTimeInput.error {
-    border: 2px solid red;
-  }
-  #eventLocationInput.error {
-    border: 2px solid red;
-  }
-  #cancelButton, #deleteButton {
-    background-color: #d36c6c;
-  }
-  #saveButton, #closeButton {
-    background-color: #92a1d1;
-  }
-  #eventText {
-    font-size: 14px;
-  }
-  #modalBackDrop {
-    display: none;
-    top: 0px;
-    left: 0px;
-    z-index: 10;
-    width: 100vw;
-    height: 1000%;
-    position: absolute;
-    background-color: rgba(0,0,0,0.8);
-  }
-  #NavUl {
-    list-style-type: none;
-    margin: 0%;
-    padding: 0%;
-    overflow: hidden;
-    background-color: #283A43;
-    font-size: 20px;
-  }
-  li {
-    float: left;
-    display: flex;
-    align-content: center;
-    color: #9bd1e5;
-  }
-  li a:link, li a:visited{
-    padding-top: 18px;
-    padding-bottom: 18px;
-    padding-right: 18px;
-    padding-left: 18px;
+
+  #calDiv {
     text-align: center;
-    text-decoration: none;
-    color: #9bd1e5;
-    border-width: 1px;
-    border-color: none;
-    border-radius: 5px;
-    display: inline-block;
-    
-  }
-  li a:hover{
-    padding-top: 18px;
-    padding-bottom: 18px;
-    padding-right: 18px;
-    padding-left: 18px;
-    text-align: center;
-    text-decoration: none;
-    color: #9bd1e5;
-    background-color: rgb(57, 94, 112);
-    border-width: 1px;
-    border-color: none;
-    border-radius: 5px;
-    display: inline-block;
-  }
-  #NavUl img{
-     float: left;
-      display: flex;
-       width: 57px;
-       height:auto;
-      margin: 0%;
-      padding: 0%;
-      margin-right: 5px;
-    }
-    footer {
-      margin-top: 15%;
-      margin-bottom: 0%;
-      background-color: #283A43; /* A shade of blue */
-      color: #f7f7f7; /* A shade of white */
-      text-align: center; /* Center the text */
-      clear: both; /* To ensure the footer is below the content */
-      padding-top: 2%;
-      font-size: 150%;
-  }
-  footer ul {
-      background-color: #283A43;
-      display: inline-block; /* Ensure the list is centered */
-      padding: 0; /* Remove padding */
-      margin: 0; /* Remove margin */
-  }
-  footer ul li {
-      display: inline; /* Display list items inline */
-      margin: 0 10px; /* Add some space between list items */
   }
 
-
-    @media only screen and (max-width: 885px) {
-      #calDiv{width: 20%;margin-right:auto ;}
-      #calDiv{text-align: center ;}
-      body{width:300vw}
-      #NavUl li{font-size: 7vw;}
-      footer{font-size:12vw}
-      #weekdays{font-size: 3vw;}
-    }
-
-    @media screen and (max-width: 768px) {
-      #calendar {
-          grid-template-columns: repeat(2, 1fr);
-      }
-  
-      nav ul {
-          flex-direction: column;
-          align-items: center;
-      }
+  body {
+    width: 300vw
   }
-  
+
+  #NavUl li {
+    font-size: 7vw;
+  }
+
+  footer {
+    font-size: 12vw
+  }
+
+  #weekdays {
+    font-size: 3vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #calendar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+}

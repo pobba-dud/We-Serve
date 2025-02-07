@@ -1,43 +1,46 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Calendar</title>
-    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-    <link href="CalendarStyle.css" rel="stylesheet" type="text/css" />
-    <script src="script.js" defer></script>
-    <script src="scriptCalendar.js" defer></script>
 
-  </head>
-  
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Calendar</title>
+  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+  <link href="CalendarStyle.css" rel="stylesheet" type="text/css" />
+  <script src="script.js" defer></script>
+  <script src="scriptCalendar.js" defer></script>
 
-  <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
+</head>
+
+<body>
+
+  <div class="notification" id="customNotification"
+    style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
     This is a notification message!
-    <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
-</div>
-<!-- Dark mode JS -->
-<script>
-  
+    <button onclick="closeNotification()"
+      style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
+  </div>
+  <!-- Dark mode JS -->
+  <script>
 
-  // Load the theme from local storage when the page loads
-  window.onload = function() {
+
+    // Load the theme from local storage when the page loads
+    window.onload = function () {
       const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
       setTheme(savedTheme);
       document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-  };
-</script>
-<script>
+    };
+  </script>
+  <script>
 
-  // Call checkUpcomingEvents function at the start or at intervals
-function load() {
-    const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
-    const calendar = document.getElementById('calendar');
-    calendar.innerHTML = ''; // Clear the calendar before rendering new events
+    // Call checkUpcomingEvents function at the start or at intervals
+    function load() {
+      const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
+      const calendar = document.getElementById('calendar');
+      calendar.innerHTML = ''; // Clear the calendar before rendering new events
 
-    // Loop through the events and display them
-    storedEvents.forEach(event => {
+      // Loop through the events and display them
+      storedEvents.forEach(event => {
         const startDate = new Date(event.startDate);  // Convert start date string to Date object
         const endDate = new Date(event.endDate);      // Convert end date string to Date object
 
@@ -47,134 +50,136 @@ function load() {
 
         // Set the background color based on event type
         switch (event.type) {
-            case 'personal':
-                eventDiv.style.backgroundColor = '#58bae4'; // Blue
-                break;
-            case 'work':
-                eventDiv.style.backgroundColor = '#ffcc00'; // Yellow
-                break;
-            case 'important':
-                eventDiv.style.backgroundColor = '#ff5733'; // Red
-                break;
-            case 'other':
-                eventDiv.style.backgroundColor = '#28a745'; // Green
-                break;
-            default:
-                eventDiv.style.backgroundColor = '#ffffff'; // Default color
+          case 'personal':
+            eventDiv.style.backgroundColor = '#58bae4'; // Blue
+            break;
+          case 'work':
+            eventDiv.style.backgroundColor = '#ffcc00'; // Yellow
+            break;
+          case 'important':
+            eventDiv.style.backgroundColor = '#ff5733'; // Red
+            break;
+          case 'other':
+            eventDiv.style.backgroundColor = '#28a745'; // Green
+            break;
+          default:
+            eventDiv.style.backgroundColor = '#ffffff'; // Default color
         }
 
         // Loop through each day between the start and end dates
         let currentDate = new Date(startDate);
         while (currentDate <= endDate) {
-            const dayDiv = document.createElement('div');
-            dayDiv.classList.add('day');
-            dayDiv.innerText = currentDate.getDate(); // Display the day number
+          const dayDiv = document.createElement('div');
+          dayDiv.classList.add('day');
+          dayDiv.innerText = currentDate.getDate(); // Display the day number
 
-            // Append the event to each day within the range
-            const eventClone = eventDiv.cloneNode(true);
-            dayDiv.appendChild(eventClone);
+          // Append the event to each day within the range
+          const eventClone = eventDiv.cloneNode(true);
+          dayDiv.appendChild(eventClone);
 
-            calendar.appendChild(dayDiv);
+          calendar.appendChild(dayDiv);
 
-            // Move to the next day
-            currentDate.setDate(currentDate.getDate() + 1);
+          // Move to the next day
+          currentDate.setDate(currentDate.getDate() + 1);
         }
-    });
-}
+      });
+    }
 
 
 
 
-  function closeNotification() {
-    const notification = document.getElementById("customNotification");
-    notification.style.display = "none"; // Hide the notification
-  }
-</script>
+    function closeNotification() {
+      const notification = document.getElementById("customNotification");
+      notification.style.display = "none"; // Hide the notification
+    }
+  </script>
 
-<!-- navbar -->
+  <!-- navbar -->
 
-<nav>
-  <ul id="NavUl" style="padding-bottom: 0px;">
-    <a href="index"><img src="Images/logo.png"></a>
-    <li><a href="dashboard" style="padding-bottom: 20px; padding-top: 19px;"><b>Homepage</b></a></li>
-    <li><a href="discover" style="padding-bottom: 20px; padding-top: 19px;"><b>Discover</b></a></li>
-    <li><a href="hours" style="padding-bottom: 20px; padding-top: 19px;"><b>Hour log</b></a></li>
-    <li><a href="calendar" style="padding-bottom: 19px; padding-top: 19px;"><b>Calendar</b></a></li>
-    <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
-  </ul>
-</nav>
-<div style="margin-bottom: 50px;"></div>
+  <nav>
+    <ul id="NavUl" style="padding-bottom: 0px;">
+      <a href="index"><img src="Images/logo.png"></a>
+      <li><a href="dashboard" style="padding-bottom: 20px; padding-top: 19px;"><b>Homepage</b></a></li>
+      <li><a href="discover" style="padding-bottom: 20px; padding-top: 19px;"><b>Discover</b></a></li>
+      <li><a href="hours" style="padding-bottom: 20px; padding-top: 19px;"><b>Hour log</b></a></li>
+      <li><a href="calendar" style="padding-bottom: 19px; padding-top: 19px;"><b>Calendar</b></a></li>
+      <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png"
+            alt="Profile" style="width:auto;height:23px;"> </a></li>
+    </ul>
+  </nav>
+  <div style="margin-bottom: 50px;"></div>
 
-<!-- end of navbar -->
-    <div style="margin:1.5%;">
-    </div>
-    <div id="calDiv" style="align-self: center;">
-      <div id="container">
-        <div id="header">
-          <div id="monthDisplay">
-          </div>
-            <div>
-              <button id="backButton">Back</button>
-              <button id="nextButton">Next</button>
-            </div>
+  <!-- end of navbar -->
+  <div style="margin:1.5%;">
+  </div>
+  <div id="calDiv" style="align-self: center;">
+    <div id="container">
+      <div id="header">
+        <div id="monthDisplay">
         </div>
-        <div id="weekdays">
-          <div>Sunday</div>
-          <div>Monday</div>
-          <div>Tuesday</div>
-          <div>Wednesday</div>
-          <div>Thursday</div>
-          <div>Friday</div>
-          <div>Saturday</div>
-        </div>
-        <div id="calendar">
+        <div>
+          <button id="backButton">Back</button>
+          <button id="nextButton">Next</button>
         </div>
       </div>
-      <div id="newEventModal">
-        <h2>New Event</h2>
-        <input id="eventTitleInput" placeholder="Event Title" />
-        <input id="eventTimeInput" placeholder="Event Time" />
-        <input id="eventLocationInput" placeholder="Event Location" />
-        <input type="date" id="startDateInput" />
-<input type="date" id="endDateInput" />
-
-        <label for="eventTypeInput">Event Type:</label>
-        <select id="eventTypeInput">
-            <option value="personal">Personal</option>
-            <option value="work">Work</option>
-            <option value="important">Important</option>
-            <option value="other">Other</option>
-        </select>
-        <button id="saveButton">Save</button>
-        <button id="cancelButton">Cancel</button>
-    </div>
-      <div id="deleteEventModal">
-        <h2>Event</h2>
-        <p id="eventText"></p>
-        <button id="editButton" style="background-color: rgb(218, 114, 45);">Edit</button> 
-        <button id="deleteButton">Delete</button>
-        <button id="closeButton">Close</button>
-    </div>
-      <div id="modalBackDrop">
+      <div id="weekdays">
+        <div>Sunday</div>
+        <div>Monday</div>
+        <div>Tuesday</div>
+        <div>Wednesday</div>
+        <div>Thursday</div>
+        <div>Friday</div>
+        <div>Saturday</div>
+      </div>
+      <div id="calendar">
       </div>
     </div>
+    <div id="newEventModal">
+      <h2>New Event</h2>
+      <input id="eventTitleInput" placeholder="Event Title" />
+      <input id="eventTimeInput" placeholder="Event Time" />
+      <input id="eventLocationInput" placeholder="Event Location" />
+      <input type="date" id="startDateInput" />
+      <input type="date" id="endDateInput" />
+
+      <label for="eventTypeInput">Event Type:</label>
+      <select id="eventTypeInput">
+        <option value="personal">Personal</option>
+        <option value="work">Work</option>
+        <option value="important">Important</option>
+        <option value="other">Other</option>
+      </select>
+      <button id="saveButton">Save</button>
+      <button id="cancelButton">Cancel</button>
+    </div>
+    <div id="deleteEventModal">
+      <h2>Event</h2>
+      <p id="eventText"></p>
+      <button id="editButton" style="background-color: rgb(218, 114, 45);">Edit</button>
+      <button id="deleteButton">Delete</button>
+      <button id="closeButton">Close</button>
+    </div>
+    <div id="modalBackDrop">
+    </div>
+  </div>
 
 
 
 
 
-    <footer>
-      <p>&copy; WeServe</p>
-      <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
-        <ul>
-          <li><a href="#">Terms of Use</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Example Link 1</a></li>
-          <li><a href="devHub">Dev</a></li>
-          <li><a href="feedback">Feedback Form</a></li>
-          <li><a href="askew">ASKEW</a></li>
-        </ul>
-      </div>
-    </footer>
-  </body>
+  <footer>
+    <p>&copy; WeServe</p>
+    <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px;">
+      <ul>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Example Link 1</a></li>
+        <li><a href="devHub">Dev</a></li>
+        <li><a href="feedback">Feedback Form</a></li>
+        <li><a href="askew">ASKEW</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+
 </html>

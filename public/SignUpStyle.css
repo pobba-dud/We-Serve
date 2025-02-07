@@ -1,5 +1,6 @@
 /* General HTML and Body Styles */
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -7,29 +8,37 @@ html, body {
   font-family: "Red Hat Text", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-  background-color: #f4f4f9; /* Soft background for better contrast */
-  color: #333; /* Standard text color for readability */
-  box-sizing: border-box; /* Include padding and border in width/height */
+  background-color: #f4f4f9;
+  /* Soft background for better contrast */
+  color: #333;
+  /* Standard text color for readability */
+  box-sizing: border-box;
+  /* Include padding and border in width/height */
 }
 
 label {
   margin-right: 20%;
 }
+
 /* Apply box-sizing to all elements */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
 /* Container for the Main Section */
 .container {
-justify-content: center;
+  justify-content: center;
 
   position: relative;
   display: flex;
   align-items: center;
   padding: 20px;
-  background: linear-gradient(to bottom right, #ffffff, #ffffff); /* Gradient background */
-  border: none; /* Removed the grey border */
+  background: linear-gradient(to bottom right, #ffffff, #ffffff);
+  /* Gradient background */
+  border: none;
+  /* Removed the grey border */
 }
 
 /* Form Wrapper for Signup */
@@ -37,7 +46,8 @@ justify-content: center;
   background: white;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a card effect */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for a card effect */
   text-align: left;
   max-width: 400px;
   width: 100%;
@@ -53,7 +63,8 @@ h1 {
 
 /* Form Group Styles */
 .form-group {
-  margin-bottom: 20px; /* Adds spacing between form groups */
+  margin-bottom: 20px;
+  /* Adds spacing between form groups */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -82,7 +93,8 @@ h1 {
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
-  border-color: #066aad; /* Highlight border on focus */
+  border-color: #066aad;
+  /* Highlight border on focus */
   outline: none;
 }
 
@@ -103,33 +115,38 @@ input[type="reset"] {
 input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover {
-  background-color: #005a8d; /* Darken on hover */
+  background-color: #005a8d;
+  /* Darken on hover */
 }
 
 /* Add Responsive Design */
 @media (max-width: 768px) {
   .form-wrapper {
-      padding: 20px;
+    padding: 20px;
   }
 
   h1 {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
   }
 }
 
 .form-row {
   display: flex;
-  align-items: center; /* Aligns items vertically centered */
-  margin-bottom: 10px; /* Adds space between rows */
+  align-items: center;
+  /* Aligns items vertically centered */
+  margin-bottom: 10px;
+  /* Adds space between rows */
 }
 
 .form-row label {
-  width: 150px; /* Set a fixed width for labels */
-  margin-right: 10px; /* Space between label and input */
+  width: 150px;
+  /* Set a fixed width for labels */
+  margin-right: 10px;
+  /* Space between label and input */
 }
 
 .form-row input,
 .form-row select {
-  flex: 1; /* Makes the input/select take the remaining space */
+  flex: 1;
+  /* Makes the input/select take the remaining space */
 }
-

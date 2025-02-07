@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
@@ -26,7 +27,8 @@
       color: #9bd1e5;
     }
 
-    li a:link, li a:visited {
+    li a:link,
+    li a:visited {
       padding-top: 18px;
       padding-bottom: 18px;
       padding-right: 18px;
@@ -52,10 +54,12 @@
       height: auto;
       margin-right: 5px;
     }
+
     /* End of Navbar CSS */
 
     /* Hide the menu by default on larger screens */
-    .menu, .menuContainer {
+    .menu,
+    .menuContainer {
       display: none;
     }
 
@@ -67,7 +71,8 @@
     /* Mobile styles: Hide the nav and show the menu icon */
     @media (max-width: 768px) {
       nav {
-        display: none; /* Hide the main navigation */
+        display: none;
+        /* Hide the main navigation */
       }
 
       header {
@@ -76,12 +81,15 @@
       }
 
       .menuContainer {
-        display: inline-block; /* Show the mobile menu icon */
+        display: inline-block;
+        /* Show the mobile menu icon */
         cursor: pointer;
         margin-left: 1%;
       }
 
-      .bar1, .bar2, .bar3 {
+      .bar1,
+      .bar2,
+      .bar3 {
         width: 35px;
         height: 5px;
         background-color: #ffffff;
@@ -137,24 +145,27 @@
   <!-- Dark mode JS -->
   <script>
     function setTheme(theme) {
-        document.body.className = theme === 'dark' ? 'dark-mode' : '';
-        localStorage.setItem('theme', theme); // Save the theme preference
+      document.body.className = theme === 'dark' ? 'dark-mode' : '';
+      localStorage.setItem('theme', theme); // Save the theme preference
     }
 
     // Load the theme from local storage when the page loads
-    window.onload = function() {
+    window.onload = function () {
       checkUpcomingEvents();
-        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-        setTheme(savedTheme);
-        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+      setTheme(savedTheme);
+      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
     };
   </script>
   <!-- End of java script -->
 </head>
+
 <body onload="mapEventsToDays()">
-  <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
+  <div class="notification" id="customNotification"
+    style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
     This is a notification message!
-    <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
+    <button onclick="closeNotification()"
+      style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
   </div>
 
   <!-- navbar -->
@@ -166,7 +177,8 @@
         <li><a href="discover"><b>Discover</b></a></li>
         <li><a href="hours"><b>Hour log</b></a></li>
         <li><a href="calendar"><b>Calendar</b></a></li>
-        <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+        <li style="float:right; display:flex; align-content: center;"><a href="account"> <img
+              src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
       </ul>
     </nav>
     <!-- Menu Icon -->
@@ -189,8 +201,8 @@
 
   <!-- spacer -->
   <main style="margin:6%;">
-    <div id= "table1" class="module">
-      <h2 class = "moduleHeader">
+    <div id="table1" class="module">
+      <h2 class="moduleHeader">
         This Week in Advance
         <h4 style="margin:0px; padding:0px;padding-left: 15px" id="date-header">
         </h4>
@@ -199,24 +211,24 @@
           const dateHeader = document.getElementById('date-header');
           const currentDate = new Date();
           const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        
+
           // Calculate the first day of the week
-          const firstDayOfWeek = currentDate.getDate() - currentDate.getDay() ;
+          const firstDayOfWeek = currentDate.getDate() - currentDate.getDay();
           const firstDayOfWeekDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), firstDayOfWeek);
-        
+
           // Calculate the last day of the week
           const lastDayOfWeek = firstDayOfWeek + 6;
           const lastDayOfWeekDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), lastDayOfWeek);
-        
+
           const firstDayOfWeekString = `${monthNames[firstDayOfWeekDate.getMonth()]} ${firstDayOfWeekDate.getDate()}${getOrdinal(firstDayOfWeekDate.getDate())}`;
           let lastDayOfWeekString = `${lastDayOfWeekDate.getDate()}${getOrdinal(lastDayOfWeekDate.getDate())}`;
-        
+
           if (lastDayOfWeekDate.getMonth() !== firstDayOfWeekDate.getMonth()) {
             lastDayOfWeekString = `${monthNames[lastDayOfWeekDate.getMonth()]} ${lastDayOfWeekString}`;
           }
-        
+
           dateHeader.textContent = `${firstDayOfWeekString}-${lastDayOfWeekString}`;
-        
+
           function getOrdinal(n) {
             if (n % 10 === 1 && n % 100 !== 11) {
               return 'st';
@@ -232,11 +244,11 @@
         <!-- Dark mode JS -->
         <script>
           // Load the theme from local storage when the page loads
-          window.onload = function() {
+          window.onload = function () {
             checkUpcomingEvents();
-              const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-              setTheme(savedTheme);
-              document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+            const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+            setTheme(savedTheme);
+            document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
           };
         </script>
         <!-- End of java script -->
@@ -279,30 +291,33 @@
     <!-- End of table -->
     <div style="margin: 2%;"></div>
     <div class="module">
-      <h2 class = "moduleHeader">Hour Log Recap</h2>
+      <h2 class="moduleHeader">Hour Log Recap</h2>
       <div class="innerContainer">
         <h3 style="display: flex; justify-content: center; margin-top: 3%;"><!--make a variable at some point-->
-          Total Hours this year: <!-- character for a space -->&#160 <b><span>0</span></b> 
+          Total Hours this year: <!-- character for a space -->&#160 <b><span>0</span></b>
         </h3>
         <h3 id="scaleableWords" style="display: flex; justify-content: center; margin-top: 3%;margin-bottom: 3%">
-          Weekly Service Streak: <!-- character for a space -->&#160 <b style="color:orange"> <span>0</span></b> <!--make a variable at some point-->
+          Weekly Service Streak: <!-- character for a space -->&#160 <b style="color:orange"> <span>0</span></b>
+          <!--make a variable at some point-->
         </h3>
       </div>
     </div>
 
     <div style="margin:2%;"></div>
 
-    <div  class="module">
-      <h2 class = "moduleHeader">Opportunies Coming Up</h2>
-      <div id ="thisModule" class="innerContainer" > 
+    <div class="module">
+      <h2 class="moduleHeader">Opportunies Coming Up</h2>
+      <div id="thisModule" class="innerContainer">
         <div style="margin-left:10%;">
-          <button id = "module-buttons" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1"> Get Involved</button>
-          <h3>Help at the Community center</h3> 
+          <button id="module-buttons" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal1"> Get
+            Involved</button>
+          <h3>Help at the Community center</h3>
           <h6>October 30, 6:00 - 7:30 pm</h6>
           <div style="margin-bottom: 7%;"></div>
-          <button id = "module-buttons" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#eventModal2"> Get Involved</button>
-          <h3>Rotary Club of Westfield</h3> 
-          <h6>November 19,  7:00 - 8:30 pm</h6>
+          <button id="module-buttons" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#eventModal2">
+            Get Involved</button>
+          <h3>Rotary Club of Westfield</h3>
+          <h6>November 19, 7:00 - 8:30 pm</h6>
         </div>
       </div>
     </div>
@@ -336,8 +351,10 @@
                 <p class="event-details">
                   Help at the Community center . We are looking for volunteers to help with various tasks.
                 </p>
-                <button class="schedule-btn" onclick="remoteCreateEvent('2024/12/20', 'Help at the Community center', '10:00 AM - 12:00 PM'), location.reload()">Get Scheduled</button>
-              </div> 
+                <button class="schedule-btn"
+                  onclick="remoteCreateEvent('2024/12/20', 'Help at the Community center', '10:00 AM - 12:00 PM'), location.reload()">Get
+                  Scheduled</button>
+              </div>
             </div>
           </div>
         </div>
@@ -371,7 +388,8 @@
               <div class="col-md-8">
                 <h5>Rotary Club of Westfield</h5>
                 <p class="event-details">
-                  Resounding Joy builds a community rooted in compassion through music therapy. Some of their volunteer opportunities include: visiting, music sessions, and special events.
+                  Resounding Joy builds a community rooted in compassion through music therapy. Some of their volunteer
+                  opportunities include: visiting, music sessions, and special events.
                 </p>
                 <script src="scriptCalendar.js">
                   function performAction() {
@@ -379,7 +397,7 @@
                     location.reload();
                   }
                 </script>
-                <button class="schedule-btn" type="button" onclick= "performAction()">Get Scheduled</button>
+                <button class="schedule-btn" type="button" onclick="performAction()">Get Scheduled</button>
               </div>
             </div>
           </div>
@@ -426,4 +444,5 @@
     mapEventsToDays();
   </script>
 </body>
+
 </html>
