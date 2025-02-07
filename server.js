@@ -221,9 +221,6 @@ app.get('/signup',limiter,  (req, res) => {
 app.get('/organizationEvent',limiter,  checkIsOrg, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'organizationEvent.html'));
 });
-app.get('/test',limiter, checkAuthentication, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'test.html'));
-});
 app.get('/donation',limiter,  (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Donation.html'));
 });
@@ -237,17 +234,8 @@ app.get('/devHub',limiter, checkAdmin, (req, res) => {
   console.log(`Admin page accessed by user ID: ${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   res.sendFile(path.join(__dirname, 'public', 'devHub.html'));
 });
-app.get('/Calendartest',limiter, checkAdmin, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'Calendartest.html'));
-});
 app.get('/template',limiter, checkAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'template.html'));
-});
-app.get('/test',limiter, checkAdmin, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'test.html'));
-});
-app.get('/RemakeCalendar',limiter, checkAdmin, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'RemakeCalendar.html'));
 });
 app.get('/askew',limiter,(req,res)=>{
   res.sendFile(path.join(__dirname, 'public', 'Askew.html'));

@@ -154,7 +154,7 @@
       checkUpcomingEvents();
       const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
       setTheme(savedTheme);
-      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme 
     };
   </script>
   <!-- End of java script -->
@@ -242,17 +242,6 @@
           }
         </script>
         <!-- Dark mode JS -->
-        <script>
-          // Load the theme from local storage when the page loads
-          window.onload = function () {
-            checkUpcomingEvents();
-            const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-            setTheme(savedTheme);
-            document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-          };
-        </script>
-        <!-- End of java script -->
-
         <!-- Table -->
       </h2>
       <div style="padding-bottom: 2%;">
@@ -441,7 +430,6 @@
     });
 
     // Mobile menu end!
-    mapEventsToDays();
   </script>
 </body>
 
