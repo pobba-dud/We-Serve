@@ -147,11 +147,16 @@ body.dark-mode .container {
         <div class="input-field">
             <label for="eventDate">Event Date:</label>
             <input type="date" id="eventDate" required>
+            <span id="dateError" style="color: red; font-size: 12px; display: none;">
+                ⚠ Please select a future date.
+            </span>
         </div>
         <div class="input-field">
             <label for="eventTimeRange">Event Time Range:</label>
-            <input type="text" id="eventTimeRange" placeholder="e.g., 10:00 AM - 12:00 PM" required>
+            <input type="text" id="eventTimeRange" placeholder="e.g., 10:00 - 12:00" required>
+            <span id="timeError" style="color: red; font-size: 12px; display: none;">⚠ Please use the format HH:MM - HH:MM</span>
         </div>
+        
         <div class="input-field">
             <label for="eventName">Event Adress:</label>
             <input type="text" id="eventAddress" placeholder="Can be an address or place name" required>
@@ -166,13 +171,64 @@ body.dark-mode .container {
     <div style="height: 50px;"></div>
 
         <script>
+             document.addEventListener("DOMContentLoaded", function () {
+        const dateInput = document.getElementById("eventDate");
+        const dateError = document.getElementById("dateError");
+
+        console.log("Date validation script loaded!");
+
+        if (!dateInput) {
+            console.error("Error: Date input field not found!");
+            return;
+        }
+
+        // Set minimum date to today (prevents past dates from being selected)
+        const today = new Date().toISOString().split("T")[0];
+        dateInput.setAttribute("min", today);
+
+        dateInput.addEventListener("change", function () {
+            console.log("Selected date:", this.value);
+
+            if (this.value < today) {
+                dateError.style.display = "inline";
+                console.log("❌ Invalid date: Can't be in the past!");
+            } else {
+                dateError.style.display = "none";
+                console.log("✅ Valid date");
+            }
+        });
+    });
+            document.addEventListener("DOMContentLoaded", function() {
+        const timeInput = document.getElementById("eventTimeRange");
+        const timeError = document.getElementById("timeError");
+
+        console.log("Script is running!"); // Check if script runs
+
+        if (!timeInput) {
+            console.error("Error: Input field not found!");
+            return;
+        }
+
+        timeInput.addEventListener("input", function() {
+            console.log("Input detected:", this.value); // Check input
+
+            const timePattern = /^([0-9]?[0-9]):[0-5][0-9] - ([0-9]?[0-9]):[0-5][0-9]$/;
+
+            if (timePattern.test(this.value.trim())) {
+                timeError.style.display = "none";
+                console.log("✅ Valid input format");
+            } else {
+                timeError.style.display = "inline";
+                console.log("❌ Invalid input format");
+            }
+        });
+    });
     async function submitEvent() {
     const eventName = document.getElementById('eventName').value;
     const eventDate = document.getElementById('eventDate').value;
     const eventTimeRange = document.getElementById('eventTimeRange').value;
     const eventAddress = document.getElementById('eventAddress').value;
     const eventDescription = document.getElementById('eventDescription').value;
-
     // Validate inputs (basic example)
     if (!eventName || !eventDate || !eventTimeRange || !eventAddress || !eventDescription) {
         alert("All fields are required.");

@@ -107,7 +107,7 @@ function loadEvents2() {
   const events = JSON.parse(localStorage.getItem('events')) || [];
   const moduleContainer = document.querySelector('.module-container');
   moduleContainer.innerHTML = '';
-
+  moduleContainer.style="display: flex; margin-bottom: 20%;flex-direction: row; flex-wrap: wrap; align-content: space-between;";
   events.forEach((event, index) => {
     const moduleDiv = document.createElement('div');
     moduleDiv.classList.add('module');

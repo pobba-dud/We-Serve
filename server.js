@@ -33,7 +33,8 @@ const limiter = rateLimit({
   headers: true, // Send rate limit info in the response headers
 });
 cron.schedule('0 0 * * *', async () => {
-  await pool.query('DELETE FROM events WHERE event_date < NOW() - INTERVAL \'30 days\''); // Delete events older than 30 days
+  await pool.query('DELETE FROM events WHERE event_date < NOW() - INTERVAL \'30 days\'');
+  console.log('Old events deleted.');
 });
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Heroku provides this variable automatically
@@ -888,6 +889,29 @@ app.post('/api/events/join', authenticate, async (req, res) => {
   } catch (err) {
     console.error('Error joining event:', err);
     res.status(500).json({ message: 'Failed to join the event.' });
+  }
+});
+// Fetch events joined by the user
+app.get('/api/events/joined', authenticate, async (req, res) => {
+  const userId = req.user.id;
+  const result = await pool.query(
+    'SELECT events.* FROM events JOIN user_events ON events.id = user_events.event_id WHERE user_events.user_id = $1',
+    [userId]
+  );
+  res.json(result.rows);
+});
+
+// Log volunteer hours
+app.post('/api/events/log-hours', authenticate, async (req, res) => {
+  const { eventId, hours } = req.body;
+  const userId = req.user.id;
+
+  try {
+    await pool.query('UPDATE users SET hourstotal = hourstotal + $1 WHERE id = $2', [hours, userId]);
+    res.status(200).json({ message: 'Hours logged successfully.' });
+  } catch (err) {
+    console.error('Error logging hours:', err);
+    res.status(500).json({ message: 'Failed to log hours.' });
   }
 });
 
