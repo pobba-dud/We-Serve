@@ -832,7 +832,7 @@ app.post('/resend-verification',limiter, (req, res) => {
 
 
 //api for events
-app.post('/api/events', async (req, res) => {
+app.post('/api/events',limiter, async (req, res) => {
   try {
       const { name, description, event_date, time_range, address, org_name } = req.body;
 
@@ -873,13 +873,13 @@ app.post('/api/events', async (req, res) => {
 
 
 // Fetch all events
-app.get('/api/events/display', async (req, res) => {
+app.get('/api/events/display',limiter, async (req, res) => {
   const result = await pool.query('SELECT * FROM events');
   res.json(result.rows);
 });
 
 // Join an event
-app.post('/api/events/join', authenticate, async (req, res) => {
+app.post('/api/events/join', authenticate,limiter, async (req, res) => {
   const { eventId } = req.body;
   const userId = req.user.id;
 
@@ -892,7 +892,7 @@ app.post('/api/events/join', authenticate, async (req, res) => {
   }
 });
 // Fetch events joined by the user
-app.get('/api/events/joined', authenticate, async (req, res) => {
+app.get('/api/events/joined', authenticate,limiter, async (req, res) => {
   const userId = req.user.id;
   const result = await pool.query(
     'SELECT events.* FROM events JOIN user_events ON events.id = user_events.event_id WHERE user_events.user_id = $1',
@@ -902,14 +902,14 @@ app.get('/api/events/joined', authenticate, async (req, res) => {
 });
 
 // Fetch events hosted by the organization
-app.get('/api/events/organization', checkIsOrg, async (req, res) => {
+app.get('/api/events/organization',limiter, checkIsOrg, async (req, res) => {
   const orgName = req.user.org_name;
   const result = await pool.query('SELECT * FROM events WHERE org_name = $1', [orgName]);
   res.json(result.rows);
 });
 
 // Fetch participants for a specific event
-app.get('/api/events/:eventId/participants', checkIsOrg, async (req, res) => {
+app.get('/api/events/:eventId/participants',limiter, checkIsOrg, async (req, res) => {
   console.log("/api/events/:eventId/participants loaded")
   const eventId = req.params.eventId;
   const result = await pool.query(
@@ -920,7 +920,7 @@ app.get('/api/events/:eventId/participants', checkIsOrg, async (req, res) => {
 });
 
 // Log volunteer hours (organization-only)
-app.post('/api/events/log-hours', checkIsOrg, async (req, res) => {
+app.post('/api/events/log-hours',limiter, checkIsOrg, async (req, res) => {
   const { eventId, userId, hours } = req.body;
 
   try {
@@ -940,41 +940,41 @@ app.post('/api/events/log-hours', checkIsOrg, async (req, res) => {
 
 //dev api
 // Fetch all users
-app.get('/api/admin/users', checkAdmin, async (req, res) => {
+app.get('/api/admin/users',limiter, checkAdmin, async (req, res) => {
   console.log(`Users loaded by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   const result = await pool.query('SELECT * FROM users');
   res.json(result.rows);
 });
 
 // Fetch all events
-app.get('/api/admin/events', checkAdmin, async (req, res) => {
+app.get('/api/admin/events',limiter, checkAdmin, async (req, res) => {
   console.log(`Events loaded by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   const result = await pool.query('SELECT * FROM events');
   res.json(result.rows);
 });
 
 // Delete a user
-app.delete('/api/admin/users/:id', checkAdmin, async (req, res) => {
+app.delete('/api/admin/users/:id',limiter, checkAdmin, async (req, res) => {
   console.log(`User ${req.params.id} deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   await pool.query('DELETE FROM users WHERE id = $1', [req.params.id]);
   res.status(200).json({ message: 'User deleted successfully.' });
 });
 
 // Delete an event
-app.delete('/api/admin/events/:id', checkAdmin, async (req, res) => {
+app.delete('/api/admin/events/:id',limiter, checkAdmin, async (req, res) => {
   console.log(`Event ${req.params.id} deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   await pool.query('DELETE FROM events WHERE id = $1', [req.params.id]);
   res.status(200).json({ message: 'Event deleted successfully.' });
 });
 // Clear all events (for testing)
-app.delete('/api/admin/clear-events', checkAdmin, async (req, res) => {
+app.delete('/api/admin/clear-events',limiter, checkAdmin, async (req, res) => {
   console.log(`all events deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   await pool.query('DELETE FROM events');
   res.status(200).json({ message: 'All events cleared.' });
 });
 
 // Create a test event (for testing)
-app.post('/api/admin/create-test-event', checkAdmin, async (req, res) => {
+app.post('/api/admin/create-test-event',limiter, checkAdmin, async (req, res) => {
   console.log(`test event created by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   try {
     const currentDate = new Date();
