@@ -66,3 +66,6 @@ Steps after downloading Nodejs!
 
 type vscode.dev/ before any github to work at home
                     so freakin' tuff!
+
+go onto any github and type . to be sent to github dev
+                    (github dev and vscode are different, if seek help ask me)
