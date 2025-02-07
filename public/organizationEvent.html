@@ -309,13 +309,19 @@ console.log(newEvent);
 }
 
     async function populateEvents() {
-      const response = await fetch('/api/events/organization');
-      const events = await response.json();
-      const eventSelect = document.getElementById('eventSelect');
-      eventSelect.innerHTML = events.map(event => `
-        <option value="${event.id}">${event.name} (${event.event_date.split('T')[0]})</option>
-      `).join('');
-    }
+    const response = await fetch('/api/events/organization');
+    const events = await response.json();
+    const eventSelect = document.getElementById('eventSelect');
+
+    // Set a default option
+    eventSelect.innerHTML = `<option value="" disabled selected>Select an event</option>`;
+
+    // Append dynamically loaded options
+    eventSelect.innerHTML += events.map(event => `
+      <option value="${event.id}">${event.name} (${event.event_date.split('T')[0]})</option>
+    `).join('');
+}
+
   
     async function populateUsers(eventId) {
       const response = await fetch(`/api/events/${eventId}/participants`);
