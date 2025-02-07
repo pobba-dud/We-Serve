@@ -178,3 +178,20 @@ function setTheme(theme) {
   document.body.className = theme === 'dark' ? 'dark-mode' : '';
   localStorage.setItem('theme', theme); // Save the theme preference
 }
+function toggleMenu(x) {
+  x.classList.toggle("change");
+  var menu = document.getElementById("dropdownMenu");
+  menu.classList.toggle("show");
+}
+
+// Close the menu when clicking outside of it
+document.addEventListener("click", function (event) {
+  var menu = document.getElementById("dropdownMenu");
+  var menuButton = document.querySelector(".menuContainer");
+
+  // Check if the click is outside the menu and menu button
+  if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+    menu.classList.remove("show");
+    menuButton.classList.remove("change");
+  }
+});

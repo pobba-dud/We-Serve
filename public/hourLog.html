@@ -53,9 +53,7 @@
     margin-top: 5%; /* Add top margin for spacing */
   }
 
-  nav a {
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
-  }
+  
 
   body {
       font-family: Arial, sans-serif;
@@ -191,35 +189,6 @@ body.dark-mode .leaderboard h1 {
       text-align: center;
   }
 
-  #nav {
-    padding-bottom: -1px;
-  }
-  #NavUl {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #283A43; /* Ensure this matches */
-    font-size: 20px;
-}
-li {
-    margin-bottom: -1%;
-    float: left;
-    display: flex;
-    align-content: center;
-    color: #9bd1e5; /* Ensure this matches */
-}
-li a:link, li a:visited {
-    padding: 18px;
-    text-align: center;
-    text-decoration: none;
-    color: #9bd1e5; /* Ensure this matches */
-    display: inline-block;
-}
-li a:hover {
-    background-color: rgb(57, 94, 112); /* Ensure this matches */
-}
-
 .buttonContainer{
     width: 95%;
     display: flex;
@@ -242,12 +211,6 @@ li a:hover {
         .leaderboard-btn:hover {
     background-color: rgb(57, 94, 112);
         }
-
-</style>
-
-</style>
-
-<style>
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -421,7 +384,7 @@ li a:hover {
 <!-- navbar -->
 <header>
   <nav>
-    <ul id="NavUl" style="padding-bottom: 9px;">
+    <ul id="NavUl">
       <a href="index"><img src="Images/logo.png"></a>
       <li><a href="dashboard" style="padding-bottom: 20px; padding-top: 19px;"><b>Homepage</b></a></li>
       <li><a href="discover" style="padding-bottom: 20px; padding-top: 19px;"><b>Discover</b></a></li>
@@ -430,7 +393,21 @@ li a:hover {
       <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
     </ul>
 </nav>
-  <div style="margin-bottom: 50px;"></div>
+<!-- Menu Icon -->
+<div class="menuContainer" onclick="toggleMenu(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+<div class="menu" id="dropdownMenu">
+  <a href="index"><img src="Images/logo.png" style="padding-top:5%;width:50%; height:50%;"></a>
+  <a href="dashboard">Home</a>
+  <a href="discover">Discover</a>
+  <a href="hours">Hour Log</a>
+  <a href="calendar">Calendar</a>
+  <a href="account">Account</a>
+</div>
 </header>
 <!-- end of navbar -->
 

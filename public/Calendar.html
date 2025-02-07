@@ -13,7 +13,6 @@
 </head>
 
 <body>
-
   <div class="notification" id="customNotification"
     style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
     This is a notification message!
@@ -22,17 +21,12 @@
   </div>
   <!-- Dark mode JS -->
   <script>
-
-
     // Load the theme from local storage when the page loads
     window.onload = function () {
       const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
       setTheme(savedTheme);
       document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
     };
-  </script>
-  <script>
-
     // Call checkUpcomingEvents function at the start or at intervals
     function load() {
       const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
@@ -106,6 +100,7 @@
       <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png"
             alt="Profile" style="width:auto;height:23px;"> </a></li>
     </ul>
+    
   </nav>
   <div style="margin-bottom: 50px;"></div>
 

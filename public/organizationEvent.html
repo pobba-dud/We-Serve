@@ -7,6 +7,7 @@
   <title>Event Notification Example</title>
   <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="script.js"></script>
   <!-- Dark mode JS -->
   <script>
     function setTheme(theme) {
@@ -23,10 +24,7 @@
   </script>
   <script src="scriptCalendar.js"></script>
   <style>
-    nav a {
-      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
-    }
-
+    
     body.dark-mode {
       background-color: #121212;
       /* Dark background */
@@ -163,6 +161,21 @@
               src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
       </ul>
     </nav>
+    <!-- Menu Icon -->
+    <div class="menuContainer" onclick="toggleMenu(this)">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </div>
+
+    <div class="menu" id="dropdownMenu">
+      <a href="index"><img src="Images/logo.png" style="padding-top:5%;width:50%; height:50%;"></a>
+      <a href="dashboard">Home</a>
+      <a href="discover">Discover</a>
+      <a href="hours">Hour Log</a>
+      <a href="calendar">Calendar</a>
+      <a href="account">Account</a>
+    </div>
     <div style="margin-bottom: 50px;"></div>
   </header>
   <!-- end of navbar -->
