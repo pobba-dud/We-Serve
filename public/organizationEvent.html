@@ -2,407 +2,406 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event Notification Example</title>
-  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-  <link href="style.css" rel="stylesheet" type="text/css" />
-  <script src="script.js"></script>
-  <!-- Dark mode JS -->
-  <script>
-    function setTheme(theme) {
-      document.body.className = theme === 'dark' ? 'dark-mode' : '';
-      localStorage.setItem('theme', theme); // Save the theme preference
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Notification Example</title>
+    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="script.js"></script>
+    <!-- Dark mode JS -->
+    <script>
+        function setTheme(theme) {
+            document.body.className = theme === 'dark' ? 'dark-mode' : '';
+            localStorage.setItem('theme', theme); // Save the theme preference
+        }
 
-    // Load the theme from local storage when the page loads
-    window.onload = function () {
-      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-      setTheme(savedTheme);
-      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-    };
-  </script>
-  <script src="scriptCalendar.js"></script>
-  <style>
-    
-    body.dark-mode {
-      background-color: #121212;
-      /* Dark background */
-      color: #f7f7f7;
-      /* Light text color */
-    }
+        // Load the theme from local storage when the page loads
+        window.onload = function () {
+            const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+            setTheme(savedTheme);
+            document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+        };
+    </script>
+    <script src="scriptCalendar.js"></script>
+    <style>
+        body.dark-mode {
+            background-color: #121212;
+            /* Dark background */
+            color: #f7f7f7;
+            /* Light text color */
+        }
 
-    body.dark-mode .module {
-      background-color: rgb(36, 36, 36);
-      /* Dark module background */
-      color: white;
-      /* Light text color */
-    }
+        body.dark-mode .module {
+            background-color: rgb(36, 36, 36);
+            /* Dark module background */
+            color: white;
+            /* Light text color */
+        }
 
-    body.dark-mode table {
-      background-color: #3f3e3e;
-      /* Dark table background */
-      color: #f7f7f7;
-      /* Light text color */
-      border: #070707;
-    }
+        body.dark-mode table {
+            background-color: #3f3e3e;
+            /* Dark table background */
+            color: #f7f7f7;
+            /* Light text color */
+            border: #070707;
+        }
 
-    body.dark-mode .innerContainer {
-      background-color: #3f3e3e;
-    }
+        body.dark-mode .innerContainer {
+            background-color: #3f3e3e;
+        }
 
-    body.dark-mode .highlight {
-      background-color: #535353;
-    }
+        body.dark-mode .highlight {
+            background-color: #535353;
+        }
 
-    body.dark-mode .schedule-btn {
-      background-color: #3f3e3e;
-    }
+        body.dark-mode .schedule-btn {
+            background-color: #3f3e3e;
+        }
 
-    body.dark-mode .schedule-btn:hover {
-      background-color: #535353;
-    }
+        body.dark-mode .schedule-btn:hover {
+            background-color: #535353;
+        }
 
-    body.dark-mode .container {
-      background-color: #333333;
-      color: white;
-    }
+        body.dark-mode .container {
+            background-color: #333333;
+            color: white;
+        }
 
-    .container {
-      display: flex;
-      top: 18%;
-      left: 23%;
-      right: 30%;
-      flex-direction: column;
-      /* Stack items vertically */
-      width: 50%;
-      margin: auto;
-      background-color: rgb(255, 255, 255);
-      border: 3px solid black;
-      font-family: "Red Hat Text", sans-serif;
-      font-optical-sizing: auto;
-      font-style: normal;
-      color: #283A43;
-      padding: 20px;
-      /* Padding around the container */
-      padding-right: 40px;
-      border-radius: 5px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      /* Add shadow for depth */
-    }
+        .container {
+            display: flex;
+            top: 18%;
+            left: 23%;
+            right: 30%;
+            flex-direction: column;
+            /* Stack items vertically */
+            width: 50%;
+            margin: auto;
+            background-color: rgb(255, 255, 255);
+            border: 3px solid black;
+            font-family: "Red Hat Text", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            color: #283A43;
+            padding: 20px;
+            /* Padding around the container */
+            padding-right: 40px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Add shadow for depth */
+        }
 
-    .header {
-      font-size: 30px;
-      text-align: center;
-      /* Center the header text */
-      margin-bottom: 20px;
-      /* Space below the header */
-    }
+        .header {
+            font-size: 30px;
+            text-align: center;
+            /* Center the header text */
+            margin-bottom: 20px;
+            /* Space below the header */
+        }
 
-    .input-field {
-      margin-bottom: 15px;
-      /* Space between input fields */
-    }
+        .input-field {
+            margin-bottom: 15px;
+            /* Space between input fields */
+        }
 
-    .input-field label {
-      display: block;
-      margin-bottom: 5px;
-      /* Space below the label */
-      font-weight: bold;
-      /* Make label text bold */
-    }
+        .input-field label {
+            display: block;
+            margin-bottom: 5px;
+            /* Space below the label */
+            font-weight: bold;
+            /* Make label text bold */
+        }
 
-    .input-field input {
-      width: 100%;
-      padding: 10px;
-      /* Inner padding for inputs */
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-      /* Increase font size for better readability */
-    }
+        .input-field input {
+            width: 100%;
+            padding: 10px;
+            /* Inner padding for inputs */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            /* Increase font size for better readability */
+        }
 
-    .submit-button {
-      padding: 10px 20px;
-      width: 95%;
-      background-color: #283A43;
-      /* Dark blue background */
-      color: white;
-      /* White text */
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      /* Increase font size */
-      transition: background-color 0.3s;
-      /* Smooth transition for hover effect */
-      margin: auto;
-    }
+        .submit-button {
+            padding: 10px 20px;
+            width: 95%;
+            background-color: #283A43;
+            /* Dark blue background */
+            color: white;
+            /* White text */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            /* Increase font size */
+            transition: background-color 0.3s;
+            /* Smooth transition for hover effect */
+            margin: auto;
+        }
 
-    .submit-button:hover {
-      background-color: #9bd1e5;
-      /* Change color on hover */
-    }
-  </style>
+        .submit-button:hover {
+            background-color: #9bd1e5;
+            /* Change color on hover */
+        }
+    </style>
 </head>
 
 <body>
 
-  <!-- navbar -->
-  <header>
-    <nav>
-      <ul id="NavUl">
-        <a href="index"><img src="Images/logo.png"></a>
-        <li><a href="dashboard"><b>Homepage</b></a></li>
-        <li><a href="discover"><b>Discover</b></a></li>
-        <li><a href="hours"><b>Hour log</b></a></li>
-        <li><a href="calendar"><b>Calendar</b></a></li>
-        <li style="float:right; display:flex; align-content: center;"><a href="account"> <img
-              src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
-      </ul>
-    </nav>
-    <!-- Menu Icon -->
-    <div class="menuContainer" onclick="toggleMenu(this)">
-      <div class="bar1"></div>
-      <div class="bar2"></div>
-      <div class="bar3"></div>
+    <!-- navbar -->
+    <header>
+        <nav>
+            <ul id="NavUl">
+                <a href="index"><img src="Images/logo.png"></a>
+                <li><a href="dashboard"><b>Homepage</b></a></li>
+                <li><a href="discover"><b>Discover</b></a></li>
+                <li><a href="hours"><b>Hour log</b></a></li>
+                <li><a href="calendar"><b>Calendar</b></a></li>
+                <li style="float:right; display:flex; align-content: center;"><a href="account"> <img
+                            src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
+            </ul>
+        </nav>
+        <!-- Menu Icon -->
+        <div class="menuContainer" onclick="toggleMenu(this)">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+
+        <div class="menu" id="dropdownMenu">
+            <a href="index"><img src="Images/logo.png" style="padding-top:5%;width:50%; height:50%;"></a>
+            <a href="dashboard">Home</a>
+            <a href="discover">Discover</a>
+            <a href="hours">Hour Log</a>
+            <a href="calendar">Calendar</a>
+            <a href="account">Account</a>
+        </div>
+        <div style="margin-bottom: 50px;"></div>
+    </header>
+    <!-- end of navbar -->
+
+
+    <div class="container">
+        <div class="header">
+            <p>Event Creation</p>
+        </div>
+        <div class="input-field">
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" placeholder="Enter event name" required>
+        </div>
+        <div class="input-field">
+            <label for="eventDate">Event Date:</label>
+            <input type="date" id="eventDate" required>
+            <span id="dateError" style="color: red; font-size: 12px; display: none;">
+                ⚠ Please select a future date.
+            </span>
+        </div>
+        <div class="input-field">
+            <label for="eventTimeRange">Event Time Range:</label>
+            <input type="text" id="eventTimeRange" placeholder="e.g., 10:00 - 12:00" required>
+            <span id="timeError" style="color: red; font-size: 12px; display: none;">⚠ Please use the format HH:MM -
+                HH:MM</span>
+        </div>
+
+        <div class="input-field">
+            <label for="eventName">Event Adress:</label>
+            <input type="text" id="eventAddress" placeholder="Can be an address or place name" required>
+        </div>
+        <div class="input-field">
+            <label for="eventName">Description of Event:</label>
+            <input type="text" id="eventDescription" placeholder="As a volunteer you will be helping with..." required>
+        </div>
+        <button class="submit-button" onclick="submitEvent()">Create Event</button>
     </div>
-
-    <div class="menu" id="dropdownMenu">
-      <a href="index"><img src="Images/logo.png" style="padding-top:5%;width:50%; height:50%;"></a>
-      <a href="dashboard">Home</a>
-      <a href="discover">Discover</a>
-      <a href="hours">Hour Log</a>
-      <a href="calendar">Calendar</a>
-      <a href="account">Account</a>
+    <div class="container" style="margin-top: 50px;">
+        <div class="hour-log-form">
+            <h2>Log Volunteer Hours</h2>
+            <form id="hoursForm">
+                <label for="eventSelect">Select Event:</label>
+                <select id="eventSelect" required>
+                    <!-- Events hosted by the organization will be populated dynamically -->
+                </select>
+                <label for="userSelect">Select Volunteer:</label>
+                <select id="userSelect" required>
+                    <!-- Volunteers who joined the event will be populated dynamically -->
+                </select>
+                <label for="hours">Hours:</label>
+                <input type="number" id="hours" min="0" step="0.5" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
-    <div style="margin-bottom: 50px;"></div>
-  </header>
-  <!-- end of navbar -->
+    <div style="height: 50px;"></div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dateInput = document.getElementById("eventDate");
+            const dateError = document.getElementById("dateError");
 
-  <div class="container">
-    <div class="header">
-      <p>Event Creation</p>
-    </div>
-    <div class="input-field">
-      <label for="eventName">Event Name:</label>
-      <input type="text" id="eventName" placeholder="Enter event name" required>
-    </div>
-    <div class="input-field">
-      <label for="eventDate">Event Date:</label>
-      <input type="date" id="eventDate" required>
-      <span id="dateError" style="color: red; font-size: 12px; display: none;">
-        ⚠ Please select a future date.
-      </span>
-    </div>
-    <div class="input-field">
-      <label for="eventTimeRange">Event Time Range:</label>
-      <input type="text" id="eventTimeRange" placeholder="e.g., 10:00 - 12:00" required>
-      <span id="timeError" style="color: red; font-size: 12px; display: none;">⚠ Please use the format HH:MM -
-        HH:MM</span>
-    </div>
+            console.log("Date validation script loaded!");
 
-    <div class="input-field">
-      <label for="eventName">Event Adress:</label>
-      <input type="text" id="eventAddress" placeholder="Can be an address or place name" required>
-    </div>
-    <div class="input-field">
-      <label for="eventName">Description of Event:</label>
-      <input type="text" id="eventDescription" placeholder="As a volunteer you will be helping with..." required>
-    </div>
-    <button class="submit-button" onclick="submitEvent()">Create Event</button>
-  </div>
-  <div class="container" style="margin-top: 50px;">
-    <div class="hour-log-form">
-      <h2>Log Volunteer Hours</h2>
-      <form id="hoursForm">
-        <label for="eventSelect">Select Event:</label>
-        <select id="eventSelect" required>
-          <!-- Events hosted by the organization will be populated dynamically -->
-        </select>
-        <label for="userSelect">Select Volunteer:</label>
-        <select id="userSelect" required>
-          <!-- Volunteers who joined the event will be populated dynamically -->
-        </select>
-        <label for="hours">Hours:</label>
-        <input type="number" id="hours" min="0" step="0.5" required>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </div>
-  <div style="height: 50px;"></div>
+            if (!dateInput) {
+                console.error("Error: Date input field not found!");
+                return;
+            }
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const dateInput = document.getElementById("eventDate");
-      const dateError = document.getElementById("dateError");
+            // Set minimum date to today (prevents past dates from being selected)
+            const today = new Date().toISOString().split("T")[0];
+            dateInput.setAttribute("min", today);
 
-      console.log("Date validation script loaded!");
+            dateInput.addEventListener("change", function () {
+                console.log("Selected date:", this.value);
 
-      if (!dateInput) {
-        console.error("Error: Date input field not found!");
-        return;
-      }
-
-      // Set minimum date to today (prevents past dates from being selected)
-      const today = new Date().toISOString().split("T")[0];
-      dateInput.setAttribute("min", today);
-
-      dateInput.addEventListener("change", function () {
-        console.log("Selected date:", this.value);
-
-        if (this.value < today) {
-          dateError.style.display = "inline";
-          console.log("❌ Invalid date: Can't be in the past!");
-        } else {
-          dateError.style.display = "none";
-          console.log("✅ Valid date");
-        }
-      });
-    });
-    document.addEventListener("DOMContentLoaded", function () {
-      const timeInput = document.getElementById("eventTimeRange");
-      const timeError = document.getElementById("timeError");
-
-      console.log("Script is running!"); // Check if script runs
-
-      if (!timeInput) {
-        console.error("Error: Input field not found!");
-        return;
-      }
-
-      timeInput.addEventListener("input", function () {
-        console.log("Input detected:", this.value); // Check input
-
-        const timePattern = /^([0-9]?[0-9]):[0-5][0-9] - ([0-9]?[0-9]):[0-5][0-9]$/;
-
-        if (timePattern.test(this.value.trim())) {
-          timeError.style.display = "none";
-          console.log("✅ Valid input format");
-        } else {
-          timeError.style.display = "inline";
-          console.log("❌ Invalid input format");
-        }
-      });
-    });
-    async function submitEvent() {
-      const eventName = document.getElementById('eventName').value;
-      const eventDate = document.getElementById('eventDate').value;
-      const eventTimeRange = document.getElementById('eventTimeRange').value;
-      const eventAddress = document.getElementById('eventAddress').value;
-      const eventDescription = document.getElementById('eventDescription').value;
-      // Validate inputs (basic example)
-      if (!eventName || !eventDate || !eventTimeRange || !eventAddress || !eventDescription) {
-        alert("All fields are required.");
-        return;
-      }
-
-      try {
-        // Fetch the current user's data from the server
-        const userResponse = await fetch('/profileJS', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+                if (this.value < today) {
+                    dateError.style.display = "inline";
+                    console.log("❌ Invalid date: Can't be in the past!");
+                } else {
+                    dateError.style.display = "none";
+                    console.log("✅ Valid date");
+                }
+            });
         });
+        document.addEventListener("DOMContentLoaded", function () {
+            const timeInput = document.getElementById("eventTimeRange");
+            const timeError = document.getElementById("timeError");
 
-        if (!userResponse.ok) {
-          alert("Failed to fetch user data. Please log in again.");
-          return;
-        }
+            console.log("Script is running!"); // Check if script runs
 
-        const userData = await userResponse.json();
+            if (!timeInput) {
+                console.error("Error: Input field not found!");
+                return;
+            }
 
-        // Ensure org_name is available for organization accounts
-        if (!userData.isorg) {
-          alert("Only organization accounts can create events.");
-          return;
-        }
+            timeInput.addEventListener("input", function () {
+                console.log("Input detected:", this.value); // Check input
 
-        // Create an event object to send to the server
-        const newEvent = {
-          name: eventName,
-          event_date: eventDate,
-          time_range: eventTimeRange,
-          address: eventAddress,
-          description: eventDescription,
-          org_name: userData.org_name, // Dynamically use the org_name from the user's data
-        };
-        console.log(newEvent);
-        // Send event data to the server via an API call
-        const response = await fetch('/api/events', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newEvent),
+                const timePattern = /^([0-9]?[0-9]):[0-5][0-9] - ([0-9]?[0-9]):[0-5][0-9]$/;
+
+                if (timePattern.test(this.value.trim())) {
+                    timeError.style.display = "none";
+                    console.log("✅ Valid input format");
+                } else {
+                    timeError.style.display = "inline";
+                    console.log("❌ Invalid input format");
+                }
+            });
         });
+        async function submitEvent() {
+            const eventName = document.getElementById('eventName').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const eventTimeRange = document.getElementById('eventTimeRange').value;
+            const eventAddress = document.getElementById('eventAddress').value;
+            const eventDescription = document.getElementById('eventDescription').value;
+            // Validate inputs (basic example)
+            if (!eventName || !eventDate || !eventTimeRange || !eventAddress || !eventDescription) {
+                alert("All fields are required.");
+                return;
+            }
 
-        // Check if the response is successful
-        if (response.ok) {
-          const result = await response.json();
-          alert(`Event Created: ${eventName} on ${eventDate} at ${eventAddress}`);
-          window.location.href = 'discover'; // Redirect to discover page
-        } else {
-          const errorData = await response.json();
-          alert(`Failed to create event: ${errorData.message}`);
+            try {
+                // Fetch the current user's data from the server
+                const userResponse = await fetch('/profileJS', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!userResponse.ok) {
+                    alert("Failed to fetch user data. Please log in again.");
+                    return;
+                }
+
+                const userData = await userResponse.json();
+
+                // Ensure org_name is available for organization accounts
+                if (!userData.isorg) {
+                    alert("Only organization accounts can create events.");
+                    return;
+                }
+
+                // Create an event object to send to the server
+                const newEvent = {
+                    name: eventName,
+                    event_date: eventDate,
+                    time_range: eventTimeRange,
+                    address: eventAddress,
+                    description: eventDescription,
+                    org_name: userData.org_name, // Dynamically use the org_name from the user's data
+                };
+                console.log(newEvent);
+                // Send event data to the server via an API call
+                const response = await fetch('/api/events', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newEvent),
+                });
+
+                // Check if the response is successful
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(`Event Created: ${eventName} on ${eventDate} at ${eventAddress}`);
+                    window.location.href = 'discover'; // Redirect to discover page
+                } else {
+                    const errorData = await response.json();
+                    alert(`Failed to create event: ${errorData.message}`);
+                }
+            } catch (error) {
+                console.error("Error submitting event:", error);
+                alert("An error occurred while creating the event. Please try again.");
+            }
         }
-      } catch (error) {
-        console.error("Error submitting event:", error);
-        alert("An error occurred while creating the event. Please try again.");
-      }
-    }
 
-    async function populateEvents() {
-      const response = await fetch('/api/events/organization');
-      const events = await response.json();
-      const eventSelect = document.getElementById('eventSelect');
+        async function populateEvents() {
+            const response = await fetch('/api/events/organization');
+            const events = await response.json();
+            const eventSelect = document.getElementById('eventSelect');
 
-      // Set a default option
-      eventSelect.innerHTML = `<option value="" disabled selected>Select an event</option>`;
+            // Set a default option
+            eventSelect.innerHTML = `<option value="" disabled selected>Select an event</option>`;
 
-      // Append dynamically loaded options
-      eventSelect.innerHTML += events.map(event => `
+            // Append dynamically loaded options
+            eventSelect.innerHTML += events.map(event => `
       <option value="${event.id}">${event.name} (${event.event_date.split('T')[0]})</option>
     `).join('');
-    }
+        }
 
 
-    async function populateUsers(eventId) {
-      const response = await fetch(`/api/events/${eventId}/participants`);
-      const users = await response.json();
-      const userSelect = document.getElementById('userSelect');
-      userSelect.innerHTML = users.map(user => `
+        async function populateUsers(eventId) {
+            const response = await fetch(`/api/events/${eventId}/participants`);
+            const users = await response.json();
+            const userSelect = document.getElementById('userSelect');
+            userSelect.innerHTML = users.map(user => `
         <option value="${user.id}">${user.firstname} ${user.lastname}</option>
       `).join('');
-    }
+        }
 
-    document.getElementById('eventSelect').addEventListener('change', (e) => {
-      populateUsers(e.target.value);
-    });
+        document.getElementById('eventSelect').addEventListener('change', (e) => {
+            populateUsers(e.target.value);
+        });
 
-    document.getElementById('hoursForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const eventId = document.getElementById('eventSelect').value;
-      const userId = document.getElementById('userSelect').value;
-      const hours = document.getElementById('hours').value;
+        document.getElementById('hoursForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const eventId = document.getElementById('eventSelect').value;
+            const userId = document.getElementById('userSelect').value;
+            const hours = document.getElementById('hours').value;
 
-      const response = await fetch('/api/events/log-hours', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId, userId, hours }),
-      });
+            const response = await fetch('/api/events/log-hours', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ eventId, userId, hours }),
+            });
 
-      if (response.ok) {
-        alert('Hours logged successfully!');
-      } else {
-        alert('Failed to log hours.');
-      }
-    });
+            if (response.ok) {
+                alert('Hours logged successfully!');
+            } else {
+                alert('Failed to log hours.');
+            }
+        });
 
-    window.onload = populateEvents;
-  </script>
+        window.onload = populateEvents;
+    </script>
 
 </body>
 

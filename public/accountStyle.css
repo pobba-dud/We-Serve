@@ -1,487 +1,547 @@
 html {
-    height: 100%;
-    width: 100%;
-  
-  }
-  nav a {
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
-  }
-  /* start of css for navbar */
-  #NavUl {
-    list-style-type: none;
-    margin: 0%;
-    padding: 0%;
-    overflow: hidden;
-    background-color: #283A43;
-    font-size: 20px;
-  }
-  li {
-    float: left;
+  height: 100%;
+  width: 100%;
+
+}
+
+nav a {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
+}
+
+/* start of css for navbar */
+#NavUl {
+  list-style-type: none;
+  margin: 0%;
+  padding: 0%;
+  overflow: hidden;
+  background-color: #283A43;
+  font-size: 20px;
+}
+
+li {
+  float: left;
+  display: flex;
+  align-content: center;
+  color: #9bd1e5;
+}
+
+li a:link,
+li a:visited {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 18px;
+  padding-left: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #9bd1e5;
+  border-width: 1px;
+  border-color: none;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+li a:hover {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 18px;
+  padding-left: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #9bd1e5;
+  background-color: rgb(57, 94, 112);
+  border-width: 1px;
+  border-color: none;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+#NavUl img {
+  float: left;
+  display: flex;
+  width: 57px;
+  height: auto;
+  margin: 0%;
+  padding: 0%;
+  margin-right: 5px;
+}
+
+/* end of navbar css */
+
+body {
+  background-color: #e8f5ff;
+  font-family: Arial;
+  overflow: hidden;
+}
+
+body.dark-mode .modal-content {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
+body.dark-mode .div.modal-content {
+  background-color: #313131;
+  color: white;
+}
+
+/* dark mode */
+body.dark-mode {
+  background-color: #121212;
+  /* Dark background */
+  color: #f7f7f7;
+  /* Light text color */
+}
+
+body.dark-mode h2 {
+  color: white;
+}
+
+
+body.dark-mode .sidenav {
+  background-color: #3f3e3e;
+  color: white;
+}
+
+body.dark-mode .active {
+  background-color: #6e6e6e;
+  color: white;
+}
+
+body.dark-mode .active:hover {
+  background-color: #868686;
+  color: white;
+}
+
+body.dark-mode .url a:hover {
+  background-color: #868686;
+  color: white;
+}
+
+body.dark-mode .card {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode table {
+  background-color: #3f3e3e;
+  /* Dark table background */
+  color: #f7f7f7;
+  /* Light text color */
+  border: #070707;
+}
+
+body.dark-mode .innerContainer {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode .highlight {
+  background-color: #535353;
+}
+
+body.dark-mode .schedule-btn {
+  background-color: #3f3e3e;
+}
+
+body.dark-mode .schedule-btn:hover {
+  background-color: #535353;
+}
+
+
+/* NavbarTop */
+.navbar-top {
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0px 4px 8px 0px grey;
+  height: 70px;
+}
+
+.title {
+  font-family: 'Dancing Script', cursive;
+  padding-top: 15px;
+  position: absolute;
+  left: 45%;
+}
+
+.navbar-top ul {
+  float: right;
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 18px 50px 0 40px;
+}
+
+.navbar-top ul li {
+  float: left;
+}
+
+.navbar-top ul li a {
+  color: #333;
+  padding: 14px 16px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.icon-count {
+  background-color: #ff0000;
+  color: #fff;
+  float: right;
+  font-size: 11px;
+  left: -25px;
+  padding: 2px;
+  position: relative;
+}
+
+/* End */
+
+/* Sidenav */
+.sidenav {
+  background-color: #fff;
+  color: #333;
+  border-bottom-right-radius: 25px;
+  border-top-right-radius: 25px;
+  height: 86%;
+  left: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+  position: absolute;
+  top: 10%;
+  width: 25%;
+}
+
+.profile {
+  margin-bottom: 20px;
+  margin-top: -12px;
+  text-align: center;
+}
+
+.profile img {
+  border-radius: 50%;
+  box-shadow: 0px 0px 5px 1px grey;
+
+}
+
+.name {
+  font-size: 20px;
+  font-weight: bold;
+  padding-top: 20px;
+}
+
+.job {
+  font-size: 16px;
+  font-weight: bold;
+  padding-top: 10px;
+}
+
+.url,
+hr {
+  text-align: center;
+}
+
+.url hr {
+  margin-left: 20%;
+  width: 60%;
+}
+
+.url a {
+  color: #818181;
+  display: block;
+  font-size: 20px;
+  margin: 10px 0;
+  padding: 6px 8px;
+  text-decoration: none;
+}
+
+/* Basic link styling */
+.hoverable-link {
+  display: inline-block;
+  text-decoration: none;
+  color: #000;
+  /* Default text color */
+  font-size: 18px;
+  /* Adjust as needed */
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button {
+  color: #818181;
+  display: block;
+  font-size: 20px;
+  margin: 10px 0;
+  padding: 6px 8px;
+  text-decoration: none;
+}
+
+/* Hover effect for links */
+.hoverable-link:hover {
+  background-color: #e8f5ff;
+  /* Light blue background */
+  color: #0056b3;
+  /* Darker text color for contrast */
+  transform: scale(1.05);
+  /* Slightly enlarges the link */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Adds a subtle shadow */
+}
+
+/* Optional focus state for accessibility */
+.hoverable-link:focus {
+  outline: none;
+  box-shadow: 0 0 4px 2px rgba(0, 123, 255, 0.5);
+  /* Adds a glowing effect */
+}
+
+/* Basic button hover effects */
+.hoverable-button {
+  display: inline-block;
+  text-decoration: none;
+  color: #000;
+  /* Default text color */
+  font-size: 18px;
+  /* Adjust as needed */
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.hoverable-button:hover {
+  background-color: #e8f5ff;
+  /* Light blue background */
+  color: #0056b3;
+  /* Darker text color for contrast */
+  transform: scale(1.05);
+  /* Slightly enlarges the link */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Adds a subtle shadow */
+}
+
+
+.hoverable-button:focus {
+  outline: none;
+  box-shadow: 0 0 4px 2px rgba(0, 123, 255, 0.5);
+  /* Adds a glowing effect */
+}
+
+
+
+
+/* End */
+
+/* Main */
+.main {
+  margin-top: 2%;
+  margin-left: 29%;
+  font-size: 28px;
+  width: 65%;
+}
+
+.main h2 {
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.main .card {
+  background-color: #9bd1e5;
+  border-radius: 18px;
+  box-shadow: 1px 1px 8px 0 grey;
+  height: auto;
+  margin-bottom: 20px;
+  padding: 20px 0 20px 50px;
+}
+
+.main .card table {
+  border: none;
+  font-size: 16px;
+  height: 270px;
+  width: 80%;
+
+}
+
+.edit {
+  position: absolute;
+  color: #e7e7e8;
+  right: 14%;
+
+
+}
+
+@media only screen and (max-width: 700px) {
+  #AllignLogin {
     display: flex;
-    align-content: center;
-    color: #9bd1e5;
+    flex-direction: column;
   }
-  li a:link, li a:visited{
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    padding-top: 18px;
-    padding-bottom: 18px;
-    padding-right: 18px;
-    padding-left: 18px;
-    text-align: center;
-    text-decoration: none;
-    color: #9bd1e5;
-    border-width: 1px;
-    border-color: none;
-    border-radius: 5px;
-    display: inline-block;
-  }
-  li a:hover{
-    padding-top: 18px;
-    padding-bottom: 18px;
-    padding-right: 18px;
-    padding-left: 18px;
-    text-align: center;
-    text-decoration: none;
-    color: #9bd1e5;
-    background-color: rgb(57, 94, 112);
-    border-width: 1px;
-    border-color: none;
-    border-radius: 5px;
-    display: inline-block;
-  }
-    #NavUl img{
-    float: left;
-     display: flex;
-      width: 57px;
-      height:auto;
-     margin: 0%;
-     padding: 0%;
-     margin-right: 5px;
-   }
-  
-  /* end of navbar css */
-  
-  body {
-      background-color: #e8f5ff;
-      font-family: Arial;
-      overflow: hidden;
-  }
-  body.dark-mode .modal-content {
-    background-color: #333;
-    color: white;
-    border: 1px solid #555;
-  }
-  body.dark-mode .div.modal-content {
-      background-color: #313131;
-      color: white;
-  }
-  
-  /* dark mode */
-  body.dark-mode {
-    background-color: #121212; /* Dark background */
-    color: #f7f7f7; /* Light text color */
-  }
-  
-  body.dark-mode h2 {
-      color: white;
-  }
-  
-  
-  body.dark-mode .sidenav {
-      background-color: #3f3e3e;
-      color: white;
-  }
-  
-  body.dark-mode .active {
-      background-color: #6e6e6e;
-      color: white;
-  }
-  
-  body.dark-mode .active:hover {
-      background-color: #868686;
-      color: white;
-  }
-  
-  body.dark-mode .url a:hover {
-      background-color: #868686;
-      color: white;
-  }
-  
-  body.dark-mode .card {
-  background-color: #3f3e3e;  
-  } 
-  
-  body.dark-mode table {
-    background-color: #3f3e3e; /* Dark table background */
-    color: #f7f7f7; /* Light text color */
-    border: #070707;
-  }
-  
-  body.dark-mode .innerContainer {
-    background-color: #3f3e3e;
-  }
-  
-  body.dark-mode .highlight {
-    background-color: #535353;
-  }
-  
-  body.dark-mode .schedule-btn {
-    background-color: #3f3e3e;
-  }
-  
-  body.dark-mode .schedule-btn:hover {
-    background-color: #535353;
-  }
-  
-  
-  /* NavbarTop */
-  .navbar-top {
-      background-color: #fff;
-      color: #333;
-      box-shadow: 0px 4px 8px 0px grey;
-      height: 70px;
-  }
-  
-  .title {
-      font-family: 'Dancing Script', cursive;
-      padding-top: 15px;
-      position: absolute;
-      left: 45%;
-  }
-  
-  .navbar-top ul {
-      float: right;
-      list-style-type: none;
-      margin: 0;
-      overflow: hidden;
-      padding: 18px 50px 0 40px;
-  }
-  
-  .navbar-top ul li {
-      float: left;
-  }
-  
-  .navbar-top ul li a {
-      color: #333;
-      padding: 14px 16px;
-      text-align: center;
-      text-decoration: none;
-  }
-  
-  .icon-count {
-      background-color: #ff0000;
-      color: #fff;
-      float: right;
-      font-size: 11px;
-      left: -25px;
-      padding: 2px;
-      position: relative;
-  }
-  
-  /* End */
-  
-  /* Sidenav */
+
   .sidenav {
-      background-color: #fff;
-      color: #333;
-      border-bottom-right-radius: 25px;
-      border-top-right-radius: 25px;
-      height: 86%;
-      left: 0;
-      overflow-x: hidden;
-      padding-top: 20px;
-      position: absolute;
-      top: 10%;
-      width: 25%;
+    position: relative;
+    width: auto;
+    border-radius: 0%;
   }
-  
-  .profile {
-      margin-bottom: 20px;
-      margin-top: -12px;
-      text-align: center;
+
+  html {
+    font-size: smaller;
   }
-  
-  .profile img {
-      border-radius: 50%;
-      box-shadow: 0px 0px 5px 1px grey;
-  
+
+  .nav ul {
+    align-items: center;
   }
-  
-  .name {
-      font-size: 20px;
-      font-weight: bold;
-      padding-top: 20px;
-  }
-  
-  .job {
-      font-size: 16px;
-      font-weight: bold;
-      padding-top: 10px;
-  }
-  
-  .url, hr {
-      text-align: center;
-  }
-  
-  .url hr {
-      margin-left: 20%;
-      width: 60%;
-  }
-  
-  .url a {
-      color: #818181;
-      display: block;
-      font-size: 20px;
-      margin: 10px 0;
-      padding: 6px 8px;
-      text-decoration: none;
-  }
-  
-  /* Basic link styling */
-  .hoverable-link {
-    display: inline-block;
-    text-decoration: none;
-    color: #000; /* Default text color */
-    font-size: 18px; /* Adjust as needed */
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  button {
-    color: #818181;
-      display: block;
-      font-size: 20px;
-      margin: 10px 0;
-      padding: 6px 8px;
-      text-decoration: none;
-  }
-  /* Hover effect for links */
-  .hoverable-link:hover {
-    background-color: #e8f5ff; /* Light blue background */
-    color: #0056b3; /* Darker text color for contrast */
-    transform: scale(1.05); /* Slightly enlarges the link */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
-  }
-  
-  /* Optional focus state for accessibility */
-  .hoverable-link:focus {
-    outline: none;
-    box-shadow: 0 0 4px 2px rgba(0, 123, 255, 0.5); /* Adds a glowing effect */
-  }
-  
-  /* Basic button hover effects */
-  .hoverable-button {
-    display: inline-block;
-    text-decoration: none;
-    color: #000; /* Default text color */
-    font-size: 18px; /* Adjust as needed */
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  
-  .hoverable-button:hover {
-    background-color: #e8f5ff; /* Light blue background */
-    color: #0056b3; /* Darker text color for contrast */
-    transform: scale(1.05); /* Slightly enlarges the link */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
-  }
-  
-  
-  .hoverable-button:focus {
-    outline: none;
-    box-shadow: 0 0 4px 2px rgba(0, 123, 255, 0.5); /* Adds a glowing effect */
-  }
-  
-  
-  
-  
-  /* End */
-  
-  /* Main */
+
   .main {
-      margin-top: 2%;
-      margin-left: 29%;
-      font-size: 28px;
-      width: 65%;
+    margin: auto;
+    width: auto;
   }
-  
+
   .main h2 {
-      color: #333;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-size: 24px;
-      margin-bottom: 10px;
+    margin-left: 10%
   }
-  
-  .main .card {
-      background-color: #9bd1e5;
-      border-radius: 18px;
-      box-shadow: 1px 1px 8px 0 grey;
-      height: auto;
-      margin-bottom: 20px;
-      padding: 20px 0 20px 50px;
+
+  html {
+    overflow: scroll;
   }
-  
-  .main .card table {
-      border: none;
-      font-size: 16px;
-      height: 270px;
-      width: 80%;
-      
-  }
-  
-  .edit {
-      position: absolute;
-      color: #e7e7e8;
-      right: 14%;
-  
-      
-  }
-  @media only screen and (max-width: 700px) {
-  #AllignLogin{display: flex;flex-direction: column;}
-  .sidenav{position:relative;width: auto; border-radius: 0%;}
-  html { font-size: smaller; }
-  .nav ul { align-items: center; }
-  .main{margin: auto; width: auto;}
-  .main h2{margin-left: 10%}
-  html{overflow:scroll;}
-  }
-  /* Modal styling */
-  .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1000; 
-    left: 0; 
-    top: 0; 
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-  
-  .modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 50%;
-  }
-  
-  .modal-content h2 {
-    margin-left: 20%;
-  }
-  .modal-content p {
-    margin-left: 40%;
-  }
-   /* Style for the input box */
-   input[type="text"] {
-        width: 75%; /* Adjust the width as needed */
-        padding: 10px;
-        font-size: 1rem;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-      }
-  
-      /* Change the border color and shadow on focus */
-      input[type="text"]:focus {
-        border-color: #007BFF;
-        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-      }
-  
-      /* Add spacing between the input and the next line */
-      input[type="text"] + br {
-        margin-bottom: 10px;
-      }
-  
-      input[type="email"] {
-        width: 75%; /* Adjust the width as needed */
-        padding: 10px;
-        font-size: 1rem;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-      }
-  
-      /* Change the border color and shadow on focus */
-      input[type="email"]:focus {
-        border-color: #007BFF;
-        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-      }
-  
-      /* Add spacing between the input and the next line */
-      input[type="email"] + br {
-        margin-bottom: 10px;
-      }
-  
-      input[type="tel"] {
-        width: 75%; /* Adjust the width as needed */
-        padding: 10px;
-        font-size: 1rem;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-      }
-  
-      /* Change the border color and shadow on focus */
-      input[type="tel"]:focus {
-        border-color: #007BFF;
-        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-      }
-  
-      /* Add spacing between the input and the next line */
-      input[type="tel"] + br {
-        margin-bottom: 10px;
-      }
-  
-      select {
-        width: 75%; /* Adjust the width as needed */
-        padding: 10px;
-        font-size: 1rem;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-      }
-  
-      /* Change the border color and shadow on focus */
-      select:focus {
-        border-color: #007BFF;
-        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-      }
-  
-      /* Add spacing between the input and the next line */
-      select + br {
-        margin-bottom: 10px;
-      }
-  
-      button[type="submit"] {
-        background-color: rgb(57, 94, 112);
-        color: white;
-        box-shadow: #000;
-      }
-  
-  
-      .close-btn {
-    color: black;
-    float: right;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .close-btn:hover {
-    color: red;
-  }
-  
-  body.dark-mode .close-btn {
-    color: white;
-  }
-  
-  /* End */
-  
+}
+
+/* Modal styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+}
+
+.modal-content h2 {
+  margin-left: 20%;
+}
+
+.modal-content p {
+  margin-left: 40%;
+}
+
+/* Style for the input box */
+input[type="text"] {
+  width: 75%;
+  /* Adjust the width as needed */
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Change the border color and shadow on focus */
+input[type="text"]:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Add spacing between the input and the next line */
+input[type="text"]+br {
+  margin-bottom: 10px;
+}
+
+input[type="email"] {
+  width: 75%;
+  /* Adjust the width as needed */
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Change the border color and shadow on focus */
+input[type="email"]:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Add spacing between the input and the next line */
+input[type="email"]+br {
+  margin-bottom: 10px;
+}
+
+input[type="tel"] {
+  width: 75%;
+  /* Adjust the width as needed */
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Change the border color and shadow on focus */
+input[type="tel"]:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Add spacing between the input and the next line */
+input[type="tel"]+br {
+  margin-bottom: 10px;
+}
+
+select {
+  width: 75%;
+  /* Adjust the width as needed */
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Change the border color and shadow on focus */
+select:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Add spacing between the input and the next line */
+select+br {
+  margin-bottom: 10px;
+}
+
+button[type="submit"] {
+  background-color: rgb(57, 94, 112);
+  color: white;
+  box-shadow: #000;
+}
+
+
+.close-btn {
+  color: black;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+body.dark-mode .close-btn {
+  color: white;
+}
+
+/* End */

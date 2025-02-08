@@ -12,7 +12,7 @@ const jwt = require('jsonwebtoken');
 const { isEmpty } = require('lodash');
 const crypto = require('crypto');
 const SECRET_KEY = process.env.SECRET_KEY;
-const sanitizeHtml = require('sanitize-html'); 
+const sanitizeHtml = require('sanitize-html');
 const rateLimit = require('express-rate-limit');
 const Email = process.env.EMAIL;
 const Password = process.env.PASSWORD;
@@ -47,8 +47,8 @@ module.exports = {
 
 // Middleware for logging requests
 app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next();
+  console.log(`${req.method} ${req.url}`);
+  next();
 });
 
 // Middleware
@@ -97,18 +97,18 @@ async function checkIsOrg(req, res, next) {
 
   if (!token) {
     return res.redirect('/'); // Handle token errors
-    }
+  }
 
   try {
     // Verify and decode the token
     const decoded = jwt.verify(token, SECRET_KEY); // Replace 'SECRET_KEY' with your actual key
-    
+
     // Fetch user data from the database using the decoded email
     const result = await pool.query('SELECT * FROM users WHERE id = $1', [decoded.id]);
-    
+
     if (result.rowCount === 0) {
       return res.redirect('/'); // Handle token errors
-      }
+    }
 
     const user = result.rows[0];
 
@@ -124,7 +124,7 @@ async function checkIsOrg(req, res, next) {
   } catch (error) {
     console.error('Error verifying token or fetching user from DB:', error);
     return res.redirect('/'); // Handle token errors
-    }
+  }
 }
 
 async function checkAdmin(req, res, next) {
@@ -168,7 +168,7 @@ async function checkAdmin(req, res, next) {
 app.use((req, res, next) => {
   if (req.url.match(/\.html$/)) {
     return res.redirect('/');
-    }
+  }
   next(); // Allow non-.html requests to proceed
 });
 
@@ -178,71 +178,71 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Redirects
-app.get('/index',limiter, (req, res) => {
-    console.log('Redirecting /index.html to /');
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('/index', limiter, (req, res) => {
+  console.log('Redirecting /index.html to /');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/dashboard',limiter, checkAuthentication, (req, res) => {
-    console.log('Redirecting /Dashboard.html to /');
-    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+app.get('/dashboard', limiter, checkAuthentication, (req, res) => {
+  console.log('Redirecting /Dashboard.html to /');
+  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
-app.get('/calendar',limiter, checkAuthentication, (req, res) => {
-    console.log('Redirecting /Calendar.html to /');
-    res.sendFile(path.join(__dirname, 'public', 'Calendar.html'));
+app.get('/calendar', limiter, checkAuthentication, (req, res) => {
+  console.log('Redirecting /Calendar.html to /');
+  res.sendFile(path.join(__dirname, 'public', 'Calendar.html'));
 });
 
-app.get('/hours',limiter, checkAuthentication, (req, res) => {
-    console.log('Redirecting /HourLog.html to /');
-    res.sendFile(path.join(__dirname, 'public', 'hourLog.html'));
+app.get('/hours', limiter, checkAuthentication, (req, res) => {
+  console.log('Redirecting /HourLog.html to /');
+  res.sendFile(path.join(__dirname, 'public', 'hourLog.html'));
 });
-app.get('/discover',limiter, checkAuthentication, (req, res) => {
-    console.log('Redirecting /DiscoverPage.html to /');
-    res.sendFile(path.join(__dirname, 'public', 'DiscoverPage.html'));
-});
-
-app.get('/proof',limiter, checkAuthentication, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'Proof.html'));
+app.get('/discover', limiter, checkAuthentication, (req, res) => {
+  console.log('Redirecting /DiscoverPage.html to /');
+  res.sendFile(path.join(__dirname, 'public', 'DiscoverPage.html'));
 });
 
-app.get('/feedback',limiter,  (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'Feedback.html'));
+app.get('/proof', limiter, checkAuthentication, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'Proof.html'));
 });
 
-app.get('/account',limiter, checkAuthentication, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'account.html'));
+app.get('/feedback', limiter, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'Feedback.html'));
 });
 
-app.get('/signup',limiter,  (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'SignUp.html'));
+app.get('/account', limiter, checkAuthentication, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'account.html'));
 });
 
-app.get('/organizationEvent',limiter,  checkIsOrg, (req, res) => {
+app.get('/signup', limiter, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'SignUp.html'));
+});
+
+app.get('/organizationEvent', limiter, checkIsOrg, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'organizationEvent.html'));
 });
-app.get('/donation',limiter,  (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'Donation.html'));
+app.get('/donation', limiter, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'Donation.html'));
 });
-app.get('/login',limiter,  (req, res) => {
+app.get('/login', limiter, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
-app.get('/settings',limiter, checkAuthentication, (req, res) => {
+app.get('/settings', limiter, checkAuthentication, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'Settings.html'));
 });
-app.get('/devHub',limiter, checkAdmin, (req, res) => {
+app.get('/devHub', limiter, checkAdmin, (req, res) => {
   console.log(`Admin page accessed by user ID: ${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   res.sendFile(path.join(__dirname, 'public', 'devHub.html'));
 });
-app.get('/template',limiter, checkAdmin, (req, res) => {
+app.get('/template', limiter, checkAdmin, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'template.html'));
 });
-app.get('/askew',limiter,(req,res)=>{
+app.get('/askew', limiter, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'Askew.html'));
 });
-app.get('/brent',limiter,(req,res)=>{
+app.get('/brent', limiter, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'brent.html'));
-  });
+});
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Server Error');
@@ -251,8 +251,8 @@ app.use((err, req, res, next) => {
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Use your email service (e.g., Gmail)
   auth: {
-      user: Email, // Your email
-      pass: Password // Your email password or app password
+    user: Email, // Your email
+    pass: Password // Your email password or app password
   }
 });
 
@@ -339,70 +339,70 @@ setInterval(() => {
 
 }, 60 * 1000);  // Cleanup every minute
 
-  
+
 app.post('/registerJS', limiter, async (req, res) => {
-    const { firstname, lastname, gender, birthday, email, phonenumber, password, isorg, org_name } = req.body;
-  
-    try {
-      // Check if the email already exists
-      const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
-      if (emailCheck.rows.length > 0) {
-        return res.status(400).json({ message: 'Email is already in use' });
-      }
-      const phoneCheck = await pool.query('SELECT * FROM users WHERE phonenumber = $1', [phonenumber]);
-      if(phonenumber!=""){
+  const { firstname, lastname, gender, birthday, email, phonenumber, password, isorg, org_name } = req.body;
+
+  try {
+    // Check if the email already exists
+    const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
+    if (emailCheck.rows.length > 0) {
+      return res.status(400).json({ message: 'Email is already in use' });
+    }
+    const phoneCheck = await pool.query('SELECT * FROM users WHERE phonenumber = $1', [phonenumber]);
+    if (phonenumber != "") {
       if (phoneCheck.rows.length > 0) {
         return res.status(400).json({ message: 'Phone Number is already in use' });
       }
     }
-      if (password.length < 8) {
-        return res.status(400).json({ message: 'Password must be at least 8 characters long.' });
-      }
+    if (password.length < 8) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters long.' });
+    }
 
-      const today = new Date();
+    const today = new Date();
     const userBirthday = new Date(birthday);
 
-      if (isNaN(userBirthday)) {
-        return res.status(400).json({ message: 'Invalid birthday format. Please use YYYY-MM-DD.' });
-      }
-  
-      const ageInMilliseconds = today - userBirthday;
-      const ageInYears = ageInMilliseconds / (365.25 * 24 * 60 * 60 * 1000);
-  
-      if (ageInYears < 13) {
-        return res.status(400).json({ message: 'You must be at least 13 years old to register.' });
-      }
-  
-      if (ageInYears > 100) {
-        return res.status(400).json({ message: 'You must be younger than 100 years old to register.' });
-      }
-  
-    
-      // Generate a hashed password
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      // Generate a unique verification token
-      const verificationToken = crypto.randomBytes(32).toString('hex');
-      const verificationTokenExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 1-hour expiration
-  
-      // Insert user data into the database
-      const result = await pool.query(
-        `INSERT INTO users (firstname, lastname, gender, birthday, email, phonenumber, password, isorg, org_name, verified, verification_token, verification_token_expires) 
+    if (isNaN(userBirthday)) {
+      return res.status(400).json({ message: 'Invalid birthday format. Please use YYYY-MM-DD.' });
+    }
+
+    const ageInMilliseconds = today - userBirthday;
+    const ageInYears = ageInMilliseconds / (365.25 * 24 * 60 * 60 * 1000);
+
+    if (ageInYears < 13) {
+      return res.status(400).json({ message: 'You must be at least 13 years old to register.' });
+    }
+
+    if (ageInYears > 100) {
+      return res.status(400).json({ message: 'You must be younger than 100 years old to register.' });
+    }
+
+
+    // Generate a hashed password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Generate a unique verification token
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const verificationTokenExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 1-hour expiration
+
+    // Insert user data into the database
+    const result = await pool.query(
+      `INSERT INTO users (firstname, lastname, gender, birthday, email, phonenumber, password, isorg, org_name, verified, verification_token, verification_token_expires) 
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
-        [firstname, lastname, gender, birthday, email.toLowerCase(), phonenumber, hashedPassword, isorg, org_name, false, verificationToken, verificationTokenExpires]
-      );
-      
-      // Send a verification email
-      
-      const verificationLink = `https://www.we-serve.net/verify-email?token=${verificationToken}`;
-      const sanitizedFirstname = sanitizeHtml(firstname, { allowedTags: [], allowedAttributes: {} });
-      const sanitizedVerificationLink = encodeURI(verificationLink);
-      await transporter.sendMail({
-        from: '"We-Serve" <your-email@we-serve.net>',
-        to: email,
-        subject: 'Email Verification - We-Serve',
-        text: `Hello ${sanitizedFirstname},\n\nThank you for registering with We-Serve. Please verify your email by clicking the link below:\n${sanitizedVerificationLink}\n\nIf you did not create an account, please ignore this email.\n\nBest regards,\nWe-Serve Team`,
-        html: `
+      [firstname, lastname, gender, birthday, email.toLowerCase(), phonenumber, hashedPassword, isorg, org_name, false, verificationToken, verificationTokenExpires]
+    );
+
+    // Send a verification email
+
+    const verificationLink = `https://www.we-serve.net/verify-email?token=${verificationToken}`;
+    const sanitizedFirstname = sanitizeHtml(firstname, { allowedTags: [], allowedAttributes: {} });
+    const sanitizedVerificationLink = encodeURI(verificationLink);
+    await transporter.sendMail({
+      from: '"We-Serve" <your-email@we-serve.net>',
+      to: email,
+      subject: 'Email Verification - We-Serve',
+      text: `Hello ${sanitizedFirstname},\n\nThank you for registering with We-Serve. Please verify your email by clicking the link below:\n${sanitizedVerificationLink}\n\nIf you did not create an account, please ignore this email.\n\nBest regards,\nWe-Serve Team`,
+      html: `
             <p>Hello ${sanitizedFirstname},</p>
             <p>Thank you for registering with We-Serve. Please verify your email by clicking the link below:</p>
             <p><a href="${sanitizedVerificationLink}" style="color: #007BFF; text-decoration: none;">Verify Email</a></p>
@@ -410,56 +410,56 @@ app.post('/registerJS', limiter, async (req, res) => {
             <p>Best regards,<br>We-Serve Team</p>
         `,
     });
-  
-      res.status(201).json({ message: 'User registered successfully. Please check your email for verification.' });
-    } catch (error) {
-      console.error('Error during registration:', error);
-      res.status(500).json({ message: 'Error registering user.' });
+
+    res.status(201).json({ message: 'User registered successfully. Please check your email for verification.' });
+  } catch (error) {
+    console.error('Error during registration:', error);
+    res.status(500).json({ message: 'Error registering user.' });
+  }
+});
+
+// Verification endpoint
+app.get('/verify-email', limiter, async (req, res) => {
+  const token = req.query.token;  // Get the token from query string
+
+  if (!token) {
+    console.log('No token provided');
+    return res.status(400).send('Token not provided');  // Return a 400 error if no token is found
+  }
+
+  console.log('Received token:', token); // For debugging purposes
+
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE verification_token = $1', [token]);
+
+    if (result.rowCount === 0) {
+      return res.status(400).send('Invalid or expired token');
     }
-  });
-  
-  // Verification endpoint
-  app.get('/verify-email',limiter,  async (req, res) => {
-    const token = req.query.token;  // Get the token from query string
-  
-    if (!token) {
-      console.log('No token provided');
-      return res.status(400).send('Token not provided');  // Return a 400 error if no token is found
+
+    const user = result.rows[0];
+
+    // Check if the token has expired
+    const currentTime = new Date();
+    if (new Date(user.verification_token_expires) < currentTime) {
+      return res.status(400).send('Token has expired');
     }
-  
-    console.log('Received token:', token); // For debugging purposes
-  
-    try {
-      const result = await pool.query('SELECT * FROM users WHERE verification_token = $1', [token]);
-  
-      if (result.rowCount === 0) {
-        return res.status(400).send('Invalid or expired token');
-      }
-  
-      const user = result.rows[0];
-  
-      // Check if the token has expired
-      const currentTime = new Date();
-      if (new Date(user.verification_token_expires) < currentTime) {
-        return res.status(400).send('Token has expired');
-      }
-  
-      // Update the user's verified status
-      await pool.query('UPDATE users SET verified = true WHERE email = $1', [user.email.toLowerCase()]);
-  
-      // Send a success response
-      res.send('Account successfully verified. You can now log in.');
-  
-    } catch (err) {
-      console.error('Error verifying email:', err);
-      res.status(500).send('Internal server error');
-    }
-  });
-  
-  
-  
-  
-  const loginAttempts = {};
+
+    // Update the user's verified status
+    await pool.query('UPDATE users SET verified = true WHERE email = $1', [user.email.toLowerCase()]);
+
+    // Send a success response
+    res.send('Account successfully verified. You can now log in.');
+
+  } catch (err) {
+    console.error('Error verifying email:', err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+
+
+
+const loginAttempts = {};
 
 app.post('/loginJS', limiter, async (req, res) => {
   const { email, password } = req.body;
@@ -530,7 +530,8 @@ app.post('/loginJS', limiter, async (req, res) => {
 
     // If the user is verified, generate a JWT token for login
     const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, { expiresIn: '7d' });
-    res.cookie('auth_token', token, { httpOnly: true, 
+    res.cookie('auth_token', token, {
+      httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'Lax'
     });
@@ -544,115 +545,115 @@ app.post('/loginJS', limiter, async (req, res) => {
   }
 });
 
-  
-  
-  
-  app.post('/profileJS',limiter, authenticate, async (req, res) => {
-    try {
-      const user = await pool.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
-      if (user.rowCount === 0) {
-        return res.status(404).send('User not found');
-      }
-      res.json(user.rows[0]); // Send user data
-    } catch (err) {
-      console.error('Error fetching user data:', err);
-      res.status(500).send('Server error');
+
+
+
+app.post('/profileJS', limiter, authenticate, async (req, res) => {
+  try {
+    const user = await pool.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
+    if (user.rowCount === 0) {
+      return res.status(404).send('User not found');
     }
-  });
+    res.json(user.rows[0]); // Send user data
+  } catch (err) {
+    console.error('Error fetching user data:', err);
+    res.status(500).send('Server error');
+  }
+});
 
-  app.post('/logout',limiter, (req, res) => {
-    res.clearCookie('auth_token', { httpOnly: true,sameSite: 'Strict'});
-    res.redirect("/login")
-  });
+app.post('/logout', limiter, (req, res) => {
+  res.clearCookie('auth_token', { httpOnly: true, sameSite: 'Strict' });
+  res.redirect("/login")
+});
 
-  app.post('/updateProfile',limiter, authenticate, async (req, res) => {
-    try {
-      const userId = req.user.id; // Get user ID from the authenticated user
-      const { name,last, email, gender, phonenumber } = req.body; // Extract incoming fields
+app.post('/updateProfile', limiter, authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id; // Get user ID from the authenticated user
+    const { name, last, email, gender, phonenumber } = req.body; // Extract incoming fields
 
-    
-      // Retrieve the existing user data
-      const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
-      if (result.rows.length === 0) {
-        return res.status(404).json({ message: 'User not found.' });
-      }
-  
-      const existingData = result.rows[0];
-  
-      // Merge provided data with existing data
-      const updatedData = {
-        firstname: name || existingData.firstname,
-        lastname: last || existingData.lastname,
-        email: email || existingData.email,
-        gender: gender || existingData.gender,
-        phonenumber: phonenumber || existingData.phonenumber,
-      };
-  
-      // Update the database with the merged data
-      const updateQuery = `
+
+    // Retrieve the existing user data
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    const existingData = result.rows[0];
+
+    // Merge provided data with existing data
+    const updatedData = {
+      firstname: name || existingData.firstname,
+      lastname: last || existingData.lastname,
+      email: email || existingData.email,
+      gender: gender || existingData.gender,
+      phonenumber: phonenumber || existingData.phonenumber,
+    };
+
+    // Update the database with the merged data
+    const updateQuery = `
         UPDATE users
         SET firstname = $1, lastname = $2, email = $3, gender = $4, phonenumber = $5
       WHERE id = $6
         RETURNING *;
       `;
-      const updateResult = await pool.query(updateQuery, [
-        updatedData.firstname,
-        updatedData.lastname,
-        updatedData.email,
-        updatedData.gender,
-        updatedData.phonenumber,
-        userId,
-      ]);
-  
-      // Respond with the updated user data
-      res.status(200).json({
-        success: true,
-        message: 'Profile updated successfully.',
-        user: updateResult.rows[0],
-      });
-    } catch (error) {
-      console.error('Error updating profile:', error.message);
-      res.status(500).json({ success: false, message: 'Internal server error.' });
+    const updateResult = await pool.query(updateQuery, [
+      updatedData.firstname,
+      updatedData.lastname,
+      updatedData.email,
+      updatedData.gender,
+      updatedData.phonenumber,
+      userId,
+    ]);
+
+    // Respond with the updated user data
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully.',
+      user: updateResult.rows[0],
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error.message);
+    res.status(500).json({ success: false, message: 'Internal server error.' });
+  }
+});
+app.post('/change-password', limiter, authenticate, async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ message: 'Current password and new password are required.' });
+  }
+
+  try {
+    const userId = req.user.id; // Assumes `authenticate` middleware attaches user ID
+    const userResult = await pool.query('SELECT password FROM users WHERE id = $1', [userId]);
+
+    if (userResult.rowCount === 0) {
+      return res.status(404).json({ message: 'User not found.' });
     }
-  });
-  app.post('/change-password',limiter, authenticate, async (req, res) => {
-    const { currentPassword, newPassword } = req.body;
 
-    if (!currentPassword || !newPassword) {
-        return res.status(400).json({ message: 'Current password and new password are required.' });
+    const hashedPassword = userResult.rows[0].password;
+
+    // Verify the current password
+    const isPasswordValid = await bcrypt.compare(currentPassword, hashedPassword);
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: 'Current password is incorrect.' });
     }
 
-    try {
-        const userId = req.user.id; // Assumes `authenticate` middleware attaches user ID
-        const userResult = await pool.query('SELECT password FROM users WHERE id = $1', [userId]);
+    // Hash the new password
+    const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
-        if (userResult.rowCount === 0) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
+    // Update the password in the database
+    await pool.query('UPDATE users SET password = $1 WHERE id = $2', [newHashedPassword, userId]);
 
-        const hashedPassword = userResult.rows[0].password;
-
-        // Verify the current password
-        const isPasswordValid = await bcrypt.compare(currentPassword, hashedPassword);
-        if (!isPasswordValid) {
-            return res.status(400).json({ message: 'Current password is incorrect.' });
-        }
-
-        // Hash the new password
-        const newHashedPassword = await bcrypt.hash(newPassword, 10);
-
-        // Update the password in the database
-        await pool.query('UPDATE users SET password = $1 WHERE id = $2', [newHashedPassword, userId]);
-
-        res.status(200).json({ message: 'Password updated successfully.' });
-    } catch (err) {
-        console.error('Error updating password:', err);
-        res.status(500).json({ message: 'Internal server error.' });
-    }
+    res.status(200).json({ message: 'Password updated successfully.' });
+  } catch (err) {
+    console.error('Error updating password:', err);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
 });
 
 
-app.post('/resend-verification',limiter, (req, res) => {
+app.post('/resend-verification', limiter, (req, res) => {
   const { email } = req.body;
 
   if (!email) {
@@ -695,7 +696,7 @@ app.post('/resend-verification',limiter, (req, res) => {
               <p>If you did not create an account, please ignore this email.</p>
               <p>Best regards,<br>We-Serve Team</p>
           `,
-      });
+        });
       });
     })
     .then(() => {
@@ -708,13 +709,13 @@ app.post('/resend-verification',limiter, (req, res) => {
     });
 });
 
-  async function sendVerificationEmail(email, verificationLink) {
-    const mailOptions = {
-      from: '"We-Serve" <your-email@we-serve.net>',
-      to: email,
-      subject: 'Email Verification - We-Serve',
-      text: `Hello,\n\nThank you for registering with We-Serve. Please verify your email by clicking the link below:\n${verificationLink}\n\nIf you did not create an account, please ignore this email.\n\nBest regards,\nWe-Serve Team`,
-      html: `
+async function sendVerificationEmail(email, verificationLink) {
+  const mailOptions = {
+    from: '"We-Serve" <your-email@we-serve.net>',
+    to: email,
+    subject: 'Email Verification - We-Serve',
+    text: `Hello,\n\nThank you for registering with We-Serve. Please verify your email by clicking the link below:\n${verificationLink}\n\nIf you did not create an account, please ignore this email.\n\nBest regards,\nWe-Serve Team`,
+    html: `
           <p>Hello,</p>
           <p>Thank you for registering with We-Serve. Please verify your email by clicking the link below:</p>
           <p><a href="${verificationLink}" style="color: #007BFF; text-decoration: none;">Verify Email</a></p>
@@ -722,17 +723,17 @@ app.post('/resend-verification',limiter, (req, res) => {
           <p>Best regards,<br>We-Serve Team</p>
       `,
   };
-  
-    try {
-      await transporter.sendMail(mailOptions);
-      console.log('Verification email sent successfully.');
-    } catch (error) {
-      console.error('Error sending email:', error);
-      throw new Error('Error sending email.');
-    }
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Verification email sent successfully.');
+  } catch (error) {
+    console.error('Error sending email:', error);
+    throw new Error('Error sending email.');
   }
-    
-  app.post('/forgot-password',limiter, (req, res) => {
+}
+
+app.post('/forgot-password', limiter, (req, res) => {
   const { email } = req.body;
 
   if (!email) {
@@ -765,7 +766,7 @@ app.post('/resend-verification',limiter, (req, res) => {
             <p>If you did not request this, please ignore this email.</p>
             <p>Best regards,<br>We-Serve Team</p>
         `,
-    });
+      });
     })
     .then(() => {
       res.status(200).json({ message: 'Password reset link sent successfully.' });
@@ -776,34 +777,34 @@ app.post('/resend-verification',limiter, (req, res) => {
     });
 });
 
-  
-  app.post('/reset-passwordJS',limiter, async (req, res) => {
-    const { token, newPassword } = req.body;
 
-    try {
-      const user = await pool.query(
-        'SELECT * FROM users WHERE reset_token = $1 AND reset_token_expires > NOW()',
-        [token]
-      );
-  
-      if (user.rows.length === 0) {
-        return res.status(400).json({ message: "Invalid or expired token." });
-      }
-  
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
-      await pool.query(
-        'UPDATE users SET password = $1, reset_token = NULL, reset_token_expires = NULL WHERE id = $2',
-        [hashedPassword, user.rows[0].id]
-      );
-  
-      res.status(200).json({ message: "Password reset successfully." });
-    } catch (error) {
-      console.error("Error resetting password:", error);
-      res.status(500).json({ message: "Error processing request." });
+app.post('/reset-passwordJS', limiter, async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    const user = await pool.query(
+      'SELECT * FROM users WHERE reset_token = $1 AND reset_token_expires > NOW()',
+      [token]
+    );
+
+    if (user.rows.length === 0) {
+      return res.status(400).json({ message: "Invalid or expired token." });
     }
-  });
-  
-  app.get('/reset-password',limiter, (req, res) => {
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await pool.query(
+      'UPDATE users SET password = $1, reset_token = NULL, reset_token_expires = NULL WHERE id = $2',
+      [hashedPassword, user.rows[0].id]
+    );
+
+    res.status(200).json({ message: "Password reset successfully." });
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    res.status(500).json({ message: "Error processing request." });
+  }
+});
+
+app.get('/reset-password', limiter, (req, res) => {
   const { token } = req.query;
 
   // Check if the token is present in the URL
@@ -818,54 +819,54 @@ app.post('/resend-verification',limiter, (req, res) => {
 
 
 //api for events
-app.post('/api/events',limiter, async (req, res) => {
+app.post('/api/events', limiter, async (req, res) => {
   try {
-      const { name, description, event_date, time_range, address, org_name } = req.body;
+    const { name, description, event_date, time_range, address, org_name } = req.body;
 
-      if (!time_range || !time_range.includes(' - ')) {
-          return res.status(400).json({ error: 'Invalid or missing time range format' });
-      }
+    if (!time_range || !time_range.includes(' - ')) {
+      return res.status(400).json({ error: 'Invalid or missing time range format' });
+    }
 
-      const [start_time, end_time] = time_range.split(' - ');
+    const [start_time, end_time] = time_range.split(' - ');
 
-      if (!start_time || !end_time) {
-          return res.status(400).json({ error: 'Start time and end time are required' });
-      }
+    if (!start_time || !end_time) {
+      return res.status(400).json({ error: 'Start time and end time are required' });
+    }
 
-      // Check if event already exists before inserting
-      const existingEvent = await pool.query(
-          `SELECT * FROM events WHERE name = $1 AND event_date = $2 AND start_time = $3 AND address = $4`,
-          [name, event_date, start_time, address]
-      );
+    // Check if event already exists before inserting
+    const existingEvent = await pool.query(
+      `SELECT * FROM events WHERE name = $1 AND event_date = $2 AND start_time = $3 AND address = $4`,
+      [name, event_date, start_time, address]
+    );
 
-      if (existingEvent.rows.length > 0) {
-          return res.status(400).json({ error: 'An event with the same name, date, time, and address already exists!' });
-      }
+    if (existingEvent.rows.length > 0) {
+      return res.status(400).json({ error: 'An event with the same name, date, time, and address already exists!' });
+    }
 
-      // If no duplicate, insert the new event
-      await pool.query(
-          `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
+    // If no duplicate, insert the new event
+    await pool.query(
+      `INSERT INTO events (name, description, event_date, start_time, end_time, address, org_name) 
            VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-          [name, description, event_date, start_time, end_time, address, org_name]
-      );
+      [name, description, event_date, start_time, end_time, address, org_name]
+    );
 
-      res.status(201).json({ message: 'Event added successfully' });
+    res.status(201).json({ message: 'Event added successfully' });
 
   } catch (err) {
-      console.error('Error saving event:', err);
-      res.status(500).json({ error: 'Failed to save event' });
+    console.error('Error saving event:', err);
+    res.status(500).json({ error: 'Failed to save event' });
   }
 });
 
 
 // Fetch all events
-app.get('/api/events/display',limiter, async (req, res) => {
+app.get('/api/events/display', limiter, async (req, res) => {
   const result = await pool.query('SELECT * FROM events');
   res.json(result.rows);
 });
 
 // Join an event
-app.post('/api/events/join',limiter, authenticate, async (req, res) => {
+app.post('/api/events/join', limiter, authenticate, async (req, res) => {
   const { eventId } = req.body;
   const userId = req.user.id;
 
@@ -878,7 +879,7 @@ app.post('/api/events/join',limiter, authenticate, async (req, res) => {
   }
 });
 // Fetch events joined by the user
-app.get('/api/events/joined',limiter, authenticate, async (req, res) => {
+app.get('/api/events/joined', limiter, authenticate, async (req, res) => {
   const userId = req.user.id;
   const result = await pool.query(
     'SELECT events.* FROM events JOIN user_events ON events.id = user_events.event_id WHERE user_events.user_id = $1',
@@ -888,14 +889,14 @@ app.get('/api/events/joined',limiter, authenticate, async (req, res) => {
 });
 
 // Fetch events hosted by the organization
-app.get('/api/events/organization',limiter, checkIsOrg, async (req, res) => {
+app.get('/api/events/organization', limiter, checkIsOrg, async (req, res) => {
   const orgName = req.user.org_name;
   const result = await pool.query('SELECT * FROM events WHERE org_name = $1', [orgName]);
   res.json(result.rows);
 });
 
 // Fetch participants for a specific event
-app.get('/api/events/:eventId/participants',limiter, checkIsOrg, async (req, res) => {
+app.get('/api/events/:eventId/participants', limiter, checkIsOrg, async (req, res) => {
   console.log("/api/events/:eventId/participants loaded")
   const eventId = req.params.eventId;
   const result = await pool.query(
@@ -906,16 +907,16 @@ app.get('/api/events/:eventId/participants',limiter, checkIsOrg, async (req, res
 });
 
 // Log volunteer hours (organization-only)
-app.post('/api/events/log-hours',limiter, checkIsOrg, async (req, res) => {
+app.post('/api/events/log-hours', limiter, checkIsOrg, async (req, res) => {
   const { eventId, userId, hours } = req.body;
 
   try {
     // Update hours
     await pool.query('UPDATE users SET hourstotal = hourstotal + $1 WHERE id = $2', [hours, userId]);
-    
+
     // Remove user from user_events
     await pool.query('DELETE FROM user_events WHERE user_id = $1 AND event_id = $2', [userId, eventId]);
-    
+
     res.status(200).json({ message: 'Hours logged successfully.' });
   } catch (err) {
     console.error('Error logging hours:', err);
@@ -926,48 +927,48 @@ app.post('/api/events/log-hours',limiter, checkIsOrg, async (req, res) => {
 
 //dev api
 // Fetch all users
-app.get('/api/admin/users',limiter, checkAdmin, async (req, res) => {
+app.get('/api/admin/users', limiter, checkAdmin, async (req, res) => {
   console.log(`Users loaded by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   const result = await pool.query('SELECT * FROM users');
   res.json(result.rows);
 });
 
 // Fetch all events
-app.get('/api/admin/events',limiter, checkAdmin, async (req, res) => {
+app.get('/api/admin/events', limiter, checkAdmin, async (req, res) => {
   console.log(`Events loaded by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   const result = await pool.query('SELECT * FROM events');
   res.json(result.rows);
 });
 
 // Delete a user
-app.delete('/api/admin/users/:id',limiter, checkAdmin, async (req, res) => {
+app.delete('/api/admin/users/:id', limiter, checkAdmin, async (req, res) => {
   console.log(`User ${req.params.id} deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   await pool.query('DELETE FROM users WHERE id = $1', [req.params.id]);
   res.status(200).json({ message: 'User deleted successfully.' });
 });
 
 // Delete an event
-app.delete('/api/admin/events/:id',limiter, checkAdmin, async (req, res) => {
+app.delete('/api/admin/events/:id', limiter, checkAdmin, async (req, res) => {
   console.log(`Event ${req.params.id} deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   await pool.query('DELETE FROM events WHERE id = $1', [req.params.id]);
   res.status(200).json({ message: 'Event deleted successfully.' });
 });
 // Clear all events (for testing)
-app.delete('/api/admin/clear-events',limiter, checkAdmin, async (req, res) => {
+app.delete('/api/admin/clear-events', limiter, checkAdmin, async (req, res) => {
   console.log(`all events deleted by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   await pool.query('DELETE FROM events');
   res.status(200).json({ message: 'All events cleared.' });
 });
 
 // Create a test event (for testing)
-app.post('/api/admin/create-test-event',limiter, checkAdmin, async (req, res) => {
+app.post('/api/admin/create-test-event', limiter, checkAdmin, async (req, res) => {
   console.log(`test event created by:${req.user.id} ${req.user.firstname} ${req.user.lastname}`);
   try {
     const currentDate = new Date();
     const startTime = currentDate.toISOString().split('T')[0] + ' ' + currentDate.toTimeString().split(' ')[0]; // Current time as HH:MM:SS
     const endTime = new Date(currentDate.getTime() + 2 * 60 * 60 * 1000); // Add 2 hours
     const endTimeFormatted = endTime.toISOString().split('T')[1].split('.')[0]; // Format to HH:MM:SS
-    
+
     const testEvent = {
       name: 'Test Event',
       event_date: currentDate.toISOString().split('T')[0], // Current date
@@ -977,28 +978,28 @@ app.post('/api/admin/create-test-event',limiter, checkAdmin, async (req, res) =>
       description: 'This is a test event.',
       org_name: 'Test Org',
     };
-    
+
     console.log(testEvent);
-    
-  await pool.query(
-    'INSERT INTO events (name, event_date, start_time, end_time, address, description, org_name) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-    [testEvent.name, testEvent.event_date, testEvent.start_time, testEvent.end_time, testEvent.address, testEvent.description, testEvent.org_name]
-  );
-  res.status(201).json({ message: 'Test event created.' });
-}catch (err) {
-  if (err.code === '23505') {  // PostgreSQL duplicate key error code
+
+    await pool.query(
+      'INSERT INTO events (name, event_date, start_time, end_time, address, description, org_name) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+      [testEvent.name, testEvent.event_date, testEvent.start_time, testEvent.end_time, testEvent.address, testEvent.description, testEvent.org_name]
+    );
+    res.status(201).json({ message: 'Test event created.' });
+  } catch (err) {
+    if (err.code === '23505') {  // PostgreSQL duplicate key error code
       return res.status(400).json({ error: 'An event with the same name, date, time, and address already exists!' });
+    }
+    console.error('Error saving event:', err);
+    res.status(500).json({ error: 'Failed to save event' });
   }
-  console.error('Error saving event:', err);
-  res.status(500).json({ error: 'Failed to save event' });
-}
 });
-  // Fallback route
-app.get('*',limiter, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Redirects to homepage for undefined routes
+// Fallback route
+app.get('*', limiter, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Redirects to homepage for undefined routes
 });
 // Make the app listen on the port provided by Heroku
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

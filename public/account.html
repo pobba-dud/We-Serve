@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Profile</title>
   <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
   <link href="accountStyle.css" rel="stylesheet" type="text/css" />
-  <script src = "accountJs.js"></script>
-</head>   
-  
+  <script src="accountJs.js"></script>
+</head>
+
 
 <body style="margin: 0%;">
 
-    <div class="notification" id="customNotification" style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
-        This is a notification message!
-        <button onclick="closeNotification()" style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
-    </div>
-    
-    
-    
-<!-- navbar -->
-<nav>
-  <ul id="NavUl" style="padding-bottom: 0px;">
-    <a href="index"><img src="Images/logo.png"></a>
-    <li><a href="dashboard" style="padding-bottom: 20px; padding-top: 19px;"><b>Homepage</b></a></li>
-    <li><a href="discover" style="padding-bottom: 20px; padding-top: 19px;"><b>Discover</b></a></li>
-    <li><a href="hours" style="padding-bottom: 20px; padding-top: 19px;"><b>Hour log</b></a></li>
-    <li><a href="calendar" style="padding-bottom: 19px; padding-top: 19px;"><b>Calendar</b></a></li>
+  <div class="notification" id="customNotification"
+    style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
+    This is a notification message!
+    <button onclick="closeNotification()"
+      style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
+  </div>
+
+
+
+  <!-- navbar -->
+  <nav>
+    <ul id="NavUl" style="padding-bottom: 0px;">
+      <a href="index"><img src="Images/logo.png"></a>
+      <li><a href="dashboard" style="padding-bottom: 20px; padding-top: 19px;"><b>Homepage</b></a></li>
+      <li><a href="discover" style="padding-bottom: 20px; padding-top: 19px;"><b>Discover</b></a></li>
+      <li><a href="hours" style="padding-bottom: 20px; padding-top: 19px;"><b>Hour log</b></a></li>
+      <li><a href="calendar" style="padding-bottom: 19px; padding-top: 19px;"><b>Calendar</b></a></li>
     </ul>
-</nav>
+  </nav>
 
-    <!--End of navbar -->
+  <!--End of navbar -->
 
 
-<div id="AllignLogin">
+  <div id="AllignLogin">
 
     <!-- Sidenav -->
     <div class="sidenav">
       <div class="profile">
-          <img src= 'Images/Default_pfp.png' style="width:70%;height:auto;margin-top: 100px;">
+        <img src='Images/Default_pfp.png' style="width:70%;height:auto;margin-top: 100px;">
 
-          <div class = name id="name2">
-              
-          </div>
+        <div class=name id="name2">
+
+        </div>
       </div>
 
       <div class="sidenav-url">
@@ -67,206 +70,203 @@
           <hr style="align-items: center;">
         </div>
       </div>
-          <div class="url">
-            <form action="/logout" method="POST">
-              <button 
-                id="Logout" 
-                class="hoverable-button"
-                style="background-color: #e8f5ff;
+      <div class="url">
+        <form action="/logout" method="POST">
+          <button id="Logout" class="hoverable-button" style="background-color: #e8f5ff;
                        border-radius: 28px;
                        color: #000;
                        font-size: 20px;
                        margin: 10px 0px;
                        padding: 6px 8px;
-                       width: 70%;"
-                type="submit">
-                Logout
-              </button>
-            </form>
-          </div>
-          
+                       width: 70%;" type="submit">
+            Logout
+          </button>
+        </form>
       </div>
+
+    </div>
   </div>
   <!-- End -->
-   <!-- Modal Structure -->
-<div id="editModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn">&times;</span>
-    <h2>Edit Account</h2>
-    <P>Only change the info you want to change, leave the rest blank</P>
-    <form id="updateForm">
-      <label for="name" style="padding-right: 1%;">Name:</label>
-      <input type="text" id="editName" name="firstname" placeholder="Enter your name"><br>
-      <div style="padding: 1%;"></div>
-      <label for="name">Last Name:</label>
-      <input type="text" id="editLast" name="lastname" placeholder="Enter your last name"><br>
-      <div style="padding: 1%;"></div>
-      <label for="email">Email:</label>
-      <input type="email" id="editEmail" name="email" placeholder="Enter your email"><br>
-      <div style="padding: 1%;"></div>
-      <label for="gender">Gender:</label>
-      <select id="editGender" name="gender">
-        <option value="">Select your gender</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
-        <option value="prefer_not_to_say">Prefer not to say</option>
-      </select>
-      <br>
-      <div style="padding: 1%;"></div>
-      <label for="phonenumber">Phone Number:</label>
-      <input type="tel" id="editPhoneNumber" name="phonenumber" placeholder="Enter your phone number"><br>
-      <div style="padding: 1%;"></div>
-      <button type="submit">Save Changes</button>
-    </form>    
+  <!-- Modal Structure -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Edit Account</h2>
+      <P>Only change the info you want to change, leave the rest blank</P>
+      <form id="updateForm">
+        <label for="name" style="padding-right: 1%;">Name:</label>
+        <input type="text" id="editName" name="firstname" placeholder="Enter your name"><br>
+        <div style="padding: 1%;"></div>
+        <label for="name">Last Name:</label>
+        <input type="text" id="editLast" name="lastname" placeholder="Enter your last name"><br>
+        <div style="padding: 1%;"></div>
+        <label for="email">Email:</label>
+        <input type="email" id="editEmail" name="email" placeholder="Enter your email"><br>
+        <div style="padding: 1%;"></div>
+        <label for="gender">Gender:</label>
+        <select id="editGender" name="gender">
+          <option value="">Select your gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+          <option value="prefer_not_to_say">Prefer not to say</option>
+        </select>
+        <br>
+        <div style="padding: 1%;"></div>
+        <label for="phonenumber">Phone Number:</label>
+        <input type="tel" id="editPhoneNumber" name="phonenumber" placeholder="Enter your phone number"><br>
+        <div style="padding: 1%;"></div>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
   </div>
-</div>
 
-<!-- Main -->
-<div class="main">
-  <h2>IDENTITY</h2>
-  <div class="card">
+  <!-- Main -->
+  <div class="main">
+    <h2>IDENTITY</h2>
+    <div class="card">
       <div class="card-body">
-          <i class="fa fa-pen fa-xs edit"></i>
-          <table>
-              <tbody>
-                  <tr>
-                      <td>Name</td>
-                      <td>:</td>
-                      <td id="name"></td>
-                  </tr>
-                  <tr>
-                      <td>Email</td>
-                      <td>:</td>
-                      <td id = "email"></td>
-                  </tr>
-                  <tr>
-                    <td>Phone Number</td>
-                    <td>:</td>
-                    <td id="phonenumber"></td>
-                </tr>
-                  <tr>
-                      <td>Gender</td>
-                      <td>:</td>
-                      <td id ="gender"></td>
-                  </tr>
-                  <tr>
-                      <td>Birthday</td>
-                      <td>:</td>
-                      <td id = birthday></td>
-                  </tr>
-                  <tr>
-                      <td>Skills</td>
-                      <td>:</td>
-                      <td></td>
-                  </tr>
-              </tbody>
-          </table>
+        <i class="fa fa-pen fa-xs edit"></i>
+        <table>
+          <tbody>
+            <tr>
+              <td>Name</td>
+              <td>:</td>
+              <td id="name"></td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>:</td>
+              <td id="email"></td>
+            </tr>
+            <tr>
+              <td>Phone Number</td>
+              <td>:</td>
+              <td id="phonenumber"></td>
+            </tr>
+            <tr>
+              <td>Gender</td>
+              <td>:</td>
+              <td id="gender"></td>
+            </tr>
+            <tr>
+              <td>Birthday</td>
+              <td>:</td>
+              <td id=birthday></td>
+            </tr>
+            <tr>
+              <td>Skills</td>
+              <td>:</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
   </div>
-</div>
-<!-- End -->
-<script>
-  // Modal controls
-  const editModal = document.getElementById("editModal");
-  const closeModalBtn = document.querySelector(".close-btn");
-  const editBtn = document.querySelector(".edit");
-  // Open modal on edit button click
-  editBtn.addEventListener("click", () => {
-    // Populate modal with current user data
-    document.getElementById("editName").value = document.getElementById("name").textContent;
-    document.getElementById("editLast").value = document.getElementById("last").textContent;
-    document.getElementById("editEmail").value = document.getElementById("email").textContent;
-    document.getElementById("editGender").value = document.getElementById("gender").textContent.toLowerCase();
-    editModal.style.display = "block";
-  });
-  // Close modal
-  closeModalBtn.addEventListener("click", () => {
-    editModal.style.display = "none";
-  });
-  // Close modal when clicking outside the modal
-  window.addEventListener("click", (e) => {
-    if (e.target === editModal) {
-      editModal.style.display = "none";
-    }
-  });
-  // Handle form submission
-  document.getElementById("updateForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  // Capture the updated values
-  const updatedName = document.getElementById("editName").value || null;
-  const updatedLast= document.getElementById("editLast").value || null;
-  const updatedEmail = document.getElementById("editEmail").value || null;
-  const updatedGender = document.getElementById("editGender").value || null;
-  const updatedPhoneNumber = document.getElementById("editPhoneNumber").value || null;
-  try {
-    const response = await fetch("/updateProfile", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: updatedName,
-        last: updatedLast,
-        email: updatedEmail,
-        gender: updatedGender,
-        phonenumber: updatedPhoneNumber,
-      }),
+  <!-- End -->
+  <script>
+    // Modal controls
+    const editModal = document.getElementById("editModal");
+    const closeModalBtn = document.querySelector(".close-btn");
+    const editBtn = document.querySelector(".edit");
+    // Open modal on edit button click
+    editBtn.addEventListener("click", () => {
+      // Populate modal with current user data
+      document.getElementById("editName").value = document.getElementById("name").textContent;
+      document.getElementById("editLast").value = document.getElementById("last").textContent;
+      document.getElementById("editEmail").value = document.getElementById("email").textContent;
+      document.getElementById("editGender").value = document.getElementById("gender").textContent.toLowerCase();
+      editModal.style.display = "block";
     });
-    if (response.ok) {
-      const data = await response.json();
-      alert(data.message);
-      location.reload(); // Reload the page to reflect updates
-    } else {
-      const errorData = await response.json();
-      alert(`Error updating profile: ${errorData.message}`);
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("An unexpected error occurred.");
-  }
-});
-  document.addEventListener("DOMContentLoaded", function () {
-  const openModalButton = document.getElementById("openModal");
-  const modal = document.getElementById("editModal");
-  const closeButton = modal.querySelector(".close-btn");
-  //Open the modal
-  openModalButton.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent the default link behavior
-    modal.style.display = "block";
-  });
-  //Close the modal
-  closeButton.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-  // Close the modal when clicking outside the modal content
-  window.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-});
+    // Close modal
+    closeModalBtn.addEventListener("click", () => {
+      editModal.style.display = "none";
+    });
+    // Close modal when clicking outside the modal
+    window.addEventListener("click", (e) => {
+      if (e.target === editModal) {
+        editModal.style.display = "none";
+      }
+    });
+    // Handle form submission
+    document.getElementById("updateForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      // Capture the updated values
+      const updatedName = document.getElementById("editName").value || null;
+      const updatedLast = document.getElementById("editLast").value || null;
+      const updatedEmail = document.getElementById("editEmail").value || null;
+      const updatedGender = document.getElementById("editGender").value || null;
+      const updatedPhoneNumber = document.getElementById("editPhoneNumber").value || null;
+      try {
+        const response = await fetch("/updateProfile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: updatedName,
+            last: updatedLast,
+            email: updatedEmail,
+            gender: updatedGender,
+            phonenumber: updatedPhoneNumber,
+          }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          alert(data.message);
+          location.reload(); // Reload the page to reflect updates
+        } else {
+          const errorData = await response.json();
+          alert(`Error updating profile: ${errorData.message}`);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An unexpected error occurred.");
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      const openModalButton = document.getElementById("openModal");
+      const modal = document.getElementById("editModal");
+      const closeButton = modal.querySelector(".close-btn");
+      //Open the modal
+      openModalButton.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent the default link behavior
+        modal.style.display = "block";
+      });
+      //Close the modal
+      closeButton.addEventListener("click", function () {
+        modal.style.display = "none";
+      });
+      // Close the modal when clicking outside the modal content
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    });
     function setTheme(theme) {
-        document.body.className = theme === 'dark' ? 'dark-mode' : '';
-        localStorage.setItem('theme', theme); // Save the theme preference
+      document.body.className = theme === 'dark' ? 'dark-mode' : '';
+      localStorage.setItem('theme', theme); // Save the theme preference
     }
 
     // Load the theme from local storage when the page loads
-    window.onload = function() {
-        fetchUserData();
-        checkUpcomingEvents();
-        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-        setTheme(savedTheme);
-        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+    window.onload = function () {
+      fetchUserData();
+      checkUpcomingEvents();
+      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+      setTheme(savedTheme);
+      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
     };
 
     // Add event listener for form submission
-    document.getElementById('settings-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-        // Here you can add any code to save settings if needed
-        window.location.href = 'account'; // Redirect to the login page
+    document.getElementById('settings-form').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent the default form submission
+      // Here you can add any code to save settings if needed
+      window.location.href = 'account'; // Redirect to the login page
     });
-    
-</script>
+
+  </script>
 </body>
+
 </html>
