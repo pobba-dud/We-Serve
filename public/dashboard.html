@@ -41,7 +41,11 @@
 
     // Load the theme from local storage when the page loads
     window.onload = function () {
+      updateDayNumbers();  // Update the day numbers dynamically
+      highlightToday();    // Highlight the current day's event
+     fetchEventsUser();
       checkUpcomingEvents();
+      console.log("startup");
       const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
       setTheme(savedTheme);
       document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme 
@@ -50,7 +54,7 @@
   <!-- End of java script -->
 </head>
 
-<body onload="mapEventsToDays()">
+<body>
   <div class="notification" id="customNotification"
     style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
     This is a notification message!

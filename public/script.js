@@ -43,11 +43,47 @@ function highlightToday() { //start of highlightToday function
 } // end of highlightToday function
 
 // Run the functions when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-  updateDayNumbers();  // Update the day numbers dynamically
-  highlightToday();    // Highlight the current day's event
-});
 
+async function fetchEventsUser() {
+  console.log("Fetching events for the logged-in user...");
+
+  // Fetch the user's ID from the server (assuming it's stored in the JWT token)
+  const userId = await fetchUserId(); // Implement this function to get the user ID
+
+  if (!userId) {
+    console.error("User ID not found. Please log in.");
+    return;
+  }
+
+  // Fetch events the user is signed up for
+  const response = await fetch(`/api/events/user/${userId}`);
+  const events = await response.json();
+
+  // Cache events in localStorage
+  localStorage.setItem('events', JSON.stringify(events));
+  console.log("Events fetched and stored in localStorage:", events);
+
+  // Render events
+  mapEventsToDays();
+}
+async function fetchUserId() {
+  try {
+    const response = await fetch('/profileJS', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user data.');
+    }
+
+    const userData = await response.json();
+    return userData.id; // Assuming the user ID is returned in the response
+  } catch (error) {
+    console.error('Error fetching user ID:', error);
+    return null;
+  }
+}
 
 // Function to map events to days
 function mapEventsToDays() { // start of mapEventsToDays() function
@@ -70,29 +106,36 @@ function mapEventsToDays() { // start of mapEventsToDays() function
   }
 
   events.forEach((event) => {
-    const eventDate = new Date(event.date);
+    const eventDate = new Date(event.event_date);
     const eventDateUTC = new Date(Date.UTC(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate()));
 
     // Check if the event falls within the current week
     if (eventDateUTC >= startOfWeek && eventDateUTC <= endOfWeek) {
       const dayOffset = eventDate.getDay(); // Get the day of the week (0-6)
       const tableRow = document.querySelector(`tr:nth-child(${dayOffset + 1})`);
+      let input = event.start_time;
+      let parts = input.split(":");
+      
+      if (parts.length !== 3) {
+          alert("Invalid time format! Use HH:MM:SS.");
+          return;
+      }
+      
+      let hours = parseInt(parts[0], 10);
+      let minutes = parts[1];
 
+      // Remove leading zero for hours if present
+      let formattedTime = `${hours}:${minutes}`;
       // Update the table cell with the event information
       if (tableRow && tableRow.cells[1]) {
-        tableRow.cells[1].innerHTML = `<u>${event.title}</u><br>${event.time}`;
+        tableRow.cells[1].innerHTML = `<u>${event.name}</u><br>${formattedTime}`;
       }
     }
   });
 } // end of mapEventsToDays() function
 
 // Call mapEventsToDays whenever the DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  mapEventsToDays();
-});
-document.addEventListener("DOMContentLoaded", mapEventsToDays);
 
-mapEventsToDays();
 
 var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
   keyboard: false,

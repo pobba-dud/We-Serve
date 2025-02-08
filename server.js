@@ -865,6 +865,34 @@ app.get('/api/events/display', limiter, async (req, res) => {
   res.json(result.rows);
 });
 
+// Fetch events for a specific user
+app.get('/api/events/user/:userId', authenticate, async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    // Fetch event IDs from user_events
+    const userEventsResult = await pool.query(
+      'SELECT event_id FROM user_events WHERE user_id = $1',
+      [userId]
+    );
+
+    if (userEventsResult.rows.length === 0) {
+      return res.json([]); // No events found for the user
+    }
+
+    // Fetch event details for the event IDs
+    const eventIds = userEventsResult.rows.map(row => row.event_id);
+    const eventsResult = await pool.query(
+      'SELECT * FROM events WHERE id = ANY($1)',
+      [eventIds]
+    );
+
+    res.json(eventsResult.rows);
+  } catch (err) {
+    console.error('Error fetching user events:', err);
+    res.status(500).json({ message: 'Failed to fetch events.' });
+  }
+});
 // Join an event
 app.post('/api/events/join', limiter, authenticate, async (req, res) => {
   const { eventId } = req.body;
