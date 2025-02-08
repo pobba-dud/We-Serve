@@ -866,7 +866,7 @@ app.get('/api/events/display', limiter, async (req, res) => {
 });
 
 // Fetch events for a specific user
-app.get('/api/events/user/:userId', authenticate, async (req, res) => {
+app.get('/api/events/user/:userId',limiter, authenticate, async (req, res) => {
   const userId = req.params.userId;
 
   try {
