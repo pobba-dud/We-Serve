@@ -112,7 +112,7 @@ function mapEventsToDays() { // start of mapEventsToDays() function
     // Check if the event falls within the current week
     if (eventDateUTC >= startOfWeek && eventDateUTC <= endOfWeek) {
       const dayOffset = eventDate.getDay(); // Get the day of the week (0-6)
-      const tableRow = document.querySelector(`tr:nth-child(${dayOffset + 1})`);
+      const tableRow = document.querySelector(`tr:nth-child(${dayOffset})`);
       let input = event.start_time;
       let parts = input.split(":");
       
