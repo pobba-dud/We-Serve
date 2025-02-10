@@ -110,11 +110,6 @@ function mapEventsToDays() {
   events.forEach((event) => {
     const eventDate = new Date(event.event_date); // Convert from DB
     const eventDateUTC = new Date(Date.UTC(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate()));
-console.log("Raw event date from DB:", event.event_date);
-console.log("Parsed event date:", eventDate);
-console.log("Event UTC Date:", eventDate.toUTCString());
-console.log("Event Local Date:", eventDate.toLocaleString());
-console.log("Day of week:", eventDate.getDay());
 
     console.log(`Checking event: ${event.name} on ${eventDateUTC.toISOString()}`);
 
