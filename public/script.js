@@ -2,7 +2,6 @@
 //code for dashboard.html
 // Function to dynamically update the numbers next to the day names
 function updateDayNumbers() {
-  console.log('updateDayNumbers');
   const today = new Date();
   const dayOfWeek = today.getUTCDay(); // Use UTC day of the week
   const currentDate = today.getUTCDate(); // Use UTC date
@@ -27,7 +26,6 @@ function updateDayNumbers() {
 
 // Function to highlight today's event
 function highlightToday() { //start of highlightToday function
-  console.log('highlightToday');
   const today = new Date().getDate(); // Get today's day number
 
   // Get all table rows with the day-number class
@@ -44,7 +42,6 @@ function highlightToday() { //start of highlightToday function
 // Run the functions when the page loads
 
 async function fetchEventsUser() {
-  console.log("Fetching events for the logged-in user...");
 
   // Fetch the user's ID from the server (assuming it's stored in the JWT token)
   const userId = await fetchUserId(); // Implement this function to get the user ID
@@ -60,7 +57,6 @@ async function fetchEventsUser() {
 
   // Cache events in localStorage
   localStorage.setItem('events', JSON.stringify(events));
-  console.log("Events fetched and stored in localStorage:", events);
 
   // Render events
   mapEventsToDays();
@@ -86,8 +82,6 @@ async function fetchUserId() {
 
 // Function to map events to days
 function mapEventsToDays() {
-  console.log('mapEventsToDays');
-
   const events = JSON.parse(localStorage.getItem("events")) || [];
   const currentDate = new Date();
 
@@ -104,9 +98,6 @@ function mapEventsToDays() {
   endOfWeekObj.setUTCDate(startOfWeekObj.getUTCDate() + 6);
   const endOfWeekStr = endOfWeekObj.toISOString().split('T')[0];
 
-  console.log(`Start of Week (UTC): ${startOfWeekStr}`);
-  console.log(`End of Week (UTC): ${endOfWeekStr}`);
-
   // Clear table cells (assumes IDs "event-1" to "event-7")
   for (let i = 1; i <= 7; i++) {
     const cell = document.getElementById(`event-${i}`);
@@ -119,14 +110,11 @@ function mapEventsToDays() {
   events.forEach((event) => {
     // Convert the event's date to a string in YYYY-MM-DD format
     const eventDateStr = new Date(event.event_date).toISOString().split('T')[0];
-    console.log(`Checking event: ${event.name} on ${eventDateStr}`);
-
     // Only proceed if the event date is within this week (by string comparison)
     if (eventDateStr >= startOfWeekStr && eventDateStr <= endOfWeekStr) {
       // To get the day of week (0=Sunday, 6=Saturday), convert the event date string back to a Date in UTC:
       const eventDateObj = new Date(eventDateStr + "T00:00:00Z");
       const dayOffset = eventDateObj.getUTCDay();
-      console.log(`Placing "${event.name}" on day offset: ${dayOffset}`);
 
       // Select the corresponding table row. 
       // For example, if you have rows for each day (Sunday is first row, so nth-child(1) is Sunday)
