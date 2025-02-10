@@ -1,30 +1,29 @@
 
 //code for dashboard.html
 // Function to dynamically update the numbers next to the day names
-function updateDayNumbers() { // start of updateDayNumbers() function
+function updateDayNumbers() {
   console.log('updateDayNumbers');
   const today = new Date();
-  const dayOfWeek = today.getDay(); // Get the current day of the week (0 = Sunday, 6 = Saturday)
-  const currentDate = today.getDate(); // Get the current day of the month
+  const dayOfWeek = today.getUTCDay(); // Use UTC day of the week
+  const currentDate = today.getUTCDate(); // Use UTC date
   const dayElements = document.querySelectorAll('.day-number');
 
-  // Calculate the start of the week (Sunday)
-  const startOfWeek = new Date(today);
-  startOfWeek.setDate(currentDate - dayOfWeek); // Go back to Sunday
+  // Calculate the start of the week (Sunday) in UTC
+  const startOfWeek = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), currentDate - dayOfWeek));
 
   // Update each day element with the correct date
   dayElements.forEach((dayElement, index) => {
     const newDate = new Date(startOfWeek);
-    newDate.setDate(startOfWeek.getDate() + index); // Increment the date for each day
+    newDate.setUTCDate(startOfWeek.getUTCDate() + index); // Increment the date for each day in UTC
 
     // Update the text inside the <th> tag
     const dayName = dayElement.innerHTML.split('<br>')[1]; // Keep the day name
-    dayElement.innerHTML = `${newDate.getDate()}<br>${dayName}`; // Update with new date
+    dayElement.innerHTML = `${newDate.getUTCDate()}<br>${dayName}`; // Update with new date in UTC
 
     // Add a custom attribute for the current day date
-    dayElement.setAttribute('data-day', newDate.getDate());
+    dayElement.setAttribute('data-day', newDate.getUTCDate());
   });
-} //start of updateDayNumbers() function
+}//start of updateDayNumbers() function
 
 // Function to highlight today's event
 function highlightToday() { //start of highlightToday function
@@ -86,19 +85,22 @@ async function fetchUserId() {
 }
 
 // Function to map events to days
-function mapEventsToDays() { // start of mapEventsToDays() function
+function mapEventsToDays() {
   console.log('mapEventsToDays');
+  
+
   const events = JSON.parse(localStorage.getItem("events")) || [];
   const currentDate = new Date();
 
-  // Calculate the start and end of the week
-  const startOfWeek = new Date(currentDate);
-  startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+  // Ensure we calculate in UTC
+  const startOfWeek = new Date(Date.UTC(currentDate.getUTCFullYear(), currentDate.getUTCMonth(), currentDate.getUTCDate()));
+  startOfWeek.setUTCDate(startOfWeek.getUTCDate() - startOfWeek.getUTCDay()); // Move to Sunday
 
-  const endOfWeek = new Date(currentDate);
-  endOfWeek.setDate(currentDate.getDate() + (7 - currentDate.getDay()));
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setUTCDate(startOfWeek.getUTCDate() + 6); // Saturday
 
-  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  console.log(`Start of Week (UTC): ${startOfWeek.toISOString()}`);
+  console.log(`End of Week (UTC): ${endOfWeek.toISOString()}`);
 
   // Clear table first
   for (let i = 1; i <= 7; i++) {
@@ -106,35 +108,50 @@ function mapEventsToDays() { // start of mapEventsToDays() function
   }
 
   events.forEach((event) => {
-    const eventDate = new Date(event.event_date);
+    const eventDate = new Date(event.event_date); // Convert from DB
     const eventDateUTC = new Date(Date.UTC(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate()));
+console.log("Raw event date from DB:", event.event_date);
+console.log("Parsed event date:", eventDate);
+console.log("Event UTC Date:", eventDate.toUTCString());
+console.log("Event Local Date:", eventDate.toLocaleString());
+console.log("Day of week:", eventDate.getDay());
 
-    // Check if the event falls within the current week
+    console.log(`Checking event: ${event.name} on ${eventDateUTC.toISOString()}`);
+
+    // Ensure event falls within the correct week range
     if (eventDateUTC >= startOfWeek && eventDateUTC <= endOfWeek) {
-      const dayOffset = eventDate.getDay(); // Get the day of the week (0-6)
-      const tableRow = document.querySelector(`tr:nth-child(${dayOffset+1})`);
+      const dayOffset = eventDateUTC.getUTCDay(); // Get the day of the week (0-6)
+      console.log(`Placing "${event.name}" on day offset: ${dayOffset}`);
+
+      const tableRow = document.querySelector(`tr:nth-child(${dayOffset + 1})`);
       let input = event.start_time;
       let parts = input.split(":");
-      
+
       if (parts.length !== 3) {
-          alert("Invalid time format! Use HH:MM:SS.");
-          return;
+        console.error("Invalid time format! Use HH:MM:SS.");
+        return;
       }
-      
+
       let hours = parseInt(parts[0], 10);
       let minutes = parts[1];
 
-      // Remove leading zero for hours if present
       let formattedTime = `${hours}:${minutes}`;
-      // Update the table cell with the event information
+
       if (tableRow && tableRow.cells[1]) {
         tableRow.cells[1].innerHTML = `<u>${event.name}</u><br>${formattedTime}`;
       }
     }
   });
-} // end of mapEventsToDays() function
+}
+
+ // end of mapEventsToDays() function
 
 // Call mapEventsToDays whenever the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  updateDayNumbers();  // Update the day numbers dynamically
+  highlightToday();    // Highlight the current day's event
+  fetchEventsUser();   // Fetch and map events
+});
 
 
 var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
