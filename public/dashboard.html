@@ -41,6 +41,9 @@
 
     // Load the theme from local storage when the page loads
     window.onload = function () {
+      updateDayNumbers();  // Update the day numbers dynamically
+      highlightToday();    // Highlight the current day's event
+      fetchEventsUser();   // Fetch and map events
       checkUpcomingEvents();
       console.log("startup");
       const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
