@@ -34,6 +34,98 @@ cron.schedule('0 0 * * *', async () => {
   await pool.query('DELETE FROM events WHERE event_date < NOW() - INTERVAL \'30 days\'');
   console.log('Old events deleted.');
 });
+cron.schedule('0 0 * * *', async () => {
+  try {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth(); // 0-based (0 = January, 11 = December)
+    const currentYear = currentDate.getFullYear();
+
+    // Query to fetch all users and their last logged time
+    const { rows: users } = await pool.query(
+      'SELECT id, last_logged FROM users'
+    );
+
+    for (const user of users) {
+      const lastLoggedTime = new Date(user.last_logged);
+      const lastLoggedMonth = lastLoggedTime.getMonth();
+      const lastLoggedYear = lastLoggedTime.getFullYear();
+
+      // Reset monthly hours if the month has changed
+      if (currentMonth !== lastLoggedMonth) {
+        await pool.query(
+          'UPDATE users SET monthly_hours = 0 WHERE id = $1',
+          [user.id]
+        );
+      }
+
+      // Reset yearly hours if the year has changed
+      if (currentYear !== lastLoggedYear) {
+        await pool.query(
+          'UPDATE users SET yearly_hours = 0 WHERE id = $1',
+          [user.id]
+        );
+      }
+    }
+
+    console.log('Monthly and yearly hours reset for users if necessary.');
+  } catch (err) {
+    console.error('Error resetting monthly and yearly hours:', err);
+  }
+}, {
+  scheduled: true,
+  timezone: 'UTC' // Make sure the cron job runs in UTC time
+});
+const cron = require('node-cron');
+
+// Schedule the cron job to run every Monday at midnight UTC
+cron.schedule('0 0 * * 1', async () => {
+  try {
+    // Get the current timestamp
+    const currentTimestamp = new Date();
+
+    // Calculate the start of the current calendar week (Monday)
+    const startOfCurrentWeek = new Date(currentTimestamp);
+    startOfCurrentWeek.setDate(currentTimestamp.getDate() - currentTimestamp.getDay() + 1); // Set to Monday
+    startOfCurrentWeek.setHours(0, 0, 0, 0); // Set to midnight on Monday
+
+    // Fetch all users and their last logged times
+    const { rows: users } = await pool.query('SELECT id, last_logged, weekly_streak FROM users');
+
+    for (const user of users) {
+      const { id, last_logged, weekly_streak } = user;
+      
+      let newWeeklyStreak = 1; // Default to 1 if no previous streak
+      let resetStreak = false;
+
+      if (last_logged) {
+        // Convert the last logged time to a date object
+        const lastLoggedDate = new Date(last_logged);
+
+        // Calculate the start of the last logged week
+        const startOfLastLoggedWeek = new Date(lastLoggedDate);
+        startOfLastLoggedWeek.setDate(lastLoggedDate.getDate() - lastLoggedDate.getDay() + 1); // Set to Monday
+
+        // If the last log was in the previous calendar week, increment streak
+        if (startOfLastLoggedWeek.getTime() < startOfCurrentWeek.getTime()) {
+          newWeeklyStreak = weeklyStreak + 1; // Increment streak for consecutive weeks
+        } else {
+          resetStreak = true; // Reset streak if the user didn't log last week
+        }
+      }
+
+      // Update the user's weekly streak, resetting or incrementing it
+      await pool.query(
+        'UPDATE users SET weekly_streak = $1 WHERE id = $2',
+        [resetStreak ? 1 : newWeeklyStreak, id]
+      );
+    }
+
+    console.log('Weekly streaks updated for all users.');
+  } catch (err) {
+    console.error('Error updating weekly streaks:', err);
+  }
+});
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Heroku provides this variable automatically
   ssl: {
@@ -938,19 +1030,73 @@ app.get('/api/events/:eventId/participants', limiter, checkIsOrg, async (req, re
 app.post('/api/events/log-hours', limiter, checkIsOrg, async (req, res) => {
   const { eventId, userId, hours } = req.body;
 
-  try {
-    // Update hours
-    await pool.query('UPDATE users SET hourstotal = hourstotal + $1 WHERE id = $2', [hours, userId]);
+  if (hours < 24) {
+    try {
+      // Get the current timestamp
+      const currentTimestamp = new Date();
 
-    // Remove user from user_events
-    await pool.query('DELETE FROM user_events WHERE user_id = $1 AND event_id = $2', [userId, eventId]);
+      // Update the user's total hours
+      await pool.query(
+        'UPDATE users SET hourstotal = hourstotal + $1 WHERE id = $2',
+        [hours, userId]
+      );
 
-    res.status(200).json({ message: 'Hours logged successfully.' });
-  } catch (err) {
-    console.error('Error logging hours:', err);
-    res.status(500).json({ message: 'Failed to log hours.' });
+      // Update monthly hours
+      await pool.query(
+        'UPDATE users SET monthly_hours = monthly_hours + $1 WHERE id = $2 AND EXTRACT(MONTH FROM CURRENT_DATE) = EXTRACT(MONTH FROM last_logged)',
+        [hours, userId]
+      );
+
+      // Update yearly hours
+      await pool.query(
+        'UPDATE users SET yearly_hours = yearly_hours + $1 WHERE id = $2 AND EXTRACT(YEAR FROM CURRENT_DATE) = EXTRACT(YEAR FROM last_logged)',
+        [hours, userId]
+      );
+
+      // Update the last logged time for the user
+      await pool.query(
+        'UPDATE users SET last_logged = $1 WHERE id = $2',
+        [currentTimestamp, userId]
+      );
+
+      // Remove the user from the user_events table for this event
+      await pool.query(
+        'DELETE FROM user_events WHERE user_id = $1 AND event_id = $2',
+        [userId, eventId]
+      );
+
+      res.status(200).json({ message: 'Hours logged successfully.' });
+    } catch (err) {
+      console.error('Error logging hours:', err);
+      res.status(500).json({ message: 'Failed to log hours.' });
+    }
+  } else {
+    res.status(400).json({ message: 'Hours cannot be greater than 24.' });
   }
 });
+
+app.get('/api/events/fetch-hours', authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id; // Extract user ID from JWT token
+
+    // Fetch user hours from the database
+    const result = await pool.query(
+      'SELECT hourstotal, weekly_streak, monthly_hours, yearly_hours FROM users WHERE id = $1',
+      [userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    // Return the fetched hours
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error fetching user hours:', error);
+    res.status(500).json({ message: 'Failed to retrieve hours.' });
+  }
+});
+
 
 
 //dev api
