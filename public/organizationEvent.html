@@ -237,10 +237,7 @@
             const dateInput = document.getElementById("eventDate");
             const dateError = document.getElementById("dateError");
 
-            console.log("Date validation script loaded!");
-
             if (!dateInput) {
-                console.error("Error: Date input field not found!");
                 return;
             }
 
@@ -249,14 +246,11 @@
             dateInput.setAttribute("min", today);
 
             dateInput.addEventListener("change", function () {
-                console.log("Selected date:", this.value);
 
                 if (this.value < today) {
                     dateError.style.display = "inline";
-                    console.log("❌ Invalid date: Can't be in the past!");
                 } else {
                     dateError.style.display = "none";
-                    console.log("✅ Valid date");
                 }
             });
         });
@@ -264,7 +258,6 @@
             const timeInput = document.getElementById("eventTimeRange");
             const timeError = document.getElementById("timeError");
 
-            console.log("Script is running!"); // Check if script runs
 
             if (!timeInput) {
                 console.error("Error: Input field not found!");
@@ -272,16 +265,15 @@
             }
 
             timeInput.addEventListener("input", function () {
-                console.log("Input detected:", this.value); // Check input
-
+                
                 const timePattern = /^([0-9]?[0-9]):[0-5][0-9] - ([0-9]?[0-9]):[0-5][0-9]$/;
 
                 if (timePattern.test(this.value.trim())) {
                     timeError.style.display = "none";
-                    console.log("✅ Valid input format");
+                    
                 } else {
                     timeError.style.display = "inline";
-                    console.log("❌ Invalid input format");
+                
                 }
             });
         });
@@ -328,7 +320,6 @@
                     description: eventDescription,
                     org_name: userData.org_name, // Dynamically use the org_name from the user's data
                 };
-                console.log(newEvent);
                 // Send event data to the server via an API call
                 const response = await fetch('/api/events', {
                     method: 'POST',

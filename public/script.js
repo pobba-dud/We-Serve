@@ -43,7 +43,7 @@ function highlightToday() { //start of highlightToday function
 
 async function fetchEventsUser() {
 
-  // Fetch the user's ID from the server (assuming it's stored in the JWT token)
+  // Fetch the user's ID from the server (assuming it's stored in a token)
   const userId = await fetchUserId(); // Implement this function to get the user ID
 
   if (!userId) {
@@ -56,7 +56,7 @@ async function fetchEventsUser() {
   const events = await response.json();
 
   // Cache events in localStorage
-  localStorage.setItem('events', JSON.stringify(events));
+  localStorage.setItem('userEvents', JSON.stringify(events));
 
   // Render events
   mapEventsToDays();
@@ -82,7 +82,7 @@ async function fetchUserId() {
 
 // Function to map events to days
 function mapEventsToDays() {
-  const events = JSON.parse(localStorage.getItem("events")) || [];
+  const events = JSON.parse(localStorage.getItem("userEvents")) || [];
   const currentDate = new Date();
 
   // Calculate the start and end of the week in UTC by converting dates to YYYY-MM-DD strings
@@ -182,44 +182,43 @@ function searchDiscoverEvents() { // start of searchDiscoverEvents() function
 
 //universally used code
 // Function to show custom notification
+// Function to show custom notification
 function showNotification(message) {
-  console.log("2nd Function started");
-  console.log(message);
   const notification = document.getElementById("customNotification");
-  console.log(notification);
-  notification.textContent = message; // Set the message
-  notification.style.display = "block"; // Show the notification
-  console.log(notification.textContent);
-  // Hide the notification after 5 seconds
+  notification.textContent = message;
+  notification.style.display = "block";
+
+  // Hide after 60 seconds (fixed from original 500000ms)
   setTimeout(() => {
-    console.log("timer Function started");
-    notification.style.opacity = '0'; // Fade out
+    notification.style.opacity = '0';
     setTimeout(() => {
-      notification.style.display = "none"; // Hide after fade out
-      notification.style.opacity = '1'; // Reset opacity for next use
-    }, 500); // Wait for the fade out duration
-  }, 500000); // Display for 5 seconds
+      notification.style.display = "none";
+      notification.style.opacity = '1';
+    }, 500);
+  }, 60000); // 60 seconds
 }
 
-// Function to check for events within 36 hours and show notifications
-function checkUpcomingEvents() {
-  console.log("Function started");
+// Function to check for upcoming events within 48 hours
+async function checkUpcomingEvents() {
+  fetchEventsUser(); // Ensure user events are fetched first
+
+  const events = JSON.parse(localStorage.getItem("userEvents")) || [];
   const currentTime = new Date();
-  const fourtyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
-
-  // Retrieve events from local storage
-  const storedEvents = JSON.parse(localStorage.getItem('events')) || []; // Replace 'events' with your actual key
-
-  storedEvents.forEach(event => {
-    console.log("Events loaded");
-    const eventDate = new Date(event.date); // Assuming event.date is a string that can be parsed into a Date object
-    eventDate.setHours(24, 0, 0, 0);
-    console.log(event);
-    if (eventDate <= fourtyEightHoursFromNow && eventDate > currentTime) {
-      console.log("event is in timespan");
-      console.log(event);
-      console.log(eventDate);
-      showNotification(`Upcoming Event: ${event.title} at ${event.location} on ${event.date} at ${event.time}`);
+  const fortyEightHoursFromNow = new Date(currentTime.getTime() + 48 * 60 * 60 * 1000);
+  events.forEach(event => {
+    // Parse the event's date and time correctly
+    const eventDateTimeUTC = new Date(`${event.event_date.split('T')[0]}T${event.start_time}Z`);
+    // Check if the event is within the next 48 hours
+    if (eventDateTimeUTC > currentTime && eventDateTimeUTC <= fortyEightHoursFromNow) {
+      const options = { 
+        month: 'long', 
+        day: 'numeric', 
+        hour: 'numeric', 
+        minute: '2-digit', 
+        timeZone: 'UTC' 
+      };
+      const formattedDate = eventDateTimeUTC.toLocaleString('en-US', options);
+      showNotification(`Upcoming Event: ${event.name} at ${event.address} on ${formattedDate}`);
     }
   });
 }
@@ -227,6 +226,13 @@ function closeNotification() {
   const notification = document.getElementById("customNotification");
   notification.style.display = "none"; // Hide the notification
 }
+// Update your existing code to call this
+document.addEventListener("DOMContentLoaded", () => {
+  checkUpcomingEvents();
+  // Run every hour to check for new events
+  setInterval(checkUpcomingEvents, 60 * 60 * 1000);
+});
+
 
 function setTheme(theme) {
   document.body.className = theme === 'dark' ? 'dark-mode' : '';
