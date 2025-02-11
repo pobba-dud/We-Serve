@@ -15,39 +15,6 @@
 <body>
   <!-- Existing content... -->
 
-  <div id="leaderboardModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <div class="leaderboard-container">
-        <div class="leaderboard">
-          <h1>Total Hours</h1>
-          <ol>
-            <li>User A - 10 hours</li>
-            <li>User B - 8 hours</li>
-            <li>User C - 5 hours</li>
-          </ol>
-        </div>
-
-        <div class="leaderboard">
-          <h1>Weekly Streak</h1>
-          <ol>
-            <li>User D - 69 weeks</li>
-            <li>User E - 1 week</li>
-            <li>User F - 💀</li>
-          </ol>
-        </div>
-
-        <div class="leaderboard">
-          <h1>Broke friend Leaderboard</h1>
-          <ol>
-            <li>User G - 16 dollars</li>
-            <li>User H - 12 pesos</li>
-            <li>User I - 2 trillion zimbabwe dollars</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script>
     function openModal() {
@@ -105,7 +72,7 @@
         <div class="bar3"></div>
       </div>
 
-      <div class="menu" id="dropdownMenu">
+      <div class="menu" style="z-index: 9999;" id="dropdownMenu">
         <a href="index"><img src="Images/logo.png" style="padding-top:5%;width:50%; height:50%;"></a>
         <a href="dashboard">Home</a>
         <a href="discover">Discover</a>
@@ -144,7 +111,9 @@
       <p id="totalHours" style="font-size: larger;">0</p>
     </div>
   </div>
-    <div id="leaderboardModal" class="modal">
+  <div id="leaderboardModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
       <div class="leaderboard-container">
         <div class="leaderboard">
           <h1>Total Hours</h1>
@@ -154,7 +123,6 @@
             <li>User C - 5 hours</li>
           </ol>
         </div>
-
 
         <div class="leaderboard">
           <h1>Weekly Streak</h1>
@@ -175,6 +143,7 @@
         </div>
       </div>
     </div>
+  </div>
 
 
     <footer>
