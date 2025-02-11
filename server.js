@@ -11,12 +11,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { isEmpty } = require('lodash');
 const crypto = require('crypto');
-const SECRET_KEY = process.env.SECRET_KEY;
 const sanitizeHtml = require('sanitize-html');
 const rateLimit = require('express-rate-limit');
+const cron = require('node-cron');
+
+const databaseUrl = process.env.DATABASE_URL;
+const SECRET_KEY = process.env.SECRET_KEY;
 const Email = process.env.EMAIL;
 const Password = process.env.PASSWORD;
-const cron = require('node-cron');
 
 if (!SECRET_KEY) {
   throw new Error("Environment variable SECRET_KEY must be set.");
@@ -126,7 +128,7 @@ cron.schedule('0 0 * * 1', async () => {
 });
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // Heroku provides this variable automatically
+  connectionString: databaseUrl, // Heroku provides this variable automatically
   ssl: {
     rejectUnauthorized: false, // Required for Heroku-managed databases
   },
