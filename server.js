@@ -1028,7 +1028,6 @@ app.get('/api/events/:eventId/participants', limiter, checkIsOrg, async (req, re
 // Log volunteer hours (organization-only)
 app.post('/api/events/log-hours', limiter, checkIsOrg, async (req, res) => {
   const { eventId, userId, hours } = req.body;
-
   if (hours < 24) {
     try {
       // Get the current timestamp
