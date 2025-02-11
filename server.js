@@ -1068,8 +1068,9 @@ app.post('/api/events/log-hours', limiter, checkIsOrg, async (req, res) => {
       console.error('Error logging hours:', err);
       res.status(500).json({ message: 'Failed to log hours.' });
     }
-  } else {
-    res.status(400).json({ message: 'Hours cannot be greater than 24.' });
+  }
+  else {
+    res.status(500).json({ message: 'Hours cannot be greater than 24.' });
   }
 });
 
