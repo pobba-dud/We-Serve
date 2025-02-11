@@ -1102,7 +1102,7 @@ app.get('/api/events/fetch-hours', authenticate, async (req, res) => {
   }
 });
 // API endpoint to get event details by eventId
-app.get('/api/events/:eventId', async (req, res) => {
+app.get('/api/events/:eventId',authenticate, async (req, res) => {
   const eventId = req.params.eventId;  // Get eventId from the URL parameter
 
   try {
@@ -1123,7 +1123,33 @@ app.get('/api/events/:eventId', async (req, res) => {
   }
 });
 
+app.post('/api/events/leave',authenticate, async (req, res) => {
+  const { eventId } = req.body;  // The event ID user wants to leave
+  const userId = req.user.id;  // Assuming user ID is attached to the request, maybe from a JWT token
 
+  if (!eventId || !userId) {
+    return res.status(400).json({ message: 'Event ID and User ID are required' });
+  }
+
+  try {
+    // Query to delete the user's participation in the event
+    const query = 'DELETE FROM user_events WHERE user_id = $1 AND event_id = $2 RETURNING *';
+    const values = [userId, eventId];
+
+    const result = await pool.query(query, values);
+
+    if (result.rowCount > 0) {
+      // Successfully deleted the event
+      res.status(200).json({ message: 'Successfully left the event' });
+    } else {
+      // No matching event found
+      res.status(404).json({ message: 'Event not found or already left' });
+    }
+  } catch (error) {
+    console.error('Error leaving event:', error);
+    res.status(500).json({ message: 'An error occurred while leaving the event' });
+  }
+});
 
 
 

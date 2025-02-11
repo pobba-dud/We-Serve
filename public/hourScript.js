@@ -1,6 +1,5 @@
  // Fetch user hours and update the page
  async function fetchUserHours() {
-    console.log("fetching")
     try {
       const response = await fetch('/api/events/fetch-hours', {
         method: 'GET',

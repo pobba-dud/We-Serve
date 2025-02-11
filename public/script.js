@@ -16,10 +16,10 @@ function updateDayNumbers() {
     newDate.setUTCDate(startOfWeek.getUTCDate() + index); // Increment in UTC
 
     // Ensure the date updates correctly
-    const dayName = dayElement.innerHTML.split('<br>')[1]; 
-    dayElement.innerHTML = `${newDate.getUTCDate()}<br>${dayName}`; 
+    const dayName = dayElement.innerHTML.split('<br>')[1];
+    dayElement.innerHTML = `${newDate.getUTCDate()}<br>${dayName}`;
 
-    dayElement.setAttribute('data-day', newDate.getUTCDate()); 
+    dayElement.setAttribute('data-day', newDate.getUTCDate());
   });
 }
 //start of updateDayNumbers() function
@@ -141,19 +141,25 @@ function formatTime(time) {
   hour = hour % 12 || 12;
   return `${hour}:${minute} ${ampm}`;
 }
-
-// Function to leave an event
+//functiuon to leave an event
 async function leaveEvent(eventId) {
-  const response = await fetch('/api/events/leave', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ eventId })
-  });
+  try {
+    const response = await fetch('/api/events/leave', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ eventId }),
+    });
 
-  if (response.ok) {
-    alert('You have left the event.');
-    location.reload();
-  } else {
+    const data = await response.json();
+
+    if (response.ok) {
+      alert(data.message);
+      location.reload();  // Refresh the page to reflect changes
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error('Error leaving the event:', error);
     alert('Failed to leave the event.');
   }
 }
@@ -185,26 +191,45 @@ function mapEventsToDays() {
 
     eventCount[dayOffset]++;
     if (eventCount[dayOffset] === 1) {
-      document.getElementById(`event-${dayOffset + 1}`).innerHTML = `<button class="event-button" onclick="openEventModal(${dayOffset})"><u>${event.name}</u></button>`;
+      document.getElementById(`event-${dayOffset + 1}`).innerHTML = `<button class="event-button" 
+      style="
+      margin-right: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      float: none;
+      width: 100%;
+      max-width: 200px;
+      margin: 10px auto;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;"
+      onclick="openEventModal(${dayOffset})"><u>${event.name}</u></button>`;
     } else {
-      document.getElementById(`event-${dayOffset + 1}`).innerHTML = `<button class="event-button" onclick="openEventModal(${dayOffset})"><u>${event.name}</u> +${eventCount[dayOffset] - 1}</button>`;
+      document.getElementById(`event-${dayOffset + 1}`).innerHTML = `<button class="event-button"
+      style="
+      margin-right: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      float: none;
+      width: 100%;
+      max-width: 200px;
+      margin: 10px auto;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold;     
+      text-align: center;
+      cursor: pointer;"
+      onclick="openEventModal(${dayOffset})"><u>${event.name}</u> +${eventCount[dayOffset] - 1}</button>`;
     }
   });
 }
-
-
-
-
-
- // end of mapEventsToDays() function
-
-// Call mapEventsToDays whenever the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  updateDayNumbers();  // Update the day numbers dynamically
-  highlightToday();    // Highlight the current day's event
-  fetchEventsUser();   // Fetch and map events
-});
-
+// end of mapEventsToDays() function
 
 var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
   keyboard: false,
@@ -268,12 +293,12 @@ async function checkUpcomingEvents() {
     const eventDateTimeUTC = new Date(`${event.event_date.split('T')[0]}T${event.start_time}Z`);
     // Check if the event is within the next 48 hours
     if (eventDateTimeUTC > currentTime && eventDateTimeUTC <= fortyEightHoursFromNow) {
-      const options = { 
-        month: 'long', 
-        day: 'numeric', 
-        hour: 'numeric', 
-        minute: '2-digit', 
-        timeZone: 'UTC' 
+      const options = {
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZone: 'UTC'
       };
       const formattedDate = eventDateTimeUTC.toLocaleString('en-US', options);
       showNotification(`Upcoming Event: ${event.name} at ${event.address} on ${formattedDate}`);
@@ -312,4 +337,38 @@ document.addEventListener("click", function (event) {
     menu.classList.remove("show");
     menuButton.classList.remove("change");
   }
+});
+
+async function fetchUserHours() {
+  try {
+    const response = await fetch('/api/events/fetch-hours', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // Ensure that the authentication token is sent along if required
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const data = await response.json();
+    // Update the page with the fetched data
+    document.getElementById('totalHours').textContent = formatNumber(data.hourstotal);
+    document.getElementById('weeklyStreak').textContent = formatNumber(data.weekly_streak);
+  } catch (error) {
+    console.error('Error fetching user hours:', error);
+    alert('Error fetching your data. Please try again later.');
+  }
+}
+
+// Helper function to format numbers with commas
+function formatNumber(number) {
+  return number.toLocaleString();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetchUserHours();
 });

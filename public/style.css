@@ -63,26 +63,7 @@ body.dark-mode .modal-lg {
   color: red;
 }
 /* Button styling */
-.event-button {
-  display: block;          /* Makes the button take up the full width */
-  width: 100%;             /* Ensure it spans the full width of the parent */
-  max-width: 200px;        /* Optional: Set a max width to prevent buttons from getting too wide */
-  margin: 10px auto;       /* Centers the button horizontally with some margin */
-  padding: 10px 20px;      /* Adds padding inside the button for better size */
-  font-size: 16px;         /* Ensures consistent font size */
-  font-weight: bold;       /* Makes the button text bold */
-  text-align: center;      /* Centers the text inside the button */
-  background-color: #007BFF; /* Set a background color */
-  color: white;            /* Set the text color */
-  border: none;            /* Remove the default border */
-  border-radius: 5px;      /* Rounded corners */
-  cursor: pointer;         /* Change cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth background color transition */
-}
 
-.event-button:hover {
-  background-color: #0056b3; /* Darken the background on hover */
-}
 
 /* Optional: Adjust the button's style for smaller screens */
 @media (max-width: 600px) {
@@ -673,4 +654,8 @@ footer ul li {
   /* Ensure it appears above other content */
   transition: opacity 0.5s;
   /* Smooth transition for fade out */
+}
+
+.event-button:hover {
+  background-color: #0056b3; /* Darken the background on hover */
 }
