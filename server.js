@@ -75,7 +75,6 @@ cron.schedule('0 0 * * *', async () => {
   scheduled: true,
   timezone: 'UTC' // Make sure the cron job runs in UTC time
 });
-const cron = require('node-cron');
 
 // Schedule the cron job to run every Monday at midnight UTC
 cron.schedule('0 0 * * 1', async () => {
