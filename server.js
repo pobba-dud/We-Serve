@@ -952,6 +952,7 @@ app.post('/api/events', limiter, async (req, res) => {
 });
 
 
+
 // Fetch all events
 app.get('/api/events/display', limiter, async (req, res) => {
   const result = await pool.query('SELECT * FROM events');
@@ -1079,7 +1080,6 @@ app.post('/api/events/log-hours', limiter, checkIsOrg, async (req, res) => {
   }
 });
 
-
 app.get('/api/events/fetch-hours', authenticate, async (req, res) => {
   try {
     const userId = req.user.id; // Extract user ID from JWT token
@@ -1101,6 +1101,29 @@ app.get('/api/events/fetch-hours', authenticate, async (req, res) => {
     res.status(500).json({ message: 'Failed to retrieve hours.' });
   }
 });
+// API endpoint to get event details by eventId
+app.get('/api/events/:eventId', async (req, res) => {
+  const eventId = req.params.eventId;  // Get eventId from the URL parameter
+
+  try {
+    // Query to get event details by eventId
+    const result = await pool.query(
+      'SELECT * FROM events WHERE id = $1', [eventId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Send the event details as JSON
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error fetching event:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 
 
 

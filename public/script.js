@@ -80,62 +80,120 @@ async function fetchUserId() {
   }
 }
 
-// Function to map events to days
-function mapEventsToDays() {
-  const events = JSON.parse(localStorage.getItem("userEvents")) || [];
-  const currentDate = new Date();
+// Function to open the modal for a specific day's events
+function openEventModal(dayOffset) {
+  console.log("Opening modal for day:", dayOffset);
 
-  // Calculate the start and end of the week in UTC by converting dates to YYYY-MM-DD strings
-  // (We force everything to UTC so that comparisons are consistent.)
-  const todayISOString = currentDate.toISOString().split('T')[0];
-  const dayOfWeek = currentDate.getUTCDay(); // 0 (Sunday) - 6 (Saturday)
-  
-  // Create a Date object for the start of the week (Sunday) using UTC parts
-  const startOfWeekObj = new Date(Date.UTC(currentDate.getUTCFullYear(), currentDate.getUTCMonth(), currentDate.getUTCDate() - dayOfWeek));
-  const startOfWeekStr = startOfWeekObj.toISOString().split('T')[0];
+  const modal = document.getElementById('eventModal');
+  const modalBody = document.getElementById('modal-body');
 
-  const endOfWeekObj = new Date(startOfWeekObj);
-  endOfWeekObj.setUTCDate(startOfWeekObj.getUTCDate() + 6);
-  const endOfWeekStr = endOfWeekObj.toISOString().split('T')[0];
-
-  // Clear table cells (assumes IDs "event-1" to "event-7")
-  for (let i = 1; i <= 7; i++) {
-    const cell = document.getElementById(`event-${i}`);
-    if (cell) {
-      cell.innerHTML = "";
-    }
+  if (!modal || !modalBody) {
+    console.error("Modal or modal body not found in the DOM!");
+    return;
   }
 
-  // Process each event
-  events.forEach((event) => {
-    // Convert the event's date to a string in YYYY-MM-DD format
-    const eventDateStr = new Date(event.event_date).toISOString().split('T')[0];
-    // Only proceed if the event date is within this week (by string comparison)
-    if (eventDateStr >= startOfWeekStr && eventDateStr <= endOfWeekStr) {
-      // To get the day of week (0=Sunday, 6=Saturday), convert the event date string back to a Date in UTC:
-      const eventDateObj = new Date(eventDateStr + "T00:00:00Z");
-      const dayOffset = eventDateObj.getUTCDay();
+  modalBody.innerHTML = `<p>Loading events...</p>`; // Placeholder while fetching
 
-      // Select the corresponding table row. 
-      // For example, if you have rows for each day (Sunday is first row, so nth-child(1) is Sunday)
-      const tableRow = document.querySelector(`tr:nth-child(${dayOffset + 1})`);
+  const events = JSON.parse(localStorage.getItem("userEvents")) || [];
+  const eventsForDay = events.filter(event => {
+    const eventDate = new Date(event.event_date);
+    const eventDay = (new Date(eventDate.toISOString().split('T')[0] + "T00:00:00Z")).getUTCDay();
+    return eventDay === dayOffset; // Filter events for the selected day
+  });
 
-      // Parse start_time (assuming format "HH:MM:SS") and get only HH:MM
-      let parts = event.start_time.split(":");
-      if (parts.length !== 3) {
-        alert("Invalid time format! Use HH:MM:SS.");
-        return;
-      }
-      let hours = parseInt(parts[0], 10);
-      let minutes = parts[1];
-      let formattedTime = `${hours}:${minutes}`;
+  if (eventsForDay.length === 0) {
+    modalBody.innerHTML = `<p>No events for this day.</p>`;
+    modal.style.display = 'block';
+    return;
+  }
 
-      if (tableRow && tableRow.cells[1]) {
-        tableRow.cells[1].innerHTML = `<u>${event.name}</u><br>${formattedTime}`;
-      }
+  // Generate modal content for multiple events
+  let modalContent = '';
+  eventsForDay.forEach(event => {
+    modalContent += `
+      <div class="event-section">
+        <h4>${event.name}</h4>
+        <p><b>Date:</b> ${event.event_date.split('T')[0]}</p>
+        <p><b>Time:</b> ${event.start_time} - ${event.end_time}</p>
+        <p><b>Location:</b> ${event.address}</p>
+        <p><b>Description:</b> ${event.description}</p>
+        <button class="btn btn-danger" onclick="leaveEvent(${event.id})">Leave Event</button>
+        <hr />
+      </div>
+    `;
+  });
+
+  modalBody.innerHTML = modalContent; // Update modal with event details
+  modal.style.display = 'block'; // Show the modal
+}
+
+
+function closeEventModal() {
+  document.getElementById('eventModal').style.display = 'none';
+}
+
+
+
+// Function to convert 24-hour format to 12-hour format
+function formatTime(time) {
+  let [hour, minute] = time.split(":");
+  let ampm = hour >= 12 ? "PM" : "AM";
+  hour = hour % 12 || 12;
+  return `${hour}:${minute} ${ampm}`;
+}
+
+// Function to leave an event
+async function leaveEvent(eventId) {
+  const response = await fetch('/api/events/leave', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ eventId })
+  });
+
+  if (response.ok) {
+    alert('You have left the event.');
+    location.reload();
+  } else {
+    alert('Failed to leave the event.');
+  }
+}
+
+// Function to populate the weekly table
+function mapEventsToDays() {
+  const events = JSON.parse(localStorage.getItem("userEvents")) || [];
+  const startOfWeek = new Date();
+  startOfWeek.setUTCDate(startOfWeek.getUTCDate() - startOfWeek.getUTCDay());
+
+  const eventCount = {};
+  for (let i = 0; i < 7; i++) {
+    document.getElementById(`event-${i + 1}`).innerHTML = "";
+    eventCount[i] = 0;
+  }
+
+  const eventsByDay = {}; // Store events by day
+
+  events.forEach(event => {
+    const eventDate = new Date(event.event_date);
+    const eventDateStr = eventDate.toISOString().split('T')[0];
+    const dayOffset = (new Date(eventDateStr + "T00:00:00Z")).getUTCDay();
+
+    if (!eventsByDay[dayOffset]) {
+      eventsByDay[dayOffset] = [];
+    }
+
+    eventsByDay[dayOffset].push(event); // Group events by the day they occur
+
+    eventCount[dayOffset]++;
+    if (eventCount[dayOffset] === 1) {
+      document.getElementById(`event-${dayOffset + 1}`).innerHTML = `<button class="event-button" onclick="openEventModal(${dayOffset})"><u>${event.name}</u></button>`;
+    } else {
+      document.getElementById(`event-${dayOffset + 1}`).innerHTML = `<button class="event-button" onclick="openEventModal(${dayOffset})"><u>${event.name}</u> +${eventCount[dayOffset] - 1}</button>`;
     }
   });
 }
+
+
+
 
 
  // end of mapEventsToDays() function
