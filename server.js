@@ -145,8 +145,7 @@ app.use((req, res, next) => {
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// Enable trust proxy
-app.set('trust proxy', 1);
+
 // Define the authenticate middleware
 
 // Middleware to check if the user is authenticated 
