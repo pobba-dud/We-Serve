@@ -20,8 +20,5 @@
     "nodemon": "^3.1.9",
     "pg": "^8.13.1",
     "sanitize-html": "^2.14.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.7.3"
   }
 }
