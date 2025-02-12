@@ -1032,53 +1032,64 @@ app.get('/api/events/:eventId/participants', limiter, checkIsOrg, async (req, re
 app.post('/api/events/log-hours', limiter, checkIsOrg, async (req, res) => {
   const { eventId, userId, hours } = req.body;
 
-  if (hours < 24) {
-    try {
-      // Get the current timestamp
-      const currentTimestamp = new Date();
+  if (hours >= 24) {
+    return res.status(400).json({ message: 'Hours cannot be greater than 24.' });
+  }
 
-      // Fetch user's last_logged and weekly_streak
-      const { rows: userResult } = await pool.query(
-        'SELECT last_logged, weekly_streak FROM users WHERE id = $1',
-        [userId]
-      );
+  try {
+    // Check if the user is still in the user_events table for this event
+    const { rowCount } = await pool.query(
+      'SELECT 1 FROM user_events WHERE user_id = $1 AND event_id = $2',
+      [userId, eventId]
+    );
 
-      let lastLoggedTime = userResult[0]?.last_logged;
-      let weeklyStreak = userResult[0]?.weekly_streak || 0; // Default to 0 if NULL
-
-      // If last_logged is NULL, treat it as a first-time log
-      if (!lastLoggedTime) {
-        lastLoggedTime = currentTimestamp; // Set it to now
-        weeklyStreak = 1; // Start streak at 1
-      }
-
-      // Ensure monthly_hours and yearly_hours update properly
-      await pool.query(
-        `UPDATE users SET 
-          monthly_hours = monthly_hours + $1, 
-          yearly_hours = yearly_hours + $1, 
-          hourstotal = hourstotal + $1, 
-          last_logged = $2, 
-          weekly_streak = $3 
-        WHERE id = $4`,
-        [hours, currentTimestamp, weeklyStreak, userId]
-      );
-
-      // Remove the user from the user_events table for this event
-      await pool.query(
-        'DELETE FROM user_events WHERE user_id = $1 AND event_id = $2',
-        [userId, eventId]
-      );
-
-      res.status(200).json({ message: 'Hours logged successfully.' });
-    } catch (err) {
-      console.error('Error logging hours:', err);
-      res.status(500).json({ message: 'Failed to log hours.' });
+    if (rowCount === 0) {
+      return res.status(400).json({ message: 'User is not registered for this event.' });
     }
-  } else {
-    res.status(400).json({ message: 'Hours cannot be greater than 24.' });
+
+    // Get the current timestamp
+    const currentTimestamp = new Date();
+
+    // Fetch user's last_logged and weekly_streak
+    const { rows: userResult } = await pool.query(
+      'SELECT last_logged, weekly_streak FROM users WHERE id = $1',
+      [userId]
+    );
+
+    let lastLoggedTime = userResult[0]?.last_logged;
+    let weeklyStreak = userResult[0]?.weekly_streak || 0; // Default to 0 if NULL
+
+    // If last_logged is NULL, treat it as a first-time log
+    if (!lastLoggedTime) {
+      lastLoggedTime = currentTimestamp; // Set it to now
+      weeklyStreak = 1; // Start streak at 1
+    }
+
+    // Ensure monthly_hours and yearly_hours update properly
+    await pool.query(
+      `UPDATE users SET 
+        monthly_hours = monthly_hours + $1, 
+        yearly_hours = yearly_hours + $1, 
+        hourstotal = hourstotal + $1, 
+        last_logged = $2, 
+        weekly_streak = $3 
+      WHERE id = $4`,
+      [hours, currentTimestamp, weeklyStreak, userId]
+    );
+
+    // Remove the user from the user_events table for this event
+    await pool.query(
+      'DELETE FROM user_events WHERE user_id = $1 AND event_id = $2',
+      [userId, eventId]
+    );
+
+    res.status(200).json({ message: 'Hours logged successfully.' });
+  } catch (err) {
+    console.error('Error logging hours:', err);
+    res.status(500).json({ message: 'Failed to log hours.' });
   }
 });
+
 
 app.get('/api/events/fetch-hours', authenticate, async (req, res) => {
   try {

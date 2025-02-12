@@ -356,11 +356,10 @@ async function fetchUserHours() {
 
     const data = await response.json();
     // Update the page with the fetched data
-    document.getElementById('totalHours').textContent = formatNumber(data.hourstotal);
+    document.getElementById('totalHours').textContent = formatNumber(data.yearly_hours);
     document.getElementById('weeklyStreak').textContent = formatNumber(data.weekly_streak);
   } catch (error) {
     console.error('Error fetching user hours:', error);
-    alert('Error fetching your data. Please try again later.');
   }
 }
 
@@ -368,6 +367,8 @@ async function fetchUserHours() {
 function formatNumber(number) {
   return number.toLocaleString();
 }
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchUserHours();
