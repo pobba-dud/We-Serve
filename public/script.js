@@ -215,7 +215,7 @@ function mapEventsToDays() {
       text-align: center;
       cursor: pointer;"
       onclick="openEventModal(${dayDiff})">
-        <u>${event.name}</u> ${eventCount[dayDiff] > 1 ? `+${eventCount[dayDiff] - 1}` : ""}
+      ${event.name} ${eventCount[dayDiff] > 1 ? `+${eventCount[dayDiff] - 1}` : ""}
         </button>`;
     }
   });
