@@ -17,16 +17,30 @@
   footer {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
   }
+  /* Light mode (default) */
+body {
+  background: white;
+  color: black;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: black;
+    color: white;
+  }
+}
+
 </style>
 <!-- Dark mode JS -->
 <script>
   // Load the theme from local storage when the page loads
-  window.onload = function () {
-    checkUpcomingEvents();
-    const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-    setTheme(savedTheme);
-    document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-  };
+  // window.onload = function () {
+  //   checkUpcomingEvents();
+  //   const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
+  //   setTheme(savedTheme);
+  //   document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
+  // };
 </script>
 </body>
 <nav>
