@@ -94,13 +94,27 @@ function openEventModal(dayOffset) {
 
   modalBody.innerHTML = `<p>Loading events...</p>`; // Placeholder while fetching
 
+  const today = new Date();
+  const startOfWeek = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay()));
+
+  // Compute the exact UTC date for the selected day
+  const selectedDate = new Date(startOfWeek);
+  selectedDate.setUTCDate(startOfWeek.getUTCDate() + dayOffset);
+
+  // Normalize to YYYY-MM-DD for accurate date comparison
+  const selectedDateString = selectedDate.toISOString().split('T')[0];
+
+  // Retrieve events
   const events = JSON.parse(localStorage.getItem("userEvents")) || [];
+
+  // Filter events to only include those happening on the exact selected date
   const eventsForDay = events.filter(event => {
-    const eventDate = new Date(event.event_date);
-    const eventDay = (new Date(eventDate.toISOString().split('T')[0] + "T00:00:00Z")).getUTCDay();
-    return eventDay === dayOffset; // Filter events for the selected day
+    const eventDateString = event.event_date.split('T')[0]; // Extract YYYY-MM-DD from event date
+    return eventDateString === selectedDateString;
   });
-console.log(eventsForDay);
+
+  console.log(eventsForDay);
+
   if (eventsForDay.length === 0) {
     modalBody.innerHTML = `<p>No events for this day.</p>`;
     modal.style.display = 'block';
@@ -126,6 +140,7 @@ console.log(eventsForDay);
   modalBody.innerHTML = modalContent; // Update modal with event details
   modal.style.display = 'block'; // Show the modal
 }
+
 
 
 function closeEventModal() {
