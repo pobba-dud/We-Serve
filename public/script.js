@@ -167,8 +167,10 @@ async function leaveEvent(eventId) {
 // Function to populate the weekly table
 function mapEventsToDays() {
   const events = JSON.parse(localStorage.getItem("userEvents")) || [];
-  const startOfWeek = new Date();
-  startOfWeek.setUTCDate(startOfWeek.getUTCDate() - startOfWeek.getUTCDay());
+
+  // Ensure startOfWeek is always in UTC
+  const today = new Date();
+  const startOfWeek = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay()));
 
   const eventCount = {};
   for (let i = 0; i < 7; i++) {
@@ -176,23 +178,28 @@ function mapEventsToDays() {
     eventCount[i] = 0;
   }
 
-  const eventsByDay = {}; // Store events by day
+  const eventsByDay = {};
 
   events.forEach(event => {
+    // Convert event date to a UTC date object
     const eventDate = new Date(event.event_date);
-    const eventDateStr = eventDate.toISOString().split('T')[0];
-    const dayOffset = (new Date(eventDateStr + "T00:00:00Z")).getUTCDay();
+    const eventDateUTC = new Date(Date.UTC(eventDate.getUTCFullYear(), eventDate.getUTCMonth(), eventDate.getUTCDate()));
 
-    if (!eventsByDay[dayOffset]) {
-      eventsByDay[dayOffset] = [];
-    }
+    // Find the difference in days from the start of the week
+    const dayDiff = Math.floor((eventDateUTC - startOfWeek) / (1000 * 60 * 60 * 24));
 
-    eventsByDay[dayOffset].push(event); // Group events by the day they occur
+    // Ensure event is within this week
+    if (dayDiff >= 0 && dayDiff < 7) {
+      if (!eventsByDay[dayDiff]) {
+        eventsByDay[dayDiff] = [];
+      }
+      eventsByDay[dayDiff].push(event);
+      eventCount[dayDiff]++;
 
-    eventCount[dayOffset]++;
-    if (eventCount[dayOffset] === 1) {
-      document.getElementById(`event-${dayOffset + 1}`).innerHTML = `<button class="event-button" 
-      style="
+      // Update the event button display
+      document.getElementById(`event-${dayDiff + 1}`).innerHTML = 
+        `<button class="event-button"
+        style="
       margin-right: 0px;
       display: flex;
       justify-content: center;
@@ -207,28 +214,13 @@ function mapEventsToDays() {
       font-weight: bold;
       text-align: center;
       cursor: pointer;"
-      onclick="openEventModal(${dayOffset})">${event.name}</button>`;
-    } else {
-      document.getElementById(`event-${dayOffset + 1}`).innerHTML = `<button class="event-button"
-      style="
-      margin-right: 0px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      float: none;
-      width: 100%;
-      max-width: 200px;
-      margin: 10px auto;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      font-size: 16px;
-      font-weight: bold;     
-      text-align: center;
-      cursor: pointer;"
-      onclick="openEventModal(${dayOffset})">${event.name} +${eventCount[dayOffset] - 1}</button>`;
+      onclick="openEventModal(${dayDiff})">
+        <u>${event.name}</u> ${eventCount[dayDiff] > 1 ? `+${eventCount[dayDiff] - 1}` : ""}
+        </button>`;
     }
   });
 }
+
 // end of mapEventsToDays() function
 
 var myModal = new bootstrap.Modal(document.getElementById('eventModal1'), {
