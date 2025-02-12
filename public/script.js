@@ -207,7 +207,7 @@ function mapEventsToDays() {
       font-weight: bold;
       text-align: center;
       cursor: pointer;"
-      onclick="openEventModal(${dayOffset})"><u>${event.name}</u></button>`;
+      onclick="openEventModal(${dayOffset})">${event.name}</button>`;
     } else {
       document.getElementById(`event-${dayOffset + 1}`).innerHTML = `<button class="event-button"
       style="
@@ -225,7 +225,7 @@ function mapEventsToDays() {
       font-weight: bold;     
       text-align: center;
       cursor: pointer;"
-      onclick="openEventModal(${dayOffset})"><u>${event.name}</u> +${eventCount[dayOffset] - 1}</button>`;
+      onclick="openEventModal(${dayOffset})">${event.name} +${eventCount[dayOffset] - 1}</button>`;
     }
   });
 }
