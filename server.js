@@ -1091,7 +1091,7 @@ app.post('/api/events/log-hours', limiter, checkIsOrg, async (req, res) => {
 });
 
 
-app.get('/api/events/fetch-hours', authenticate, async (req, res) => {
+app.get('/api/events/fetch-hours', authenticate,limiter, async (req, res) => {
   try {
     const userId = req.user.id; // Extract user ID from JWT token
 
@@ -1113,7 +1113,7 @@ app.get('/api/events/fetch-hours', authenticate, async (req, res) => {
   }
 });
 // API endpoint to get event details by eventId
-app.get('/api/events/:eventId',authenticate, async (req, res) => {
+app.get('/api/events/:eventId',authenticate,limiter, async (req, res) => {
   const eventId = req.params.eventId;  // Get eventId from the URL parameter
 
   try {
@@ -1134,7 +1134,7 @@ app.get('/api/events/:eventId',authenticate, async (req, res) => {
   }
 });
 
-app.post('/api/events/leave',authenticate, async (req, res) => {
+app.post('/api/events/leave',authenticate,limiter, async (req, res) => {
   const { eventId } = req.body;  // The event ID user wants to leave
   const userId = req.user.id;  // Assuming user ID is attached to the request, maybe from a JWT token
 
