@@ -100,7 +100,7 @@ function openEventModal(dayOffset) {
     const eventDay = (new Date(eventDate.toISOString().split('T')[0] + "T00:00:00Z")).getUTCDay();
     return eventDay === dayOffset; // Filter events for the selected day
   });
-
+console.log(eventsForDay);
   if (eventsForDay.length === 0) {
     modalBody.innerHTML = `<p>No events for this day.</p>`;
     modal.style.display = 'block';
