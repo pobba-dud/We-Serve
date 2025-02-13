@@ -28,4 +28,3 @@ All rights reserved.
 5. Termination
     Violation of this license automatically 
     terminates your right to use this software.
-
