@@ -1,0 +1,31 @@
+We-Serve Proprietary License
+Version v.Prerelease 
+© [2024-2025] We-Serve Team. 
+All rights reserved.
+
+1. Grant of License
+    This software is proprietary and owned by the We-Serve Team.
+    By using this software, you are granted a limited, non-exclusive,
+     non-transferable, and revocable license to access and use it for
+    personal or organizational purposes only.
+
+2. Restrictions
+    You may not:
+        Modify, distribute, sublicense, or sell any part of this software.
+        Reverse-engineer, decompile, or attempt to extract the source code.
+        Use this software for any illegal or unauthorized purposes.
+
+3. Ownership & Copyright
+    All rights, title, and interest in We-Serve, including but not limited to
+    its design, code, and branding, remain the exclusive property of the
+    We-Serve Team.
+
+4. Liability Disclaimer
+    This software is provided "as is" without warranties of any kind.
+    The We-Serve Team is not responsible for any damages, data loss,
+    or issues arising from the use of this software.
+
+5. Termination
+    Violation of this license automatically 
+    terminates your right to use this software.
+

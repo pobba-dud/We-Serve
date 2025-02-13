@@ -1228,7 +1228,7 @@ app.post('/api/admin/create-test-event', limiter, checkAdmin, async (req, res) =
 app.get('*', limiter, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html')); // Redirects to homepage for undefined routes
 });
-// Make the app listen on the port provided by Heroku
+//starts on server port 3000
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

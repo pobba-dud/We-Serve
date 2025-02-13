@@ -1,4 +1,12 @@
 {
+  "author": "We-Serve Team",
+  "contributors": [
+    "Jordynn Garner <jordynngarner@gmail.com>",
+    "Jonathon Stewart <jonathon@jonstewart.org>",
+    "Lucas Sintim <lknsintim@outlook.com>",
+    "Delbert Duncan <brentduncan06@gmail.com>",
+    "Aidan Jimenez <aidanjimenez77@gmail.com>"
+  ],
   "scripts": {
     "start": "node server.js"
   },

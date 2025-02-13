@@ -14,9 +14,6 @@
 </head>
 
 <body>
-  <!-- Existing content... -->
-
-
   <script>
     function openModal() {
       document.getElementById("leaderboardModal").style.display = "flex";
@@ -25,7 +22,9 @@
     function closeModal() {
       document.getElementById("leaderboardModal").style.display = "none";
     }
-
+    window.onload=function(){
+      checkUpcomingEvents();
+    }
     // Close the modal when clicking outside of it
     window.onclick = function (event) {
       const modal = document.getElementById("leaderboardModal");
