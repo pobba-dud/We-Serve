@@ -1,7 +1,7 @@
 html {
   height: 100%;
   width: 100%;
-
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
 }
 
 nav a {
@@ -74,77 +74,12 @@ body {
   overflow: hidden;
 }
 
-body.dark-mode .modal-content {
+.modal-content {
   background-color: #333;
   color: white;
   border: 1px solid #555;
 }
 
-body.dark-mode .div.modal-content {
-  background-color: #313131;
-  color: white;
-}
-
-/* dark mode */
-body.dark-mode {
-  background-color: #121212;
-  /* Dark background */
-  color: #f7f7f7;
-  /* Light text color */
-}
-
-body.dark-mode h2 {
-  color: white;
-}
-
-
-body.dark-mode .sidenav {
-  background-color: #3f3e3e;
-  color: white;
-}
-
-body.dark-mode .active {
-  background-color: #6e6e6e;
-  color: white;
-}
-
-body.dark-mode .active:hover {
-  background-color: #868686;
-  color: white;
-}
-
-body.dark-mode .url a:hover {
-  background-color: #868686;
-  color: white;
-}
-
-body.dark-mode .card {
-  background-color: #3f3e3e;
-}
-
-body.dark-mode table {
-  background-color: #3f3e3e;
-  /* Dark table background */
-  color: #f7f7f7;
-  /* Light text color */
-  border: #070707;
-}
-
-body.dark-mode .innerContainer {
-  background-color: #3f3e3e;
-}
-
-body.dark-mode .highlight {
-  background-color: #535353;
-}
-
-body.dark-mode .schedule-btn {
-  background-color: #3f3e3e;
-}
-
-body.dark-mode .schedule-btn:hover {
-  background-color: #535353;
-}
 
 
 /* NavbarTop */
@@ -337,14 +272,14 @@ button {
   width: 65%;
 }
 
-.main h2 {
+h2 {
   color: #333;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 24px;
   margin-bottom: 10px;
 }
 
-.main .card {
+.card {
   background-color: #9bd1e5;
   border-radius: 18px;
   box-shadow: 1px 1px 8px 0 grey;
@@ -353,7 +288,7 @@ button {
   padding: 20px 0 20px 50px;
 }
 
-.main .card table {
+.card table {
   border: none;
   font-size: 16px;
   height: 270px;
@@ -540,8 +475,76 @@ button[type="submit"] {
   color: red;
 }
 
-body.dark-mode .close-btn {
-  color: white;
+@media (prefers-color-scheme: dark) {
+  .div.modal-content {
+   background-color: #313131;
+   color: white;
+ }
+
+ /* dark mode */
+  body {
+   background-color: #121212;
+   /* Dark background */
+   color: #f7f7f7;
+   /* Light text color */
+ }
+
+  h2 {
+   color: white;
+ }
+
+
+  .sidenav {
+   background-color: #3f3e3e;
+   color: white;
+ }
+
+  .active {
+   background-color: #6e6e6e;
+   color: white;
+ }
+
+  .active:hover {
+   background-color: #868686;
+   color: white;
+ }
+
+  .url a:hover {
+   background-color: #868686;
+   color: white;
+ }
+
+  .card {
+   background-color: #3f3e3e;
+ }
+
+  table {
+   background-color: #3f3e3e;
+   /* Dark table background */
+   color: #f7f7f7;
+   /* Light text color */
+   border: #070707;
+ }
+
+  .innerContainer {
+   background-color: #3f3e3e;
+ }
+
+  .highlight {
+   background-color: #535353;
+ }
+
+  .schedule-btn {
+   background-color: #3f3e3e;
+ }
+
+  .schedule-btn:hover {
+   background-color: #535353;
+ }
+
+  .close-btn {
+   color: white;
+ }
 }
 
 /* End */

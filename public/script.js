@@ -317,17 +317,8 @@ function closeNotification() {
   notification.style.display = "none"; // Hide the notification
 }
 // Update your existing code to call this
-document.addEventListener("DOMContentLoaded", () => {
-  checkUpcomingEvents();
-  // Run every hour to check for new events
-  setInterval(checkUpcomingEvents, 60 * 60 * 1000);
-});
 
 
-function setTheme(theme) {
-  document.body.className = theme === 'dark' ? 'dark-mode' : '';
-  localStorage.setItem('theme', theme); // Save the theme preference
-}
 function toggleMenu(x) {
   x.classList.toggle("change");
   var menu = document.getElementById("dropdownMenu");

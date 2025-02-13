@@ -7,86 +7,15 @@
     <link rel="stylesheet" href="styles.css">
     <title>Settings</title>
     <script src="script.js"></script>
+    <link rel="stylesheet" href="darkMode.css">
+    <link rel="stylesheet" href="Settings.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            transition: background-color 0.3s;
-            /* Smooth transition for background color */
-        }
-
-        body.dark-mode {
-            background-color: #121212;
-            /* Dark background */
-            transition: background-color 0.3s;
-        }
-
-        body.dark-mode .settings-container {
-            background-color: #3f3e3e;
-            color: white;
-        }
-
-
-        .settings-container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        .setting-item {
-            margin: 15px 0;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        select {
-            width: 95%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #0d6efd;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-            /* Darker button on hover */
-        }
+        
     </style>
 </head>
 <div class="settings-container">
     <h1>Preferences</h1>
     <form id="settings-form">
-        <div class="setting-item">
-            <label for="theme">Theme:</label>
-            <select id="theme" name="theme" onchange="setTheme(this.value)">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-            </select>
-        </div>
         <div class="setting-item">
             <label for="notifications">Email Notifications: <input type="checkbox" id="notifications"
                     name="notifications" checked></label>
@@ -116,7 +45,6 @@
         const currentPassword = document.getElementById('current-password').value.trim();
         const newPassword = document.getElementById('new-password').value.trim();
         const confirmNewPassword = document.getElementById('confirm-new-password').value.trim();
-        const theme = document.getElementById('theme').value;
 
         // Handle password change if the current password is provided
         if (currentPassword) {
@@ -147,32 +75,8 @@
                 return; // Stop further execution
             }
         }
-
-        // Save theme and other settings
-        localStorage.setItem('theme', theme);
-        alert('Settings saved successfully.');
         window.location.href = 'account';
     });
-
-
-    // Function to toggle between light and dark themes
-    function setTheme(theme) {
-        if (theme === 'dark') {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
-        localStorage.setItem('theme', theme); // Save the theme preference
-    }
-
-    // Load the theme from local storage when the page loads
-    window.onload = function () {
-        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-        setTheme(savedTheme);
-        document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-    };
-
-
 </script>
 </body>
 

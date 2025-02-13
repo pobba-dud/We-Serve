@@ -9,6 +9,7 @@
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src='script.js'></script>
+  <link href="darkMode.css" rel="stylesheet" type="text/css" />
   <style>
     .bar1,
     .bar2,
@@ -41,16 +42,13 @@
 
     // Load the theme from local storage when the page loads
     window.onload = function () {
+      console.log("startup");
       updateDayNumbers();  // Update the day numbers dynamically
       highlightToday();    // Highlight the current day's event
       fetchEventsUser();   // Fetch and map events
       checkUpcomingEvents();
       fetchUserHours();
-      console.log("startup");
-      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-      setTheme(savedTheme);
-      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme 
-    };
+      };
   </script>
   <!-- End of java script -->
 </head>

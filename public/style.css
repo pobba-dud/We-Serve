@@ -2,63 +2,11 @@
 html {
   height: 100%;
   width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
 
 }
 
 
-
-body {
-  background-color: white;
-  margin: 0%;
-}
-
-/* dark mode */
-body.dark-mode {
-  background-color: #121212;
-  /* Dark background */
-  color: #f7f7f7;
-  /* Light text color */
-}
-
-body.dark-mode .module {
-  background-color: rgb(36, 36, 36);
-  /* Dark module background */
-  color: white;
-  /* Light text color */
-}
-
-body.dark-mode table {
-  background-color: #3f3e3e;
-  /* Dark table background */
-  color: #f7f7f7;
-  /* Light text color */
-  border: #070707;
-}
-
-body.dark-mode .innerContainer {
-  background-color: #3f3e3e;
-}
-
-body.dark-mode .highlight {
-  background-color: #535353;
-}
-
-body.dark-mode .schedule-btn {
-  background-color: #3f3e3e;
-}
-
-body.dark-mode .schedule-btn:hover {
-  background-color: #535353;
-}
-
-body.dark-mode .modal-content {
-  background-color: #535353;
-  border-color: #535353;
-}
-
-body.dark-mode .modal-lg {
-  background-color: #535353;
-}
 .close:hover {
   color: red;
 }
@@ -240,12 +188,7 @@ nav {
   height: inherit;
 }
 
-body.dark-mode .hourContainer div {
-  border: 5px solid #2b2c2c;
-  /* Color is different from others because it shows differently, PLEASE don't change it */
-  background-color: #575757;
-  color: #ffffff;
-}
+
 
 .hourContainer {
   display: flex;
@@ -659,3 +602,58 @@ footer ul li {
 .event-button:hover {
   background-color: #3b4857; /* Darken the background on hover */
 }
+@media (prefers-color-scheme: dark) {
+  /* dark mode */
+   body{
+    background-color: #121212;
+    /* Dark background */
+    color: #f7f7f7;
+    /* Light text color */
+  }
+  
+   .module {
+    background-color: rgb(36, 36, 36);
+    /* Dark module background */
+    color: white;
+    /* Light text color */
+  }
+  
+   table {
+    background-color: #3f3e3e;
+    /* Dark table background */
+    color: #f7f7f7;
+    /* Light text color */
+    border: #070707;
+  }
+  
+   .innerContainer {
+    background-color: #3f3e3e;
+  }
+  
+   .highlight {
+    background-color: #535353;
+  }
+  
+   .schedule-btn {
+    background-color: #3f3e3e;
+  }
+  
+   .schedule-btn:hover {
+    background-color: #535353;
+  }
+  
+   .modal-content {
+    background-color: #535353;
+    border-color: #535353;
+  }
+  
+   .modal-lg {
+    background-color: #535353;
+  }
+   .hourContainer div {
+    border: 5px solid #2b2c2c;
+    /* Color is different from others because it shows differently, PLEASE don't change it */
+    background-color: #575757;
+    color: #ffffff;
+  }
+  }

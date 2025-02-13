@@ -467,9 +467,6 @@
       // Call checkUpcomingEvents function at the start or at intervals
       // Load the theme from local storage when the page loads
       window.onload = function () {
-        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-        setTheme(savedTheme);
-        document.getElementById('theme').value = savedTheme;
         checkUpcomingEvents();// Set the select box to the saved theme
       };
 

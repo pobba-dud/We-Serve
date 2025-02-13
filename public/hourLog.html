@@ -10,6 +10,7 @@
   <link href="hourStyle.css" rel="stylesheet" type="text/css" />
   <script src="script.js"></script>
   <script src = "hourScript.js"></script>
+  <link href="darkMode.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -32,12 +33,6 @@
         closeModal();
       }
     }
-    window.onload = function () {
-        const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-        setTheme(savedTheme);
-        document.getElementById('theme').value = savedTheme;
-        checkUpcomingEvents();// Set the select box to the saved theme
-      };
   </script>
   <!-- Dark mode JS -->
 

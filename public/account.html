@@ -84,7 +84,6 @@
           </button>
         </form>
       </div>
-
     </div>
   </div>
   <!-- End -->
@@ -262,19 +261,12 @@
         }
       });
     });
-    function setTheme(theme) {
-      document.body.className = theme === 'dark' ? 'dark-mode' : '';
-      localStorage.setItem('theme', theme); // Save the theme preference
-    }
-
+    
     // Load the theme from local storage when the page loads
     window.onload = function () {
       fetchUserData();
       checkUpcomingEvents();
-      const savedTheme = localStorage.getItem('theme') || 'light'; // Default to light
-      setTheme(savedTheme);
-      document.getElementById('theme').value = savedTheme; // Set the select box to the saved theme
-    };
+      };
 
     // Add event listener for form submission
     document.getElementById('settings-form').addEventListener('submit', function (event) {

@@ -1,6 +1,7 @@
 html {
   height: 100%;
   width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
 
 }
 
@@ -19,54 +20,55 @@ nav a {
 p {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 }
-
+@media (prefers-color-scheme: dark) {
 /* dark mode */
-body.dark-mode {
+ body {
   background-color: #121212;
   /* Dark background */
   color: #f7f7f7;
   /* Light text color */
 }
 
-body.dark-mode div {
+ div {
   color: #f7f7f7;
   /* Light text color */
 }
 
-body.dark-mode div.day {
+ div.day {
   color: #535353;
   /* Light text color */
   background-color: #929292;
 }
 
-body.dark-mode div.day:hover {
+ div.day:hover {
   color: #535353;
   /* Light text color */
   background-color: #b3b3b3;
 }
 
-body.dark-mode div #currentDay.day {
+ div #currentDay.day {
   color: #535353;
   /* Light text color */
   background-color: #c5c5c5;
 }
 
-body.dark-mode .event {
+ .event {
   color: white;
   /* Light text color */
   background-color: #2f4858;
 }
 
-body.dark-mode #newEventModal {
+ #newEventModal {
   color: white;
   /* Light text color */
   background-color: #3f3e3e;
 }
 
-body.dark-mode #deleteEventModal {
+ #deleteEventModal {
   color: white;
   /* Light text color */
   background-color: #3f3e3e;
+}
 }
 
 button {
