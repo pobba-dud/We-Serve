@@ -33,13 +33,7 @@
       transform: translate(0, -11px) rotate(45deg);
     }
   </style>
-  <!-- Dark mode JS -->
   <script>
-    function setTheme(theme) {
-      document.body.className = theme === 'dark' ? 'dark-mode' : '';
-      localStorage.setItem('theme', theme); // Save the theme preference
-    }
-
     // Load the theme from local storage when the page loads
     window.onload = function () {
       console.log("startup");
@@ -142,7 +136,6 @@
           }
         </script>
         <script src="dashboardScript.js"></script>
-        <!-- Dark mode JS -->
         <!-- Table -->
       </h2>
       <div style="padding-bottom: 2%;">
