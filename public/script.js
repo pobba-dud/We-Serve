@@ -21,6 +21,7 @@ function updateDayNumbers() {
 
     dayElement.setAttribute('data-day', newDate.getUTCDate());
   });
+  highlightToday();
 }
 //start of updateDayNumbers() function
 
@@ -37,6 +38,7 @@ function highlightToday() { //start of highlightToday function
       dayElement.parentElement.classList.add('highlight'); // Highlight today's row
     }
   });
+  fetchEventsUser();
 } // end of highlightToday function
 
 // Run the functions when the page loads

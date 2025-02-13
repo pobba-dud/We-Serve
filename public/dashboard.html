@@ -36,10 +36,7 @@
   <script>
     // Load the theme from local storage when the page loads
     window.onload = function () {
-      console.log("startup");
       updateDayNumbers();  // Update the day numbers dynamically
-      highlightToday();    // Highlight the current day's event
-      fetchEventsUser();   // Fetch and map events
       checkUpcomingEvents();
       fetchUserHours();
     };
