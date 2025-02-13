@@ -1,172 +1,206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Calendar</title>
-  <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
-  <link href="CalendarStyle.css" rel="stylesheet" type="text/css" />
-  <link href="style.css" rel="stylesheet" type="text/css" />
-  <script src="script.js" defer></script>
-  <script src="scriptCalendar.js" defer></script>
-
-</head>
-
-<body>
-  <div class="notification" id="customNotification"
-    style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
-    This is a notification message!
-    <button onclick="closeNotification()"
-      style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
-  </div>
-
-  <script>
-    // Call checkUpcomingEvents function at the start or at intervals
-    function load() {
-      const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
-      const calendar = document.getElementById('calendar');
-      calendar.innerHTML = ''; // Clear the calendar before rendering new events
-
-      // Loop through the events and display them
-      storedEvents.forEach(event => {
-        const startDate = new Date(event.startDate);  // Convert start date string to Date object
-        const endDate = new Date(event.endDate);      // Convert end date string to Date object
-
-        const eventDiv = document.createElement('div');
-        eventDiv.classList.add('event');
-        eventDiv.innerText = `${event.title} - ${event.time} - ${event.location}`;
-
-        // Set the background color based on event type
-        switch (event.type) {
-          case 'personal':
-            eventDiv.style.backgroundColor = '#58bae4'; // Blue
-            break;
-          case 'work':
-            eventDiv.style.backgroundColor = '#ffcc00'; // Yellow
-            break;
-          case 'important':
-            eventDiv.style.backgroundColor = '#ff5733'; // Red
-            break;
-          case 'other':
-            eventDiv.style.backgroundColor = '#28a745'; // Green
-            break;
-          default:
-            eventDiv.style.backgroundColor = '#ffffff'; // Default color
-        }
-
-        // Loop through each day between the start and end dates
-        let currentDate = new Date(startDate);
-        while (currentDate <= endDate) {
-          const dayDiv = document.createElement('div');
-          dayDiv.classList.add('day');
-          dayDiv.innerText = currentDate.getDate(); // Display the day number
-
-          // Append the event to each day within the range
-          const eventClone = eventDiv.cloneNode(true);
-          dayDiv.appendChild(eventClone);
-
-          calendar.appendChild(dayDiv);
-
-          // Move to the next day
-          currentDate.setDate(currentDate.getDate() + 1);
-        }
-      });
-    }
-
-
-
-
-    function closeNotification() {
-      const notification = document.getElementById("customNotification");
-      notification.style.display = "none"; // Hide the notification
-    }
-  </script>
-
-  <!-- navbar -->
-
+<!-- navbar -->
+<header>
   <nav>
-    <ul id="NavUl" style="padding-bottom: 0px;">
-      <a href="index"><img src="Images/logo.png"></a>
-      <li><a href="dashboard" style="padding-bottom: 20px; padding-top: 19px;"><b>Homepage</b></a></li>
-      <li><a href="discover" style="padding-bottom: 20px; padding-top: 19px;"><b>Discover</b></a></li>
-      <li><a href="hours" style="padding-bottom: 20px; padding-top: 19px;"><b>Hour log</b></a></li>
-      <li><a href="calendar" style="padding-bottom: 19px; padding-top: 19px;"><b>Calendar</b></a></li>
-      <li style="float:right; display:flex; align-content: center;"><a href="account"> <img src="Images/Default_pfp.png"
-            alt="Profile" style="width:auto;height:23px;"> </a></li>
-    </ul>
-
-  </nav>
-  <div style="margin-bottom: 50px;"></div>
-
-  <!-- end of navbar -->
-  <div style="margin:1.5%;">
-  </div>
-  <div id="calDiv" style="align-self: center;">
-    <div id="container">
-      <div id="header">
-        <div id="monthDisplay">
-        </div>
-        <div>
-          <button id="backButton">Back</button>
-          <button id="nextButton">Next</button>
-        </div>
-      </div>
-      <div id="weekdays">
-        <div>Sunday</div>
-        <div>Monday</div>
-        <div>Tuesday</div>
-        <div>Wednesday</div>
-        <div>Thursday</div>
-        <div>Friday</div>
-        <div>Saturday</div>
-      </div>
-      <div id="calendar">
-      </div>
-    </div>
-    <div id="newEventModal">
-      <h2>New Event</h2>
-      <input id="eventTitleInput" placeholder="Event Title" />
-      <input id="eventTimeInput" placeholder="Event Time" />
-      <input id="eventLocationInput" placeholder="Event Location" />
-      <input type="date" id="startDateInput" />
-      <input type="date" id="endDateInput" />
-
-      <label for="eventTypeInput">Event Type:</label>
-      <select id="eventTypeInput">
-        <option value="personal">Personal</option>
-        <option value="work">Work</option>
-        <option value="important">Important</option>
-        <option value="other">Other</option>
-      </select>
-      <button id="saveButton">Save</button>
-      <button id="cancelButton">Cancel</button>
-    </div>
-    <div id="deleteEventModal">
-      <h2>Event</h2>
-      <p id="eventText"></p>
-      <button id="editButton" style="background-color: rgb(218, 114, 45);">Edit</button>
-      <button id="deleteButton">Delete</button>
-      <button id="closeButton">Close</button>
-    </div>
-    <div id="modalBackDrop">
-    </div>
-  </div>
-
-  <footer>
-    <p>&copy; WeServe</p>
-    <div
-      style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
-      <ul>
-        <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Example Link 1</a></li>
-        <li><a href="devHub">Dev</a></li>
-        <li><a href="feedback">Feedback Form</a></li>
-        <li><a href="askew">ASKEW</a></li>
+      <ul id="NavUl">
+          <a href="index"><img src="Images/logo.png"></a>
+          <li><a href="dashboard"><b>Homepage</b></a></li>
+          <li><a href="discover"><b>Discover</b></a></li>
+          <li><a href="hours"><b>Hour log</b></a></li>
+          <li><a href="calendar"><b>Calendar</b></a></li>
+          <li style="float:right; display:flex; align-content: center;"><a href="account"> <img
+                      src="Images/Default_pfp.png" alt="Profile" style="width:auto;height:23px;"> </a></li>
       </ul>
-    </div>
-  </footer>
-</body>
+  </nav>
+  <!-- Menu Icon -->
+  <div class="menuContainer" onclick="toggleMenu(this)">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+  </div>
 
+  <div class="menu" id="dropdownMenu">
+      <a href="index"><img src="Images/logo.png" style="padding-top:5%;width:50%; height:50%;"></a>
+      <a href="dashboard">Home</a>
+      <a href="discover">Discover</a>
+      <a href="hours">Hour Log</a>
+      <a href="calendar">Calendar</a>
+      <a href="account">Account</a>
+  </div>
+  <div style="margin-bottom: 50px;"></div>
+</header>
+<!-- end of navbar -->
+
+<style>
+  .capsule {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: #262626;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: inherit;
+    filter: blur(10px);
+  }
+}
+
+.calendar {
+  position: relative;
+  width: 300px;
+  background-color: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 5px 50px rgba(#000, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.calendar__picture {
+  position: relative;
+  height: 200px;
+  padding: 20px;
+  color: #fff;
+  background: #262626 url("Images/logo.png") no-repeat center / cover;
+  text-shadow: 0 2px 2px rgba(#000, 0.2);
+  box-sizing: border-box;
+  
+  &::before {
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    background: linear-gradient(to top, rgba(#000, 0.25), rgba(#000, 0.1));
+  }
+  
+  h2 {
+    margin: 0;
+  }
+  
+  h3 {
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+.calendar__date {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25px, 1fr));
+  grid-gap: 10px;
+  box-sizing: border-box;
+}
+
+.calendar__day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  font-weight: 600;
+  color: #262626;
+  
+  &:nth-child(7) {
+    color: #ff685d;
+  }
+}
+
+.calendar__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  color: #262626;
+
+  &:nth-child(7n) {
+    color: #ff685d;
+    font-weight: 700;
+  }
+  
+  &--current,
+  &:hover {
+    background-color: #009688;
+    color: #fff !important;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+</style>
+
+<div class="capsule">
+<div class="calendar">
+  <div class="calendar__picture">
+    <h2>18, Sunday</h2>
+    <h3>November</h3>
+  </div>
+  <div class="calendar__date">
+    <div class="calendar__day">M</div>
+    <div class="calendar__day">T</div>
+    <div class="calendar__day">W</div>
+    <div class="calendar__day">T</div>
+    <div class="calendar__day">F</div>
+    <div class="calendar__day">S</div>
+    <div class="calendar__day">S</div>
+    <div class="calendar__number"></div>
+    <div class="calendar__number"></div>
+    <div class="calendar__number"></div>
+    <button class="calendar__number">1</button>
+    <button class="calendar__number">2</button>
+    <button class="calendar__number">3</button>
+    <button class="calendar__number">4</button>
+    <button class="calendar__number">5</button>
+    <button class="calendar__number">6</button>
+    <button class="calendar__number">7</button>
+    <button class="calendar__number">8</button>
+    <button class="calendar__number">9</button>
+    <button class="calendar__number">10</button>
+    <button class="calendar__number">11</button>
+    <button class="calendar__number">12</button>
+    <button class="calendar__number">13</button>
+    <button class="calendar__number">14</button>
+    <button class="calendar__number">15</button>
+    <button class="calendar__number">16</button>
+    <button class="calendar__number">17</button>
+    <button class="calendar__number calendar__number--current">18</button>
+    <button class="calendar__number">19</button>
+    <button class="calendar__number">20</button>
+    <button class="calendar__number">21</button>
+    <button class="calendar__number">22</button>
+    <button class="calendar__number">23</button>
+    <button class="calendar__number">24</button>
+    <button class="calendar__number">25</button>
+    <button class="calendar__number">26</button>
+    <button class="calendar__number">27</button>
+    <button class="calendar__number">28</button>
+    <button class="calendar__number">29</button>
+    <button class="calendar__number">30</button>
+  </div>
+</div>
+</div>
+
+<footer>
+  <p>&copy; WeServe</p>
+  <div
+    style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+    <ul>
+      <li><a href="#">Terms of Use</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Example Link 1</a></li>
+      <li><a href="devHub">Dev</a></li>
+      <li><a href="feedback">Feedback Form</a></li>
+      <li><a href="askew">ASKEW</a></li>
+    </ul>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </html>
