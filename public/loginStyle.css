@@ -1,8 +1,9 @@
-html{
+html {
     width: 100%;
     height: 100%;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
-  }
+}
+
 /* General button styling */
 button {
     background-color: rgb(202, 202, 202);
@@ -16,16 +17,16 @@ button {
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease, transform 0.2s ease;
-  }
+}
 
-  button:hover {
+button:hover {
     background-color: rgb(57, 94, 112);
     color: white;
     transform: scale(1.05);
-  }
+}
 
-  /* Modal background */
-  .modal {
+/* Modal background */
+.modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -34,10 +35,10 @@ button {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-  }
+}
 
-  /* Modal content box */
-  .modal-content {
+/* Modal content box */
+.modal-content {
     background-color: #fff;
     margin: auto;
     padding: 30px 40px;
@@ -48,23 +49,23 @@ button {
     text-align: center;
     position: relative;
     animation: fadeIn 0.3s ease-in-out;
-  }
+}
 
-  /* Fade-in animation */
-  @keyframes fadeIn {
+/* Fade-in animation */
+@keyframes fadeIn {
     from {
-      opacity: 0;
-      transform: translateY(-20px);
+        opacity: 0;
+        transform: translateY(-20px);
     }
 
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
+}
 
-  /* Close button styling */
-  .close-btn {
+/* Close button styling */
+.close-btn {
     position: absolute;
     top: 15px;
     right: 15px;
@@ -75,32 +76,32 @@ button {
     color: rgb(150, 150, 150);
     cursor: pointer;
     transition: color 0.2s ease;
-  }
+}
 
-  .close-btn:hover {
+.close-btn:hover {
     color: rgb(57, 94, 112);
-  }
+}
 
-  /* Input field styling */
-  input[type="email"],
-  input[type="password"] {
+/* Input field styling */
+input[type="email"],
+input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-  }
+}
 
-  input[type="email"]:focus,
-  input[type="password"]:focus {
+input[type="email"]:focus,
+input[type="password"]:focus {
     outline: none;
     border-color: rgb(57, 94, 112);
     box-shadow: 0 0 5px rgba(57, 94, 112, 0.5);
-  }
+}
 
-  /* Submit button styling */
-  .modal-content button {
+/* Submit button styling */
+.modal-content button {
     background-color: rgb(57, 94, 112);
     color: white;
     padding: 10px 20px;
@@ -108,17 +109,17 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-  }
+}
 
-  .modal-content button:hover {
+.modal-content button:hover {
     background-color: rgb(35, 65, 85);
     transform: scale(1.05);
-  }
+}
 
 
 
 
-  .modal {
+.modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -127,17 +128,17 @@ button {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-  }
+}
 
-  .modal-content {
+.modal-content {
     background-color: #fff;
     margin: 15% auto;
     padding: 20px;
     border-radius: 8px;
     width: 400px;
-  }
+}
 
-  .close-btn {
+.close-btn {
     float: right;
     cursor: pointer;
-  }
+}

@@ -94,7 +94,7 @@ cron.schedule('0 0 * * 1', async () => {
 
     for (const user of users) {
       const { id, last_logged, weekly_streak } = user;
-      
+
       let newWeeklyStreak = 1; // Default to 1 if no previous streak
       let resetStreak = false;
 
@@ -960,7 +960,7 @@ app.get('/api/events/display', limiter, async (req, res) => {
 });
 
 // Fetch events for a specific user
-app.get('/api/events/user/:userId',limiter, authenticate, async (req, res) => {
+app.get('/api/events/user/:userId', limiter, authenticate, async (req, res) => {
   const userId = req.params.userId;
 
   try {
@@ -1113,7 +1113,7 @@ app.get('/api/events/fetch-hours', limiter, authenticate, async (req, res) => {
   }
 });
 // API endpoint to get event details by eventId
-app.get('/api/events/:eventId',limiter,authenticate, async (req, res) => {
+app.get('/api/events/:eventId', limiter, authenticate, async (req, res) => {
   const eventId = req.params.eventId;  // Get eventId from the URL parameter
 
   try {
@@ -1134,7 +1134,7 @@ app.get('/api/events/:eventId',limiter,authenticate, async (req, res) => {
   }
 });
 
-app.post('/api/events/leave',limiter,authenticate, async (req, res) => {
+app.post('/api/events/leave', limiter, authenticate, async (req, res) => {
   const { eventId } = req.body;  // The event ID user wants to leave
   const userId = req.user.id;  // Assuming user ID is attached to the request, maybe from a JWT token
 

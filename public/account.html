@@ -104,7 +104,7 @@
         <input type="email" id="editEmail" name="email" placeholder="Enter your email"><br>
         <div style="padding: 1%;"></div>
         <label for="gender">Gender:</label><br>
-        <select id="editGender" name="gender"> 
+        <select id="editGender" name="gender">
           <option value="">Select your gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
@@ -261,12 +261,12 @@
         }
       });
     });
-    
+
     // Load the theme from local storage when the page loads
     window.onload = function () {
       fetchUserData();
       checkUpcomingEvents();
-      };
+    };
 
     // Add event listener for form submission
     document.getElementById('settings-form').addEventListener('submit', function (event) {

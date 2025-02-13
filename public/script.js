@@ -212,7 +212,7 @@ function mapEventsToDays() {
       eventCount[dayDiff]++;
 
       // Update the event button display
-      document.getElementById(`event-${dayDiff + 1}`).innerHTML = 
+      document.getElementById(`event-${dayDiff + 1}`).innerHTML =
         `<button class="event-button"
         style="
       margin-right: 0px;

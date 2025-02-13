@@ -1,10 +1,10 @@
-
-html{
+html {
     width: 100%;
     height: 100%;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif
-  }
-  .container {
+}
+
+.container {
     display: flex;
     top: 18%;
     left: 23%;
@@ -79,9 +79,10 @@ html{
     background-color: #9bd1e5;
     /* Change color on hover */
 }
+
 @media (prefers-color-scheme: dark) {
-.container{
-    color: white;
-    background-color: #3f3e3e;
-}
+    .container {
+        color: white;
+        background-color: #3f3e3e;
+    }
 }

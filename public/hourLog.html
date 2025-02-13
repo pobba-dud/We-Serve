@@ -9,7 +9,7 @@
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="hourStyle.css" rel="stylesheet" type="text/css" />
   <script src="script.js"></script>
-  <script src = "hourScript.js"></script>
+  <script src="hourScript.js"></script>
   <link href="darkMode.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -82,77 +82,78 @@
       <button class="leaderboard-btn" style="margin-top: 1%;" onclick="openModal()">Leaderboard</button>
     </div>
     <!-- Hour Log Content -->
- <div class="hourContainer" style="font-size: larger;">
-    <div class="weekStreak">
-      <p>Weekly Streak</p>
-      <br>
-      <p id="weeklyStreak"style="font-size: larger; color:orange;">0</p>
+    <div class="hourContainer" style="font-size: larger;">
+      <div class="weekStreak">
+        <p>Weekly Streak</p>
+        <br>
+        <p id="weeklyStreak" style="font-size: larger; color:orange;">0</p>
+      </div>
+      <div class="monthHours">
+        <p>Hours Served This Month</p>
+        <br>
+        <p id="monthlyHours" style="font-size: larger;">0</p>
+      </div>
+      <div class="yearHours">
+        <p>Hours Served This Year</p>
+        <br>
+        <p id="yearlyHours" style="font-size: larger;">0</p>
+      </div>
+      <div class="careerHours">
+        <p>Total Career Hours Served</p>
+        <br>
+        <p id="totalHours" style="font-size: larger;">0</p>
+      </div>
     </div>
-    <div class="monthHours">
-      <p>Hours Served This Month</p>
-      <br>
-      <p id="monthlyHours" style="font-size: larger;">0</p>
-    </div>
-    <div class="yearHours">
-      <p>Hours Served This Year</p>
-      <br>
-      <p id="yearlyHours" style="font-size: larger;">0</p>
-    </div>
-    <div class="careerHours">
-      <p>Total Career Hours Served</p>
-      <br>
-      <p id="totalHours" style="font-size: larger;">0</p>
-    </div>
-  </div>
-  <div id="leaderboardModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <div class="leaderboard-container">
-        <div class="leaderboard">
-          <h1>Total Hours</h1>
-          <ol>
-            <li>User A - 10 hours</li>
-            <li>User B - 8 hours</li>
-            <li>User C - 5 hours</li>
-          </ol>
-        </div>
+    <div id="leaderboardModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="leaderboard-container">
+          <div class="leaderboard">
+            <h1>Total Hours</h1>
+            <ol>
+              <li>User A - 10 hours</li>
+              <li>User B - 8 hours</li>
+              <li>User C - 5 hours</li>
+            </ol>
+          </div>
 
-        <div class="leaderboard">
-          <h1>Weekly Streak</h1>
-          <ol>
-            <li>User D - 69 weeks</li>
-            <li>User E - 1 week</li>
-            <li>User F - 💀</li>
-          </ol>
-        </div>
+          <div class="leaderboard">
+            <h1>Weekly Streak</h1>
+            <ol>
+              <li>User D - 69 weeks</li>
+              <li>User E - 1 week</li>
+              <li>User F - 💀</li>
+            </ol>
+          </div>
 
-        <div class="leaderboard">
-          <h1>Broke friend Leaderboard</h1>
-          <ol>
-            <li>User G - 16 dollars</li>
-            <li>User H - 12 pesos</li>
-            <li>User I - 2 trillion zimbabwe dollars</li>
-          </ol>
+          <div class="leaderboard">
+            <h1>Broke friend Leaderboard</h1>
+            <ol>
+              <li>User G - 16 dollars</li>
+              <li>User H - 12 pesos</li>
+              <li>User I - 2 trillion zimbabwe dollars</li>
+            </ol>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
 
-  <footer>
-    <p>&copy; WeServe</p>
-    <div style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
-      <ul>
-        <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Example Link 1</a></li>
-        <li><a href="devHub">Dev</a></li>
-        <li><a href="feedback">Feedback Form</a></li>
-        <li><a href="askew">ASKEW</a></li>
-      </ul>
-    </div>
-  </footer>
-</body>
+    <footer>
+      <p>&copy; WeServe</p>
+      <div
+        style="width: 100%;background-color: #283A43; padding-bottom: 5%;height:200px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+        <ul>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Example Link 1</a></li>
+          <li><a href="devHub">Dev</a></li>
+          <li><a href="feedback">Feedback Form</a></li>
+          <li><a href="askew">ASKEW</a></li>
+        </ul>
+      </div>
+    </footer>
   </body>
+</body>
 
 </html>

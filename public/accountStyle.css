@@ -477,74 +477,74 @@ button[type="submit"] {
 
 @media (prefers-color-scheme: dark) {
   .div.modal-content {
-   background-color: #313131;
-   color: white;
- }
+    background-color: #313131;
+    color: white;
+  }
 
- /* dark mode */
+  /* dark mode */
   body {
-   background-color: #121212;
-   /* Dark background */
-   color: #f7f7f7;
-   /* Light text color */
- }
+    background-color: #121212;
+    /* Dark background */
+    color: #f7f7f7;
+    /* Light text color */
+  }
 
   h2 {
-   color: white;
- }
+    color: white;
+  }
 
 
   .sidenav {
-   background-color: #3f3e3e;
-   color: white;
- }
+    background-color: #3f3e3e;
+    color: white;
+  }
 
   .active {
-   background-color: #6e6e6e;
-   color: white;
- }
+    background-color: #6e6e6e;
+    color: white;
+  }
 
   .active:hover {
-   background-color: #868686;
-   color: white;
- }
+    background-color: #868686;
+    color: white;
+  }
 
   .url a:hover {
-   background-color: #868686;
-   color: white;
- }
+    background-color: #868686;
+    color: white;
+  }
 
   .card {
-   background-color: #3f3e3e;
- }
+    background-color: #3f3e3e;
+  }
 
   table {
-   background-color: #3f3e3e;
-   /* Dark table background */
-   color: #f7f7f7;
-   /* Light text color */
-   border: #070707;
- }
+    background-color: #3f3e3e;
+    /* Dark table background */
+    color: #f7f7f7;
+    /* Light text color */
+    border: #070707;
+  }
 
   .innerContainer {
-   background-color: #3f3e3e;
- }
+    background-color: #3f3e3e;
+  }
 
   .highlight {
-   background-color: #535353;
- }
+    background-color: #535353;
+  }
 
   .schedule-btn {
-   background-color: #3f3e3e;
- }
+    background-color: #3f3e3e;
+  }
 
   .schedule-btn:hover {
-   background-color: #535353;
- }
+    background-color: #535353;
+  }
 
   .close-btn {
-   color: white;
- }
+    color: white;
+  }
 }
 
 /* End */
