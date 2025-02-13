@@ -128,7 +128,7 @@ cron.schedule('0 0 * * 1', async () => {
 });
 
 const pool = new Pool({
-  connectionString: databaseUrl, // Heroku provides this variable automatically
+  connectionString: databaseUrl,
   ssl: {
     rejectUnauthorized: false, // Required for Heroku-managed databases
   },
@@ -152,7 +152,7 @@ app.use(express.json());
 
 // Middleware to check if the user is authenticated 
 const authenticate = (req, res, next) => {
-  const token = req.cookies.auth_token; // Use consistent naming
+  const token = req.cookies.auth_token; // 
   if (!token) {
     return res.redirect('/login'); // Redirect if no token
   }
@@ -194,8 +194,7 @@ async function checkIsOrg(req, res, next) {
 
   try {
     // Verify and decode the token
-    const decoded = jwt.verify(token, SECRET_KEY); // Replace 'SECRET_KEY' with your actual key
-
+    const decoded = jwt.verify(token, SECRET_KEY);
     // Fetch user data from the database using the decoded email
     const result = await pool.query('SELECT * FROM users WHERE id = $1', [decoded.id]);
 
@@ -229,8 +228,7 @@ async function checkAdmin(req, res, next) {
 
   try {
     // Verify and decode the token
-    const decoded = jwt.verify(token, SECRET_KEY); // Replace 'SECRET_KEY' with your actual key
-
+    const decoded = jwt.verify(token, SECRET_KEY); 
     // Fetch user data from the database using the decoded user ID
     const result = await pool.query('SELECT * FROM users WHERE id = $1', [decoded.id]);
 
@@ -267,8 +265,6 @@ app.use((req, res, next) => {
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
-
-
 
 // Redirects
 app.get('/index', limiter, (req, res) => {
@@ -333,24 +329,21 @@ app.get('/template', limiter, checkAdmin, (req, res) => {
 app.get('/askew', limiter, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'Askew.html'));
 });
-app.get('/brent', limiter, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'brent.html'));
-});
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Server Error');
 });
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // Use your email service (e.g., Gmail)
+  service: 'gmail',
   auth: {
-    user: Email, // Your email
-    pass: Password // Your email password or app password
+    user: Email, 
+    pass: Password
   }
 });
 
 // Route to handle form submission
-const emailRateLimits = {}; // Key: email, Value: timestamp of the last request
+const emailRateLimits = {}; 
 app.post('/send-feedback', (req, res) => {
   const { email, name, feedback } = req.body;
 
@@ -391,7 +384,7 @@ const forgotPasswordRateLimits = {}; // To track requests for forgot-password
 const resendVerificationRateLimits = {}; // To track requests for resend-verification
 
 // Rate limit duration in milliseconds (10 seconds)
-const RATE_LIMIT_DURATION = 10 * 1000;
+const RATE_LIMIT_DURATION = 20 * 1000;
 function isRateLimited(email, rateLimits) {
   const currentTime = Date.now();
 
@@ -520,8 +513,6 @@ app.get('/verify-email', limiter, async (req, res) => {
     return res.status(400).send('Token not provided');  // Return a 400 error if no token is found
   }
 
-  console.log('Received token:', token); // For debugging purposes
-
   try {
     const result = await pool.query('SELECT * FROM users WHERE verification_token = $1', [token]);
 
@@ -557,10 +548,10 @@ const loginAttempts = {};
 app.post('/loginJS', limiter, async (req, res) => {
   const { email, password } = req.body;
 
-  // Check if the user has made a request in the last 5 seconds
+  // Check if the user has made a request in the last 7 seconds
   const now = Date.now();
-  if (loginAttempts[email] && now - loginAttempts[email] < 8000) {
-    return res.status(429).json({ message: 'Too many login attempts. Please wait a moment.' });
+  if (loginAttempts[email] && now - loginAttempts[email] < 7000) {
+    return res.status(429).json({ message: 'Too frequent login attempts. Please wait a moment.' });
   }
 
   // Record the time of this attempt
@@ -717,7 +708,7 @@ app.post('/change-password', limiter, authenticate, async (req, res) => {
   }
 
   try {
-    const userId = req.user.id; // Assumes `authenticate` middleware attaches user ID
+    const userId = req.user.id;
     const userResult = await pool.query('SELECT password FROM users WHERE id = $1', [userId]);
 
     if (userResult.rowCount === 0) {
@@ -1226,7 +1217,7 @@ app.post('/api/admin/create-test-event', limiter, checkAdmin, async (req, res) =
     );
     res.status(201).json({ message: 'Test event created.' });
   } catch (err) {
-    if (err.code === '23505') {  // PostgreSQL duplicate key error code
+    if (err.code === '23505') { 
       return res.status(400).json({ error: 'An event with the same name, date, time, and address already exists!' });
     }
     console.error('Error saving event:', err);

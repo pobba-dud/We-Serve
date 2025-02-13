@@ -38,7 +38,7 @@
       }
     })
     .then(data => {
-      // Assuming 'data' is the object containing user data returned from the /profile endpoint
+      
       document.getElementById('name').textContent = `${data.firstname} ${data.lastname}`;
 document.getElementById('name2').textContent = `${data.firstname} ${data.lastname}`;
 document.getElementById('email').textContent = data.email;

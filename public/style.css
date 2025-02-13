@@ -13,7 +13,7 @@ html {
 /* Button styling */
 
 
-/* Optional: Adjust the button's style for smaller screens */
+
 @media (max-width: 600px) {
   .event-button {
     width: 80%;
