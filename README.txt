@@ -6,11 +6,11 @@
 ## Authors
 **We-Serve Team** -Lead Developers
 **[Author Names]**
-     -Aidan Jimenez
-     -Delbert Duncan
-     -Lucas Sintim
-     -Jonathon Stewart
-     -Jordynn Garner
+     -Aidan Jimenez <aidanjimenez77@gmail.com>
+     -Delbert Duncan <brentduncan06@gmail.com>
+     -Lucas Sintim <lknsintim@outlook.com>
+     -Jonathon Stewart <jonathon@jonstewart.org>
+     -Jordynn Garner <jordynngarner@gmail.com>
 
 ## About
      We-Serve is a web application designed to connect users
