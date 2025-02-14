@@ -233,8 +233,7 @@ button {
   text-decoration: none;
   color: #000;
   /* Default text color */
-  font-size: 18px;
-  
+  font-size: 18px; 
   padding: 10px 15px;
   border-radius: 5px;
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
@@ -258,10 +257,6 @@ button {
   box-shadow: 0 0 4px 2px rgba(0, 123, 255, 0.5);
   /* Adds a glowing effect */
 }
-
-
-
-
 /* End */
 
 /* Main */
@@ -458,7 +453,6 @@ button[type="submit"] {
   box-shadow: #000;
 }
 
-
 .close-btn {
   color: black;
   float: right;
@@ -542,5 +536,4 @@ button[type="submit"] {
     color: white;
   }
 }
-
 /* End */

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
@@ -10,19 +9,13 @@
   <script src="accountJs.js"></script>
   <script src="script.js"></script>
 </head>
-
-
 <body style="margin: 0%;">
-
   <div class="notification" id="customNotification"
     style="display: none; background-color: #283A43; color: white; padding: 10px; position: fixed; bottom: 20px; right: 20px; border-radius: 5px;">
     This is a notification message!
     <button onclick="closeNotification()"
       style="background-color: #283A43; color: white; border: none; margin-left: 10px;">X</button>
   </div>
-
-
-
   <!-- navbar -->
   <nav>
     <ul id="NavUl" style="padding-bottom: 0px;">
@@ -33,22 +26,15 @@
       <li><a href="calendar" style="padding-bottom: 19px; padding-top: 19px;"><b>Calendar</b></a></li>
     </ul>
   </nav>
-
   <!--End of navbar -->
-
-
   <div id="AllignLogin">
-
     <!-- Sidenav -->
     <div class="sidenav">
       <div class="profile">
         <img src='Images/Default_pfp.png' style="width:70%;height:auto;margin-top: 100px;">
-
         <div class=name id="name2">
-
         </div>
       </div>
-
       <div class="sidenav-url">
         <div class="url">
           <a href="#" class="hoverable-link" id="openModal" style="background-color: #e8f5ff;
@@ -73,13 +59,14 @@
       </div>
       <div class="url">
         <form action="/logout" method="POST">
-          <button id="Logout" class="hoverable-button" style="background-color: #e8f5ff;
-                       border-radius: 28px;
-                       color: #000;
-                       font-size: 20px;
-                       margin: 10px 0px;
-                       padding: 6px 8px;
-                       width: 70%;" type="submit">
+          <button id="Logout" class="hoverable-button" style="
+                      background-color: #e8f5ff;
+                      border-radius: 28px;
+                      color: #000;
+                      font-size: 20px;
+                      margin: 10px 0px;
+                      padding: 6px 8px;
+                      width: 70%;" type="submit">
             Logout
           </button>
         </form>
@@ -122,7 +109,6 @@
       </form>
     </div>
   </div>
-
   <!-- Main -->
   <div class="main">
     <h2>IDENTITY</h2>
@@ -261,19 +247,16 @@
         }
       });
     });
-
     // Load the theme from local storage when the page loads
     window.onload = function () {
       fetchUserData();
     };
-
     // Add event listener for form submission
     document.getElementById('settings-form').addEventListener('submit', function (event) {
       event.preventDefault(); // Prevent the default form submission
       // Here you can add any code to save settings if needed
       window.location.href = 'account'; // Redirect to the login page
     });
-
   </script>
 </body>
 
