@@ -1241,9 +1241,9 @@ app.post('/api/admin/create-test-event', limiter, checkAdmin, async (req, res) =
     const startTime = currentDate.toISOString().split('T')[0] + ' ' + currentDate.toTimeString().split(' ')[0]; // Current time as HH:MM:SS
     const endTime = new Date(currentDate.getTime() + 2 * 60 * 60 * 1000); // Add 2 hours
     const endTimeFormatted = endTime.toISOString().split('T')[1].split('.')[0]; // Format to HH:MM:SS
-
+    const tempName = 'Test Event ' + currentDate.toISOString().split('T')[0];
     const testEvent = {
-      name: 'Test Event',
+      name: tempName,
       event_date: currentDate.toISOString().split('T')[0], // Current date
       start_time: startTime, // Set start time to current time
       end_time: endTimeFormatted, // Set end time to 2 hours later
