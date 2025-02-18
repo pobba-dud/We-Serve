@@ -1152,7 +1152,7 @@ app.post('/api/events/leave', limiter, authenticate, async (req, res) => {
     res.status(500).json({ message: 'An error occurred while leaving the event' });
   }
 });
-app.post('/api/leaderboard',limiter, authenticate, async (req, res) => {
+app.get('/api/leaderboard',limiter, authenticate, async (req, res) => {
   try {
       // Fetch all users excluding organizations
       const result = await pool.query(`
