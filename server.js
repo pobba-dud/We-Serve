@@ -90,12 +90,14 @@ cron.schedule('0 0 * * 1', async () => {
     startOfCurrentWeek.setHours(0, 0, 0, 0); // Set to midnight on Monday
 
     // Fetch all users and their last logged times
-    const { rows: users } = await pool.query('SELECT id, last_logged, weekly_streak FROM users');
-
+    const { rows: users } = await pool.query(
+      'SELECT id, last_logged, weekly_streak FROM users WHERE verified = TRUE'
+    );
+    
     for (const user of users) {
       const { id, last_logged, weekly_streak } = user;
 
-      let newWeeklyStreak = 1; // Default to 1 if no previous streak
+      let newWeeklyStreak = 0; // Default to 0 if no previous streak
       let resetStreak = false;
 
       if (last_logged) {
