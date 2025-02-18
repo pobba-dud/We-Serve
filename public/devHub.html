@@ -48,6 +48,7 @@
               <th>ID</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Verified</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -76,7 +77,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-6" style="margin-left:10%;">
     <h2 id="eventNameTitle">Event Participants ()</h2>
     <select id="eventSelect" onchange="loadParticipants()">
       <option value="">Select an event</option>
@@ -160,6 +161,7 @@
           <td>${user.id}</td>
           <td>${user.firstname} ${user.lastname}</td>
           <td>${user.email}</td>
+          <td>${user.verified}</td>
           <td>
             <button class="btn btn-danger" onclick="deleteUser(${user.id})">Delete</button>
           </td>
@@ -176,6 +178,7 @@
           <td>${event.id}</td>
           <td>${event.name}</td>
           <td>${event.event_date}</td>
+          <td>${event.org_name}</td>
           <td>
             <button class="btn btn-danger" onclick="deleteEvent(${event.id})">Delete</button>
           </td>

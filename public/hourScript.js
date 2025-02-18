@@ -64,3 +64,138 @@ function easeOutQuad(t) {
 document.addEventListener("DOMContentLoaded", () => {
     fetchUserHours();
 });
+
+
+const CACHE_KEY = "leaderboard_data";
+const CACHE_TIMESTAMP_KEY = "leaderboard_last_updated";
+const CACHE_EXPIRATION = 5 * 60 * 1000; // 5 minutes
+const PAGE_SIZE = 20;
+let currentLimit = PAGE_SIZE;
+
+async function fetchLeaderboard() {
+    try {
+        const response = await fetch("/api/leaderboard");
+        if (!response.ok) throw new Error("Failed to fetch leaderboard data");
+        
+        const data = await response.json();
+        
+        // Validate response structure
+        if (!data.yearlyHours || !data.weeklyStreak) {
+            throw new Error("Invalid leaderboard data structure");
+        }        
+
+        localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+        localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+        renderLeaderboard(data);
+    } catch (error) {
+        console.error("Error fetching leaderboard:", error);
+        showFallbackMessage();
+    }
+}
+
+function checkAndFetchLeaderboard() {
+    const lastUpdated = parseInt(localStorage.getItem(CACHE_TIMESTAMP_KEY) || "0", 10);
+    const cachedData = localStorage.getItem(CACHE_KEY);
+    
+    if (Date.now() - lastUpdated > CACHE_EXPIRATION || !isValidCache(cachedData)) {
+        fetchLeaderboard();
+    } else {
+        loadLeaderboardFromCache();
+    }
+}
+
+function isValidCache(cachedData) {
+    try {
+        const data = JSON.parse(cachedData);
+        return data && data.total_hours && data.weekly_streak;
+    } catch {
+        return false;
+    }
+}
+
+function loadLeaderboardFromCache() {
+    try {
+        const cachedData = localStorage.getItem(CACHE_KEY);
+        if (cachedData) {
+            const data = JSON.parse(cachedData);
+            if (data.total_hours && data.weekly_streak) {
+                renderLeaderboard(data);
+                return;
+            }
+        }
+    } catch (error) {
+        console.error("Error loading cached data:", error);
+    }
+    fetchLeaderboard();
+}
+
+function renderLeaderboard(data) {
+    const totalHoursList = document.getElementById("HoursThisYear");
+    const weeklyStreakList = document.getElementById("WeeklyStreakBoard");
+    const userId = getCurrentUserId();
+
+    // Clear existing content
+    totalHoursList.innerHTML = "";
+    weeklyStreakList.innerHTML = "";
+
+        data.yearlyHours.slice(0, currentLimit).forEach((user, index) => {
+        totalHoursList.innerHTML += `<li>${index + 1}. ${user.firstname} - ${user.hourstotal} hours</li>`;
+    });
+
+    data.weeklyStreak.slice(0, currentLimit).forEach((user, index) => {
+        weeklyStreakList.innerHTML += `<li>${index + 1}. ${user.firstname} - ${user.weekly_streak} weeks</li>`;
+    });
+
+    
+    displayUserRanking(data.userRanking, userId);
+}
+
+
+function displayUserRanking(rankingData, userId) {
+    const userRankingContainer = document.getElementById("userRanking");
+    let content = [];
+    
+    if (rankingData.yearlyHours) {
+        content.push(`Yearly Hours: #${rankingData.yearlyHours.rank} (Top ${rankingData.yearlyHours.percentile}%)`);
+    }
+    
+    if (rankingData.weeklyStreak) {
+        content.push(`Weekly Streak: #${rankingData.weeklyStreak.rank} (Top ${rankingData.weeklyStreak.percentile}%)`);
+    }
+
+    userRankingContainer.innerHTML = content.join("<br>") || "Not ranked yet.";
+}
+
+
+function showFallbackMessage() {
+    const containers = document.querySelectorAll('.leaderboard ol');
+    containers.forEach(container => {
+        container.innerHTML = "<li>Leaderboard data unavailable. Please try again later.</li>";
+    });
+}
+async function getCurrentUserId() {
+    try {
+        const response = await fetch('/profileJS', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        });
+        const userData = await response.json();
+        return userData.id;
+    } catch (error) {
+        console.error('Error fetching user ID:', error);
+        return null;
+    }
+}
+
+
+function openLeaderboard() {
+    document.getElementById("leaderboardModal").style.display = "flex";
+    // Add class to hide scrollbars when modal is open
+    document.body.classList.add("modal-open");
+  }
+  
+  function closeModal() {
+    document.getElementById("leaderboardModal").style.display = "none";
+    // Remove class to restore scrollbars when modal is closed
+    document.body.classList.remove("modal-open");
+  }

@@ -1152,6 +1152,49 @@ app.post('/api/events/leave', limiter, authenticate, async (req, res) => {
     res.status(500).json({ message: 'An error occurred while leaving the event' });
   }
 });
+app.post('/api/leaderboard',limiter, authenticate, async (req, res) => {
+  try {
+      // Fetch all users excluding organizations
+      const result = await pool.query(`
+          SELECT id, firstname, hourstotal, weekly_streak
+          FROM users
+      `);
+
+      let users = result.rows;
+
+      // Sort users for each category in descending order
+      const sortDescending = (a, b, key) => b[key] - a[key];
+
+      const yearlyHoursLeaderboard = [...users].sort((a, b) => sortDescending(a, b, 'hourstotal'));
+      const weeklyStreakLeaderboard = [...users].sort((a, b) => sortDescending(a, b, 'weekly_streak'));
+
+      // Function to find user rank and percentile
+      const getUserRank = (leaderboard, userId) => {
+          const index = leaderboard.findIndex(user => user.id === userId);
+          if (index === -1) return null;
+          const percentile = ((index + 1) / leaderboard.length) * 100;
+          return { rank: index + 1, percentile: Math.round(percentile) };
+      };
+
+      // Get the current user's rank and percentile
+      const userId = req.user.id;
+      const userYearlyRank = getUserRank(yearlyHoursLeaderboard, userId);
+      const userWeeklyRank = getUserRank(weeklyStreakLeaderboard, userId);
+
+      res.json({
+          yearlyHours: yearlyHoursLeaderboard.slice(0, 20), // Return top 20
+          weeklyStreak: weeklyStreakLeaderboard.slice(0, 20), // Return top 20
+          userRanking: {
+              yearlyHours: userYearlyRank,
+              weeklyStreak: userWeeklyRank
+          }
+      });
+
+  } catch (error) {
+      console.error('Error fetching leaderboard:', error);
+      res.status(500).json({ error: 'Failed to fetch leaderboard data' });
+  }
+});
 
 
 

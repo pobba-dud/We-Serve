@@ -15,15 +15,10 @@
 
 <body>
   <script>
-    function openModal() {
-      document.getElementById("leaderboardModal").style.display = "flex";
-    }
-
-    function closeModal() {
-      document.getElementById("leaderboardModal").style.display = "none";
-    }
     window.onload=function(){
       checkUpcomingEvents();
+      loadLeaderboardFromCache();
+      checkAndFetchLeaderboard();
     }
     // Close the modal when clicking outside of it
     window.onclick = function (event) {
@@ -76,9 +71,8 @@
     <!-- end of navbar -->
 
     <!-- Leaderboard button -->
-
     <div class="buttonContainer">
-      <button class="leaderboard-btn" style="margin-top: 1%;" onclick="openModal()">Leaderboard</button>
+      <button class="leaderboard-btn" style="margin-top: 1%;" onclick="openLeaderboard()">Leaderboard</button>
     </div>
     <!-- Hour Log Content -->
     <div class="hourContainer" style="font-size: larger;">
@@ -105,37 +99,22 @@
     </div>
     <div id="leaderboardModal" class="modal">
       <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <div class="leaderboard-container">
-          <div class="leaderboard">
-            <h1>Total Hours</h1>
-            <ol>
-              <li>User A - 10 hours</li>
-              <li>User B - 8 hours</li>
-              <li>User C - 5 hours</li>
-            </ol>
+          <span class="close" onclick="closeModal()">&times;</span>
+          <div id="userRanking" class="user-ranking"></div>
+          <div class="leaderboard-container">
+              <div class="leaderboard">
+                  <h1>Total Hours</h1>
+                  <ol id="HoursThisYear"></ol>
+              </div>
+              <div class="leaderboard">
+                  <h1>Weekly Streak</h1>
+                  <ol id="WeeklyStreakBoard"></ol>
+              </div>
           </div>
-
-          <div class="leaderboard">
-            <h1>Weekly Streak</h1>
-            <ol>
-              <li>User D - 69 weeks</li>
-              <li>User E - 1 week</li>
-              <li>User F - 💀</li>
-            </ol>
-          </div>
-
-          <div class="leaderboard">
-            <h1>Broke friend Leaderboard</h1>
-            <ol>
-              <li>User G - 16 dollars</li>
-              <li>User H - 12 pesos</li>
-              <li>User I - 2 trillion zimbabwe dollars</li>
-            </ol>
-          </div>
-        </div>
       </div>
-    </div>
+  </div>
+  
+  <!-- Add a button to open the leaderboard -->
 
 
     <footer>
