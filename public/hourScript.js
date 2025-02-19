@@ -139,7 +139,7 @@ function renderLeaderboard(data) {
     weeklyStreakList.innerHTML = "";
 
         data.yearlyHours.slice(0, currentLimit).forEach((user, index) => {
-        totalHoursList.innerHTML += `<li>${index + 1}. ${user.firstname} - ${user.hourstotal} hours</li>`;
+        totalHoursList.innerHTML += `<li>${index + 1}. ${user.firstname} ${user.lastname[0]}. - ${user.hourstotal} hours</li>`;
     });
 
     data.weeklyStreak.slice(0, currentLimit).forEach((user, index) => {

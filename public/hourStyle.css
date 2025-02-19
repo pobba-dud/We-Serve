@@ -158,7 +158,7 @@ body.dark-mode .leaderboard h1 {
 
 .leaderboard ol {
   margin: auto;
-  width: 50%;
+  width: 100%;
   padding: 10px;
   display: flex;
   flex-direction: column;

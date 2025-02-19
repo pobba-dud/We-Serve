@@ -1158,7 +1158,7 @@ app.get('/api/leaderboard',limiter, authenticate, async (req, res) => {
   try {
       // Fetch all users excluding organizations
       const result = await pool.query(`
-          SELECT id, firstname, hourstotal, weekly_streak
+          SELECT id, firstname, lastname, hourstotal, weekly_streak
           FROM users
       `);
 
